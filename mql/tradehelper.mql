@@ -1,0 +1,480 @@
+//+------------------------------------------------------------------+
+//|                                                  tradehelper.mq4 |
+//|                                                           yuting |
+//|                                           http://www.17forex.com |
+//+------------------------------------------------------------------+
+#property copyright "yuting"
+#property link      "http://www.17forex.com"
+
+
+extern int TimeFrame=15;
+extern int ExtBackstep = 40;
+
+
+string ObjNames[20];
+string ObjAttr[20][10]; // 属性表
+
+
+
+int init()
+  {
+   ObjectCreate("Channel 11316",OBJ_CHANNEL,0,D'2011.01.03 16:45',1.3368,D'2011.01.03 22:30',1.33528,D'2011.01.03 17:15',1.33944);
+   ObjectSet("Channel 11316",OBJPROP_COLOR,Yellow);
+   ObjectSet("Channel 11316",OBJPROP_RAY,false);
+   ObjectSetText("Channel 11316", "b_50_100_0.01_0_", 0, "", Yellow);
+   
+   ObjectCreate("Trendline X",OBJ_TREND,0,D'2011.01.03 08:45',1.32499,D'2011.01.03 14:00',1.33647);
+   ObjectCreate("Trendline Y",OBJ_TREND,0,D'2011.01.03 14:00',1.33647,D'2011.01.03 16:00',1.33047);
+   ObjectCreate("Trendline Z",OBJ_TREND,0,D'2011.01.03 16:00',1.33041,D'2011.01.03 17:15',1.33944);
+   //ObjectSet("Trendline X",OBJPROP_RAY,false);
+   //ObjectSet("Trendline Y",OBJPROP_RAY,false);
+   //ObjectSet("Trendline Z",OBJPROP_RAY,false);
+   return(0);
+  }
+
+int deinit()
+{
+   return(0);
+}
+
+
+int start()
+  {
+   int start   = GetTickCount();
+   int obj_num = obj_reg();    // 注册 交易对象.
+   string cstr;
+      
+   cstr = "共发现" + DoubleToStr(obj_num,0) + "个交易对象\n";
+   
+   for(int i=0;i<obj_num;i++) {
+      cstr = cstr + ObjComment(i) ;
+      trade_proc(i);          
+      modify_proc(i);          // 如果该对象有ticket . 检查是否符合  modify 的条件.
+   }
+
+   //testOrdering();
+   Comment(cstr,"lat.:",GetTickCount()- start);
+   
+   return(0);
+  }
+
+
+int modify_proc(int n)
+{
+
+   switch(StringGetChar(ObjAttr[n][5],0)) {
+      case '1':   // 依据点数 开仓 调整止损.
+         channel_order_modify_zero_risk(n);
+         channel_modify(n);
+      break;
+      case '2':   // 依据 价格 开仓，调整止损.
+      break;
+      default:
+      break;
+   }
+ 
+   return(0);
+}
+
+int channel_modify(int n)
+{
+
+   if(ObjectGet(ObjNames[n],OBJPROP_COLOR) == Red || ObjAttr[n][6] == "n6" ) {
+      return(1);
+   }
+
+   double  cur_price;
+   double  plan_price = StrToDouble(ObjAttr[n][6]);
+   double  price_dist = StrToDouble(ObjAttr[n][7]);
+   
+   if(ObjAttr[n][1] == "b") {
+            cur_price = Ask;
+   } 
+       
+   if(ObjAttr[n][1] == "s") {
+            cur_price = Bid;
+   } 
+   
+   if(MathAbs(plan_price-cur_price) >= price_dist) {
+      ObjectSet(ObjNames[n],OBJPROP_COLOR,Red);
+      Print(ObjNames[n],"忽略");   
+   }
+}
+
+int channel_order_modify_zero_risk(int n)  // 只提一次止损.  当前价格运行到通道上演附近的时候止损提高到成本
+{
+   if(ObjAttr[n][9] == "n9") {
+      return(0);
+   }
+
+   int ticket = StrToInteger(ObjAttr[n][9]);
+   
+   OrderSelect(ticket, SELECT_BY_TICKET) ;
+   
+   double cur_sl = OrderStopLoss();
+   double cur_op = OrderOpenPrice();
+   double cur_tp = StrToDouble(ObjAttr[n][3]);
+   
+   if(cur_sl == cur_op) {
+      return(1);
+   }
+   
+
+   //Print("ticket found:",ticket);
+   if((OrderType() == OP_BUY) && ((Bid - cur_op) >= StrToDouble(ObjAttr[n][7])) ) {
+      // 止损提高到成本.      
+      OrderModify(ticket,cur_op,cur_op,cur_tp,0,Blue); 
+   }
+   
+   if((OrderType() == OP_SELL) && (cur_op - Ask >=  StrToDouble(ObjAttr[n][7])) ) {
+      // 止损提高到成本.
+      //Print("Ask - cur_op :",cur_op - Ask, "(-1 * StrToDouble(ObjAttr[n][7])):",StrToDouble(ObjAttr[n][7]));
+      if(OrderModify(ticket,cur_op,cur_op,cur_tp,0,Blue)==false) {
+         Print("Modify Erro:",GetLastError());
+      }
+   }
+   
+   return(0);
+}
+
+bool trade_proc(int n)
+{
+   if(ObjAttr[n][0] == "c" || ObjAttr[n][0] == "z") {
+      double open = StrToDouble(ObjAttr[n][6]);
+      double sl   = StrToDouble(ObjAttr[n][2]);
+      double tp   = StrToDouble(ObjAttr[n][3]);
+      double vols = StrToDouble(ObjAttr[n][4]);
+      string type = ObjAttr[n][1];
+      int    ticket   = 0; // ticket 在开始的时候都假设不成功.
+      int    ignp     = 1;   // 应该放到 extern 或者协议
+      int    slippage = 3;  //划点数；
+      int    magic    = 999;   //临时的magic 
+      int    expir    = 0;     // 过期时间.
+      color  c = Green;
+      int    spread = MarketInfo(Symbol(),MODE_SPREAD);
+
+      double irp =  spread * Point;
+      // Point 数字含义.
+   
+      if(ObjectGet(ObjNames[n],OBJPROP_COLOR) == Red || ObjAttr[n][6] == "n6" ) {
+         return(false);
+      }
+
+      if       ( type == "b" && MathAbs(open - Ask) < irp ) {
+        ticket=OrderSend(Symbol(),OP_BUY,vols,Ask,slippage,sl,tp,ObjNames[n],magic,0,c);
+      } else if( type == "s" && MathAbs(open - Bid) < irp ) {
+        ticket=OrderSend(Symbol(),OP_SELL,vols,Bid,slippage,sl,tp,ObjNames[n],magic,0,c);
+      } else {
+        return(false);
+      }
+   
+      if(ticket<0)
+      {
+         Print(ObjNames[n],":OrderSend 失败错误 #",GetLastError());
+         return(false);
+      } else {
+         ObjectSet(ObjNames[n],OBJPROP_COLOR,Red);
+         Print(ObjNames[n],":成交");   
+      }
+   }
+   return(true);
+}
+//----
+// 对象注册 流程  
+// 对于通道开仓线永远使用 time1 value1 所在的直线.
+// 选出所有指定的交易分析工具, （目前只有通道） 
+// 如果不是指定的 ObjectType 进入下一个循环.
+// 如果是对 ObjAttr 添加交易信息.
+// --- 
+int obj_reg()
+{
+
+   int objIdx=-1;
+   int ot = OrdersTotal();
+
+   for(int i=0;i<ObjectsTotal();i++)
+   {
+      string optStr;
+      int    boc=0;   // buy or sell -1 or  1
+      int    offset=0;
+      int    slashCount=0;
+      double curPrice=0;
+      
+      if(StringFind(ObjectName(i),"Channel",0) != -1)
+      {
+         objIdx++;
+         ObjAttrInit(objIdx);
+         ObjAttr[objIdx][0]="c";
+ 
+         ObjNames[objIdx]=ObjectName(i);
+         optStr=ObjectDescription(ObjNames[objIdx]); 
+      
+         for(int pos=0; pos<StringLen(optStr); pos++)  // 处理字串  b_50_100_0.01_1_
+         {
+            if(StringGetChar(optStr,pos) == 95)  // 匹配到 _ 
+            {
+               slashCount++;
+               ObjAttr[objIdx][slashCount] = StringSubstr(optStr,offset, pos-offset);
+               offset = pos+1;
+            }
+         }
+         if (ObjAttr[objIdx][1] == "b") {
+            boc = -1;
+            curPrice = Ask;
+         } else if(ObjAttr[objIdx][1] == "s") {
+            boc = 1;
+            curPrice = Bid;
+         } else {
+            ObjAttrInit(objIdx);  // 即不是 buy 也不是 sell reinit 后退出.
+            objIdx--;
+            continue;
+         }
+      } else if(StringFind(ObjectName(i),"Trendline Z",0) != -1 && HaveXY()) {
+         objIdx++;
+         ObjAttrInit(objIdx);
+         ObjAttr[objIdx][0]="z";  //zigzag trendline
+         ObjNames[objIdx]=ObjectName(i);
+         ZigConn();
+         boc = ElectZ2Spike();
+         if(boc > 0) {
+            ObjAttr[objIdx][1]="b";
+            curPrice = Bid;
+         } else {
+            ObjAttr[objIdx][1]="s";
+            curPrice = Ask;
+         }
+      } else {
+         continue;
+      }
+
+
+      // 根据当前的技术分析工具得出计划进场的点位. 转换成string 类型存储.
+      switch(StringGetChar(ObjAttr[objIdx][0],0)) 
+      {
+         case 'c':   // 通道类型
+             if(TimeCurrent()> ObjectGet(ObjNames[objIdx],OBJPROP_TIME1) && 
+                TimeCurrent()< ObjectGet(ObjNames[objIdx],OBJPROP_TIME2)) {             // 如果价格在通道的范围内. 进行交易计划填充.
+                  // 预期当前进场价位.
+                  ObjAttr[objIdx][6] = DoubleToStr(ObjectGetValueByShift( ObjNames[objIdx], 0),Digits);
+                  // 通道间距.  =  
+                  ObjAttr[objIdx][7] = DoubleToStr(GetChannelDist(objIdx),Digits);
+                  // 止损
+                  ObjAttr[objIdx][2] = DoubleToStr(MathPow(10,MarketInfo(Symbol(),MODE_DIGITS) * (-1)) * StrToDouble(ObjAttr[objIdx][2]) * 10 * boc    +  StrToDouble(ObjAttr[objIdx][6]) ,
+                                        5);
+                  // 目标
+                  ObjAttr[objIdx][3] = DoubleToStr(MathPow(10,MarketInfo(Symbol(),MODE_DIGITS) * (-1)) * StrToDouble(ObjAttr[objIdx][3]) * 10 * (-boc) +  StrToDouble(ObjAttr[objIdx][6]) ,
+                                        5);
+                  // 距离现价的点数
+                  ObjAttr[objIdx][8] = DoubleToStr(MathAbs((StrToDouble(ObjAttr[objIdx][6]) - curPrice ) * MathPow(10,Digits -1 )),1);
+               } else {
+                  ObjAttr[objIdx][6] = "n6";
+               }
+            break;
+         case 'z':   // TrendLine zigzag
+            // 预期当前进场价位.
+            ObjAttr[objIdx][6] = DoubleToStr((ObjectGet("Trendline Z",OBJPROP_PRICE1) + ObjectGet("Trendline Z",OBJPROP_PRICE2))/2,Digits);
+            // 止损
+            ObjAttr[objIdx][2] = DoubleToStr(ObjectGet("Trendline Z",OBJPROP_PRICE1),Digits);
+            // 目标
+            ObjAttr[objIdx][3] = DoubleToStr(ObjectGet("Trendline Z",OBJPROP_PRICE2) - ObjectGet("Trendline Z",OBJPROP_PRICE1) + StrToDouble(ObjAttr[objIdx][6]) , Digits);
+            // 距离现价的点数
+            ObjAttr[objIdx][8] = DoubleToStr(MathAbs((StrToDouble(ObjAttr[objIdx][6]) - curPrice ) * MathPow(10,Digits -1 )),1);
+            ObjAttr[objIdx][4] = ObjectDescription("Trendline Y");  // 需要做仓位限制.
+            break;
+         default :    // 什么都不是 退出 到下一个循环。
+           Print("Not Recognize:",ObjAttr[objIdx][0]);
+           break;
+      }
+  }
+  // order table regest.
+   for(int p = 0; p < ot; p++)
+   {
+      string n;
+      if( OrderSelect( p, SELECT_BY_POS ) == false ) continue;
+      n = OrderComment();
+      for(int k=0;k<=objIdx;k++)
+      {
+         if(n == ObjNames[k]) {
+            ObjAttr[k][9] = DoubleToStr(OrderTicket(),0); 
+         }
+      }
+   }
+
+   return(objIdx+1);
+}
+
+int ElectZ2Spike()   //Z2Spike more better.
+{
+   int z1_shift_number = (Time[1]-ObjectGet("Trendline Z",OBJPROP_TIME1))/(TimeFrame*60) + 2;
+   double   z1_value  = ObjectGet("Trendline Z",OBJPROP_PRICE1);
+   int z2_shift_number = (Time[1]-ObjectGet("Trendline Z",OBJPROP_TIME2))/(TimeFrame*60) + 2;
+   double   z2_value  = ObjectGet("Trendline Z",OBJPROP_PRICE2);
+
+   datetime oldz2_spike_time = ObjectGet("Trendline Z",OBJPROP_TIME2);
+   double   oldz2_spike_value= ObjectGet("Trendline Z",OBJPROP_PRICE2);
+   datetime oldz1_spike_time = ObjectGet("Trendline Z",OBJPROP_TIME1);
+   double   oldz1_spike_value= ObjectGet("Trendline Z",OBJPROP_PRICE1);
+   datetime oldy2_spike_time = ObjectGet("Trendline Y",OBJPROP_TIME2);
+   double   oldy2_spike_value= ObjectGet("Trendline Y",OBJPROP_PRICE2);
+   datetime oldy1_spike_time = ObjectGet("Trendline Y",OBJPROP_TIME1);
+   double   oldy1_spike_value= ObjectGet("Trendline Y",OBJPROP_PRICE1);   
+   
+       
+   int CustomBackstep = StrToInteger(ObjectDescription("Trendline Z"));
+   if( CustomBackstep == 0) {
+      CustomBackstep = ExtBackstep;
+   }
+
+   int      uod ,dou;
+   if (z1_shift_number <= z2_shift_number ) {
+      Print("Trendline Z wrong direction.");
+      return;
+   }
+   if(z2_value > z1_value ) {
+         // Z 为上涨趋势线
+      uod =1;
+      dou = -1;
+   } else {
+         // Z 为下跌趋势线.
+      uod = -1;
+      dou = 1;
+   }
+   
+
+   if(Close[1] * uod > z2_value * uod ) {
+      // 趋势延续新顶点.
+      // 取中间点.
+      ObjectSet("Trendline Z", OBJPROP_TIME2, Time[iSpikePoint(TimeFrame,z2_shift_number,0,uod)]);
+      if(uod > 0) {
+         ObjectSet("Trendline Z", OBJPROP_PRICE2,High[iSpikePoint(TimeFrame,z2_shift_number,0,uod)]);
+      } else {
+         ObjectSet("Trendline Z", OBJPROP_PRICE2,Low[iSpikePoint(TimeFrame,z2_shift_number,0,uod)]);
+      }
+
+      if(z2_shift_number >= ExtBackstep || z2_shift_number >= CustomBackstep ) {
+         ObjectSet("Trendline Z",OBJPROP_TIME1,Time[iSpikePoint(TimeFrame,z2_shift_number,0, dou )]);
+         if(uod > 0) {
+            ObjectSet("Trendline Z",OBJPROP_PRICE1,Low[iSpikePoint(TimeFrame,z2_shift_number,0, dou )]);   
+         } else {
+            ObjectSet("Trendline Z",OBJPROP_PRICE1,High[iSpikePoint(TimeFrame,z2_shift_number,0, dou )]); 
+         }
+      } else {
+         return(uod);
+      }
+   } else if (Close[1] * uod < z1_value * uod) {
+      ObjectSet("Trendline Z", OBJPROP_TIME2, Time[iSpikePoint(TimeFrame,z2_shift_number,0,dou)]);
+      if(uod > 0) {
+         ObjectSet("Trendline Z", OBJPROP_PRICE2,Low[iSpikePoint(TimeFrame,z2_shift_number,0,dou)]);
+      } else {
+         ObjectSet("Trendline Z", OBJPROP_PRICE2,High[iSpikePoint(TimeFrame,z2_shift_number,0,dou)]);
+      }
+      ObjectSet("Trendline Z",OBJPROP_TIME1,Time[iSpikePoint(TimeFrame,z1_shift_number,0, uod )]);
+      if(uod > 0) {
+         ObjectSet("Trendline Z",OBJPROP_PRICE1,High[iSpikePoint(TimeFrame,z1_shift_number,0, uod )]);
+      } else {
+         ObjectSet("Trendline Z",OBJPROP_PRICE1,Low[iSpikePoint(TimeFrame,z1_shift_number,0, uod )]); 
+      }      
+   }
+
+   if(Close[1] * uod > z2_value * uod ) {
+         ObjectSet("Trendline Y",OBJPROP_TIME2, ObjectGet("Trendline Z",OBJPROP_TIME1));
+         ObjectSet("Trendline Y",OBJPROP_PRICE2,ObjectGet("Trendline Z",OBJPROP_PRICE1));
+         ObjectSet("Trendline Y",OBJPROP_TIME1,oldz2_spike_time);
+         ObjectSet("Trendline Y",OBJPROP_PRICE1,oldz2_spike_value);
+         ObjectSet("Trendline X",OBJPROP_TIME2,oldz2_spike_time);
+         ObjectSet("Trendline X",OBJPROP_PRICE2,oldz2_spike_value);
+         ObjectSet("Trendline X",OBJPROP_TIME1,oldz1_spike_time);
+         ObjectSet("Trendline X",OBJPROP_PRICE1,oldz1_spike_value);        
+   } else if( Close[1] * uod < z1_value * uod ) {
+         ObjectSet("Trendline Y",OBJPROP_TIME2, ObjectGet("Trendline Z",OBJPROP_TIME1));
+         ObjectSet("Trendline Y",OBJPROP_PRICE2,ObjectGet("Trendline Z",OBJPROP_PRICE1));
+         ObjectSet("Trendline Y",OBJPROP_TIME1,oldz1_spike_time);
+         ObjectSet("Trendline Y",OBJPROP_PRICE1,oldz1_spike_value);
+         ObjectSet("Trendline X",OBJPROP_TIME2,oldy2_spike_time);
+         ObjectSet("Trendline X",OBJPROP_PRICE2,oldy2_spike_value);
+         ObjectSet("Trendline X",OBJPROP_TIME1,oldy1_spike_time);
+         ObjectSet("Trendline X",OBJPROP_PRICE1,oldy1_spike_value);        
+   }
+
+   return (uod);
+   //Print("Z1 to now:");
+}
+
+int iSpikePoint(int timeframe,int count,int start,int uod_flag) {
+   if(uod_flag ==  1) return(iHighest(NULL,timeframe,MODE_HIGH,count,start));
+   if(uod_flag == -1) return(iLowest (NULL,timeframe,MODE_LOW,count,start));
+   Print("uod_flag wrong number:",uod_flag);
+}
+
+void ZigConn()
+{
+   datetime X_time2  = ObjectGet("Trendline Y",OBJPROP_TIME1);
+   double   X_price2 = ObjectGet("Trendline Y",OBJPROP_PRICE1);
+   datetime Y_time2 = ObjectGet("Trendline Z",OBJPROP_TIME1);
+   double   Y_price2 = ObjectGet("Trendline Z",OBJPROP_PRICE1);
+   // Connnecting...
+   ObjectSet("Trendline Y", OBJPROP_TIME2, Y_time2);
+   ObjectSet("Trendline Y", OBJPROP_PRICE2, Y_price2);
+   ObjectSet("Trendline X", OBJPROP_TIME2, X_time2);
+   ObjectSet("Trendline X", OBJPROP_PRICE2, X_price2);
+}
+
+bool HaveXY()
+{
+   int XY=0;
+   for(int i=0;i<ObjectsTotal();i++) {
+      if(StringFind(ObjectName(i),"Trendline X",0) != -1 || StringFind(ObjectName(i),"Trendline Y",0) != -1 ) {
+        XY++; 
+      }
+   }
+   
+   if(XY == 2) {
+      return(true);
+   } else {
+      return(false);
+   }
+   
+}
+
+double GetChannelDist(int n)
+{
+   int    s3  = iBarShift(Symbol(),0,ObjectGet(ObjNames[n],OBJPROP_TIME3));
+   double p3  = ObjectGet(ObjNames[n],OBJPROP_PRICE3);
+   double sp1 = ObjectGetValueByShift(ObjNames[n],s3);
+   
+   return(MathAbs(sp1-p3));
+   
+}
+
+string ObjComment(int n)
+{
+   string out="交易对象:" + ObjNames[n]   + "\n";
+   out = out + " 计划: "  + ObjAttr[n][1] + 
+               " 在 "     + ObjAttr[n][6] + 
+               " 止损:"   + ObjAttr[n][2] + 
+               " 目标:"   + ObjAttr[n][3] +
+               " 市价差:" + ObjAttr[n][8] +
+               " Pos:" + ObjAttr[n][9] + "\n" ;
+   
+   return(out);
+}
+
+
+
+void ObjAttrInit(int n)
+{
+   ObjAttr[n][0] = "n0";   // 类型 c: 通道,                 z: zigzag 线
+   ObjAttr[n][1] = "n1";   // 买卖指令 b: 买 s:卖           
+   ObjAttr[n][2] = "n2";   // 止损点数.
+   ObjAttr[n][3] = "n3";   // 目标点数.
+   ObjAttr[n][4] = "n4";   // 仓位
+   ObjAttr[n][5] = "n5";   // 条件扩展 (买入，卖出,止损调整等的条件扩展)
+   ObjAttr[n][6] = "n6";   // 预期当前进场价位.             z: 只针对 TrendLine Z 有效
+   ObjAttr[n][7] = "n7";   // 通道间距.
+   ObjAttr[n][8] = "n8";   // 价差.
+   //Print("n9 is:",ObjAttr[n][9]);
+   if(OrderSelect(StrToInteger(ObjAttr[n][9]),SELECT_BY_TICKET) == false)   ObjAttr[n][9] = "n9";   //  ticket number
+   //Print("ObjAttrInit#4:",ObjAttr[n][4]);
+}
+
+//+------------------------------------------------------------------+
