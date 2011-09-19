@@ -3,3 +3,5 @@ syntax: glob
 *.elc
 .git
 .git*
+*~
+.save*
