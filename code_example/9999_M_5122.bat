@@ -1,0 +1,1 @@
+D:\cygwin\bin\autossh -M 5122 -N -R 9999:localhost:22 yuting@www.17forex.com -p 54321
