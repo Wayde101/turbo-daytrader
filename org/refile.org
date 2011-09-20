@@ -1,0 +1,153 @@
+* Refiling Tasks 						       :NOTE:
+  CLOCK: [2011-09-20 Tue 14:12]--[2011-09-20 Tue 14:14] =>  0:02
+  :PROPERTIES:
+  :ORDERED:  t
+  :END:
+4.2 Refiling Tasks
+
+Tasks to refile are in their own section of the block agenda. To find tasks 
+to refile I run my agenda view with F12 SPC and scroll down to second section 
+of the block agenda: Tasks to Refile. This view shows all tasks (even ones marked 
+in a done state). Alternatively I just use F12 r on my slower Eee PC.
+
+Bulk refiling in the agenda works very well for multiple tasks going to the same 
+place. Just mark the tasks with m and then B r to refile all of them to a new location. 
+Occasionally I'll also refile tasks as subtasks of the current clocking task 
+using C-2 C-c C-w from the refile.org file.
+
+Refiling all of my tasks tends to take less than a minute so I may do this a 
+couple of times a day.
+
+4.3 Refiling Notes
+
+I keep a * Notes headline in most of my org-mode files. Notes have a NOTE tag 
+which is created by the capture template for notes. This allows finding notes 
+across multiple files easily using the agenda search functions.
+
+Notes created by capture tasks go first to refile.org and are later refiled to 
+the appropriate project file. Some notes that are project related get filed to 
+the appropriate project instead of under the catchall * NOTES task. Generally 
+these types of notes are specific to the project and not generally useful – so 
+removing them from the notes list when the project is archived makes sense.
+
+4.4 Refiling Phone Calls
+
+Phone calls are handled using capture mode and a few custom functions that look 
+up addressbook information in bbdb. I time my calls using the capture mode 
+template settings to clock in and out the capture task while the phone call is 
+in progress.
+
+Phone call tasks collect in refile.org and are later refiled to the appropriate 
+location. Some phone calls are billable and we want these tracked in the 
+appropriate category.
+
+
+[2011-09-20 Tue 01:47]
+[[file:~/org/todolist.org::*org-mode%20refile][org-mode refile]]
+* TODO 整理一个 forextrade.org 将日常的交易方面的东西放在这个文件里
+大体的org struct.
+
+1. 日常交易计划 [每日都要做的]  需要可以计算每次功课所花费的时间，并且是和tradeplan.el结合
+2. 有交易记录表，可以对日常的交易做一些行为分析。
+3. 交易心得和总结 。
+  CLOCK: [2011-09-20 Tue 09:14]--[2011-09-20 Tue 09:18] =>  0:04
+[2011-09-20 Tue 09:14]
+[[file:~/org/todolist.org::*PackWork][PackWork]]
+* NEXT 需要在emacs 里面配置一个w3m.
+[2011-09-20 Tue 09:20]
+[[file:~/org/todolist.org::*http://doc.norang.ca/org-mode.html][http://doc.norang.ca/org-mode.html]]
+* TODO 需要搞清楚什么是project. 通常的使用情景是什么
+  CLOCK: [2011-09-20 Tue 09:20]--[2011-09-20 Tue 09:21] =>  0:01
+[2011-09-20 Tue 09:20]
+[[file:~/org/todolist.org::*http://doc.norang.ca/org-mode.html][http://doc.norang.ca/org-mode.html]]
+* NEXT 如何实现每个 todo / notes的计时？
+[2011-09-20 Tue 09:21]
+[[file:~/org/todolist.org::*Notes][Notes]]
+* TODO checkout 一份本地的 metapkgs... 确保大部分工作可以在本机上调试修改.减少网络依赖 :Project:Writing:
+  CLOCK: [2011-09-20 Tue 09:22]--[2011-09-20 Tue 09:23] =>  0:01
+  :PROPERTIES:
+  :Effort:   sdf
+  :END:
+[2011-09-20 Tue 09:22]
+[[file:~/org/todolist.org::*Notes][Notes]]
+* TODO 简历一个运维方面的 org 文件. taobaowork.org. 里面建立 n 个project
+  SCHEDULED: <2011-09-20 Tue>
+1. gemstone
+2. packages
+3. OpsDocs
+  CLOCK: [2011-09-20 Tue 09:23]--[2011-09-20 Tue 09:25] =>  0:02
+[2011-09-20 Tue 09:23]
+[[file:~/org/todolist.org::*Gemstone%20nodes][Gemstone nodes]]
+* TODO 搞清除为啥 Tasks to Refile 这里是空的?
+  每次refile.org 里面的东西为啥不能出现在 custom agenda里面。
+  CLOCK: [2011-09-20 Tue 09:35]--[2011-09-20 Tue 09:36] =>  0:01
+[2011-09-20 Tue 09:35]
+* TODO 配置一个gnu mail
+  CLOCK: [2011-09-20 Tue 09:59]--[2011-09-20 Tue 10:00] =>  0:01
+  CLOCK: [2011-09-20 Tue 09:57]--[2011-09-20 Tue 09:58] =>  0:01
+  连同mta (qmail or postfix) 配置实现本地的邮件配置. 
+  可以让自己通过 gnus 阅读邮件，在17forex 可以收发邮件。
+  CLOCK: [2011-09-20 Tue 09:49]--[2011-09-20 Tue 09:52] =>  0:03
+  :PROPERTIES:
+  :ORDERED:  t
+  :END:
+[2011-09-20 Tue 09:49]
+
+* TODO opsfree 和 gemstone 链接.
+  人来编辑模板，实现机器和人可以coedit HOSTS/nodes.cf GROUPS/nodes.cf
+  CLOCK: [2011-09-20 Tue 09:52]--[2011-09-20 Tue 09:57] =>  0:05
+[2011-09-20 Tue 09:52]
+[[file:~/org/todolist.org::*@SQA%20%E7%9A%84%E6%9C%BA%E5%99%A8%E9%9C%80%E8%A6%81%E9%83%A8%E5%B1%9E%E4%B8%8A%E6%89%80%E6%9C%89%E7%9A%84gemclient][@SQA 的机器需要部属上所有的gemclient]]
+* TODO org-mode定期的任务场景如何进行org.
+[2011-09-20 Tue 10:12]
+[[file:~/org/refile.org::*opsfree%20%E5%92%8C%20gemstone%20%E9%93%BE%E6%8E%A5.][opsfree 和 gemstone 链接.]]
+* TODO schedule todo list to somedays.
+  CLOCK: [2011-09-20 Tue 10:21]--[2011-09-20 Tue 10:22] =>  0:01
+[2011-09-20 Tue 10:21]
+* NEXT 收集所有的gemstone cover到的软件包集体升级到 TOPS tag
+  CLOCK: [2011-09-20 Tue 14:53]--[2011-09-20 Tue 15:25] =>  0:32
+  CLOCK: [2011-09-20 Tue 14:49]--[2011-09-20 Tue 14:50] =>  0:01
+  CLOCK: [2011-09-20 Tue 14:33]--[2011-09-20 Tue 14:45] =>  0:12
+  CLOCK: [2011-09-20 Tue 14:15]--[2011-09-20 Tue 14:21] =>  0:06
+  1. 收集软件列表。 （日后评估安装的影响）
+tops-seco-core install           # tops
+tops-seco-gemstone install       # tops
+tops-seco-awesomerange install   # tops
+tops-python27 install		 # tops 
+tops-perl58 install		 # tops
+libcrange install		 # tops
+librange install		 # tops
+daemontools install		 # tops
+ucspi-tcp install		 # tops
+tops-seco-utils install		 # tops 
+supervisersync install		 # tops
+sync-gemserver install		 # tops
+p4-server install		 # tops
+p4-client install		 # tops
+  2. recompile.			done
+  3. re-install tops-gemclient.
+  CLOCK: [2011-09-20 Tue 14:00]--[2011-09-20 Tue 14:02] =>  0:02
+  :PROPERTIES:
+  :ORDERED:  t
+  :END:
+[2011-09-20 Tue 14:00]
+[[file:~/org/todolist.org::*tops-seco-core][tops-seco-core]]
+* TODO 需要对每一个目前已经有的安装包进行一次整体review.
+  主要看 daemontools + tops-gemclient-run
+  
+  CLOCK: [2011-09-20 Tue 14:50]--[2011-09-20 Tue 14:53] =>  0:03
+[2011-09-20 Tue 14:50]
+[[file:~/org/refile.org::*%E6%94%B6%E9%9B%86%E6%89%80%E6%9C%89%E7%9A%84gemstone%20cover%E5%88%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85%E9%9B%86%E4%BD%93%E5%8D%87%E7%BA%A7%E5%88%B0%20TOPS%20tag][收集所有的gemstone cover到的软件包集体升级到 TOPS tag]]
+* TODO Review (let ((n 0)
+      (v (make-vector 100 "nn")))
+(while (< n (length v))
+(message "%s" (elt v n))
+(setq n (1+ n))
+))
+
+[2011-09-20 Tue 15:57]
+* TODO 开个小会..
+  1. gemstone 如何上生产.
+  2. cmos 上线.
+  CLOCK: [2011-09-20 Tue 16:12]--[2011-09-20 Tue 17:34] =>  1:22
+[2011-09-20 Tue 16:12]
