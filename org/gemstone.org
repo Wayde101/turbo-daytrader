@@ -1,0 +1,44 @@
+* pre gemstone project 
+  :PROPERTIES:
+  :CATEGORY: GEMSTONE
+  :END:   
+
+** 确定机器的部署范围. (仅仅motd)
+*** amdin 规划
+**** 确定以及部署 gemserver
+*** gemclient 部署
+**** 确定 gemclient 的部署步骤.
+**** 确定普通机器上需要安装的 tops 包，来评估系统影响.
+*** 系统整体规划.
+
+** DONE 收集所有的gemstone 覆盖到的软件包集体升级到 TOPS tag
+  CLOCK: [2011-09-20 Tue 14:53]--[2011-09-20 Tue 15:25] =>  0:32
+  CLOCK: [2011-09-20 Tue 14:49]--[2011-09-20 Tue 14:50] =>  0:01
+  CLOCK: [2011-09-20 Tue 14:33]--[2011-09-20 Tue 14:45] =>  0:12
+  CLOCK: [2011-09-20 Tue 14:15]--[2011-09-20 Tue 14:21] =>  0:06
+  1. 收集软件列表。 （日后评估安装的影响）
+tops-seco-core install           # tops
+tops-seco-gemstone install       # tops
+tops-seco-awesomerange install   # tops
+tops-python27 install		 # tops 
+tops-perl58 install		 # tops
+libcrange install		 # tops
+librange install		 # tops
+daemontools install		 # tops
+ucspi-tcp install		 # tops
+tops-seco-utils install		 # tops 
+supervisersync install		 # tops
+sync-gemserver install		 # tops
+p4-server install		 # tops
+p4-client install		 # tops
+  2. recompile.			done
+  3. re-install tops-gemclient.
+  CLOCK: [2011-09-20 Tue 14:00]--[2011-09-20 Tue 14:02] =>  0:02
+  :PROPERTIES:
+  :ORDERED:  t
+  :END:
+[2011-09-20 Tue 14:00]
+[[file:~/org/todolist.org::*tops-seco-core][tops-seco-core]]
+** TODO @SQA 的机器的KEY 的问题确认
+和baifei 确认后继续安装 gemstone.
+

@@ -240,10 +240,19 @@ to display in menu and the header of buffer instead of the page-name."
 	 (mt (plist-get (assoc tf time-frame-vars) :mtime))
 	 (out (plist-get (assoc fxs-tfm tplan-vars) key)))
 
-    (message "time frame:[%s] modify time:[%s]" tf mt) 
+    ;; (message "time frame:[%s] modify time:[%s]" tf mt) 
     (if (< (- (float-time) mt) th)
 	out
-      "NA")))
+      (progn (tpvar-update (concat "usdx-" tf) :sum "")
+	(dolist (fxs forex-symbol)
+	       (if (or (string= key ":obj") (string= key ":sub") (string= key ":gfx"))
+		   (progn (tpvar-update (concat fxs "-" tf) :obj "NA")
+			  (tpvar-update (concat fxs "-" tf) :sub "NA")
+			  (tpvar-update (concat fxs "-" tf) :tsel "NA")
+			  (tpvar-update (concat fxs "-" tf) :gfx "NA"))))
+	     "NA")
+      )))
+
 
 (defun tpvar-get-float (fxs-tfm key)
   "主观方向与客观方向的更新 args: "
@@ -380,8 +389,8 @@ to display in menu and the header of buffer instead of the page-name."
 ;;}}}
 (defun tp-reset ()
   (interactive)
-  (unload-feature 'tradeplan) 
-  (load-file "~/org/newtp.el")
+  ;; (unload-feature 'tradeplan) 
+  (load-file "~/.emacs.d/tp/tradeplan.el")
   (kill-buffer "*交易计划模板*")
   (tradeplan)
 )
@@ -403,8 +412,8 @@ to display in menu and the header of buffer instead of the page-name."
       (widget-insert "\n")
       (setq idx (1+ idx)))))
 
-(defun tp-usdx-os-matrix-print(cur-sym)
-  (widget-insert "   ------------------------------------\n tf   | ")
+(defun tp-os-matrix-print(cur-sym)
+  (widget-insert "   ---------------" cur-sym "---------------------\n tf   | ")
   (dolist (tfi time-frame)
     (widget-insert (format "%s | " (plist-get (assoc tfi time-frame-vars) :name))))
   (widget-insert "\n   ------------------------------------\n 客 : ")
@@ -533,7 +542,7 @@ to display in menu and the header of buffer instead of the page-name."
 
 (defun tp-usdx ()
   (widget-insert "*美元指数分析\n")
-  (tp-usdx-os-matrix-print "usdx")
+  (tp-os-matrix-print "usdx")
   (widget-insert "*结论\n\n")
   (tp-usdx-summary-editor)
   (widget-insert "\n\n*货币分化表\n")
@@ -564,11 +573,17 @@ to display in menu and the header of buffer instead of the page-name."
   "市场规范性选择"
   (dolist (tfi '("4hr" "1hr" "15m"))
     (widget-insert " \n  ------------------------------------\n" tfi ":规范性:\n")
-    (dolist-if (fxs forex-symbol)
-	       (not (string= fxs "usdx") (string= fxs "eur"))
-	       (progn
-		 
-		 (widget-insert " "))))
+    (dolist (gfx '(("zc" . "已经有中继或者次的迹象") 
+		   ("cc" . "已经有不规范的次的迹象") 
+		   ;; ("nc" . "暂时还没有中继或者次的迹象") 
+		   ;; ("fc" . "短时间内不太可能形成次") 
+		   ("NA" . "未更新规范性")))
+      (widget-insert (cdr gfx) ":")
+      (dolist (fxs forex-symbol)
+	(if (string= (tpvar-get (concat fxs "-" tfi) :gfx) (car gfx))
+	    (widget-insert "[" fxs "]")
+	    ))
+	(widget-insert "\n")))
   (widget-insert " \n  ------------------------------------\n"))
 
 (defun tp-fselect()
@@ -578,5 +593,29 @@ to display in menu and the header of buffer instead of the page-name."
   (tp-fselect-gf)
   )
 
-(provide 'tradeplan)
+(defun tp-tselected()
+  (widget-insert "* 请选择要交易的货币\n\n")
+  (dolist-if (fxs forex-symbol)
+	     (not (string= fxs "usdx"))
+	     (progn
+	       (tp-create-anchor (concat fxs "-tsel" ))
+	       (widget-create 'link
+			      :notify `(lambda (widget &rest ignore)
+					 (let ((choosed (widget-choose ,(concat fxs "-tsel") '(("4小时" . "4hr") ("1小时" . "1hr") ("15分钟" . "15m")))))
+					    (if (string= (tpvar-get (concat ,fxs "-" choosed) :tsel) "select")
+						(tpvar-update (concat ,fxs "-" choosed) :tsel "NA")
+					      (tpvar-update (concat ,fxs "-" choosed) :tsel "select"))
+					   (tp-goto ,(concat tp-current "#" fxs "-tsel"))))
+			      (format "%s" fxs ))
+	       (widget-insert " ")))
+  (dolist (tfi '("4hr" "1hr" "15m"))
+    (dolist-if (fxs forex-symbol)
+	       (string= (tpvar-get (concat fxs "-" tfi) :tsel) "select")
+	       (progn
+		 (widget-insert "\n\n* 选择货币级别 " fxs "-" tfi "\n")
+		 (tp-os-matrix-print fxs)
+		)
+	       ))
+   )
 
+(provide 'tradeplan)

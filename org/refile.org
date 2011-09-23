@@ -44,57 +44,46 @@ appropriate category.
 
 [2011-09-20 Tue 01:47]
 [[file:~/org/todolist.org::*org-mode%20refile][org-mode refile]]
-* TODO 整理一个 forextrade.org 将日常的交易方面的东西放在这个文件里
-大体的org struct.
-
-1. 日常交易计划 [每日都要做的]  需要可以计算每次功课所花费的时间，并且是和tradeplan.el结合
-2. 有交易记录表，可以对日常的交易做一些行为分析。
-3. 交易心得和总结 。
-  CLOCK: [2011-09-20 Tue 09:14]--[2011-09-20 Tue 09:18] =>  0:04
-[2011-09-20 Tue 09:14]
-[[file:~/org/todolist.org::*PackWork][PackWork]]
-* NEXT 需要在emacs 里面配置一个w3m.
+* SOMEDAY 需要在emacs 里面配置一个w3m.				    :WAITING:
+  - State "SOMEDAY"    from "STARTED"    [2011-09-21 Wed 14:03]
 [2011-09-20 Tue 09:20]
 [[file:~/org/todolist.org::*http://doc.norang.ca/org-mode.html][http://doc.norang.ca/org-mode.html]]
-* TODO 需要搞清楚什么是project. 通常的使用情景是什么
-  CLOCK: [2011-09-20 Tue 09:20]--[2011-09-20 Tue 09:21] =>  0:01
-[2011-09-20 Tue 09:20]
-[[file:~/org/todolist.org::*http://doc.norang.ca/org-mode.html][http://doc.norang.ca/org-mode.html]]
-* NEXT 如何实现每个 todo / notes的计时？
-[2011-09-20 Tue 09:21]
-[[file:~/org/todolist.org::*Notes][Notes]]
-* TODO checkout 一份本地的 metapkgs... 确保大部分工作可以在本机上调试修改.减少网络依赖 :Project:Writing:
+* DONE checkout 一份本地的 metapkgs... 确保大部分工作可以在本机上调试修改.减少网络依赖 :Project:Writing:
+  CLOCK: [2011-09-21 Wed 10:36]--[2011-09-21 Wed 10:44] =>  0:08
   CLOCK: [2011-09-20 Tue 09:22]--[2011-09-20 Tue 09:23] =>  0:01
   :PROPERTIES:
-  :Effort:   sdf
+  :Effort:  whateffort?
   :END:
+  1. 是否可以直接从newbie 上rsync 下来当clone?
 [2011-09-20 Tue 09:22]
 [[file:~/org/todolist.org::*Notes][Notes]]
-* TODO 简历一个运维方面的 org 文件. taobaowork.org. 里面建立 n 个project
-  SCHEDULED: <2011-09-20 Tue>
+* DONE 简历一个运维方面的 org 文件. taobaowork.org. 里面建立 n 个project
+  SCHEDULED: <2011-09-22 Thu>
+  CLOCK: [2011-09-22 Thu 08:35]--[2011-09-22 Thu 08:42] =>  0:07
 1. gemstone
 2. packages
 3. OpsDocs
   CLOCK: [2011-09-20 Tue 09:23]--[2011-09-20 Tue 09:25] =>  0:02
 [2011-09-20 Tue 09:23]
 [[file:~/org/todolist.org::*Gemstone%20nodes][Gemstone nodes]]
-* TODO 搞清除为啥 Tasks to Refile 这里是空的?
-  每次refile.org 里面的东西为啥不能出现在 custom agenda里面。
-  CLOCK: [2011-09-20 Tue 09:35]--[2011-09-20 Tue 09:36] =>  0:01
-[2011-09-20 Tue 09:35]
-* TODO 配置一个gnu mail
+
+* TODO 配置一个gnus mail
+  CLOCK: [2011-09-21 Wed 16:04]--[2011-09-21 Wed 16:48] =>  0:44
+  CLOCK: [2011-09-21 Wed 14:49]--[2011-09-21 Wed 16:04] =>  1:15
   CLOCK: [2011-09-20 Tue 09:59]--[2011-09-20 Tue 10:00] =>  0:01
   CLOCK: [2011-09-20 Tue 09:57]--[2011-09-20 Tue 09:58] =>  0:01
   连同mta (qmail or postfix) 配置实现本地的邮件配置. 
   可以让自己通过 gnus 阅读邮件，在17forex 可以收发邮件。
+  目前考虑的方法在 17forex 上面配置一个 fetchmail + gnus
   CLOCK: [2011-09-20 Tue 09:49]--[2011-09-20 Tue 09:52] =>  0:03
   :PROPERTIES:
   :ORDERED:  t
   :END:
 [2011-09-20 Tue 09:49]
 
-* TODO opsfree 和 gemstone 链接.
-  人来编辑模板，实现机器和人可以coedit HOSTS/nodes.cf GROUPS/nodes.cf
+* TODO opsfree 和 gemstone 信息交互。
+  1. 通过mako 把opsfree 里面的数据 + HOSTS/nodes.cf GROUPS/nodes.cf
+  2. 人来编辑模板，实现机器和人可以coedit HOSTS/nodes.cf GROUPS/nodes.cf
   CLOCK: [2011-09-20 Tue 09:52]--[2011-09-20 Tue 09:57] =>  0:05
 [2011-09-20 Tue 09:52]
 [[file:~/org/todolist.org::*@SQA%20%E7%9A%84%E6%9C%BA%E5%99%A8%E9%9C%80%E8%A6%81%E9%83%A8%E5%B1%9E%E4%B8%8A%E6%89%80%E6%9C%89%E7%9A%84gemclient][@SQA 的机器需要部属上所有的gemclient]]
@@ -104,50 +93,144 @@ appropriate category.
 * TODO schedule todo list to somedays.
   CLOCK: [2011-09-20 Tue 10:21]--[2011-09-20 Tue 10:22] =>  0:01
 [2011-09-20 Tue 10:21]
-* NEXT 收集所有的gemstone cover到的软件包集体升级到 TOPS tag
-  CLOCK: [2011-09-20 Tue 14:53]--[2011-09-20 Tue 15:25] =>  0:32
-  CLOCK: [2011-09-20 Tue 14:49]--[2011-09-20 Tue 14:50] =>  0:01
-  CLOCK: [2011-09-20 Tue 14:33]--[2011-09-20 Tue 14:45] =>  0:12
-  CLOCK: [2011-09-20 Tue 14:15]--[2011-09-20 Tue 14:21] =>  0:06
-  1. 收集软件列表。 （日后评估安装的影响）
-tops-seco-core install           # tops
-tops-seco-gemstone install       # tops
-tops-seco-awesomerange install   # tops
-tops-python27 install		 # tops 
-tops-perl58 install		 # tops
-libcrange install		 # tops
-librange install		 # tops
-daemontools install		 # tops
-ucspi-tcp install		 # tops
-tops-seco-utils install		 # tops 
-supervisersync install		 # tops
-sync-gemserver install		 # tops
-p4-server install		 # tops
-p4-client install		 # tops
-  2. recompile.			done
-  3. re-install tops-gemclient.
-  CLOCK: [2011-09-20 Tue 14:00]--[2011-09-20 Tue 14:02] =>  0:02
-  :PROPERTIES:
-  :ORDERED:  t
-  :END:
-[2011-09-20 Tue 14:00]
-[[file:~/org/todolist.org::*tops-seco-core][tops-seco-core]]
 * TODO 需要对每一个目前已经有的安装包进行一次整体review.
   主要看 daemontools + tops-gemclient-run
   
   CLOCK: [2011-09-20 Tue 14:50]--[2011-09-20 Tue 14:53] =>  0:03
 [2011-09-20 Tue 14:50]
 [[file:~/org/refile.org::*%E6%94%B6%E9%9B%86%E6%89%80%E6%9C%89%E7%9A%84gemstone%20cover%E5%88%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85%E9%9B%86%E4%BD%93%E5%8D%87%E7%BA%A7%E5%88%B0%20TOPS%20tag][收集所有的gemstone cover到的软件包集体升级到 TOPS tag]]
-* TODO Review (let ((n 0)
-      (v (make-vector 100 "nn")))
-(while (< n (length v))
-(message "%s" (elt v n))
-(setq n (1+ n))
-))
 
-[2011-09-20 Tue 15:57]
-* TODO 开个小会..
+** DONE 开个小会..
   1. gemstone 如何上生产.
   2. cmos 上线.
   CLOCK: [2011-09-20 Tue 16:12]--[2011-09-20 Tue 17:34] =>  1:22
 [2011-09-20 Tue 16:12]
+* DONE 需要把家里的机器通过自有的 open vpn 链接到公司的网络.
+  CLOCK: [2011-09-22 Thu 17:34]--[2011-09-22 Thu 17:41] =>  0:07
+[2011-09-21 Wed 09:47]
+[[file:~/org/refile.org::*org-mode%E5%AE%9A%E6%9C%9F%E7%9A%84%E4%BB%BB%E5%8A%A1%E5%9C%BA%E6%99%AF%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8Corg.][org-mode定期的任务场景如何进行org.]]
+	1. 已经完成了 jp <-> newbie <-> debian  三台机器互联.
+	   在家  dns 用 8.8.8.8
+	   在公司用 10.13.4.102 目前可以链接 twitter . 
+
+* DONE 如何替换文件中的一行, 去掉文件中的某几行. etc.
+  CLOCK: [2011-09-21 Wed 10:44]--[2011-09-21 Wed 11:04] =>  0:20
+[2011-09-21 Wed 10:44]
+[[file:~/org/refile.org::*checkout%20%E4%B8%80%E4%BB%BD%E6%9C%AC%E5%9C%B0%E7%9A%84%20metapkgs...%20%E7%A1%AE%E4%BF%9D%E5%A4%A7%E9%83%A8%E5%88%86%E5%B7%A5%E4%BD%9C%E5%8F%AF%E4%BB%A5%E5%9C%A8%E6%9C%AC%E6%9C%BA%E4%B8%8A%E8%B0%83%E8%AF%95%E4%BF%AE%E6%94%B9.%E5%87%8F%E5%B0%91%E7%BD%91%E7%BB%9C%E4%BE%9D%E8%B5%96][checkout 一份本地的 metapkgs... 确保大部分工作可以在本机上调试修改.减少网络依赖]]
+
+  1. sed : sed -i -e 'patten' filename
+  2. patten: '1,2d' 删除1到2行
+  3. 在某一行后追加 sed -i -e 's/patten/a\appendstring' filename  
+     在文件匹配到 patten 的部分后面追加 appendstring.
+* DONE huijun  meeting 确定做gemstone 部署的wbs分解
+  CLOCK: [2011-09-21 Wed 12:03]--[2011-09-21 Wed 13:00] =>  0:57
+[2011-09-21 Wed 12:03]
+[[file:~/org/taobaoworks.org::*]]
+
+  1. opsfree 
+  2. rt/k2
+  3. broom
+  4. oob
+  5. account
+  6. dns
+  7. yum
+  8. gemstone
+ 
+* SA main road map 						       :NOTE:
+   CLOCK: [2011-09-21 Wed 14:26]--[2011-09-21 Wed 14:48] =>  0:22
+[2011-09-21 Wed 14:26]
+
+** 预期分布
+
+** 系统的组成不分.
+*** opsfree 
+*** rt/k2
+*** broom
+*** oob
+*** account
+*** dns
+*** yum
+*** gemstone/cmos
+
+** 系统管理项目实施模板
+
+*** 确定机器范围(TAGS)
+
+*** 确定关联软件，以及工具.
+**** 功能描述
+     
+*** 确定关联软件的配置管理方法.
+**** 配置形式(net/localfile/none)
+    
+*** 部署方法描述.
+    
+*** 是否有相关的监控和自修复需求.
+
+* TODO 自己搭建一个dns 未来只使用自己的dns 服务器.
+  CLOCK: [2011-09-21 Wed 16:48]--[2011-09-21 Wed 16:53] =>  0:05
+[2011-09-21 Wed 16:48]
+[[file:~/org/refile.org::*%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AAgnus%20mail][配置一个gnus mail]]
+
+问题来源.
+	1. host www.zhouchang.com
+	2. 为自己常用的域名做解析.
+	3. 需要搞清除如何搭建一个自己的dns. band9?
+* TODO 升级 www.17forex.com 的系统软件。
+[2011-09-21 Wed 16:54]
+[[file:~/org/refile.org::*%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AAgnus%20mail][配置一个gnus mail]]
+* TODO 搭建一个家庭使用的openvpn
+[2011-09-21 Wed 17:18]
+[[file:~/org/refile.org::*%E5%8D%87%E7%BA%A7%20www.17forex.com%20%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E3%80%82][升级 www.17forex.com 的系统软件。]]
+* 送餐地址								       :NOTE:
+[2011-09-22 Thu 12:54]
+[[file:~/.emacs.d/tp/tradeplan.el]]
+东三环北路 38 号院 1号楼 15层.
+* openvpn 							       :NOTE:
+   CLOCK: [2011-09-22 Thu 13:19]--[2011-09-22 Thu 16:17] =>  2:58
+[2011-09-22 Thu 13:19]
+[[file:~/.emacs.d/tp/tradeplan.el::(tpvar-update%20,(concat%20"usdx-"%20tfi)%20:dsum%20(widget-value%20widget%20))))][file:~/.emacs.d/tp/tradeplan.el::(tpvar-update ,(concat "usdx-" tfi) :dsum (widget-value widget ))))]]
+
+
+** 生成 key 
+
+openvpn dep on:
+CA 证书
+
+固定机器，固定目录
+newbie  /root
+
+rpm -qa openvpn
+cp -a /usr/share/openvpn/easy-rsa/2.0 tops-rsa
+source ./tops-rsa/vars  #  fix last some lines
+
+cd tops-rsa/keys  # 信任方面的key
+cd ..
+./build-ca tops.linuxnotes.net
+crt 公钥
+key 私钥(揭密用)
+Common Name 很重要.
+./build-dh
+
+build-key-server
+
+openvpn --mktun --dev <devname>
+tun 3 layer net
+tap 2 layer net
+
+debian: /etc/service/openlink /server.conf
+
+vpn port 1194
+
+/etc/rt_table
+ip ro table tops-access add
+
+ip rule add dev tap-tl-yuting table tops-access
+ip rule
+
+net.ipv4.ip_forward=1
+iptables -t nat -
+
+./build-key tingbox.corp.linuxnote.net
+* TODO 给openvpn 搭建daemontools
+[2011-09-22 Thu 17:43]
+[[file:~/org/elist_tut.org::*%E5%B1%80%E9%83%A8%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%8F%98%E9%87%8F%20(let%20&%20let*)][局部作用域的变量 (let & let*)]]
