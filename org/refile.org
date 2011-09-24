@@ -234,3 +234,12 @@ iptables -t nat -
 * TODO 给openvpn 搭建daemontools
 [2011-09-22 Thu 17:43]
 [[file:~/org/elist_tut.org::*%E5%B1%80%E9%83%A8%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%8F%98%E9%87%8F%20(let%20&%20let*)][局部作用域的变量 (let & let*)]]
+* use openssl to encrypt file 					       :NOTE:
+   CLOCK: [2011-09-24 Sat 23:26]--[2011-09-24 Sat 23:50] =>  0:24
+[2011-09-24 Sat 23:26]
+
+openssl enc -des -e -a -in <filename> -out <filename.des>
+openssl enc -des -d -a -in <filename.des> -out <filename>
+* TODO move openvpn and hgpush to turbo-dt .
+  CLOCK: [2011-09-24 Sat 23:50]--[2011-09-25 Sun 00:35] =>  0:45
+[2011-09-24 Sat 23:50]

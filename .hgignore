@@ -5,3 +5,10 @@ syntax: glob
 .git*
 *~
 .save*
+\#*
+.\#*
+log/main
+supervise
+ca.crt
+tingbox.corp.linuxnote.net.*
+
