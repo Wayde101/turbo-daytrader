@@ -8,7 +8,7 @@ pingcmd="ping -W 5 -c 1 turbo-daytrader.googlecode.com"
 
 while [ true ];do
     cd $srcpath
-    $pingcmd  &&  $hg addre && $hg ci -m "autocomit" && $hg push
+    $pingcmd  && $hg pull && $hg update &&  $hg addre && $hg ci -m "autocomit" && $hg push
     echo "commit or push done"
     sleep 60
 done
