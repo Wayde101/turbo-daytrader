@@ -1,0 +1,15 @@
+#!/bin/sh
+source /home/yuting/.python2/bin/activate
+exec 2>&1
+
+hg=/home/yuting/.python2/bin/hg
+srcpath=/home/yuting/src/turbo-daytrader
+pingcmd="ping -W 5 -c 1 turbo-daytrader.googlecode.com"
+
+while [ true ];do
+    cd $srcpath
+    $pingcmd  &&  $hg addre && $hg ci -m "autocomit" && $hg push
+    echo "commit or push done"
+    sleep 60
+done
+
