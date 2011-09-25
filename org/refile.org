@@ -192,6 +192,7 @@ appropriate category.
 
 
 ** 生成 key 
+   CLOCK: [2011-09-25 Sun 10:31]
 
 openvpn dep on:
 CA 证书
@@ -230,7 +231,14 @@ ip rule
 net.ipv4.ip_forward=1
 iptables -t nat -
 
-./build-key tingbox.corp.linuxnote.net
+给用户添加key
+
+./build-key <username>.corp.linuxnote.net 
+# 生成 3个文件
+将build 好的key 中的 <username>.corp.linuxnote.net.{crt,key} 和 ca.crt copy 到给用户,最好用邮件发送.
+
+同时把 key 上传到 debian 服务器中.
+
 * TODO 给openvpn 搭建daemontools
 [2011-09-22 Thu 17:43]
 [[file:~/org/elist_tut.org::*%E5%B1%80%E9%83%A8%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%8F%98%E9%87%8F%20(let%20&%20let*)][局部作用域的变量 (let & let*)]]
