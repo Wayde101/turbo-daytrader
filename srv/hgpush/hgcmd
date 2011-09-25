@@ -10,6 +10,6 @@ while [ true ];do
     cd $srcpath
     $pingcmd  && $hg pull && $hg update &&  $hg addre && $hg ci -m "autocomit" && $hg push
     echo "commit or push done"
-    sleep 60
+    sleep 300
 done
 
