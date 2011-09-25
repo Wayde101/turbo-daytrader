@@ -2,6 +2,5 @@
 
 /sbin/modprobe vboxdrv
 
-cd /home/yuting
-exec setuidgid yuting /usr/bin/VBoxManage startvm winxp --type headless
+sudo -u yuting sh -c "/usr/bin/VBoxManage startvm winxp --type headless"
 
