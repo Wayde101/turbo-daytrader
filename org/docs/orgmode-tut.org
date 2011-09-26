@@ -376,7 +376,7 @@ The only exception to this is this document :) since I don't want
 I've set up a dummy =#+SEQ_TODO: FIXME FIXED= entry at the top of this
 file just to leave my =TODO= keyword untouched in this document.
 
-** TODO keywords
+** TODO 关键词
 
 I use a light colour theme in emacs.  I find this easier to read on bright sunny days.
 
