@@ -1,5 +1,5 @@
 #!/bin/sh
 
+sleep 3
 exec 2>&1
 exec setuidgid yuting ./hgcmd
-sleep 3
