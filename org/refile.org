@@ -48,25 +48,6 @@ appropriate category.
   - State "SOMEDAY"    from "STARTED"    [2011-09-21 Wed 14:03]
 [2011-09-20 Tue 09:20]
 [[file:~/org/todolist.org::*http://doc.norang.ca/org-mode.html][http://doc.norang.ca/org-mode.html]]
-* DONE checkout 一份本地的 metapkgs... 确保大部分工作可以在本机上调试修改.减少网络依赖 :Project:Writing:
-  CLOCK: [2011-09-21 Wed 10:36]--[2011-09-21 Wed 10:44] =>  0:08
-  CLOCK: [2011-09-20 Tue 09:22]--[2011-09-20 Tue 09:23] =>  0:01
-  :PROPERTIES:
-  :Effort:  whateffort?
-  :END:
-  1. 是否可以直接从newbie 上rsync 下来当clone?
-[2011-09-20 Tue 09:22]
-[[file:~/org/todolist.org::*Notes][Notes]]
-* DONE 简历一个运维方面的 org 文件. taobaowork.org. 里面建立 n 个project
-  SCHEDULED: <2011-09-22 Thu>
-  CLOCK: [2011-09-22 Thu 08:35]--[2011-09-22 Thu 08:42] =>  0:07
-1. gemstone
-2. packages
-3. OpsDocs
-  CLOCK: [2011-09-20 Tue 09:23]--[2011-09-20 Tue 09:25] =>  0:02
-[2011-09-20 Tue 09:23]
-[[file:~/org/todolist.org::*Gemstone%20nodes][Gemstone nodes]]
-
 * TODO 配置一个gnus mail
   CLOCK: [2011-09-21 Wed 16:04]--[2011-09-21 Wed 16:48] =>  0:44
   CLOCK: [2011-09-21 Wed 14:49]--[2011-09-21 Wed 16:04] =>  1:15
@@ -84,30 +65,9 @@ appropriate category.
   :END:
 [2011-09-20 Tue 09:49]
 
-* TODO opsfree 和 gemstone 信息交互。
-  1. 通过mako 把opsfree 里面的数据 + HOSTS/nodes.cf GROUPS/nodes.cf
-  2. 人来编辑模板，实现机器和人可以coedit HOSTS/nodes.cf GROUPS/nodes.cf
-  CLOCK: [2011-09-20 Tue 09:52]--[2011-09-20 Tue 09:57] =>  0:05
-[2011-09-20 Tue 09:52]
-[[file:~/org/todolist.org::*@SQA%20%E7%9A%84%E6%9C%BA%E5%99%A8%E9%9C%80%E8%A6%81%E9%83%A8%E5%B1%9E%E4%B8%8A%E6%89%80%E6%9C%89%E7%9A%84gemclient][@SQA 的机器需要部属上所有的gemclient]]
-* TODO org-mode定期的任务场景如何进行org.
-[2011-09-20 Tue 10:12]
-[[file:~/org/refile.org::*opsfree%20%E5%92%8C%20gemstone%20%E9%93%BE%E6%8E%A5.][opsfree 和 gemstone 链接.]]
 * TODO schedule todo list to somedays.
   CLOCK: [2011-09-20 Tue 10:21]--[2011-09-20 Tue 10:22] =>  0:01
 [2011-09-20 Tue 10:21]
-* TODO 需要对每一个目前已经有的安装包进行一次整体review.
-  主要看 daemontools + tops-gemclient-run
-  
-  CLOCK: [2011-09-20 Tue 14:50]--[2011-09-20 Tue 14:53] =>  0:03
-[2011-09-20 Tue 14:50]
-[[file:~/org/refile.org::*%E6%94%B6%E9%9B%86%E6%89%80%E6%9C%89%E7%9A%84gemstone%20cover%E5%88%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85%E9%9B%86%E4%BD%93%E5%8D%87%E7%BA%A7%E5%88%B0%20TOPS%20tag][收集所有的gemstone cover到的软件包集体升级到 TOPS tag]]
-
-** DONE 开个小会..
-  1. gemstone 如何上生产.
-  2. cmos 上线.
-  CLOCK: [2011-09-20 Tue 16:12]--[2011-09-20 Tue 17:34] =>  1:22
-[2011-09-20 Tue 16:12]
 * DONE 需要把家里的机器通过自有的 open vpn 链接到公司的网络.
   CLOCK: [2011-09-22 Thu 17:34]--[2011-09-22 Thu 17:41] =>  0:07
 [2011-09-21 Wed 09:47]
@@ -115,59 +75,6 @@ appropriate category.
 	1. 已经完成了 jp <-> newbie <-> debian  三台机器互联.
 	   在家  dns 用 8.8.8.8
 	   在公司用 10.13.4.102 目前可以链接 twitter . 
-
-* DONE 如何替换文件中的一行, 去掉文件中的某几行. etc.
-  CLOCK: [2011-09-21 Wed 10:44]--[2011-09-21 Wed 11:04] =>  0:20
-[2011-09-21 Wed 10:44]
-[[file:~/org/refile.org::*checkout%20%E4%B8%80%E4%BB%BD%E6%9C%AC%E5%9C%B0%E7%9A%84%20metapkgs...%20%E7%A1%AE%E4%BF%9D%E5%A4%A7%E9%83%A8%E5%88%86%E5%B7%A5%E4%BD%9C%E5%8F%AF%E4%BB%A5%E5%9C%A8%E6%9C%AC%E6%9C%BA%E4%B8%8A%E8%B0%83%E8%AF%95%E4%BF%AE%E6%94%B9.%E5%87%8F%E5%B0%91%E7%BD%91%E7%BB%9C%E4%BE%9D%E8%B5%96][checkout 一份本地的 metapkgs... 确保大部分工作可以在本机上调试修改.减少网络依赖]]
-
-  1. sed : sed -i -e 'patten' filename
-  2. patten: '1,2d' 删除1到2行
-  3. 在某一行后追加 sed -i -e 's/patten/a\appendstring' filename  
-     在文件匹配到 patten 的部分后面追加 appendstring.
-* DONE huijun  meeting 确定做gemstone 部署的wbs分解
-  CLOCK: [2011-09-21 Wed 12:03]--[2011-09-21 Wed 13:00] =>  0:57
-[2011-09-21 Wed 12:03]
-[[file:~/org/taobaoworks.org::*]]
-
-  1. opsfree 
-  2. rt/k2
-  3. broom
-  4. oob
-  5. account
-  6. dns
-  7. yum
-  8. gemstone
- 
-* SA main road map 						       :NOTE:
-   CLOCK: [2011-09-21 Wed 14:26]--[2011-09-21 Wed 14:48] =>  0:22
-[2011-09-21 Wed 14:26]
-
-** 预期分布
-
-** 系统的组成不分.
-*** opsfree 
-*** rt/k2
-*** broom
-*** oob
-*** account
-*** dns
-*** yum
-*** gemstone/cmos
-
-** 系统管理项目实施模板
-
-*** 确定机器范围(TAGS)
-
-*** 确定关联软件，以及工具.
-**** 功能描述
-     
-*** 确定关联软件的配置管理方法.
-**** 配置形式(net/localfile/none)
-    
-*** 部署方法描述.
-    
-*** 是否有相关的监控和自修复需求.
 
 * TODO 自己搭建一个dns 未来只使用自己的dns 服务器.
   CLOCK: [2011-09-21 Wed 16:48]--[2011-09-21 Wed 16:53] =>  0:05
@@ -261,11 +168,12 @@ openssl enc -des -d -a -in <filename.des> -out <filename>
 [[file:~/org/gemstone.org::*%E7%A1%AE%E5%AE%9A%E6%99%AE%E9%80%9A%E6%9C%BA%E5%99%A8%E4%B8%8A%E9%9C%80%E8%A6%81%E5%AE%89%E8%A3%85%E7%9A%84%20tops%20%E5%8C%85%EF%BC%8C%E6%9D%A5%E8%AF%84%E4%BC%B0%E7%B3%BB%E7%BB%9F%E5%BD%B1%E5%93%8D.][确定普通机器上需要安装的 tops 包，来评估系统影响.]]
 
 一个地下 system & network operation center
-  CLOCK: [2011-09-26 Mon 10:38]
+  CLOCK: [2011-09-26 Mon 10:38]--[2011-09-26 Mon 10:40] =>  0:02
   CLOCK: [2011-09-26 Mon 10:37]--[2011-09-26 Mon 10:38] =>  0:01
 [2011-09-26 Mon 10:37]
 [[file:~/org/refile.org::*%E9%9C%80%E8%A6%81%E5%AF%B9%E6%AF%8F%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%89%8D%E5%B7%B2%E7%BB%8F%E6%9C%89%E7%9A%84%E5%AE%89%E8%A3%85%E5%8C%85%E8%BF%9B%E8%A1%8C%E4%B8%80%E6%AC%A1%E6%95%B4%E4%BD%93review.][需要对每一个目前已经有的安装包进行一次整体review.]]
 
 * TODO 每日功课
+  CLOCK: [2011-09-26 Mon 10:40]--[2011-09-26 Mon 11:14] =>  0:34
 [2011-09-26 Mon 10:38]
 [[file:~/org/forex.org::*%E6%95%B4%E7%90%86%E4%B8%80%E4%B8%AA%20forex.org%20%E5%B0%86%E6%97%A5%E5%B8%B8%E7%9A%84%E4%BA%A4%E6%98%93%E6%96%B9%E9%9D%A2%E7%9A%84%E4%B8%9C%E8%A5%BF%E6%94%BE%E5%9C%A8%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E9%87%8C][整理一个 forex.org 将日常的交易方面的东西放在这个文件里]]
