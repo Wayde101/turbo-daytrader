@@ -22,7 +22,8 @@ concepts like the agenda, capture mode, etc.  won't be completely
 foreign to you.  More information about org-mode can be found in the
 [[http://orgmode.org/index.html#sec-4.1][Org-Mode Manual]] and on the [[http://orgmode.org/worg/][Worg Site]].
 
-我开始
+我已经使用 org-mode 作为我个人的信息管理器几年了，从开始默认的 =TODO= 和
+=DONE=  两个关键词, 到现在不断的小调整进化到这篇文档我所描述的样子.
 I have been using org-mode as my personal information manager for
 years now.  I started small with just the default =TODO= and =DONE=
 keywords.  I added small changes to my workflow and over time it
