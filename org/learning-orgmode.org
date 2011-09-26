@@ -1,5 +1,6 @@
 * 学习 orgmode
 ** TODO org-mode定期的任务场景如何进行org.
 [2011-09-20 Tue 10:12]
-[[file:~/org/refile.org::*opsfree%20%E5%92%8C%20gemstone%20%E9%93%BE%E6%8E%A5.][opsfree 和 gemstone 链接.]]
+
 ** 建立一个定期的任务，每天可以定期执行
+** 打开一个
