@@ -1154,17 +1154,15 @@ This helps to keep my agenda clutter-free.
 :CUSTOM_ID: Clocking
 :END:
 
-Okay, I admit it.  I'm a clocking fanatic.
+好吧，我承认，我是一个clocking 迷
 
-I clock everything (well almost everything).  Org-mode makes this
-really easy.  I'd rather clock too much stuff than not enough so I
-find it's easier to get in the habit of clocking everything.
+我 clock 所有的事情 (近乎所有)。 Org-mode 做这事太简单了.  我宁愿多clock
+而不是少，因为我发现这很容易让人 clock 所有的事情.
 
-As an example of what I mean my clock data for April 20, 2009 shows 14
-hours 19 minutes of clocked time (which included 3 hours and 17
-minutes of painting my basement.)  My clocked day started at 6:57AM
-and ended at 23:11PM.  I have only a few holes in my clocked day
-(where I wasn't clocking anything):
+下面这个例子意味着，在 April 20,2009 显示 14小时 19分钟的clock time.(其中 
+包括 3小时 17分钟，刷我的地下室.) 我的 clocked day 开始于早上 6:57分.结束
+于 23:11点. 仅有几个 holes 没有 clockin .这些地方是我没有 clock 任何事的
+== 这个习惯很好， 需要学习. 
 
 | Missing Clock Data |
 |--------------------|
