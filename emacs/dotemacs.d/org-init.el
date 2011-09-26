@@ -435,3 +435,28 @@ as the default task."
     (bh/clock-in-parent-task)))
 
 (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
+
+(require 'org-id)  
+(defun bh/clock-in-task-by-id (id)
+  "Clock in a task by id"
+  (save-restriction
+    (widen)
+    (org-with-point-at (org-id-find id 'marker)
+      (org-clock-in nil))))
+
+(defun bh/clock-in-last-task (arg)
+  "Clock in the interrupted task if there is one
+Skip the default task and get the next one.
+A prefix arg forces clock in of the default task."
+  (interactive "p")
+  (let ((clock-in-to-task
+         (cond
+          ((eq arg 4) org-clock-default-task)
+          ((and (org-clock-is-active)
+                (equal org-clock-default-task (cadr org-clock-history)))
+           (caddr org-clock-history))
+          ((org-clock-is-active) (cadr org-clock-history))
+          ((equal org-clock-default-task (car org-clock-history)) (cadr org-clock-history))
+          (t (car org-clock-history)))))
+    (org-with-point-at clock-in-to-task
+      (org-clock-in nil))))
