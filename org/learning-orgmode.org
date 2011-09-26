@@ -7,5 +7,5 @@
    CLOCK: [2011-09-26 Mon 13:13]--[2011-09-26 Mon 13:14] =>  0:01
    org-open-at-point
    C-c C-o
-   
+** Yasnippet   
 
