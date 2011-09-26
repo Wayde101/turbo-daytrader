@@ -48,117 +48,16 @@ appropriate category.
   - State "SOMEDAY"    from "STARTED"    [2011-09-21 Wed 14:03]
 [2011-09-20 Tue 09:20]
 [[file:~/org/todolist.org::*http://doc.norang.ca/org-mode.html][http://doc.norang.ca/org-mode.html]]
-* TODO 配置一个gnus mail
-  CLOCK: [2011-09-21 Wed 16:04]--[2011-09-21 Wed 16:48] =>  0:44
-  CLOCK: [2011-09-21 Wed 14:49]--[2011-09-21 Wed 16:04] =>  1:15
-  CLOCK: [2011-09-20 Tue 09:59]--[2011-09-20 Tue 10:00] =>  0:01
-  CLOCK: [2011-09-20 Tue 09:57]--[2011-09-20 Tue 09:58] =>  0:01
-  连同mta (qmail or postfix) 配置实现本地的邮件配置. 
-  可以让自己通过 gnus 阅读邮件，在17forex 可以收发邮件。
-  目前考虑的方法在 17forex 上面配置一个 fetchmail + gnus
-  pastebin:
-  
-
-  CLOCK: [2011-09-20 Tue 09:49]--[2011-09-20 Tue 09:52] =>  0:03
-  :PROPERTIES:
-  :ORDERED:  t
-  :END:
-[2011-09-20 Tue 09:49]
-
 * TODO schedule todo list to somedays.
   CLOCK: [2011-09-20 Tue 10:21]--[2011-09-20 Tue 10:22] =>  0:01
 [2011-09-20 Tue 10:21]
-* DONE 需要把家里的机器通过自有的 open vpn 链接到公司的网络.
-  CLOCK: [2011-09-22 Thu 17:34]--[2011-09-22 Thu 17:41] =>  0:07
-[2011-09-21 Wed 09:47]
-[[file:~/org/refile.org::*org-mode%E5%AE%9A%E6%9C%9F%E7%9A%84%E4%BB%BB%E5%8A%A1%E5%9C%BA%E6%99%AF%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8Corg.][org-mode定期的任务场景如何进行org.]]
-	1. 已经完成了 jp <-> newbie <-> debian  三台机器互联.
-	   在家  dns 用 8.8.8.8
-	   在公司用 10.13.4.102 目前可以链接 twitter . 
-
-* TODO 自己搭建一个dns 未来只使用自己的dns 服务器.
-  CLOCK: [2011-09-21 Wed 16:48]--[2011-09-21 Wed 16:53] =>  0:05
-[2011-09-21 Wed 16:48]
-[[file:~/org/refile.org::*%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AAgnus%20mail][配置一个gnus mail]]
-
-问题来源.
-	1. host www.zhouchang.com
-	2. 为自己常用的域名做解析.
-	3. 需要搞清除如何搭建一个自己的dns. band9?
 * TODO 升级 www.17forex.com 的系统软件。
 [2011-09-21 Wed 16:54]
 [[file:~/org/refile.org::*%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AAgnus%20mail][配置一个gnus mail]]
-* TODO 搭建一个家庭使用的openvpn
-[2011-09-21 Wed 17:18]
-[[file:~/org/refile.org::*%E5%8D%87%E7%BA%A7%20www.17forex.com%20%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E3%80%82][升级 www.17forex.com 的系统软件。]]
 * 送餐地址								       :NOTE:
 [2011-09-22 Thu 12:54]
 [[file:~/.emacs.d/tp/tradeplan.el]]
 东三环北路 38 号院 1号楼 15层.
-* openvpn 							       :NOTE:
-   CLOCK: [2011-09-22 Thu 13:19]--[2011-09-22 Thu 16:17] =>  2:58
-[2011-09-22 Thu 13:19]
-[[file:~/.emacs.d/tp/tradeplan.el::(tpvar-update%20,(concat%20"usdx-"%20tfi)%20:dsum%20(widget-value%20widget%20))))][file:~/.emacs.d/tp/tradeplan.el::(tpvar-update ,(concat "usdx-" tfi) :dsum (widget-value widget ))))]]
-
-
-** 生成 key 
-
-openvpn dep on:
-CA 证书
-
-固定机器，固定目录
-newbie  /root
-
-rpm -qa openvpn
-cp -a /usr/share/openvpn/easy-rsa/2.0 tops-rsa
-source ./tops-rsa/vars  #  fix last some lines
-
-cd tops-rsa/keys  # 信任方面的key
-cd ..
-./build-ca tops.linuxnotes.net
-crt 公钥
-key 私钥(揭密用)
-Common Name 很重要.
-./build-dh
-
-build-key-server
-
-openvpn --mktun --dev <devname>
-tun 3 layer net
-tap 2 layer net
-
-debian: /etc/service/openlink /server.conf
-
-vpn port 1194
-
-/etc/rt_table
-ip ro table tops-access add
-
-ip rule add dev tap-tl-yuting table tops-access
-ip rule
-
-net.ipv4.ip_forward=1
-iptables -t nat -
-
-给用户添加key
-ssh newbie && sudo
-cd tops-rsa && source ./vars
-then:
-./build-key <username>.corp.linuxnote.net 
-# 生成 3个文件
-将build 好的key 中的 <username>.corp.linuxnote.net.{crt,key} 和 ca.crt copy 到给用户,最好用邮件发送.
-
-同时把 key 上传到 debian 服务器中.
-
-* TODO 给openvpn 搭建daemontools
-[2011-09-22 Thu 17:43]
-[[file:~/org/elist_tut.org::*%E5%B1%80%E9%83%A8%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%8F%98%E9%87%8F%20(let%20&%20let*)][局部作用域的变量 (let & let*)]]
-* use openssl to encrypt file 					       :NOTE:
-   CLOCK: [2011-09-24 Sat 23:26]--[2011-09-24 Sat 23:50] =>  0:24
-[2011-09-24 Sat 23:26]
-
-openssl enc -des -e -a -in <filename> -out <filename.des>
-openssl enc -des -d -a -in <filename.des> -out <filename>
 * TODO move openvpn and hgpush to turbo-dt .
   CLOCK: [2011-09-24 Sat 23:50]--[2011-09-25 Sun 00:35] =>  0:45
 [2011-09-24 Sat 23:50]
@@ -173,7 +72,3 @@ openssl enc -des -d -a -in <filename.des> -out <filename>
 [2011-09-26 Mon 10:37]
 [[file:~/org/refile.org::*%E9%9C%80%E8%A6%81%E5%AF%B9%E6%AF%8F%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%89%8D%E5%B7%B2%E7%BB%8F%E6%9C%89%E7%9A%84%E5%AE%89%E8%A3%85%E5%8C%85%E8%BF%9B%E8%A1%8C%E4%B8%80%E6%AC%A1%E6%95%B4%E4%BD%93review.][需要对每一个目前已经有的安装包进行一次整体review.]]
 
-* TODO 每日功课
-  CLOCK: [2011-09-26 Mon 10:40]--[2011-09-26 Mon 11:14] =>  0:34
-[2011-09-26 Mon 10:38]
-[[file:~/org/forex.org::*%E6%95%B4%E7%90%86%E4%B8%80%E4%B8%AA%20forex.org%20%E5%B0%86%E6%97%A5%E5%B8%B8%E7%9A%84%E4%BA%A4%E6%98%93%E6%96%B9%E9%9D%A2%E7%9A%84%E4%B8%9C%E8%A5%BF%E6%94%BE%E5%9C%A8%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E9%87%8C][整理一个 forex.org 将日常的交易方面的东西放在这个文件里]]
