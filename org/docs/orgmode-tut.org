@@ -1188,6 +1188,7 @@ notes take a few minutes to write.
 My clocking setup basically works like this:
 
 - Punch in (开始计时)
+  - 这个标志着一个 task, default task 无论什么时候都不
   - This identifies a task that is the default task to clock in
     whenever the clock normally stops
 - Clock in tasks normally, and let moving to a DONE state clock out
@@ -1195,6 +1196,7 @@ My clocking setup basically works like this:
 - Continue clocking whatever tasks you work on
 - Punch out (stop the clock)
 
+我自由修改
 I'm free to change the default task multiple times during the day.
 If I punch-in with a prefix on a task in =Project X= then that task
 automatically becomes the default task and all clocked time goes on
