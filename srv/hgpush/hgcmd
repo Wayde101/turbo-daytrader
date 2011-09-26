@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 source /home/yuting/.python2/bin/activate
 exec 2>&1
 
