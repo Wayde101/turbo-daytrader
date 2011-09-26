@@ -2992,9 +2992,8 @@ without a prompt.
 :CUSTOM_ID: Reminders
 :END:
 
-I use appt for reminders.  It's simple and unobtrusive -- putting
-pending appointments in the status bar and beeping as 12, 9, 6, 3,
-and 0 minutes before the appointment is due.
+我使用  appt 作为提醒. 它简单，低调 -- 把 pending 的约会防盗 status bar
+中并且在到点的 12, 9, 6 ,3 和 0 分钟 之前 beeping 
 
 Everytime the agenda is displayed (and that's lots for me) the
 appointment list is erased and rebuilt from the current agenda
