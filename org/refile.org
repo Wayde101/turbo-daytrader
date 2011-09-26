@@ -78,8 +78,17 @@ appropriate category.
   :END:
 [2011-09-26 Mon 17:36]
 [[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
-* TODO 翻译 time clocking , 学习作者为什么会沉迷于clocking.
+* STARTED 翻译 time clocking , 学习作者为什么会沉迷于clocking.
   :LOGBOOK:
+  CLOCK: [2011-09-26 Mon 17:55]
+  CLOCK: [2011-09-26 Mon 17:39]--[2011-09-26 Mon 17:54] =>  0:15
   :END:
 [2011-09-26 Mon 17:38]
 [[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
+* TODO  王惠军 汇钱
+  :LOGBOOK:
+  CLOCK: [2011-09-26 Mon 17:54]--[2011-09-26 Mon 17:55] =>  0:01
+  :END:
+[2011-09-26 Mon 17:54]
+[[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
+6226 0901 0598 4856

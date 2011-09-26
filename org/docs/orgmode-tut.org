@@ -1174,7 +1174,7 @@ This helps to keep my agenda clutter-free.
 如果没有如果没有 clocking data ，这将会很难控制.
 
 我现在使用 punching in 和 punching out 来开始和结束我的一天. 它定义了一个默认
-的任务给clock time.
+的任务给clock time. 
 I now use the concept of punching in and punching out at the start and
 end of my work day.  This defines a default task to clock time on
 whenever the clock would normally stop.  I found that with the default
@@ -1184,9 +1184,10 @@ if you write notes when moving to a DONE state - in this case the
 clock normally stops before you have composed the note -- and good
 notes take a few minutes to write.
 
+我的 clocking 设置基本上象下面这样 :
 My clocking setup basically works like this:
 
-- Punch in (start the clock)
+- Punch in (开始计时)
   - This identifies a task that is the default task to clock in
     whenever the clock normally stops
 - Clock in tasks normally, and let moving to a DONE state clock out
