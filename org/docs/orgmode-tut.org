@@ -1170,11 +1170,11 @@ This helps to keep my agenda clutter-free.
 |        16:55-17:19 |
 |        18:00-18:52 |
 
-This makes it possible to look back at the day and see where I'm
-spending too much time, or not enough time on specific projects.
+这让你回头看看自己那些事情花了太多时间，那些项目上花费的时间不够，成为可能 。
+如果没有如果没有 clocking data ，这将会很难控制.
 
-Without clocking data it's hard to tell what you did after the fact.
-
+我现在使用 punching in 和 punching out 来开始和结束我的一天. 它定义了一个默认
+的任务给clock time.
 I now use the concept of punching in and punching out at the start and
 end of my work day.  This defines a default task to clock time on
 whenever the clock would normally stop.  I found that with the default
