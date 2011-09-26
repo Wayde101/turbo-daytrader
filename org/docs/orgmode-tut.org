@@ -2992,16 +2992,14 @@ without a prompt.
 :CUSTOM_ID: Reminders
 :END:
 
-我使用  appt 作为提醒. 它简单，低调 -- 把 pending 的约会防盗 status bar
+我使用  appt 作为提醒. 它简单，低调 -- 把 pending 的约会放到 status bar
 中并且在到点的 12, 9, 6 ,3 和 0 分钟 之前 beeping 
 
-Everytime the agenda is displayed (and that's lots for me) the
-appointment list is erased and rebuilt from the current agenda
-details for today.  This means everytime I reschedule something, add
-or remove tasks that are time related the appointment list is
-automatically updated the next time I look at the agenda.
+每次日程上显示 (并且有很多对我来说) 约会列表会擦掉并且从当前的今天的 agenda 
+细节中rebuild 一份. 这意味着每次我从新计划某事，加入或者删除任务，这些任务相关
+的约会列表会自动的更新在我下次看 agenda的时候.
 
-** Reminder Setup
+** Reminder 设置
 
 #+begin_src emacs-lisp :tangle yes
   ; Erase all reminders and rebuilt reminders for today from the agenda
