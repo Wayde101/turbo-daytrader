@@ -20,3 +20,16 @@ C-M r  开启一个refile. 存储在 refile.org 中, 编辑完毕后用 c-c c-c 
 
 ** org-mode 
 C-c C-t key  给一个任务节点打tag
+** STARTED 翻译 time clocking , 学习作者为什么会沉迷于clocking.
+  :LOGBOOK:
+  CLOCK: [2011-09-27 Tue 10:26]--[2011-09-27 Tue 10:53] =>  0:27
+  CLOCK: [2011-09-26 Mon 17:55]--[2011-09-27 Tue 10:16] => 16:21
+  CLOCK: [2011-09-26 Mon 17:39]--[2011-09-26 Mon 17:54] =>  0:15
+  :END:
+[2011-09-26 Mon 17:38]
+[[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
+** 如何展现每天的时间报表					       :NOTE:
+   :LOGBOOK:
+   :END:
+[2011-09-27 Tue 11:51]
+[[file:~/org/docs/orgmode-tut.org::*Drop%20old%20style%20references%20in%20tables][Drop old style references in tables]]
