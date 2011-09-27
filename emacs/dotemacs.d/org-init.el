@@ -478,3 +478,22 @@ A prefix arg forces clock in of the default task."
 
   ; If we leave Emacs running overnight - reset the appointments one minute after midnight
   (run-at-time "24:01" nil 'bh/org-agenda-to-appt)
+
+  (setq org-use-speed-commands t)
+  (setq org-speed-commands-user (quote (("1" . delete-other-windows)
+                                        ("2" . split-window-vertically)
+                                        ("3" . split-window-horizontally)
+                                        ("h" . hide-other)
+                                        ("k" . org-kill-note-or-show-branches)
+                                        ("q" . bh/show-org-agenda)
+                                        ("r" . org-reveal)
+                                        ("s" . org-save-all-org-buffers)
+                                        ("z" . org-add-note)
+                                        ("c" . self-insert-command)
+                                        ("C" . self-insert-command)
+                                        ("J" . org-clock-goto))))
+
+  (defun bh/show-org-agenda ()
+    (interactive)
+    (switch-to-buffer "*Org Agenda*")
+    (delete-other-windows))
