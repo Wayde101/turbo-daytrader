@@ -80,7 +80,7 @@ appropriate category.
 [[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
 * STARTED 翻译 time clocking , 学习作者为什么会沉迷于clocking.
   :LOGBOOK:
-  CLOCK: [2011-09-26 Mon 17:55]
+  CLOCK: [2011-09-26 Mon 17:55]--[2011-09-27 Tue 10:16] => 16:21
   CLOCK: [2011-09-26 Mon 17:39]--[2011-09-26 Mon 17:54] =>  0:15
   :END:
 [2011-09-26 Mon 17:38]
@@ -92,3 +92,8 @@ appropriate category.
 [2011-09-26 Mon 17:54]
 [[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
 6226 0901 0598 4856
+* 抽烟去							       :NOTE:
+   :LOGBOOK:
+   :END:
+[2011-09-27 Tue 10:17]
+[[file:~/org/docs/orgmode-tut.org::*Key%20bindings][Key bindings]]
