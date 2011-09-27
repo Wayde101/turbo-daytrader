@@ -1,49 +1,3 @@
-* Refiling Tasks 						       :NOTE:
-  CLOCK: [2011-09-20 Tue 14:12]--[2011-09-20 Tue 14:14] =>  0:02
-  :PROPERTIES:
-  :ORDERED:  t
-  :END:
-4.2 Refiling Tasks
-
-Tasks to refile are in their own section of the block agenda. To find tasks 
-to refile I run my agenda view with F12 SPC and scroll down to second section 
-of the block agenda: Tasks to Refile. This view shows all tasks (even ones marked 
-in a done state). Alternatively I just use F12 r on my slower Eee PC.
-
-Bulk refiling in the agenda works very well for multiple tasks going to the same 
-place. Just mark the tasks with m and then B r to refile all of them to a new location. 
-Occasionally I'll also refile tasks as subtasks of the current clocking task 
-using C-2 C-c C-w from the refile.org file.
-
-Refiling all of my tasks tends to take less than a minute so I may do this a 
-couple of times a day.
-
-4.3 Refiling Notes
-
-I keep a * Notes headline in most of my org-mode files. Notes have a NOTE tag 
-which is created by the capture template for notes. This allows finding notes 
-across multiple files easily using the agenda search functions.
-
-Notes created by capture tasks go first to refile.org and are later refiled to 
-the appropriate project file. Some notes that are project related get filed to 
-the appropriate project instead of under the catchall * NOTES task. Generally 
-these types of notes are specific to the project and not generally useful – so 
-removing them from the notes list when the project is archived makes sense.
-
-4.4 Refiling Phone Calls
-
-Phone calls are handled using capture mode and a few custom functions that look 
-up addressbook information in bbdb. I time my calls using the capture mode 
-template settings to clock in and out the capture task while the phone call is 
-in progress.
-
-Phone call tasks collect in refile.org and are later refiled to the appropriate 
-location. Some phone calls are billable and we want these tracked in the 
-appropriate category.
-
-
-[2011-09-20 Tue 01:47]
-[[file:~/org/todolist.org::*org-mode%20refile][org-mode refile]]
 * SOMEDAY 需要在emacs 里面配置一个w3m.				    :WAITING:
   - State "SOMEDAY"    from "STARTED"    [2011-09-21 Wed 14:03]
 [2011-09-20 Tue 09:20]
@@ -93,16 +47,23 @@ appropriate category.
 [2011-09-26 Mon 17:54]
 [[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
 6226 0901 0598 4856
-* STARTED smoking 						       :NOTE:
+* DONE smoking							       :NOTE:
    :LOGBOOK:
-   CLOCK: [2011-09-27 Tue 11:01]
+   CLOCK: [2011-09-27 Tue 11:24]--[2011-09-27 Tue 11:31] =>  0:07
+   CLOCK: [2011-09-27 Tue 11:01]--[2011-09-27 Tue 11:08] =>  0:07
    CLOCK: [2011-09-27 Tue 10:17]--[2011-09-27 Tue 10:26] =>  0:09
    :END:
+  :PROPERTIES:
+  :ORDERED:  t
+  :END:
 [[file:~/org/docs/orgmode-tut.org::*Key%20bindings][Key bindings]]
 * DONE emacs 'bbdb 'bbdb-com 是否可以作为存储交易计划的emacs数据库来使用？ :NOTE:
    :LOGBOOK:
    CLOCK: [2011-09-27 Tue 10:53]--[2011-09-27 Tue 10:57] =>  0:04
    :END:
+  :PROPERTIES:
+  :ORDERED:  t
+  :END:
 [2011-09-27 Tue 10:53]
 [[file:~/org/docs/orgmode-tut.org::*Handling%20Phone%20Calls][Handling Phone Calls]]
 The Insidious Big Brother Database (BBDB) is a contact management utility
