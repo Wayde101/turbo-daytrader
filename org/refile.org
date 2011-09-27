@@ -93,8 +93,9 @@ appropriate category.
 [2011-09-26 Mon 17:54]
 [[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
 6226 0901 0598 4856
-* DONE 抽烟去							       :NOTE:
+* STARTED smoking 						       :NOTE:
    :LOGBOOK:
+   CLOCK: [2011-09-27 Tue 11:01]
    CLOCK: [2011-09-27 Tue 10:17]--[2011-09-27 Tue 10:26] =>  0:09
    :END:
 [[file:~/org/docs/orgmode-tut.org::*Key%20bindings][Key bindings]]
