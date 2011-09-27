@@ -11,6 +11,6 @@ while [ true ];do
     #XXX: if update failed commit will be stucked
     $pingcmd  && $hg pull && $hg update &&  $hg addre && $hg ci -m "autocomit" && $hg push
     echo "commit or push done"
-    sleep 300
+    sleep 3600
 done
 
