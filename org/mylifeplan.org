@@ -1,6 +1,8 @@
 * 5年目标
   :LOGBOOK:
-  CLOCK: [2011-09-27 Tue 11:36]
+  :END:
+  :PROPERTIES:
+  :ORDERED:  t
   :END:
  - 买一个300w的房子.
    - 接父母到北京
