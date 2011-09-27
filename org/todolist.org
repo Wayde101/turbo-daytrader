@@ -1,6 +1,9 @@
 #+FILETAGS: PERSONAL
 * Tasks
 ** Organization
+   :LOGBOOK:
+   CLOCK: [2011-09-27 Tue 14:25]
+   :END:
 :PROPERTIES:
 :CLOCK_MODELINE_TOTAL: today
 :ID:       eb155a82-92b2-4f25-a3c6-0304591af2f9
@@ -16,7 +19,7 @@
 * Notes
 ** org-mode 
 C-c C-t key  给一个任务节点打tag
-*** org-mode refile						       :NOTE:
+** org-mode refile 						       :NOTE:
 C-M r  开启一个refile. 存储在 refile.org 中, 编辑完毕后用 c-c c-c 保存退出.
 会提示多种模式的 refile item. 具体在 [[file:~/.emacs.d/org-init.el::(setq%20org-capture-templates][file:~/.emacs.d/org-init.el::(setq org-capture-templates]]
 定义

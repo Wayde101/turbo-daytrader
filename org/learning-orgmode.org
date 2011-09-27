@@ -12,3 +12,11 @@
    C-c C-o
 ** Yasnippet   
 
+** org-mode refile						       :NOTE:
+C-M r  开启一个refile. 存储在 refile.org 中, 编辑完毕后用 c-c c-c 保存退出.
+会提示多种模式的 refile item. 具体在 [[file:~/.emacs.d/org-init.el::(setq%20org-capture-templates][file:~/.emacs.d/org-init.el::(setq org-capture-templates]]
+定义
+   CLOCK: [2011-09-20 Tue 01:14]--[2011-09-20 Tue 01:50] =>  0:36
+
+** org-mode 
+C-c C-t key  给一个任务节点打tag
