@@ -1190,12 +1190,10 @@ notes take a few minutes to write.
 
 - Punch in (开始计时)
   - 这个标志着一个 task为默认的 task 无论什么时候都计时都可以随时停止
-  - This identifies a task that is the default task to clock in
-    whenever the clock normally stops
-- Clock in tasks normally, and let moving to a DONE state clock out
-  - clocking out automatically clocks time on a new task
-- Continue clocking whatever tasks you work on
-- Punch out (stop the clock)
+- 正常clockin 一个 task, 并且 DONE之后 clockout
+  - clockout 之后会自动对一个新 task 做 clock time
+- 继续 clocking 你干的task .
+- Punch out (停止计时)
 
 我自由修改
 I'm free to change the default task multiple times during the day.
