@@ -1,2 +1,46 @@
 * taobaoworks roadmap
 
+** DONE huijun  meeting 确定做gemstone 部署的wbs分解
+  CLOCK: [2011-09-21 Wed 12:03]--[2011-09-21 Wed 13:00] =>  0:57
+[2011-09-21 Wed 12:03]
+[[file:~/org/taobaoworks.org::*]]
+
+  1. opsfree 
+  2. rt/k2
+  3. broom
+  4. oob
+  5. account
+  6. dns
+  7. yum
+  8. gemstone
+ 
+** SA main road map						       :NOTE:
+   CLOCK: [2011-09-21 Wed 14:26]--[2011-09-21 Wed 14:48] =>  0:22
+[2011-09-21 Wed 14:26]
+
+*** 预期分布
+
+*** 系统的组成不分.
+**** opsfree 
+**** rt/k2
+**** broom
+**** oob
+**** account
+**** dns
+**** yum
+**** gemstone/cmos
+
+*** 系统管理项目实施模板
+
+**** 确定机器范围(TAGS)
+
+**** 确定关联软件，以及工具.
+***** 功能描述
+      
+**** 确定关联软件的配置管理方法.
+***** 配置形式(net/localfile/none)
+     
+**** 部署方法描述.
+     
+**** 是否有相关的监控和自修复需求.
+
