@@ -247,8 +247,12 @@ are set up like this:
 :   :END:      
 
 ** Key bindings
+   :LOGBOOK:
+   CLOCK: [2011-09-27 Tue 11:10]--[2011-09-27 Tue 11:11] =>  0:01
+   :END:
 :PROPERTIES:
 :CUSTOM_ID: KeyBindings
+:ORDERED: t
 :END:
 
 I live in the agenda.  To make getting to the agenda faster I mapped
