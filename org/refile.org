@@ -70,7 +70,7 @@ The Insidious Big Brother Database (BBDB) is a contact management utility
 [[file:~/org/refile.org::*daily%20trading%20plan][daily trading plan]]
 
 
-* TODO cmos package and installation
+* STARTED cmos package and installation
   :LOGBOOK:
   CLOCK: [2011-09-27 Tue 14:32]--[2011-09-27 Tue 14:36] =>  0:04
   :END:
@@ -78,6 +78,8 @@ The Insidious Big Brother Database (BBDB) is a contact management utility
 [[file:~/org/gemstone.org::*opsfree%20%E5%92%8C%20gemstone%20%E4%BF%A1%E6%81%AF%E4%BA%A4%E4%BA%92%E3%80%82][opsfree 和 gemstone 信息交互。]]
 ** checkout cmos 包，并且编译
    :LOGBOOK:
-   CLOCK: [2011-09-27 Tue 14:36]
+   CLOCK: [2011-09-27 Tue 14:36]--[2011-09-27 Tue 18:08] =>  3:32
    :END:
+   fix: /usr/local/cmos => datapath 
+   
 ** 考虑如何加入 gemstone refresh 的包.
