@@ -1195,7 +1195,7 @@ notes take a few minutes to write.
 - 继续 clocking 你干的task .
 - Punch out (停止计时)
 
-我自由修改
+我可以在一天当中自由改变默认 task 多次。 如果我 punchin-in 一个 =Project X=
 I'm free to change the default task multiple times during the day.
 If I punch-in with a prefix on a task in =Project X= then that task
 automatically becomes the default task and all clocked time goes on
