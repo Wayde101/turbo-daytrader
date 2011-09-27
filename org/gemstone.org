@@ -15,9 +15,6 @@
 
 ***** DONE 开个小会..
   1. gemstone 如何上生产.
-  2. cmos 上线.
-  CLOCK: [2011-09-20 Tue 16:12]--[2011-09-20 Tue 17:34] =>  1:22
-[2011-09-20 Tue 16:12]
 **** TODO opsfree 和 gemstone 信息交互。
   1. 通过mako 把opsfree 里面的数据 + HOSTS/nodes.cf GROUPS/nodes.cf
   2. 人来编辑模板，实现机器和人可以coedit HOSTS/nodes.cf GROUPS/nodes.cf
