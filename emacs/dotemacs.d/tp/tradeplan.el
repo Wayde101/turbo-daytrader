@@ -556,11 +556,11 @@ to display in menu and the header of buffer instead of the page-name."
   (dolist-if (fxs forex-symbol)
 	     (not (string= fxs "usdx"))
 	     (progn
-	       (tp-create-anchor (concat fxs "-tsel" ))
+	       (tp-create-anchor (concat fxs "-qrtag" ))
 	       (widget-create 'link
 			      :notify `(lambda (widget &rest ignore)
-					 (let ((choosed (widget-choose ,(concat fxs "-tsel") '(("4小时" . "4hr") ("1小时" . "1hr") ("15分钟" . "15m")))))
-					    (if (string= (tpvar-get (concat ,fxs "-" choosed) :tsel) "select")
+					 (let ((choosed (widget-choose ,(concat fxs "-qr") '(("" . "4hr") ("1小时" . "1hr") ("15分钟" . "15m")))))
+					    (if (string= (tpvar-get (concat ,fxs "-" choosed) :qr) "select")
 						(tpvar-update (concat ,fxs "-" choosed) :tsel "NA")
 					      (tpvar-update (concat ,fxs "-" choosed) :tsel "select"))
 					   (tp-goto ,(concat tp-current "#" fxs "-tsel"))))
