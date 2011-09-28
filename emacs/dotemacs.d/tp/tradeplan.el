@@ -560,10 +560,8 @@ to display in menu and the header of buffer instead of the page-name."
 	       (widget-create 'link
 			      :notify `(lambda (widget &rest ignore)
 					 (let ((choosed (widget-choose ,(concat fxs "-qrtag") '(("4分" . "4") ("3.75分" . "3.75") ("3.5分" . "3.5") ("3.25分" . "3.25")))))
-					    (if (string= (tpvar-get (concat ,fxs "-1hr") :qr) "select")
-						(tpvar-update (concat ,fxs "-1hr") :tsel "NA")
-					      (tpvar-update (concat ,fxs "-1hr") :tsel "select"))
-					   (tp-goto ,(concat tp-current "#" fxs "-1hr"))))
+					   (tpvar-update (concat ,fxs "-1hr") :qr choosed)
+					   (tp-goto ,(concat tp-current "#" fxs "-qrtag"))))
 			      (format "%s" fxs ))
 	       (widget-insert " ")))
 
