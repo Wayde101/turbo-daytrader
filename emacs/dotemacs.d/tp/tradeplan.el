@@ -413,10 +413,10 @@ to display in menu and the header of buffer instead of the page-name."
       (setq idx (1+ idx)))))
 
 (defun tp-os-matrix-print(cur-sym)
-  (widget-insert "   ---------------" cur-sym "---------------------\n tf   | ")
+  (widget-insert "   ---------------" cur-sym "---------------------\n时间及别  | ")
   (dolist (tfi time-frame)
     (widget-insert (format "%s | " (plist-get (assoc tfi time-frame-vars) :name))))
-  (widget-insert "\n   ------------------------------------\n 客 : ")
+  (widget-insert "\n   ----------------------------------------\n 客 : ")
   (dolist (tfi time-frame)
     (tp-create-anchor (concat cur-sym "-" tfi "-obj" ))
     (widget-create 'link
@@ -437,7 +437,7 @@ to display in menu and the header of buffer instead of the page-name."
 				(tp-goto ,(concat tp-current "#" cur-sym "-" tfi "-sub")))) 
 		   (format " %s " (tpvar-get (concat cur-sym "-" tfi) :sub))
 		   (widget-insert "|")))
-  (widget-insert "\n   ------------------------------------\n\n")
+  (widget-insert "\n   ----------------------------------------\n\n")
   )
 
 
@@ -559,7 +559,7 @@ to display in menu and the header of buffer instead of the page-name."
 	       (tp-create-anchor (concat fxs "-qrtag" ))
 	       (widget-create 'link
 			      :notify `(lambda (widget &rest ignore)
-					 (let ((choosed (widget-choose ,(concat fxs "-qrtag") '(("4分" . 4) ("3.75分" . 3.75) ("3.5分" . 3.5) ("3.25分" . 3.25) ("2分" . 2)))))
+					 (let ((choosed (widget-choose ,(concat fxs "-qrtag") '(("4分" . 4.0) ("3.75分" . 3.75) ("3.5分" . 3.5) ("3.25分" . 3.25) ("2分" . 2.0)))))
 					   (tpvar-update (concat ,fxs "-1hr") :qr choosed)
 					   (tp-goto ,(concat tp-current "#" fxs "-qrtag"))))
 			      (format "%s" fxs ))
@@ -569,7 +569,9 @@ to display in menu and the header of buffer instead of the page-name."
     (dolist-if (fxs forex-symbol)
 	       (not (string= fxs "usdx"))
 	       (progn
-		 (if (and (tpvar-get (concat fxs "-1hr") :qr) (= (tpvar-get (concat fxs "-1hr") :qr) score))
+		 (if (and (tpvar-get (concat fxs "-1hr") :qr) 
+			  (floatp (tpvar-get (concat fxs "-1hr") :qr)) 
+			  (= (tpvar-get (concat fxs "-1hr") :qr) score))
 		     (widget-insert fxs " "))))
     (widget-insert ">")))
 
