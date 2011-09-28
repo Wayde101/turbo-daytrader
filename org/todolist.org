@@ -10,13 +10,6 @@
 :ID:       eb155a82-92b2-4f25-a3c6-0304591af2f9
 :END:
 
-* Gemstone nodes
-** TODO @SQA 的机器需要部属上所有的gemclient
-有一些包的 TAG 需要变成 TOPS . 重新做包以避免和 阿凡达 冲突
-
-* Gemstone applications
-** sudo
-
 * Notes
 * Health/Ent
   :PROPERTIES:
