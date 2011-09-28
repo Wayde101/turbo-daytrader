@@ -552,7 +552,7 @@ to display in menu and the header of buffer instead of the page-name."
 )
 
 (defun tp-fselect-qr()
-
+  (widget-insert "** 日内强弱选择\n")
   (dolist-if (fxs forex-symbol)
 	     (not (string= fxs "usdx"))
 	     (progn
