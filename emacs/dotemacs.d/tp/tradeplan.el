@@ -52,7 +52,7 @@
     (define-key map "k" 'previous-line)
     (define-key map "h" 'widget-backward)
     (define-key map "l" 'widget-forward)
-    (define-key map "s" 'save-tp-vars)
+    (define-key map "\C-c\C-c" 'save-tp-vars)
     (define-key map "/" 'isearch-forward)
     (dolist (num (number-sequence ?1 ?9))
       (define-key map (char-to-string num) 'tp-goto-page))
