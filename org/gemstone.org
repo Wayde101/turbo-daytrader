@@ -56,3 +56,6 @@ p4-client install		 # tops
 ** TODO @SQA 的机器的KEY 的问题确认
 和baifei 确认后继续安装 gemstone.
 
+** TODO @SQA 的机器需要部属上所有的gemclient
+有一些包的 TAG 需要变成 TOPS . 重新做包以避免和 阿凡达 冲突
+
