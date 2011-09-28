@@ -552,6 +552,21 @@ to display in menu and the header of buffer instead of the page-name."
 )
 
 (defun tp-fselect-qr()
+
+  (dolist-if (fxs forex-symbol)
+	     (not (string= fxs "usdx"))
+	     (progn
+	       (tp-create-anchor (concat fxs "-tsel" ))
+	       (widget-create 'link
+			      :notify `(lambda (widget &rest ignore)
+					 (let ((choosed (widget-choose ,(concat fxs "-tsel") '(("4小时" . "4hr") ("1小时" . "1hr") ("15分钟" . "15m")))))
+					    (if (string= (tpvar-get (concat ,fxs "-" choosed) :tsel) "select")
+						(tpvar-update (concat ,fxs "-" choosed) :tsel "NA")
+					      (tpvar-update (concat ,fxs "-" choosed) :tsel "select"))
+					   (tp-goto ,(concat tp-current "#" fxs "-tsel"))))
+			      (format "%s" fxs ))
+	       (widget-insert " ")))
+
   (widget-create 'editable-field
 		 :size 50
 		 :format (concat  "** 强势货币: %v " )
