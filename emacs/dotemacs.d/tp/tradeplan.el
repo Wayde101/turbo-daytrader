@@ -567,8 +567,13 @@ to display in menu and the header of buffer instead of the page-name."
   (dolist (score '(4 3.75 3.5 3.25 2))
     (dolist-if (fxs forex-symbol)
 	       (not (string= fxs "usdx"))
-
+	       (progn
+		 (if (= (tpvar-get (concat fxs "-1hr") :qr) score)
+		     (widget-insert fxs)
+		   )
+		 )
 	       )
+    (widget-insert ">")
    )
   )
 
