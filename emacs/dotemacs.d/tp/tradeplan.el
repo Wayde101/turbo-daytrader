@@ -559,24 +559,19 @@ to display in menu and the header of buffer instead of the page-name."
 	       (tp-create-anchor (concat fxs "-qrtag" ))
 	       (widget-create 'link
 			      :notify `(lambda (widget &rest ignore)
-					 (let ((choosed (widget-choose ,(concat fxs "-qrtag") '(("4分" . 4) ("3.75分" . 3.75) ("3.5分" . 3.5) ("3.25分" . 3.25) ("2分" 2)))))
+					 (let ((choosed (widget-choose ,(concat fxs "-qrtag") '(("4分" . 4) ("3.75分" . 3.75) ("3.5分" . 3.5) ("3.25分" . 3.25) ("2分" . 2)))))
 					   (tpvar-update (concat ,fxs "-1hr") :qr choosed)
 					   (tp-goto ,(concat tp-current "#" fxs "-qrtag"))))
 			      (format "%s" fxs ))
 	       (widget-insert " ")))
-  (widget-insert "\n")
+  (widget-insert "\n\n")
   (dolist (score '(4 3.75 3.5 3.25 2))
     (dolist-if (fxs forex-symbol)
 	       (not (string= fxs "usdx"))
 	       (progn
 		 (if (and (tpvar-get (concat fxs "-1hr") :qr) (= (tpvar-get (concat fxs "-1hr") :qr) score))
-		     (widget-insert fxs "|")
-		   )
-		 )
-	       )
-    (widget-insert ">")
-   )
-  )
+		     (widget-insert fxs " "))))
+    (widget-insert ">")))
 
 
 
