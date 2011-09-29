@@ -34,10 +34,15 @@
 
 ****** STARTED mako example
        :LOGBOOK:
-       CLOCK: [2011-09-29 Thu 14:20]
+       CLOCK: [2011-09-29 Thu 15:42]--[2011-09-29 Thu 16:28] =>  0:46
+       CLOCK: [2011-09-29 Thu 14:20]--[2011-09-29 Thu 14:30] =>  0:10
        :END:
 
 
+****** STARTED 配置 yasnippet & flymake
+       :LOGBOOK:
+       CLOCK: [2011-09-29 Thu 16:28]--[2011-09-29 Thu 18:05] =>  1:37
+       :END:
 *** gemclient 部署
 **** 确定 gemclient 的部署步骤.
 **** 确定普通机器上需要安装的 tops 包，来评估系统影响.

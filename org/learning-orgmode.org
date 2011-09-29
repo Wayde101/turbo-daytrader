@@ -4,6 +4,34 @@
    CLOCK: [2011-09-26 Mon 15:30]--[2011-09-26 Mon 15:40] =>  0:10
 [2011-09-20 Tue 10:12]
 
+*** http://doc.norang.ca/org-mode.html
+*** DONE emacs 'bbdb 'bbdb-com 是否可以作为存储交易计划的emacs数据库来使用？ :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-09-27 Tue 10:53]--[2011-09-27 Tue 10:57] =>  0:04
+   :END:
+  :PROPERTIES:
+  :ORDERED:  t
+  :END:
+[2011-09-27 Tue 10:53]
+[[file:~/org/docs/orgmode-tut.org::*Handling%20Phone%20Calls][Handling Phone Calls]]
+The Insidious Big Brother Database (BBDB) is a contact management utility
+不能
+*** TODO 搞清楚 ID 是干啥用的
+  :LOGBOOK:
+  :END:
+[2011-09-26 Mon 17:36]
+[[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
+
+*** DONE 翻译 reminders 尝试使用 orgmode 做提醒
+  :LOGBOOK:
+  CLOCK: [2011-09-26 Mon 17:16]--[2011-09-26 Mon 17:27] =>  0:11
+  :END:
+[2011-09-26 Mon 17:13]
+[[file:~/org/docs/orgmode-tut.org::*Reminders][Reminders]]
+	翻译完毕，但是具体还不知道怎么用
+*** TODO schedule todo list to somedays.
+  CLOCK: [2011-09-20 Tue 10:21]--[2011-09-20 Tue 10:22] =>  0:01
+[2011-09-20 Tue 10:21]
 ** 建立一个定期的任务，每天可以定期执行
 ** 打开一个 org-mode 中的文字链接
    CLOCK: [2011-09-26 Mon 13:13]--[2011-09-26 Mon 13:14] =>  0:01
