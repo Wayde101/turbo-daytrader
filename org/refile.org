@@ -1,85 +1,14 @@
-* SOMEDAY 需要在emacs 里面配置一个w3m.				    :WAITING:
-  - State "SOMEDAY"    from "STARTED"    [2011-09-21 Wed 14:03]
-[2011-09-20 Tue 09:20]
-[[file:~/org/todolist.org::*http://doc.norang.ca/org-mode.html][http://doc.norang.ca/org-mode.html]]
-* TODO schedule todo list to somedays.
-  CLOCK: [2011-09-20 Tue 10:21]--[2011-09-20 Tue 10:22] =>  0:01
-[2011-09-20 Tue 10:21]
-* TODO 升级 www.17forex.com 的系统软件。
-[2011-09-21 Wed 16:54]
-[[file:~/org/refile.org::*%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AAgnus%20mail][配置一个gnus mail]]
-* 送餐地址								       :NOTE:
-[2011-09-22 Thu 12:54]
-[[file:~/.emacs.d/tp/tradeplan.el]]
-东三环北路 38 号院 1号楼 15层.
-* DONE move openvpn and hgpush to turbo-dt .
-  CLOCK: [2011-09-24 Sat 23:50]--[2011-09-26 Mon 16:08] => 40:18
-[2011-09-24 Sat 23:50]
-* Write an invitation message from snoc-engineering 		       :NOTE:
-   CLOCK: [2011-09-25 Sun 09:41]--[2011-09-25 Sun 09:55] =>  0:14
-[2011-09-25 Sun 09:41]
-[[file:~/org/gemstone.org::*%E7%A1%AE%E5%AE%9A%E6%99%AE%E9%80%9A%E6%9C%BA%E5%99%A8%E4%B8%8A%E9%9C%80%E8%A6%81%E5%AE%89%E8%A3%85%E7%9A%84%20tops%20%E5%8C%85%EF%BC%8C%E6%9D%A5%E8%AF%84%E4%BC%B0%E7%B3%BB%E7%BB%9F%E5%BD%B1%E5%93%8D.][确定普通机器上需要安装的 tops 包，来评估系统影响.]]
-
-* DONE 翻译 reminders 尝试使用 orgmode 做提醒
+* STARTED runin 脚本
   :LOGBOOK:
-  CLOCK: [2011-09-26 Mon 17:16]--[2011-09-26 Mon 17:27] =>  0:11
+  CLOCK: [2011-09-29 Thu 13:14]
+  CLOCK: [2011-09-29 Thu 12:40]--[2011-09-29 Thu 13:08] =>  0:28
   :END:
-[2011-09-26 Mon 17:13]
-[[file:~/org/docs/orgmode-tut.org::*Reminders][Reminders]]
-	翻译完毕，但是具体还不知道怎么用
-* TODO 搞清楚 ID 是干啥用的
+[2011-09-29 Thu 12:39]
+[[file:~/org/health_ent.org::*%E5%90%83%E9%A5%AD][吃饭]]
+	support run cmd in some directory
+* NEXT 把 spkg clone 到本机笔记本上
   :LOGBOOK:
+  CLOCK: [2011-09-29 Thu 13:08]--[2011-09-29 Thu 13:14] =>  0:06
   :END:
-[2011-09-26 Mon 17:36]
-[[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
-
-* PHONE smoking						     :NOTE:CANCELLED:
-   :LOGBOOK:
-   CLOCK: [2011-09-27 Tue 14:04]--[2011-09-27 Tue 14:15] =>  0:11
-   CLOCK: [2011-09-27 Tue 11:24]--[2011-09-27 Tue 11:31] =>  0:07
-   CLOCK: [2011-09-27 Tue 11:01]--[2011-09-27 Tue 11:08] =>  0:07
-   CLOCK: [2011-09-27 Tue 10:17]--[2011-09-27 Tue 10:26] =>  0:09
-   :END:
-  :PROPERTIES:
-  :ORDERED:  t
-  :END:
-[[file:~/org/docs/orgmode-tut.org::*Key%20bindings][Key bindings]]
-* DONE emacs 'bbdb 'bbdb-com 是否可以作为存储交易计划的emacs数据库来使用？ :NOTE:
-   :LOGBOOK:
-   CLOCK: [2011-09-27 Tue 10:53]--[2011-09-27 Tue 10:57] =>  0:04
-   :END:
-  :PROPERTIES:
-  :ORDERED:  t
-  :END:
-[2011-09-27 Tue 10:53]
-[[file:~/org/docs/orgmode-tut.org::*Handling%20Phone%20Calls][Handling Phone Calls]]
-The Insidious Big Brother Database (BBDB) is a contact management utility
-不能
-* TODO daily trading plan
-  :LOGBOOK:
-  CLOCK: [2011-09-27 Tue 11:51]--[2011-09-27 Tue 12:25] =>  0:34
-  :END:
-[2011-09-27 Tue 11:51]
-[[file:~/org/docs/orgmode-tut.org::*Limiting%20the%20agenda%20to%20a%20subtree][Limiting the agenda to a subtree]]
-
-* TODO 吃饭
-  :LOGBOOK:
-  CLOCK: [2011-09-27 Tue 12:25]--[2011-09-27 Tue 14:15] =>  1:50
-  :END:
-[2011-09-27 Tue 12:25]
-[[file:~/org/refile.org::*daily%20trading%20plan][daily trading plan]]
-
-
-* STARTED cmos package and installation
-  :LOGBOOK:
-  CLOCK: [2011-09-27 Tue 14:32]--[2011-09-27 Tue 14:36] =>  0:04
-  :END:
-[2011-09-27 Tue 14:32]
-[[file:~/org/gemstone.org::*opsfree%20%E5%92%8C%20gemstone%20%E4%BF%A1%E6%81%AF%E4%BA%A4%E4%BA%92%E3%80%82][opsfree 和 gemstone 信息交互。]]
-** checkout cmos 包，并且编译
-   :LOGBOOK:
-   CLOCK: [2011-09-27 Tue 14:36]--[2011-09-27 Tue 18:08] =>  3:32
-   :END:
-   fix: /usr/local/cmos => datapath 
-   
-** 考虑如何加入 gemstone refresh 的包.
+[2011-09-29 Thu 13:08]
+[[file:~/org/refile.org::*runin%20%E8%84%9A%E6%9C%AC][runin 脚本]]

@@ -2,8 +2,7 @@
   :PROPERTIES:
   :CATEGORY: GEMSTONE
   :END:   
-
-** 确定机器的部署范围. (仅仅motd)
+** gemclient
 *** amdin 规划
 **** 确定以及部署 gemserver
 **** TODO 需要对每一个目前已经有的安装包进行一次整体review.
@@ -13,17 +12,67 @@
 [2011-09-20 Tue 14:50]
 [[file:~/org/refile.org::*%E6%94%B6%E9%9B%86%E6%89%80%E6%9C%89%E7%9A%84gemstone%20cover%E5%88%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85%E9%9B%86%E4%BD%93%E5%8D%87%E7%BA%A7%E5%88%B0%20TOPS%20tag][收集所有的gemstone cover到的软件包集体升级到 TOPS tag]]
 
-***** DONE 开个小会..
-  1. gemstone 如何上生产.
-**** TODO opsfree 和 gemstone 信息交互。
+**** STARTED opsfree 和 gemstone 信息交互。
+     :LOGBOOK:
+     CLOCK: [2011-09-29 Thu 14:11]--[2011-09-29 Thu 14:12] =>  0:01
+     CLOCK: [2011-09-20 Tue 09:52]--[2011-09-20 Tue 09:57] =>  0:05
+     :END:
+[2011-09-20 Tue 09:52]
   1. 通过mako 把opsfree 里面的数据 + HOSTS/nodes.cf GROUPS/nodes.cf
   2. 人来编辑模板，实现机器和人可以coedit HOSTS/nodes.cf GROUPS/nodes.cf
-  CLOCK: [2011-09-20 Tue 09:52]--[2011-09-20 Tue 09:57] =>  0:05
-[2011-09-20 Tue 09:52]
-[[file:~/org/todolist.org::*@SQA%20%E7%9A%84%E6%9C%BA%E5%99%A8%E9%9C%80%E8%A6%81%E9%83%A8%E5%B1%9E%E4%B8%8A%E6%89%80%E6%9C%89%E7%9A%84gemclient][@SQA 的机器需要部属上所有的gemclient]]
+
+***** STARTED 调研mako .  目的 opsfree + json 接口 + mako 模板生成 nodes.cf
+      :LOGBOOK:
+      CLOCK: [2011-09-29 Thu 14:12]--[2011-09-29 Thu 14:15] =>  0:03
+      :END:
+      - mako 
+
+****** NEXT 给mako 打包
+       :LOGBOOK:
+       CLOCK: [2011-09-29 Thu 14:15]--[2011-09-29 Thu 14:20] =>  0:05
+       :END:
+
+****** STARTED mako example
+       :LOGBOOK:
+       CLOCK: [2011-09-29 Thu 14:20]
+       :END:
+
+
 *** gemclient 部署
 **** 确定 gemclient 的部署步骤.
 **** 确定普通机器上需要安装的 tops 包，来评估系统影响.
+** CMOS
+*** DONE cmos package and installation
+    CLOSED: [2011-09-29 Thu 13:57]
+    - State "DONE"       from "STARTED"    [2011-09-29 Thu 13:57]
+  :LOGBOOK:
+  :END:
+    [2011-09-27 Tue 14:32]
+
+**** DONE checkout cmos 包，并且编译
+      CLOSED: [2011-09-29 Thu 10:31]
+      - State "DONE"       from "NEXT"       [2011-09-29 Thu 10:31]
+      :LOGBOOK:
+      :END:
+      fix: /usr/local/cmos => datapath 
+      
+**** DONE 考虑如何加入 gemclient 相关的工具包到 cmos module下.
+     CLOSED: [2011-09-29 Thu 13:57]
+     - State "DONE"       from "STARTED"    [2011-09-29 Thu 13:57]
+      :LOGBOOK:
+      CLOCK: [2011-09-29 Thu 13:29]--[2011-09-29 Thu 13:57] =>  0:28
+      CLOCK: [2011-09-29 Thu 11:41]--[2011-09-29 Thu 12:23] =>  0:42
+      :END:
+     - gemclient (refresh,stop,start,status)
+
+**** NEXT cmos 相关设计
+   - 主要包含的命令:
+     - net 
+       - MACs
+     - service (list service )
+   - cmos 功
+
+** 确定机器的部署范围. (仅仅motd)
 *** 系统整体规划.
 ** DONE 收集所有的gemstone 覆盖到的软件包集体升级到 TOPS tag
   CLOCK: [2011-09-20 Tue 14:53]--[2011-09-20 Tue 15:25] =>  0:32
@@ -54,7 +103,7 @@ p4-client install		 # tops
 [2011-09-20 Tue 14:00]
 [[file:~/org/todolist.org::*tops-seco-core][tops-seco-core]]
 ** TODO @SQA 的机器的KEY 的问题确认
-和baifei 确认后继续安装 gemstone.
+   和baifei 确认后继续安装 gemstone.
 
 ** TODO @SQA 的机器需要部属上所有的gemclient
 有一些包的 TAG 需要变成 TOPS . 重新做包以避免和 阿凡达 冲突

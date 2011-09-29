@@ -35,3 +35,16 @@
 [2011-09-26 Mon 10:38]
 做多加元
 
+** DONE daily trading plan
+  CLOSED: [2011-09-29 Thu 11:20]
+  - State "DONE"       from "STARTED"    [2011-09-29 Thu 11:20]
+  :LOGBOOK:
+  CLOCK: [2011-09-29 Thu 10:33]--[2011-09-29 Thu 11:20] =>  0:47
+  CLOCK: [2011-09-27 Tue 11:51]--[2011-09-27 Tue 12:25] =>  0:34
+  :END:
+[2011-09-27 Tue 11:51]
+	今日交易重点 ，澳元，加元, 但是目前短线上都没有次要节奏出现. 若没有次要节奏出现按照主观+日波幅进场
+
+** TODO 升级 www.17forex.com 的系统软件。
+[2011-09-21 Wed 16:54]
+[[file:~/org/refile.org::*%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AAgnus%20mail][配置一个gnus mail]]

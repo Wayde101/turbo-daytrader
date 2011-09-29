@@ -2,22 +2,9 @@
 * Tasks
 ** Organization
    :LOGBOOK:
-   CLOCK: [2011-09-28 Wed 09:56]
-   CLOCK: [2011-09-27 Tue 14:25]--[2011-09-27 Tue 14:32] =>  0:07
    :END:
 :PROPERTIES:
 :CLOCK_MODELINE_TOTAL: today
 :ID:       eb155a82-92b2-4f25-a3c6-0304591af2f9
 :END:
 
-* Notes
-* Health/Ent
-  :PROPERTIES:
-  :CATEGORY: 健康
-  :END:
-** 看海贼王
-** DONE 看牙，最后一次上冠。
-  SCHEDULED: <2011-09-20 Tue>
-  CLOCK: [2011-09-20 Tue 11:18]--[2011-09-20 Tue 14:00] =>  2:42
-* Thanks
-** http://doc.norang.ca/org-mode.html
