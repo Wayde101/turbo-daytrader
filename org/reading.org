@@ -1,3 +1,7 @@
 * 书目
 ** 《深入理解计算机系统》
 *** chapter 13 : 并发编程.
+** 《C programming language》
+** 《C++ programming language》
+** 《编译原理极其实践》
+
