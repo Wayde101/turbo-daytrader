@@ -13,7 +13,7 @@
 [[file:~/org/refile.org::*runin%20%E8%84%9A%E6%9C%AC][runin 脚本]]
 * TODO 配置 imapd + ssl
   :LOGBOOK:
-  CLOCK: [2011-09-29 Thu 18:05]
+  CLOCK: [2011-09-29 Thu 18:05]--[2011-09-29 四 18:15] =>  0:10
   :END:
 [2011-09-29 Thu 18:05]
 [[file:~/org/gemstone.org::*%E9%85%8D%E7%BD%AE%20yasnippet%20&%20flymake][配置 yasnippet & flymake]]
@@ -32,7 +32,7 @@
 
 * 离职 yuhao  03643  量子统计						       :NOTE:
    :LOGBOOK:
-   CLOCK: [2011-09-30 Fri 14:20]
+   CLOCK: [2011-09-30 Fri 14:20]--[2011-09-30 五 14:39] =>  0:19
    :END:
 [2011-09-30 Fri 14:20]
 [[file:~/org/refile.org::*][:NOTE:]]
