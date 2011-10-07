@@ -245,15 +245,12 @@ Return only one group for each buffer."
       )
      )))
 
-
-
 (defun ysl/set-x-font () 
    (let ((fontset "fontset-default"))
    (set-default-font ysl/x-font-en) 
    (dolist (charset '(kana han symbol cjk-misc bopomofo)) 
    (set-fontset-font fontset charset ysl/x-font-zh))))
    (setq ysl/x-font-en "Consolas:size=14:weight=bold"  ysl/x-font-zh "Microsoft YaHei:size=16:weight=light")
-
 
 ;; (display-time)
 ;; ;;(unset-font)
@@ -270,3 +267,6 @@ Return only one group for each buffer."
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+
+(define-key global-map (kbd "<f9> r") 'remember)
+(define-key global-map (kbd "<f9> R") 'remember-region)

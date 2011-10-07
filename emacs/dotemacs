@@ -4,6 +4,7 @@
 (require 'org-init)
 (require 'c-fav-dev)
 (require 'misc-init)
+(require 'w3m-init)
 (require 'tp-init)
 (require 'yasnippet-init)
 (require 'global-key-init)
