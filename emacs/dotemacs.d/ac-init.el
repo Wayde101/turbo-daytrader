@@ -10,4 +10,4 @@
 ;; (setq ac-dwim t) ;; Do What I Mean Mode: enabled by default
 ;; (setq ac-auto-start 3)
 
-(provide 'ysl-auto-complete)
+(provide 'ac-init)
