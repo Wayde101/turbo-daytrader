@@ -3,9 +3,12 @@
 (require 'ido)
 (ido-mode t)
 
+(setq user-home-dir (getenv "HOME")
+      conf-root-dir (concat user-home-dir "/.emacs.d"))
+
 (defun add-search-path (path)
   (add-to-list 'load-path (concat conf-root-dir "/" path))
-  (message (concat "ysl-init: load-path added: " path)))
+  (message (concat "misc-init: load-path added: " path)))
 
 (set-language-environment 'UTF-8) 
 (set-locale-environment "UTF-8") 

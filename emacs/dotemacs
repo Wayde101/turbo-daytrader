@@ -7,5 +7,7 @@
 (require 'w3m-init)
 (require 'tp-init)
 (require 'yasnippet-init)
+(require 'python-init)
+(require 'ac-init)
 (require 'global-key-init)
 
