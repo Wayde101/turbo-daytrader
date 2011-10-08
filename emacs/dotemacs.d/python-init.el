@@ -126,7 +126,7 @@
 ;;            (set (make-local-variable 'ac-auto-start) nil)))
 
 ;; load flymake {{
-(add-search-path "site-lisp/flymake")
+(add-search-path "misc")
 (load-library "flymake-cursor")
 (setq flymake-extension-use-showtip t)
 (setq flymake-allowed-file-name-masks
