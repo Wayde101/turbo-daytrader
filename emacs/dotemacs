@@ -8,6 +8,6 @@
 (require 'tp-init)
 (require 'yasnippet-init)
 (require 'ac-init)
-(require 'python-init)
+;;(require 'python-init)
 (require 'global-key-init)
 
