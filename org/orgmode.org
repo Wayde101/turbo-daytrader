@@ -17,3 +17,6 @@
    2. project 内部应该可以做任务分解.
    3. 判断 task 和 project 的却别，project 有task 和 sub task.
 
+** 如何找到最后一个clockin 的任务.
+   <f11>   'org-clock-goto
+

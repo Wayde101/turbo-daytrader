@@ -3,6 +3,9 @@
 (require 'ido)
 (ido-mode t)
 
+(defun add-search-path (path)
+  (add-to-list 'load-path (concat conf-root-dir "/" path))
+  (message (concat "ysl-init: load-path added: " path)))
 
 (set-language-environment 'UTF-8) 
 (set-locale-environment "UTF-8") 
@@ -268,5 +271,5 @@ Return only one group for each buffer."
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
-(define-key global-map (kbd "<f9> r") 'remember)
-(define-key global-map (kbd "<f9> R") 'remember-region)
+;; (define-key global-map (kbd "<f9> r") 'remember)
+;; (define-key global-map (kbd "<f9> R") 'remember-region)
