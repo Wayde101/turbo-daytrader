@@ -497,19 +497,7 @@ to display in menu and the header of buffer instead of the page-name."
 				(format "%s:   %s  " fxs (tpvar-get (concat fxs "-" tfi ) :gfx)))
 
 		 (widget-insert " ")))
-    (widget-insert " \n" tfi ":撑:")
-    (dolist-if (fxs forex-symbol)
-	       (not (string= fxs "usdx"))
-	       (progn
-		 (tp-create-anchor (concat fxs "-" tfi "-cheng" ))
-		 (widget-create 'link
-				:notify `(lambda (widget &rest ignore)
-					   (let ((price (completing-read "支撑:" nil nil nil)))
-					     (tpvar-update ,(concat fxs "-" tfi) :cheng price)
-					     (tp-goto ,(concat tp-current "#" fxs "-" tfi "-cheng"))))
-				(format "%s:%.4f " fxs (tpvar-get-float (concat fxs "-" tfi ) :cheng)))
 
-		 (widget-insert " ")))
 
     (widget-insert " \n" tfi ":阻:")
     (dolist-if (fxs forex-symbol)
@@ -525,7 +513,19 @@ to display in menu and the header of buffer instead of the page-name."
 
 		 (widget-insert " ")))
 
+    (widget-insert " \n" tfi ":撑:")
+    (dolist-if (fxs forex-symbol)
+	       (not (string= fxs "usdx"))
+	       (progn
+		 (tp-create-anchor (concat fxs "-" tfi "-cheng" ))
+		 (widget-create 'link
+				:notify `(lambda (widget &rest ignore)
+					   (let ((price (completing-read "支撑:" nil nil nil)))
+					     (tpvar-update ,(concat fxs "-" tfi) :cheng price)
+					     (tp-goto ,(concat tp-current "#" fxs "-" tfi "-cheng"))))
+				(format "%s:%.4f " fxs (tpvar-get-float (concat fxs "-" tfi ) :cheng)))
 
+		 (widget-insert " ")))
     ))
 
 (defun tp-usdx-diff-summary-editor()

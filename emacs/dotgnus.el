@@ -2,13 +2,19 @@
 (load-library "nnimap")
 (load-library "starttls")
 ;; server settings
-(setq gnus-select-method '(nnimap "www.17forex.com"
-           (nnimap-address "www.17forex.com")
+(setq gnus-select-method '(nnimap "mymailserver"
+           (nnimap-address "mymailserver")
             (nnimap-server-port 55143)
            ;;(nnimap-server-port 993)
            ;; (nnimap-authinfo-file "~/.imap-authinfo")
            ;; (nnimap-stream ssl)))
               ))
+
+(setq gnus-select-method '(nnimap "gmail"
+				  (nnimap-address "imap.gmail.com")
+				  (nnimap-server-port 993)
+				  (nnimap-stream ssl)))
+
 (setq message-send-mail-function 'smtpmail-send-it)
 (add-to-list 'gnus-secondary-select-methods '(nntp "news.cn99.com"))
 
