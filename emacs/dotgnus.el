@@ -17,6 +17,8 @@
 (setq w3m-default-display-inline-images t)
 (setq mm-inline-text-html-with-images t)
 
+
+
 ;; sort articles in reverse date
 (setq gnus-article-sort-functions
       '(gnus-article-sort-by-subject
