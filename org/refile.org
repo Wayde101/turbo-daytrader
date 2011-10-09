@@ -38,3 +38,10 @@ https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94
 [[file:~/org/refile.org::*%E5%B8%AElidun%20%E6%90%9E%E5%AE%9A%20postgresql%20hstore][帮lidun 搞定 postgresql hstore]]
   - http://wwwmaster.postgresql.org/download/mirrors-ftp/source/v9.1.1/postgresql-9.1.1.tar.bz2
     
+* 如何通过 emacs 编辑系统下root权限的东西 			       :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-10-10 一 07:26]--[2011-10-10 一 07:29] =>  0:03
+   :END:
+[2011-10-10 一 07:26]
+[[id:eb155a82-92b2-4f25-a3c6-0304591af2f9][Organization]]
+   /sudo::/etc/hosts
