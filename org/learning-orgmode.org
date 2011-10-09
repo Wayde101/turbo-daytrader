@@ -29,17 +29,23 @@ The Insidious Big Brother Database (BBDB) is a contact management utility
 [2011-09-26 Mon 17:13]
 [[file:~/org/docs/orgmode-tut.org::*Reminders][Reminders]]
 	翻译完毕，但是具体还不知道怎么用
+
 *** TODO schedule todo list to somedays.
   CLOCK: [2011-09-20 Tue 10:21]--[2011-09-20 Tue 10:22] =>  0:01
 [2011-09-20 Tue 10:21]
+*** bh/clock-in-last-time					       :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-10-08 Sat 09:56]--[2011-10-08 Sat 09:58] =>  0:02
+   :END:
+[2011-10-08 Sat 09:56]
+[[file:~/org/orgmode.org::*%E9%9C%80%E8%A6%81%E6%90%9E%E6%B8%85%E6%A5%9A%E4%BB%80%E4%B9%88%E6%98%AFproject.%20%E9%80%9A%E5%B8%B8%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E6%99%AF%E6%98%AF%E4%BB%80%E4%B9%88][需要搞清楚什么是project. 通常的使用情景是什么]]
+需要 clock-in last time 的意义, 是否是找到最后一个任务并且 clock in?
 ** 建立一个定期的任务，每天可以定期执行
 ** 打开一个 org-mode 中的文字链接
    CLOCK: [2011-09-26 Mon 13:13]--[2011-09-26 Mon 13:14] =>  0:01
 
    org-open-at-point
    C-c C-o
-** Yasnippet   
-
 ** org-mode refile						       :NOTE:
 C-M r  开启一个refile. 存储在 refile.org 中, 编辑完毕后用 c-c c-c 保存退出.
 会提示多种模式的 refile item. 具体在 [[file:~/.emacs.d/org-init.el::(setq%20org-capture-templates][file:~/.emacs.d/org-init.el::(setq org-capture-templates]]

@@ -11,3 +11,15 @@
 ;;(require 'python-init)
 (require 'global-key-init)
 
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(org-agenda-files (quote ("~/org/docs/orgmode-tut.org" "/home/yuting/org/diary.org" "/home/yuting/org/emacs-misc.org" "/home/yuting/org/forex.org" "/home/yuting/org/gemstone.org" "/home/yuting/org/health_ent.org" "/home/yuting/org/learning-orgmode.org" "/home/yuting/org/metapkg.org" "/home/yuting/org/mylifeplan.org" "/home/yuting/org/opsdocs.org" "/home/yuting/org/orgmode.org" "/home/yuting/org/packages.org" "/home/yuting/org/reading.org" "/home/yuting/org/refile.org" "/home/yuting/org/shellbyexample.org" "/home/yuting/org/snocengin.org" "/home/yuting/org/taobaoworks.org" "/home/yuting/org/todolist.org"))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )

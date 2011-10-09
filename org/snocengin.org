@@ -81,9 +81,13 @@ then:
 
 openssl enc -des -e -a -in <filename> -out <filename.des>
 openssl enc -des -d -a -in <filename.des> -out <filename>
-** TODO 搭建一个家庭使用的openvpn
+
+** DONE 搭建一个家庭使用的openvpn
 [2011-09-21 Wed 17:18]
-[[file:~/org/refile.org::*%E5%8D%87%E7%BA%A7%20www.17forex.com%20%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E3%80%82][升级 www.17forex.com 的系统软件。]]
+  - hg 中使用的是 openvpn 给家里的电脑用 。
+  - officevpn 是给笔记本使用
+
+
 ** TODO 配置一个gnus mail
   CLOCK: [2011-09-21 Wed 16:04]--[2011-09-21 Wed 16:48] =>  0:44
   CLOCK: [2011-09-21 Wed 14:49]--[2011-09-21 Wed 16:04] =>  1:15
@@ -114,4 +118,13 @@ openssl enc -des -d -a -in <filename.des> -out <filename>
    CLOCK: [2011-09-25 Sun 09:41]--[2011-09-25 Sun 09:55] =>  0:14
 [2011-09-25 Sun 09:41]
 [[file:~/org/gemstone.org::*%E7%A1%AE%E5%AE%9A%E6%99%AE%E9%80%9A%E6%9C%BA%E5%99%A8%E4%B8%8A%E9%9C%80%E8%A6%81%E5%AE%89%E8%A3%85%E7%9A%84%20tops%20%E5%8C%85%EF%BC%8C%E6%9D%A5%E8%AF%84%E4%BC%B0%E7%B3%BB%E7%BB%9F%E5%BD%B1%E5%93%8D.][确定普通机器上需要安装的 tops 包，来评估系统影响.]]
+
+** TODO 配置 imapd + ssl
+  :LOGBOOK:
+  CLOCK: [2011-09-29 Thu 18:05]--[2011-09-29 四 18:15] =>  0:10
+  :END:
+[2011-09-29 Thu 18:05]
+[[file:~/org/gemstone.org::*%E9%85%8D%E7%BD%AE%20yasnippet%20&%20flymake][配置 yasnippet & flymake]]
+
+
 
