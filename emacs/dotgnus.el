@@ -10,13 +10,17 @@
            ;; (nnimap-stream ssl)))
               ))
 
-(setq gnus-select-method '(nnimap "gmail"
-				  (nnimap-address "imap.gmail.com")
-				  (nnimap-server-port 993)
-				  (nnimap-stream ssl)))
+
+(setq message-send-mail-function 'smtpmail-send-it
+      smtpmail-starttls-credentials '(("email.alibaba-inc.com" 587 nil nil))
+      smtpmail-auth-credentials '(("email.alibaba-inc.com" 587 "taobao-hz/yanzhuang" nil))
+      smtpmail-default-smtp-server "email.alibaba-inc.com"
+      smtpmail-smtp-server "email.alibaba-inc.com"
+      smtpmail-smtp-service 587
+      smtpmail-local-domain "taobao.com")
 
 (setq message-send-mail-function 'smtpmail-send-it)
-(add-to-list 'gnus-secondary-select-methods '(nntp "news.cn99.com"))
+;; (add-to-list 'gnus-secondary-select-methods '(nntp "news.cn99.com"))
 
 ;; view settings
 (add-to-list 'mm-attachment-override-types "image/.*")
