@@ -64,6 +64,9 @@ https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94
 [[file:~/org/refile.org::*%E5%9B%9E%E8%B4%AD][回购]]
 
  机器地址:
+
+ssh yuting@shterm.aliyun-inc.com
+
 李敦 2011-10-09 11:41:33
 ay10-c，进去后到workgw这台机器
 李敦 2011-10-09 11:41:40
