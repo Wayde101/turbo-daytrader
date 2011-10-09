@@ -119,7 +119,7 @@
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!/!)")
-              (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)" "PHONE")
+              (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "|" "CANCELLED(c@/!)" "TRADEPLAN")
               (sequence "OPEN(O!)" "|" "CLOSED(C!)"))))
 
 (setq org-todo-keyword-faces 
@@ -132,7 +132,7 @@
               ("CANCELLED" :foreground "forest green" :weight bold)
               ("OPEN" :foreground "blue" :weight bold)
               ("CLOSED" :foreground "forest green" :weight bold)
-              ("PHONE" :foreground "forest green" :weight bold))))
+              ("TRADEPLAN" :foreground "forest green" :weight bold))))
 
 
 (setq org-default-notes-file "~/org/refile.org")
@@ -152,10 +152,8 @@
                "* %?\n%U\n  %i" :clock-in t :clock-resume t)
               ("w" "org-protocol" entry (file "~/org/refile.org")
                "* TODO Review %c\n%U\n  %i" :immediate-finish t)
-              ("p" "Phone call" entry (file "~/org/refile.org")
-               "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-              ("f" "forexplan" entry (file "~/org/refile.org")
-               "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
+              ("f" "forexplan" entry (file "~/org/tradeplan.org")
+               "* TRADEPLAN (tradeplan) %? :TRADEPLAN:\n%U" :clock-in t :clock-resume t)
               ("h" "Habit" entry (file "~/org/refile.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %t .+1d/3d\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n  %i"))))
 
