@@ -125,38 +125,40 @@
             (set (make-local-variable 'ac-candidate-function) 'ac-python-candidate)))
 ;;            (set (make-local-variable 'ac-auto-start) nil)))
 
-;; load flymake {{
-(add-search-path "misc")
-(load-library "flymake-cursor")
-(setq flymake-extension-use-showtip t)
-(setq flymake-allowed-file-name-masks
-      '(("\\.p[ml]\\'" flymake-perl-init))
-)
-(delete '("\\.html?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
-;; }}
+
+;; slow don't know why
+;; ;; load flymake {{
+;; (add-search-path "misc")
+;; (load-library "flymake-cursor")
+;; (setq flymake-extension-use-showtip t)
+;; (setq flymake-allowed-file-name-masks
+      ;; '(("\\.p[ml]\\'" flymake-perl-init))
+;; )
+;; (delete '("\\.html?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
+;; ;; }}
 
 
 
-;; setup flymake {{
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "pycheckers"  (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pyflakes-init)))
+;; ;; setup flymake {{
+;; (add-hook 'find-file-hook 'flymake-find-file-hook)
+;; (when (load "flymake" t)
+  ;; (defun flymake-pyflakes-init ()
+    ;; (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       ;; 'flymake-create-temp-inplace))
+           ;; (local-file (file-relative-name
+                        ;; temp-file
+                        ;; (file-name-directory buffer-file-name))))
+      ;; (list "pycheckers"  (list local-file))))
+  ;; (add-to-list 'flymake-allowed-file-name-masks
+               ;; '("\\.py\\'" flymake-pyflakes-init)))
 
-(add-hook 'python-mode-hook
-          (lambda ()
-            (unless (eq buffer-file-name nil) (flymake-mode 1))
-            (local-set-key [f10] 'flymake-goto-prev-error)
-            (local-set-key [f11] 'flymake-goto-next-error)
-            ))
-;; }}
+;; (add-hook 'python-mode-hook
+          ;; (lambda ()
+            ;; (unless (eq buffer-file-name nil) (flymake-mode 1))
+            ;; (local-set-key [f10] 'flymake-goto-prev-error)
+            ;; (local-set-key [f11] 'flymake-goto-next-error)
+            ;; ))
+;; ;; }}
 
 (provide 'python-init)
 
