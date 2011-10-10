@@ -309,6 +309,12 @@
               (tags priority-down))))
 
 
+;;
+;; Resume clocking tasks when emacs is restarted
+(org-clock-persistence-insinuate)
+;;
+;; Small windows on my Eee PC displays only the end of long lists which isn't very useful
+(setq org-clock-history-length 10)
 ;; Resume clocking task on clock-in if the clock is open
 (setq org-clock-in-resume t)
 ;; Change task to STARTED when clocking in
