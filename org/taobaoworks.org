@@ -19,7 +19,6 @@
 [2011-09-21 Wed 14:26]
 
 *** 预期分布
-
 *** 系统的组成部分.
 **** opsfree 
 **** rt/k2
@@ -56,25 +55,14 @@
 [2011-09-30 Fri 14:20]
 [[file:~/org/refile.org::*][:NOTE:]]
 
-** DONE 帮lidun 搞定 postgresql hstore
+** DONE  postgresql9.1.1 hstore 安装
   :LOGBOOK:
   CLOCK: [2011-10-09 Sun 15:01]--[2011-10-09 Sun 15:04] =>  0:03
   CLOCK: [2011-10-09 Sun 11:41]--[2011-10-09 Sun 12:10] =>  0:29
   :END:
-[2011-10-09 Sun 11:41]
-[[file:~/org/refile.org::*%E5%9B%9E%E8%B4%AD][回购]]
 
- 机器地址:
-
-ssh yuting@shterm.aliyun-inc.com
-
-李敦 2011-10-09 11:41:33
-ay10-c，进去后到workgw这台机器
-李敦 2011-10-09 11:41:40
-ssh workgw
-
- postgresql 9.1 开始使用 create extention hstore 来创建 扩展
-
+   1. ssh yuting@shterm.aliyun-inc.com
+   2. postgresql 9.1 开始使用 create extention hstore 来创建 扩展
 
 * wangwang
   rolesdb 加入到 opsfree 当中.
@@ -82,3 +70,6 @@ ssh workgw
 
 * aliyun 的云梯的入口
   1. ssh shterm.aliyun-inc.com
+
+* opsfree2 的访问地址
+  1. http://sitefront.corp.linuxnote.net/search/index
