@@ -5,7 +5,7 @@
 [2011-09-21 Wed 12:03]
 [[file:~/org/taobaoworks.org::*]]
 
-  1. opsfree 
+  1. opsfree / rolesdb
   2. rt/k2
   3. broom
   4. oob
@@ -30,6 +30,7 @@
 **** yum
 **** gemstone/cmos
 
+
 *** 系统管理项目实施模板
 
 **** 确定机器范围(TAGS)
@@ -41,7 +42,6 @@
 ***** 配置形式(net/localfile/none)
      
 **** 部署方法描述.
-     
 **** 是否有相关的监控和自修复需求.
 
 ** 离职: zhangchengwei.pt@ 淘宝旅行， java 开发			       :NOTE:
@@ -74,3 +74,11 @@ ay10-c，进去后到workgw这台机器
 ssh workgw
 
  postgresql 9.1 开始使用 create extention hstore 来创建 扩展
+
+
+* wangwang
+  rolesdb 加入到 opsfree 当中.
+	- 需要确认加什么东西.
+
+* aliyun 的云梯的入口
+  1. ssh shterm.aliyun-inc.com

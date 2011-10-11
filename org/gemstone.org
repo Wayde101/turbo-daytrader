@@ -33,9 +33,7 @@
       - [ ] mako 库
       - [ ] 程序命令行界面.
 	cf_out.py --template <template_file> 
-	
 
-       
 ***** STARTED 配置 yasnippet & flymake
        :LOGBOOK:
        CLOCK: [2011-10-08 Sat 09:58]--[2011-10-08 Sat 11:30] =>  1:32
@@ -49,24 +47,20 @@
 *** gemclient 部署
 **** 确定 gemclient 的部署步骤.
 **** 确定普通机器上需要安装的 tops 包，来评估系统影响.
+*** TODO @SQA 的机器需要部属上所有的gemclient
+   - [X] 有一些包的 TAG 需要变成 TOPS . 重新做包以避免和 阿凡达 冲突 
+
+
 ** CMOS
 *** DONE cmos package and installation
-    CLOSED: [2011-09-29 Thu 13:57]
-    - State "DONE"       from "STARTED"    [2011-09-29 Thu 13:57]
   :LOGBOOK:
   :END:
-    [2011-09-27 Tue 14:32]
-
 **** DONE checkout cmos 包，并且编译
-      CLOSED: [2011-09-29 Thu 10:31]
-      - State "DONE"       from "NEXT"       [2011-09-29 Thu 10:31]
       :LOGBOOK:
       :END:
       fix: /usr/local/cmos => datapath 
       
 **** DONE 考虑如何加入 gemclient 相关的工具包到 cmos module下.
-     CLOSED: [2011-09-29 Thu 13:57]
-     - State "DONE"       from "STARTED"    [2011-09-29 Thu 13:57]
       :LOGBOOK:
       CLOCK: [2011-09-29 Thu 13:29]--[2011-09-29 Thu 13:57] =>  0:28
       CLOCK: [2011-09-29 Thu 11:41]--[2011-09-29 Thu 12:23] =>  0:42
@@ -112,7 +106,4 @@
 [[file:~/org/todolist.org::*tops-seco-core][tops-seco-core]]
 ** TODO @SQA 的机器的KEY 的问题确认
    和baifei 确认后继续安装 gemstone.
-
-** TODO @SQA 的机器需要部属上所有的gemclient
-有一些包的 TAG 需要变成 TOPS . 重新做包以避免和 阿凡达 冲突
 
