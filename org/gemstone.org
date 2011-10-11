@@ -89,23 +89,23 @@
   CLOCK: [2011-09-20 Tue 14:49]--[2011-09-20 Tue 14:50] =>  0:01
   CLOCK: [2011-09-20 Tue 14:33]--[2011-09-20 Tue 14:45] =>  0:12
   CLOCK: [2011-09-20 Tue 14:15]--[2011-09-20 Tue 14:21] =>  0:06
-  1. 收集软件列表。 （日后评估安装的影响）
-tops-seco-core install           # tops
-tops-seco-gemstone install       # tops
-tops-seco-awesomerange install   # tops
-tops-python27 install		 # tops 
-tops-perl58 install		 # tops
-libcrange install		 # tops
-librange install		 # tops
-daemontools install		 # tops
-ucspi-tcp install		 # tops
-tops-seco-utils install		 # tops 
-supervisersync install		 # tops
-sync-gemserver install		 # tops
-p4-server install		 # tops
-p4-client install		 # tops
-  2. recompile.			done
-  3. re-install tops-gemclient.
+  - 收集软件列表。 （日后评估安装的影响）[16/16]
+    - [X] tops-seco-core install           # tops
+    - [X] tops-seco-gemstone install       # tops
+    - [X] tops-seco-awesomerange install   # tops
+    - [X] tops-python27 install		 # tops 
+    - [X] tops-perl58 install		 # tops
+    - [X] libcrange install		 # tops
+    - [X] librange install		 # tops
+    - [X] daemontools install		 # tops
+    - [X] ucspi-tcp install		 # tops
+    - [X] tops-seco-utils install	 # tops 
+    - [X] supervisersync install	 # tops
+    - [X] sync-gemserver install	 # tops
+    - [X] p4-server install		 # tops
+    - [X] p4-client install 
+    - [X] recompile.			done
+    - [X] re-install tops-gemclient.
   CLOCK: [2011-09-20 Tue 14:00]--[2011-09-20 Tue 14:02] =>  0:02
   :PROPERTIES:
   :ORDERED:  t
