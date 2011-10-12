@@ -21,6 +21,11 @@
   1. 通过mako 把opsfree 里面的数据 + HOSTS/nodes.cf GROUPS/nodes.cf
   2. 人来编辑模板，实现机器和人可以coedit HOSTS/nodes.cf GROUPS/nodes.cf
 
+     是否多个template.
+	patten1.tmpl
+	patten2.tmpl
+        patten3.tmpl
+
 ***** STARTED 调研mako .  目的 opsfree + json 接口 + mako 模板生成 nodes.cf [1/3]
       :LOGBOOK:
       CLOCK: [2011-10-11 Tue 14:28]--[2011-10-12 三 07:50] => 17:22
@@ -50,33 +55,8 @@
 *** TODO @SQA 的机器需要部属上所有的gemclient
    - [X] 有一些包的 TAG 需要变成 TOPS . 重新做包以避免和 阿凡达 冲突 
 
-
-** CMOS
-*** DONE cmos package and installation
-  :LOGBOOK:
-  :END:
-**** DONE checkout cmos 包，并且编译
-      :LOGBOOK:
-      :END:
-      fix: /usr/local/cmos => datapath 
-      
-**** DONE 考虑如何加入 gemclient 相关的工具包到 cmos module下.
-      :LOGBOOK:
-      CLOCK: [2011-09-29 Thu 13:29]--[2011-09-29 Thu 13:57] =>  0:28
-      CLOCK: [2011-09-29 Thu 11:41]--[2011-09-29 Thu 12:23] =>  0:42
-      :END:
-     - gemclient (refresh,stop,start,status)
-
-**** NEXT cmos 相关设计
-   - 主要包含的命令:
-     - net 
-       - MACs
-     - service (list service )
-   - cmos 功
-
-** 确定机器的部署范围. (仅仅motd)
-*** 系统整体规划.
-** DONE 收集所有的gemstone 覆盖到的软件包集体升级到 TOPS tag
+*** 确定gemstone管理范围. (仅仅motd)
+*** DONE 收集所有的gemstone 覆盖到的软件包集体升级到 TOPS tag
   CLOCK: [2011-09-20 Tue 14:53]--[2011-09-20 Tue 15:25] =>  0:32
   CLOCK: [2011-09-20 Tue 14:49]--[2011-09-20 Tue 14:50] =>  0:01
   CLOCK: [2011-09-20 Tue 14:33]--[2011-09-20 Tue 14:45] =>  0:12
@@ -104,6 +84,33 @@
   :END:
 [2011-09-20 Tue 14:00]
 [[file:~/org/todolist.org::*tops-seco-core][tops-seco-core]]
+
+** CMOS
+*** DONE cmos package and installation
+  :LOGBOOK:
+  :END:
+**** DONE checkout cmos 包，并且编译
+      :LOGBOOK:
+      :END:
+      fix: /usr/local/cmos => datapath 
+      
+**** DONE 考虑如何加入 gemclient 相关的工具包到 cmos module下.
+      :LOGBOOK:
+      CLOCK: [2011-09-29 Thu 13:29]--[2011-09-29 Thu 13:57] =>  0:28
+      CLOCK: [2011-09-29 Thu 11:41]--[2011-09-29 Thu 12:23] =>  0:42
+      :END:
+     - gemclient (refresh,stop,start,status)
+
+**** NEXT cmos 相关设计
+   - 主要包含的命令:
+     - net 
+       - MACs
+     - service (list service )
+   - cmos 功
+
+
+*** 系统整体规划.
+
 ** TODO @SQA 的机器的KEY 的问题确认
    和baifei 确认后继续安装 gemstone.
 

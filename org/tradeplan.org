@@ -36,7 +36,6 @@
 	0.9179 做多美瑞, 止损 0.9128 ,目标 0.9310
 	仓位: 0.3 手. 
 
-
 * TRADEPLAN (tradeplan)  :TRADEPLAN:
   :LOGBOOK:
   CLOCK: [2011-10-11 Tue 08:56]--[2011-10-11 Tue 10:05] =>  1:09

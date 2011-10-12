@@ -1,10 +1,9 @@
 * System Network operating center
-
+  
 ** openvpn							       :NOTE:
    CLOCK: [2011-09-22 Thu 13:19]--[2011-09-22 Thu 16:17] =>  2:58
 [2011-09-22 Thu 13:19]
 [[file:~/.emacs.d/tp/tradeplan.el::(tpvar-update%20,(concat%20"usdx-"%20tfi)%20:dsum%20(widget-value%20widget%20))))][file:~/.emacs.d/tp/tradeplan.el::(tpvar-update ,(concat "usdx-" tfi) :dsum (widget-value widget ))))]]
-
 
 *** 生成 key 
 
@@ -55,9 +54,6 @@ then:
 
 同时把 key 上传到 debian 服务器中.
 
-** TODO 给openvpn 搭建daemontools
-[2011-09-22 Thu 17:43]
-[[file:~/org/elist_tut.org::*%E5%B1%80%E9%83%A8%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%8F%98%E9%87%8F%20(let%20&%20let*)][局部作用域的变量 (let & let*)]]
 ** DONE 需要把家里的机器通过自有的 open vpn 链接到公司的网络.
   CLOCK: [2011-09-22 Thu 17:34]--[2011-09-22 Thu 17:41] =>  0:07
 [2011-09-21 Wed 09:47]
