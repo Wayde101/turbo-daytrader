@@ -83,7 +83,6 @@ openssl enc -des -d -a -in <filename.des> -out <filename>
   - hg 中使用的是 openvpn 给家里的电脑用 。
   - officevpn 是给笔记本使用
 
-
 ** TODO 配置一个gnus mail
   CLOCK: [2011-09-21 Wed 16:04]--[2011-09-21 Wed 16:48] =>  0:44
   CLOCK: [2011-09-21 Wed 14:49]--[2011-09-21 Wed 16:04] =>  1:15
