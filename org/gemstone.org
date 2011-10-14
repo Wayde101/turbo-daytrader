@@ -36,7 +36,7 @@
       :END:
       - [X] 给mako 打包 
       - [ ] opsfree + json 的库.
-	http://tops.corp.taobao.com/2011/07/sitebase-api-%E6%8F%8F%E8%BF%B0/
+ 	http://tops.corp.taobao.com/2011/07/sitebase-api-%E6%8F%8F%E8%BF%B0/
       - [ ] mako 库
       - [ ] 程序命令行界面.
 	cf_out.py --template <template_file> 
