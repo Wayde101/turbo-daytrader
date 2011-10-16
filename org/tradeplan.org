@@ -1,3 +1,6 @@
+| date in | currency | ent. | s(l/p) | profit | total |
+|         |          |      |        |        |       |
+
 | currency |    sl. |    en. |    sp. | b/s | lots | point  |  profit |
 |----------+--------+--------+--------+-----+------+--------+---------|
 | usdchf   | 0.9130 | 0.9182 | 0.9310 | s   |  0.3 | 51.9   | -170.87 |
