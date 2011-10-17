@@ -126,3 +126,20 @@ https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94
 [[file:~/org/gemstone.org::*%E9%85%8D%E7%BD%AE%20yasnippet%20&%20flymake][配置 yasnippet & flymake]]
 
 	需要把默认的pyrange 的 altpath 设置成 /home/tops/tools/conf
+* TODO 需要确定 rsyncd 的日志存放地点
+  :LOGBOOK:
+  CLOCK: [2011-10-17 Mon 11:54]--[2011-10-17 Mon 11:58] =>  0:04
+  :END:
+[2011-10-17 Mon 11:54]
+[[file:~/org/reading.org::*%E3%80%8A%E6%97%85%E8%A1%8C%E4%BA%BA%E7%94%9F%E6%9C%80%E6%9C%89%E4%BB%B7%E5%80%BC%E7%9A%84%E6%8A%95%E8%B5%84%E3%80%8B%20-%20Jim%20Rogers][《旅行人生最有价值的投资》   - Jim Rogers]]
+
+目前已经写满了一个admin 的机器 v035030.sqa.cm4.
+	- 写到 /dev/null?
+	- 还是打到 syslog-ng 下面?
+* TODO 去掉 supervisersync.x86_64 这个包，统一使用 supervisersync.noarch
+  :LOGBOOK:
+  CLOCK: [2011-10-17 Mon 11:59]--[2011-10-17 Mon 12:00] =>  0:01
+  :END:
+[2011-10-17 Mon 11:59]
+[[file:~/org/reading.org::*%E3%80%8A%E6%97%85%E8%A1%8C%E4%BA%BA%E7%94%9F%E6%9C%80%E6%9C%89%E4%BB%B7%E5%80%BC%E7%9A%84%E6%8A%95%E8%B5%84%E3%80%8B%20-%20Jim%20Rogers][《旅行人生最有价值的投资》   - Jim Rogers]]
+	统一使用 supervisersync.noarch
