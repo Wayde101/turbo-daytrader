@@ -1,2 +1,7 @@
-;; org-persist.el - tingbox at <2011-10-11 Tue 18:16>
-(setq stored-clock-history '(("/home/yuting/org/gemstone.org" . 1341) ("/home/yuting/org/refile.org" . 1639) ("/home/yuting/org/todolist.org" . 30) ("/home/yuting/org/gemstone.org" . 866)))
+<<<<<<< local
+;; org-persist.el - tingbox at <2011-10-14 Fri 18:28>
+(setq stored-clock-history '(("/home/yuting/org/refile.org" . 1958) ("/home/yuting/org/refile.org" . 3930) ("/home/yuting/org/gemstone.org" . 524) ("/home/yuting/src/turbo-daytrader/org/tradeplan.org" . 2577) ("/home/yuting/org/todolist.org" . 30)))
+=======
+;; org-persist.el - tingbox at <2011-10-16 日 09:34>
+(setq stored-clock-history '(("/home/yuting/src/turbo-daytrader/org/reading.org" . 3948)))
+>>>>>>> other
