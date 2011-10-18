@@ -3,6 +3,8 @@
 (require 'ido)
 (ido-mode t)
 
+
+
 (setq user-home-dir (getenv "HOME")
       conf-root-dir (concat user-home-dir "/.emacs.d"))
 
