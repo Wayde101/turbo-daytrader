@@ -197,3 +197,9 @@ Next: 交易币种初选  交易计划模板  Prev: 交易计划模板
 >eur chf aud cad >gbp >>jpy >
 
 今日选择做多欧元. 1等模型
+* TRADEPLAN (tradeplan)  :TRADEPLAN:
+  :LOGBOOK:
+  CLOCK: [2011-10-18 Tue 09:27]
+  :END:
+[2011-10-18 Tue 09:27]
+
