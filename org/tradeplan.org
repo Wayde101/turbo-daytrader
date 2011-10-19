@@ -199,8 +199,15 @@ Next: 交易币种初选  交易计划模板  Prev: 交易计划模板
 今日选择做多欧元. 1等模型
 * TRADEPLAN (tradeplan)  :TRADEPLAN:
   :LOGBOOK:
-  CLOCK: [2011-10-18 Tue 09:27]
+  CLOCK: [2011-10-18 Tue 09:27]--[2011-10-19 Wed 09:49] => 24:22
   :END:
 [2011-10-18 Tue 09:27]
 
-macd 反弹模型.
+macd 反弹模型. 
+* TRADEPLAN (tradeplan)  :TRADEPLAN:
+  :LOGBOOK:
+  CLOCK: [2011-10-19 Wed 09:50]--[2011-10-19 Wed 10:21] =>  0:31
+  :END:
+[2011-10-19 Wed 09:50]
+ 维持昨天的看法，非美进入到小时图震荡走势，macd 模型交易模型依然成立.
+ 瑞郎和欧元进场.
