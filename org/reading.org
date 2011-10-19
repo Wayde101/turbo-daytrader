@@ -11,7 +11,35 @@
    flexible database. You'll also see, in Chapter 6, how even using a 
    global variable is more flexible in Common Lisp than it may be in 
    other languages.
+    - (list 1 2 3)
+    - (getf (list :a 1 :b 2 :c 3) :a)
 
+    创建一个 hash item.
+    - (defun make-cd (title artist rating ripped)
+      (list :title title :artist artist :rating rating :ripped ripped))
+    把这个hash item 放到 *db* 中去
+    (defvar *db* nil)
+    (defun add-record (cd) (push cd *db*))
+    (add-record (make-cd "Roses" "Kathy Mattea" 7 t))
+    (add-record (make-cd "Fly" "Dixie Chicks" 8 t))
+    (add-record (make-cd "Home" "Dixie Chicks" 9 t))
+    
+    dump *db*
+    (defun dump-db ()
+	(dolist (cd *db*)
+	(format t "~{~a:~10t~a~%~}~%" cd)))
+    (dump-db)
+    
+    - Improving the User Interaction
+
+    (defun prompt-read (prompt)
+	  (format *query-io* "~a: " prompt)
+	  (force-output *query-io*)
+	  (read-line *query-io*))
+  
+    - parse integer
+    (defun parse-integer (prompt-read))
+    (parse-integer (prompt-read "Rating"))
 
   - [ ] Syntax and Semantics
   - [ ] Functions
