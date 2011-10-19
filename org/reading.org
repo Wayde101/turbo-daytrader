@@ -5,6 +5,14 @@
     korn-like motto: a programble programing language
   - [X] Lather, Rinse, Repeat: A Tour of the REPL
   - [ ] Practical: A Simple Database
+   2 Using a global variable also has some drawbacks--for instance, 
+   you can have only one database at a time. In Chapter 27, with more 
+   of the language under your belt, you'll be ready to build a more 
+   flexible database. You'll also see, in Chapter 6, how even using a 
+   global variable is more flexible in Common Lisp than it may be in 
+   other languages.
+
+
   - [ ] Syntax and Semantics
   - [ ] Functions
   - [ ] Variables
