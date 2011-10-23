@@ -1,75 +1,73 @@
 * 书目
 ** TODO 《Practical Common Lisp》
-- progress [2/32]
-  - [X] Introduction: Why Lisp?
-    korn-like motto: a programble programing language
-  - [X] Lather, Rinse, Repeat: A Tour of the REPL
-  - [ ] Practical: A Simple Database
-   2 Using a global variable also has some drawbacks--for instance, 
-   you can have only one database at a time. In Chapter 27, with more 
-   of the language under your belt, you'll be ready to build a more 
-   flexible database. You'll also see, in Chapter 6, how even using a 
-   global variable is more flexible in Common Lisp than it may be in 
-   other languages.
-    - (list 1 2 3)
-    - (getf (list :a 1 :b 2 :c 3) :a)
+   1. [X] Introduction: Why Lisp?
+      korn-like motto: a programble programing language
+   2. [X] Lather, Rinse, Repeat: A Tour of the REPL
+   3. [ ] Practical: A Simple Database
+     2 Using a global variable also has some drawbacks--for instance, 
+     you can have only one database at a time. In Chapter 27, with more 
+     of the language under your belt, you'll be ready to build a more 
+     flexible database. You'll also see, in Chapter 6, how even using a 
+     global variable is more flexible in Common Lisp than it may be in 
+     other languages.
+      - (list 1 2 3)
+      - (getf (list :a 1 :b 2 :c 3) :a)
 
-    创建一个 hash item.
-    - (defun make-cd (title artist rating ripped)
-      (list :title title :artist artist :rating rating :ripped ripped))
-    把这个hash item 放到 *db* 中去
-    (defvar *db* nil)
-    (defun add-record (cd) (push cd *db*))
-    (add-record (make-cd "Roses" "Kathy Mattea" 7 t))
-    (add-record (make-cd "Fly" "Dixie Chicks" 8 t))
-    (add-record (make-cd "Home" "Dixie Chicks" 9 t))
+      创建一个 hash item.
+      - (defun make-cd (title artist rating ripped)
+	(list :title title :artist artist :rating rating :ripped ripped))
+      把这个hash item 放到 *db* 中去
+      (defvar *db* nil)
+      (defun add-record (cd) (push cd *db*))
+      (add-record (make-cd "Roses" "Kathy Mattea" 7 t))
+      (add-record (make-cd "Fly" "Dixie Chicks" 8 t))
+      (add-record (make-cd "Home" "Dixie Chicks" 9 t))
     
-    dump *db*
-    (defun dump-db ()
-	(dolist (cd *db*)
-	(format t "~{~a:~10t~a~%~}~%" cd)))
-    (dump-db)
+      dump *db*
+      (defun dump-db ()
+	  (dolist (cd *db*)
+	  (format t "~{~a:~10t~a~%~}~%" cd)))
+      (dump-db)
     
-    - Improving the User Interaction
+      - Improving the User Interaction
 
-    (defun prompt-read (prompt)
-	  (format *query-io* "~a: " prompt)
-	  (force-output *query-io*)
-	  (read-line *query-io*))
+      (defun prompt-read (prompt)
+	    (format *query-io* "~a: " prompt)
+	    (force-output *query-io*)
+	    (read-line *query-io*))
   
-    - parse integer
-    (defun parse-integer (prompt-read))
-    (parse-integer (prompt-read "Rating"))
-
-  - [ ] Syntax and Semantics
-  - [ ] Functions
-  - [ ] Variables
-  - [ ] Macros: Standard Control Constructs
-  - [ ] Macros: Defining Your Own
-  - [ ] Practical: Building a Unit Test Framework
-  - [ ] Numbers, Characters, and Strings
-  - [ ] Collections
-  - [ ] They Called It LISP for a Reason: List Processing
-  - [ ] Beyond Lists: Other Uses for Cons Cells
-  - [ ] Files and File I/O
-  - [ ] Practical: A Portable Pathname Library
-  - [ ] Object Reorientation: Generic Functions
-  - [ ] Object Reorientation: Classes
-  - [ ] A Few FORMAT Recipes
-  - [ ] Beyond Exception Handling: Conditions and Restarts
-  - [ ] The Special Operators
-  - [ ] Programming in the Large: Packages and Symbols
-  - [ ] LOOP for Black Belts
-  - [ ] Practical: A Spam Filter
-  - [ ] Practical: Parsing Binary Files
-  - [ ] Practical: An ID3 Parser
-  - [ ] Practical: Web Programming with AllegroServe
-  - [ ] Practical: An MP3 Database
-  - [ ] Practical: A Shoutcast Server
-  - [ ] Practical: An MP3 Browser
-  - [ ] Practical: An HTML Generation Library, the Interpreter
-  - [ ] Practical: An HTML Generation Library, the Compiler
-  - [ ] Conclusion: What's Next?
+      - parse integer
+      (defun parse-integer (prompt-read))
+      (parse-integer (prompt-read "Rating"))
+   4. [ ] Syntax and Semantics
+   5. [ ] Functions
+   6. [ ] Variables
+   7. [ ] Macros: Standard Control Constructs
+   8. [ ] Macros: Defining Your Own
+   9. [ ] Practical: Building a Unit Test Framework
+   10. [ ] Numbers, Characters, and Strings
+   11. [ ] Collections
+   12. [ ] They Called It LISP for a Reason: List Processing
+   13. [ ] Beyond Lists: Other Uses for Cons Cells
+   14. [ ] Files and File I/O
+   15. [ ] Practical: A Portable Pathname Library
+   16. [ ] Object Reorientation: Generic Functions
+   17. [ ] Object Reorientation: Classes
+   18. [ ] A Few FORMAT Recipes
+   19. [ ] Beyond Exception Handling: Conditions and Restarts
+   20. [ ] The Special Operators
+   21. [ ] Programming in the Large: Packages and Symbols
+   22. [ ] LOOP for Black Belts
+   23. [ ] Practical: A Spam Filter
+   24. [ ] Practical: Parsing Binary Files
+   25. [ ] Practical: An ID3 Parser
+   26. [ ] Practical: Web Programming with AllegroServe
+   27. [ ] Practical: An MP3 Database
+   28. [ ] Practical: A Shoutcast Server
+   29. [ ] Practical: An MP3 Browser
+   30. [ ] Practical: An HTML Generation Library, the Interpreter
+   31. [ ] Practical: An HTML Generation Library, the Compiler
+   32. [ ] Conclusion: What's Next?
 ** 《深入理解计算机系统》
    - chapter 1 计算机系统漫游 [0/10]
      - [ ] 信息就是位 + 上下文
@@ -233,7 +231,10 @@
      
 ** 《黑客与画家》
    - 第一章
-** 《旅行人生最有价值的投资》   - Jim Rogers
+** DONE 《旅行人生最有价值的投资》   - Jim Rogers
+   :LOGBOOK:
+   CLOCK: [2011-10-10 日 22:43]--[2011-10-23 日 22:43] => 312:00
+   :END:
    - 第一篇 从顿琴到东京 [10/10]
      - [X] 飞向苏联
      - [X] 纽约
@@ -271,16 +272,16 @@
      - [X] 赞比亚和大津巴布韦
      - [X] 博次瓦纳
      - [X] 南非
-   - 第四篇 绕过和恩角
+   - 第四篇 绕过和恩角 [9/9]
      - [X] 澳大利亚的长途跋涉
      - [X] 世界尽头
      - [X] 布宜诺斯艾利斯
      - [X] 智力与复活节岛
      - [X] 走进印加
-     - [ ] 沿着达尔文的足迹
-     - [ ] 达里恩地带
-     - [ ] 巴拿马运河
-     - [ ] 回家
+     - [X] 沿着达尔文的足迹
+     - [X] 达里恩地带
+     - [X] 巴拿马运河
+     - [X] 回家
 
 ** 《次第花开》  - 希阿荣博堪步 著
    - 第一部 珍宝人生 [3/3]
