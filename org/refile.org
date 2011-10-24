@@ -30,13 +30,15 @@
 https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94E37406A9E6B5BCB504D17AB8F7B7BD5E5E3622FD9117550216682B2E83AE4F06271348A0FD4D7
 
 
-* TODO 给postgresql 打一个 tops 包
+* DONE 给postgresql 打一个 tops 包
   :LOGBOOK:
+  CLOCK: [2011-10-24 Mon 11:07]--[2011-10-24 Mon 16:51] =>  5:44
   CLOCK: [2011-10-09 Sun 12:10]--[2011-10-09 Sun 15:01] =>  2:51
   :END:
 [2011-10-09 Sun 12:10]
 [[file:~/org/refile.org::*%E5%B8%AElidun%20%E6%90%9E%E5%AE%9A%20postgresql%20hstore][帮lidun 搞定 postgresql hstore]]
   - http://wwwmaster.postgresql.org/download/mirrors-ftp/source/v9.1.1/postgresql-9.1.1.tar.bz2
+    包名: tops-pgsql
     
 * 如何通过 emacs 编辑系统下root权限的东西 			       :NOTE:
    :LOGBOOK:
