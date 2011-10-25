@@ -26,8 +26,6 @@
   :LOGBOOK:
   CLOCK: [2011-09-26 Mon 17:16]--[2011-09-26 Mon 17:27] =>  0:11
   :END:
-[2011-09-26 Mon 17:13]
-[[file:~/org/docs/orgmode-tut.org::*Reminders][Reminders]]
 	翻译完毕，但是具体还不知道怎么用
 
 *** TODO schedule todo list to somedays.
