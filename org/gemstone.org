@@ -5,12 +5,12 @@
 ** gemclient
 *** amdin 规划
 **** 确定以及部署 gemserver
-**** TODO 需要对每一个目前已经有的安装包进行一次整体review.
-  主要看 daemontools + tops-gemclient-run
-  
+**** DONE 需要对每一个目前已经有的安装包进行一次整体review.
   CLOCK: [2011-09-20 Tue 14:50]--[2011-09-20 Tue 14:53] =>  0:03
 [2011-09-20 Tue 14:50]
 [[file:~/org/refile.org::*%E6%94%B6%E9%9B%86%E6%89%80%E6%9C%89%E7%9A%84gemstone%20cover%E5%88%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85%E9%9B%86%E4%BD%93%E5%8D%87%E7%BA%A7%E5%88%B0%20TOPS%20tag][收集所有的gemstone cover到的软件包集体升级到 TOPS tag]]
+	主要看 daemontools + tops-gemclient-run
+  
 
 **** STARTED opsfree 和 gemstone 信息交互。
      :LOGBOOK:
