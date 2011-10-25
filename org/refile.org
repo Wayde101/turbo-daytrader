@@ -19,7 +19,6 @@
 [2011-09-29 Thu 18:05]
 [[file:~/org/gemstone.org::*%E9%85%8D%E7%BD%AE%20yasnippet%20&%20flymake][配置 yasnippet & flymake]]
  
-
 * DONE 回购
   :LOGBOOK:
   CLOCK: [2011-10-08 Sat 11:30]--[2011-10-08 Sat 11:40] =>  0:10
@@ -28,7 +27,6 @@
 [[gnus:Junk#1750506965.23141316708747540.JavaMail.root@UNKNOWN.aliyun.com][Email from SHARES@alibaba-inc.com: 第三方投资人投标要约购买阿里巴]]
 
 https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94E37406A9E6B5BCB504D17AB8F7B7BD5E5E3622FD9117550216682B2E83AE4F06271348A0FD4D7
-
 
 * DONE 给postgresql 打一个 tops 包
   :LOGBOOK:
@@ -75,7 +73,6 @@ https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94
 目前已经写满了一个admin 的机器 v035030.sqa.cm4.
 	- 写到 /dev/null yes
 
-	
 * TODO gemserver.rsync 
   :LOGBOOK:
   CLOCK: [2011-10-17 Mon 12:00]--[2011-10-18 Tue 09:27] => 21:27
