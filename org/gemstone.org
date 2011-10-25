@@ -105,24 +105,24 @@
      - gemclient (refresh,stop,start,status)
 
 **** NEXT cmos 的插件需求
-     - network [/]
-       - [ ] mac address
-       - [ ] ip address
-       - [ ] interface related
-     - system
+     - network [3/3]
+       - [X] mac address
+       - [X] ip address
+       - [X] interface related
+     - system  [0/3]
        - [ ] cpu
 	# of cores, # of cpus, # of threads
        - [ ] model
        - [ ] real freq / capable freq
-     - [ ] mem
+     - [ ] mem [0/3]
        - [ ] size
        - [ ] in-used slots and avaiable slots
        - [ ] serial no.
-     - hard disk
+     - hard disk [0/3]
        - [ ] raid
        - [ ] size
        - [ ] avaiable space and percent
-     - service
+     - service [0/5]
        - [ ] ntp
        - [ ] yum
        - [ ] sitebase / opsfree
