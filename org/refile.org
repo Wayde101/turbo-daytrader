@@ -1,11 +1,3 @@
-* STARTED runin 脚本
-  :LOGBOOK:
-  CLOCK: [2011-09-29 Thu 12:40]--[2011-09-29 Thu 13:08] =>  0:28
-  :END:
-[2011-09-29 Thu 12:39]
-[[file:~/org/health_ent.org::*%E5%90%83%E9%A5%AD][吃饭]]
-	support run cmd in some directory
-
 * NEXT 把 spkg clone 到本机笔记本上
   :LOGBOOK:
   CLOCK: [2011-09-29 Thu 13:08]--[2011-09-29 Thu 13:14] =>  0:06
@@ -28,16 +20,6 @@
 
 https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94E37406A9E6B5BCB504D17AB8F7B7BD5E5E3622FD9117550216682B2E83AE4F06271348A0FD4D7
 
-* DONE 给postgresql 打一个 tops 包
-  :LOGBOOK:
-  CLOCK: [2011-10-24 Mon 11:07]--[2011-10-24 Mon 16:51] =>  5:44
-  CLOCK: [2011-10-09 Sun 12:10]--[2011-10-09 Sun 15:01] =>  2:51
-  :END:
-[2011-10-09 Sun 12:10]
-[[file:~/org/refile.org::*%E5%B8%AElidun%20%E6%90%9E%E5%AE%9A%20postgresql%20hstore][帮lidun 搞定 postgresql hstore]]
-  - http://wwwmaster.postgresql.org/download/mirrors-ftp/source/v9.1.1/postgresql-9.1.1.tar.bz2
-    包名: tops-pgsql
-    
 * 如何通过 emacs 编辑系统下root权限的东西 			       :NOTE:
    :LOGBOOK:
    CLOCK: [2011-10-10 一 07:26]--[2011-10-10 一 07:29] =>  0:03
@@ -73,20 +55,7 @@ https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94
 目前已经写满了一个admin 的机器 v035030.sqa.cm4.
 	- 写到 /dev/null yes
 
-* TODO gemserver.rsync 
-  :LOGBOOK:
-  CLOCK: [2011-10-17 Mon 12:00]--[2011-10-18 Tue 09:27] => 21:27
-  :END:
-[2011-10-17 Mon 12:00]
-[[file:~/org/reading.org::*%E3%80%8A%E6%97%85%E8%A1%8C%E4%BA%BA%E7%94%9F%E6%9C%80%E6%9C%89%E4%BB%B7%E5%80%BC%E7%9A%84%E6%8A%95%E8%B5%84%E3%80%8B%20-%20Jim%20Rogers][《旅行人生最有价值的投资》   - Jim Rogers]]
-
-@400000004e9b9fa02597f084 WARN: verification: setting symlink /home/gemserver -> /home/gemserver.rsync/current
-@400000004e9b9fa025981f64 WARN: verification: could not symlink /home/gemserver -> /home/gemserver.rsync/current
-@400000004e9b9fa02598a04c WARN: verification: director /home/gemserver 0755 root root
-
-gemserver.rsync 是从哪里rsync 的？
-
-*  project for our works 					       :NOTE:
+* project for our works 					       :NOTE:
    :LOGBOOK:
    :END:
 [2011-10-25 Tue 10:30]

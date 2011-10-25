@@ -1,5 +1,4 @@
 * System Network operating center
-  
 ** openvpn							       :NOTE:
    CLOCK: [2011-09-22 Thu 13:19]--[2011-09-22 Thu 16:17] =>  2:58
 [2011-09-22 Thu 13:19]
@@ -114,12 +113,17 @@ openssl enc -des -d -a -in <filename.des> -out <filename>
 [2011-09-25 Sun 09:41]
 [[file:~/org/gemstone.org::*%E7%A1%AE%E5%AE%9A%E6%99%AE%E9%80%9A%E6%9C%BA%E5%99%A8%E4%B8%8A%E9%9C%80%E8%A6%81%E5%AE%89%E8%A3%85%E7%9A%84%20tops%20%E5%8C%85%EF%BC%8C%E6%9D%A5%E8%AF%84%E4%BC%B0%E7%B3%BB%E7%BB%9F%E5%BD%B1%E5%93%8D.][确定普通机器上需要安装的 tops 包，来评估系统影响.]]
 
-** TODO 配置 imapd + ssl
+** DONE runin 脚本
+  :LOGBOOK:
+  CLOCK: [2011-09-29 Thu 12:40]--[2011-09-29 Thu 13:08] =>  0:28
+  :END:
+    support run cmd in some directory。 小工具
+
+** DONE 配置 imapd + ssl
   :LOGBOOK:
   CLOCK: [2011-09-29 Thu 18:05]--[2011-09-29 四 18:15] =>  0:10
   :END:
-[2011-09-29 Thu 18:05]
-[[file:~/org/gemstone.org::*%E9%85%8D%E7%BD%AE%20yasnippet%20&%20flymake][配置 yasnippet & flymake]]
-
+   目前依然使用的是 lancelot 上的 imapd + fetchmail + procmail 来收邮件.
+   然后通过 17forex 向外网导出邮件端口 。 收集邮件
 
 
