@@ -35,16 +35,6 @@
       - [ ] 程序命令行界面.
 	cf_out.py --template <template_file> 
 
-***** STARTED 配置 yasnippet & flymake
-       :LOGBOOK:
-       CLOCK: [2011-10-08 Sat 09:58]--[2011-10-08 Sat 11:30] =>  1:32
-       CLOCK: [2011-10-08 Sat 09:55]--[2011-10-08 Sat 09:56] =>  0:01
-       CLOCK: [2011-09-29 Thu 16:28]--[2011-09-29 Thu 18:05] =>  1:37
-       :END:
-
-       如果需要安装 python-mode , 先搞定 auto-complete
-       目前flymake 特别的慢
-
 *** gemclient 部署
 **** TODO 确定 gemclient 的部署步骤.
      - 部署步骤 [3/4]
