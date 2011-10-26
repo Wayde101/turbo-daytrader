@@ -1,2 +1,2 @@
-;; org-persist.el - tingbox at <2011-10-25 Tue 17:50>
-(setq stored-clock-history '(("/home/yuting/org/refile.org" . 2062) ("/home/yuting/org/todolist.org" . 30) ("/home/yuting/org/learning-orgmode.org" . 1252)))
+;; org-persist.el - tingbox at <2011-10-26 三 08:30>
+(setq stored-clock-history '(("/home/yuting/src/turbo-daytrader/org/refile.org" . 2062) ("/home/yuting/src/turbo-daytrader/org/todolist.org" . 30) ("/home/yuting/src/turbo-daytrader/org/learning-orgmode.org" . 1170)))
