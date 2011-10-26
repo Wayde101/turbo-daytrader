@@ -22,6 +22,8 @@
      GROUP1
 	INCLUDE opsfree1_nodes_compress('group1_query_string_in_opsfree')
 
+     目前暂时需要
+
 ***** STARTED 调研mako .  目的 opsfree + json 接口 + mako 模板生成 nodes.cf [1/3]
       :LOGBOOK:
       CLOCK: [2011-10-11 Tue 14:28]--[2011-10-12 三 07:50] => 17:22
@@ -92,7 +94,7 @@
       :END:
      - gemclient (refresh,stop,start,status)
 
-**** NEXT cmos 的插件需求
+**** TODO cmos 的插件需求
      - network [3/3]
        - [X] mac address
        - [X] ip address
