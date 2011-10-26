@@ -61,3 +61,20 @@ https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94
 [2011-10-25 Tue 10:30]
 [[file:~/org/gemstone.org::*@SQA%20%E7%9A%84%E6%9C%BA%E5%99%A8%E9%9C%80%E8%A6%81%E9%83%A8%E5%B1%9E%E4%B8%8A%E6%89%80%E6%9C%89%E7%9A%84gemclient][@SQA 的机器需要部属上所有的gemclient]]
 	http://project.corp.linuxnote.net/index.php?c=access&a=login
+* 运维的关键在 包管理上							       :NOTE:
+   :LOGBOOK:
+   :END:
+[2011-10-26 Wed 10:13]
+[[file:~/org/gemstone.org::*%E9%85%8D%E7%BD%AE%20yasnippet%20&%20flymake][配置 yasnippet & flymake]]
+	关于包管理上如何做? 
+* DNS/YUM/LVS/NTP 服务器运维 					       :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-10-26 Wed 10:18]
+   :END:
+[2011-10-26 Wed 10:18]
+[[file:~/org/gemstone.org::*gemserver.rsync][gemserver.rsync]]
+	- YUM 服务器.  (yum 集群的角色)
+	- DNS (包) lvs + dns 包.
+	- CNZ 的帐号问题. 在CNZ的机器上部署gemclient-run .
+	- NTP
+	- SYSLOG-NG
