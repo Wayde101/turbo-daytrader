@@ -5,12 +5,6 @@
 ** gemclient
 *** amdin 规划
 **** 确定以及部署 gemserver
-**** DONE 需要对每一个目前已经有的安装包进行一次整体review.
-  CLOCK: [2011-09-20 Tue 14:50]--[2011-09-20 Tue 14:53] =>  0:03
-[2011-09-20 Tue 14:50]
-[[file:~/org/refile.org::*%E6%94%B6%E9%9B%86%E6%89%80%E6%9C%89%E7%9A%84gemstone%20cover%E5%88%B0%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85%E9%9B%86%E4%BD%93%E5%8D%87%E7%BA%A7%E5%88%B0%20TOPS%20tag][收集所有的gemstone cover到的软件包集体升级到 TOPS tag]]
-	主要看 daemontools + tops-gemclient-run
-  
 
 **** STARTED opsfree 和 gemstone 信息交互。
      :LOGBOOK:
@@ -52,14 +46,18 @@
        目前flymake 特别的慢
 
 *** gemclient 部署
-**** 确定 gemclient 的部署步骤.
+**** TODO 确定 gemclient 的部署步骤.
+     - 部署步骤 [3/4]
+       - [X] 在目标机器上 yum install -y tops-gemclient-run
+       - [X] 在 gemroot (accountdb2) 的 .gs 下面 hosts.cf groups.cf 中配置该机器
+	 - [X] hosts.cf 确定该机器的 admin
+	 - [X] groups.cf 给该机器打 TAG
+       - [X] bin/make -r 该机器.
+       - [ ] bin/slave -r 该机器.
 **** 确定普通机器上需要安装的 tops 包，来评估系统影响.
-*** TODO @SQA 的机器需要部属上所有的gemclient
-    - 
-     
 
 *** 确定gemstone管理范围. (仅仅motd)
-*** DONE 收集所有的gemstone 覆盖到的软件包集体升级到 TOPS tag
+*** DONE 收集所有的gemstone 覆盖到的软件包集体升级到 TOPS tag . 顺便做review
   CLOCK: [2011-09-20 Tue 14:53]--[2011-09-20 Tue 15:25] =>  0:32
   CLOCK: [2011-09-20 Tue 14:49]--[2011-09-20 Tue 14:50] =>  0:01
   CLOCK: [2011-09-20 Tue 14:33]--[2011-09-20 Tue 14:45] =>  0:12
@@ -131,8 +129,9 @@
 
 *** 系统整体规划.
 
-** TODO @SQA 的机器的KEY 的问题确认
-   和baifei 确认后继续安装 gemstone.
+** DONE @SQA 的机器的KEY 的问题确认
+   和baifei 确认后继续安装 gemstone. rt9003
+   目前有 500多台机器无法登录.
 
 ** DONE 去掉 supervisersync.x86_64 这个包，统一使用 supervisersync.noarch
   :LOGBOOK:
