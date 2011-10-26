@@ -1,0 +1,48 @@
+#+PROPERTY: Effort_ALL 2d 5d 10d 20d 30d 35d 50d 
+#+COLUMNS: %70ITEM(Task) %Effort
+
+* Accounting Software
+
+** Specification
+   :PROPERTIES:
+   :Effort:   20d
+   :END:
+
+** Software Development
+
+*** Database coupling
+    :PROPERTIES:
+    :Effort:   20d
+    :END:
+
+*** Back-End Functions
+    :PROPERTIES:
+    :Effort:   30d
+    :END:
+
+*** Graphical User Interface
+    :PROPERTIES:
+    :Effort:   35d
+    :END:
+
+** Software testing
+*** Alpha Test
+    :PROPERTIES:
+    :Effort:   5d
+    :END:
+
+*** Beta Test
+    :PROPERTIES:
+    :Effort:   20d
+    :END:
+
+** Manual
+   :PROPERTIES:
+   :Effort:   50d
+   :END:
+
+** Milestones
+*** Project start
+*** Technology Preview
+*** Beta version
+*** Ship Product to Customer
