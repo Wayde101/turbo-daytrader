@@ -30,17 +30,20 @@
 
 
 ;;;; Code:
-(let ((org-test-dir (expand-file-name
+(let* ((org-test-dir (expand-file-name
 		      (file-name-directory
-		       (or load-file-name buffer-file-name)))))
-   (let ((org-lisp-dir (expand-file-name
-   		       (concat org-test-dir "../lisp"))))
-     (unless (featurep 'org)
-       (setq load-path (cons org-lisp-dir load-path))
-       (org-babel-do-load-languages
-	'org-babel-load-languages '((sh . t)))))
-   (let* ((load-path (cons
-		     (expand-file-name "ert" org-test-dir)
+		       (or load-file-name buffer-file-name))))
+       (org-lisp-dir (expand-file-name
+		      (concat org-test-dir "../lisp"))))
+
+  (unless (featurep 'org)
+    (setq load-path (cons org-lisp-dir load-path))
+    (require 'org)
+    (org-babel-do-load-languages
+     'org-babel-load-languages '((sh . t))))
+
+  (let* ((load-path (cons
+		     org-test-dir
 		     (cons
 		      (expand-file-name "jump" org-test-dir)
 		      load-path))))
@@ -69,8 +72,7 @@
     (when (file-exists-p
 	   (expand-file-name "jump/jump.el" org-test-dir))
       (require 'jump)
-      (require 'which-func))
-    (require 'org)))
+      (require 'which-func))))
 
 (defconst org-test-default-test-file-name "tests.el"
   "For each defun a separate file with tests may be defined.
@@ -100,6 +102,17 @@ org-test searches this directory up the directory tree.")
 
 
 ;;; Functions for writing tests
+(defun org-test-for-executable (exe)
+  "Throw an error if EXE is not available.
+This can be used at the top of code-block-language specific test
+files to avoid loading the file on systems without the
+executable."
+  (unless (reduce
+	   (lambda (acc dir)
+	     (or acc (file-exists-p (expand-file-name exe dir))))
+	   exec-path :initial-value nil)
+    (throw 'missing-test-dependency exe)))
+
 (defun org-test-buffer (&optional file)
   "TODO:  Setup and return a buffer to work with.
 If file is non-nil insert it's contents in there.")
@@ -138,6 +151,8 @@ currently executed.")
      (save-window-excursion
        (save-match-data
 	 (find-file my-file)
+	 (unless (eq major-mode 'org-mode)
+	   (org-mode))
 	 (setq to-be-removed (current-buffer))
 	 (goto-char (point-min))
 	 (condition-case nil
@@ -161,52 +176,69 @@ files."
      (re-search-forward (regexp-quote ,marker))
      ,@body))
 
+(defmacro org-test-with-temp-text (text &rest body)
+  "Run body in a temporary buffer with Org-mode as the active
+mode holding TEXT.  If the string \"<point>\" appears in TEXT
+then remove it and place the point there before running BODY,
+otherwise place the point at the beginning of the inserted text."
+  (declare (indent 1))
+  (let ((inside-text (if (stringp text) text (eval text))))
+    `(with-temp-buffer
+       (org-mode)
+       ,(let ((point (string-match (regexp-quote "<point>") inside-text)))
+	  (if point
+	      `(progn (insert `(replace-match "" nil nil inside-text))
+		      (goto-char ,(match-beginning 0)))
+	    `(progn (insert ,inside-text)
+		    (goto-char (point-min)))))
+       ,@body)))
+
 
 ;;; Navigation Functions
 (when (featurep 'jump)
-(defjump org-test-jump
-  (("lisp/\\1.el" . "testing/lisp/test-\\1.el")
-   ("lisp/\\1.el" . "testing/lisp/\\1.el/test.*.el")
-   ("contrib/lisp/\\1.el" . "testing/contrib/lisp/test-\\1.el")
-   ("contrib/lisp/\\1.el" . "testing/contrib/lisp/\\1.el/test.*.el")
-   ("testing/lisp/test-\\1.el" . "lisp/\\1.el")
-   ("testing/lisp/\\1.el" . "lisp/\\1.el/test.*.el")
-   ("testing/contrib/lisp/test-\\1.el" . "contrib/lisp/\\1.el")
-   ("testing/contrib/lisp/test-\\1.el" . "contrib/lisp/\\1.el/test.*.el"))
-  (concat org-base-dir "/")
-  "Jump between org-mode files and their tests."
-  (lambda (path)
-    (let* ((full-path (expand-file-name path org-base-dir))
-	  (file-name (file-name-nondirectory path))
-	  (name (file-name-sans-extension file-name)))
-      (find-file full-path)
-      (insert
-       ";;; " file-name "\n\n"
-       ";; Copyright (c) " (nth 5 (decode-time (current-time)))
-       " " user-full-name "\n"
-       ";; Authors: " user-full-name "\n\n"
-       ";; Released under the GNU General Public License version 3\n"
-       ";; see: http://www.gnu.org/licenses/gpl-3.0.html\n\n"
-       ";;;; Comments:\n\n"
-       ";; Template test file for Org-mode tests\n\n"
-       "\n"
-       ";;; Code:\n"
-       "(let ((load-path (cons (expand-file-name\n"
-       "			\"..\" (file-name-directory\n"
-       "			      (or load-file-name buffer-file-name)))\n"
-       "		       load-path)))\n"
-       "  (require 'org-test)\n"
-       "  (require 'org-test-ob-consts))\n\n"
-       "\n"
-       ";;; Tests\n"
-       "(ert-deftest " name "/example-test ()\n"
-       "  \"Just an example to get you started.\"\n"
-       "  (should t)\n"
-       "  (should-not nil)\n"
-       "  (should-error (error \"errr...\")))\n\n\n"
-       "(provide '" name ")\n\n"
-       ";;; " file-name " ends here\n") full-path))
-  (lambda () ((lambda (res) (if (listp res) (car res) res)) (which-function)))))
+  (defjump org-test-jump
+    (("lisp/\\1.el" . "testing/lisp/test-\\1.el")
+     ("lisp/\\1.el" . "testing/lisp/\\1.el/test.*.el")
+     ("contrib/lisp/\\1.el" . "testing/contrib/lisp/test-\\1.el")
+     ("contrib/lisp/\\1.el" . "testing/contrib/lisp/\\1.el/test.*.el")
+     ("testing/lisp/test-\\1.el" . "lisp/\\1.el")
+     ("testing/lisp/\\1.el" . "lisp/\\1.el/test.*.el")
+     ("testing/contrib/lisp/test-\\1.el" . "contrib/lisp/\\1.el")
+     ("testing/contrib/lisp/test-\\1.el" . "contrib/lisp/\\1.el/test.*.el"))
+    (concat org-base-dir "/")
+    "Jump between org-mode files and their tests."
+    (lambda (path)
+      (let* ((full-path (expand-file-name path org-base-dir))
+	     (file-name (file-name-nondirectory path))
+	     (name (file-name-sans-extension file-name)))
+	(find-file full-path)
+	(insert
+	 ";;; " file-name "\n\n"
+	 ";; Copyright (c) " (nth 5 (decode-time (current-time)))
+	 " " user-full-name "\n"
+	 ";; Authors: " user-full-name "\n\n"
+	 ";; Released under the GNU General Public License version 3\n"
+	 ";; see: http://www.gnu.org/licenses/gpl-3.0.html\n\n"
+	 ";;;; Comments:\n\n"
+	 ";; Template test file for Org-mode tests\n\n"
+	 "\n"
+	 ";;; Code:\n"
+	 "(let ((load-path (cons (expand-file-name\n"
+	 "			\"..\" (file-name-directory\n"
+	 "			      (or load-file-name buffer-file-name)))\n"
+	 "		       load-path)))\n"
+	 "  (require 'org-test)\n"
+	 "  (require 'org-test-ob-consts))\n\n"
+	 "\n"
+	 ";;; Tests\n"
+	 "(ert-deftest " name "/example-test ()\n"
+	 "  \"Just an example to get you started.\"\n"
+	 "  (should t)\n"
+	 "  (should-not nil)\n"
+	 "  (should-error (error \"errr...\")))\n\n\n"
+	 "(provide '" name ")\n\n"
+	 ";;; " file-name " ends here\n") full-path))
+    (lambda () ((lambda (res) (if (listp res) (car res) res)) (which-function)))))
 
 (define-key emacs-lisp-mode-map "\M-\C-j" 'org-test-jump)
 
@@ -234,15 +266,21 @@ files."
 (defun org-test-load ()
   "Load up the org-mode test suite."
   (interactive)
-  (flet ((rload (base)
-		(mapc
-		 (lambda (path)
-		   (if (file-directory-p path) (rload path) (load-file path)))
-		 (directory-files base 'full
-				  "^\\([^.]\\|\\.\\([^.]\\|\\..\\)\\).*\\.el$"))))
-    (rload (expand-file-name "lisp" org-test-dir))
-    (rload (expand-file-name "lisp"
-			     (expand-file-name "contrib" org-test-dir)))))
+  (flet ((rld (base)
+	      ;; Recursively load all files, if files throw errors
+	      ;; then silently ignore the error and continue to the
+	      ;; next file.  This allows files to error out if
+	      ;; required executables aren't available.
+	      (mapc
+	       (lambda (path)
+		 (if (file-directory-p path)
+		   (rld path)
+		   (catch 'missing-test-dependency
+		     (load-file path))))
+	       (directory-files base 'full
+				"^\\([^.]\\|\\.\\([^.]\\|\\..\\)\\).*\\.el$"))))
+    (rld (expand-file-name "lisp" org-test-dir))
+    (rld (expand-file-name "lisp" (expand-file-name "contrib" org-test-dir)))))
 
 (defun org-test-current-defun ()
   "Test the current function."

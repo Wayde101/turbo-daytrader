@@ -4,6 +4,7 @@
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 (require 'org-install)
 (require 'org-taskjuggler)
+(setq org-export-taskjuggler-target-version 3.0)
 
 
 (define-key global-map "\C-cl" 'org-store-link)

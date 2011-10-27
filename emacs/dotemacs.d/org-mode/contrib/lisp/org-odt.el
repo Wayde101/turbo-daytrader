@@ -30,6 +30,11 @@
 (eval-when-compile (require 'cl))
 (require 'org-lparse)
 
+(defgroup org-export-odt nil
+  "Options specific for ODT export of Org-mode files."
+  :tag "Org Export ODT"
+  :group 'org-export)
+
 (defun org-odt-end-export ()
   (org-odt-fixup-label-references)
 
@@ -184,7 +189,13 @@ FILE-MEMBERS.
 Use options 1, 2 or 3 only if styles.xml alone suffices for
 achieving the desired formatting.  Use option 4, if the styles.xml
 references additional files like header and footer images for
-achieving the desired formattting."
+achieving the desired formattting.
+
+Use \"#+ODT_STYLES_FILE: ...\" directive to set this variable on
+a per-file basis.  For example,
+
+#+ODT_STYLES_FILE: \"/path/to/styles.xml\" or
+#+ODT_STYLES_FILE: (\"/path/to/file.ott\" (\"styles.xml\" \"image/hdr.png\"))."
   :group 'org-export-odt
   :type
   '(choice
@@ -197,34 +208,24 @@ achieving the desired formattting."
 		(file :tag "	Member" "styles.xml")
 		(repeat (file :tag "Member"))))))
 
+(eval-after-load 'org-exp
+  '(add-to-list 'org-export-inbuffer-options-extra
+		'("ODT_STYLES_FILE" :odt-styles-file)))
+
 (defconst org-export-odt-tmpdir-prefix "odt-")
 (defconst org-export-odt-bookmark-prefix "OrgXref.")
-(defcustom org-export-odt-use-bookmarks-for-internal-links t
-  "Export Internal links as bookmarks?."
-  :type 'boolean
-  :group 'org-export-odt)
 
-(defcustom org-export-odt-embed-images t
-  "Should the images be copied in to the odt file or just linked?"
-  :type 'boolean
-  :group 'org-export-odt)
+(defvar org-export-odt-embed-images t
+  "Should the images be copied in to the odt file or just linked?")
 
-(defcustom org-odt-export-inline-images 'maybe
-  "Non-nil means inline images into exported HTML pages.
-This is done using an <img> tag.  When nil, an anchor with href is used to
-link to the image.  If this option is `maybe', then images in links with
-an empty description will be inlined, while images with a description will
-be linked only."
-  :group 'org-odt-export
-  :type '(choice (const :tag "Never" nil)
-		 (const :tag "Always" t)
-		 (const :tag "When there is no description" maybe)))
+(defvar org-export-odt-inline-images 'maybe) ; counterpart of
+					     ; `org-export-html-inline-images'
 
-(defcustom org-odt-export-inline-image-extensions
+(defcustom org-export-odt-inline-image-extensions
   '("png" "jpeg" "jpg" "gif")
   "Extensions of image files that can be inlined into HTML."
   :type '(repeat (string :tag "Extension"))
-  :group 'org-odt-export)
+  :group 'org-export-odt)
 
 (defcustom org-export-odt-pixels-per-inch display-pixels-per-inch
   ;; FIXME add docstring
@@ -276,25 +277,19 @@ be linked only."
   "Automatically post-process to this format after exporting to \"odt\".
 Interactive commands `org-export-as-odt' and
 `org-export-as-odt-and-open' export first to \"odt\" format and
-then use an external converter to convert the resulting document
-to this format.
-
-The converter used is that specified with CONVERT-METHOD option
-in `org-odt-get'. If the above option is unspecified then
-`org-lparse-convert-process' is used.
-
-The format specified here should be listed in OTHER-BACKENDS
-option of `org-odt-get' or `org-lparse-convert-capabilities' as
-appropriate."
-  :group 'org-odt
+then use `org-export-odt-convert-process' to convert the
+resulting document to this format.  During customization of this
+variable, the list of valid values are populated based on
+`org-export-odt-convert-capabilities'."
+  :group 'org-export-odt
   :type '(choice :convert-widget
 		 (lambda (w)
 		   (apply 'widget-convert (widget-type w)
 			  (eval (car (widget-get w :args)))))
 		 `((const :tag "None" nil)
 		   ,@(mapcar (lambda (c)
-			       `(const :tag ,(car c) ,(car c)))
-			     (org-lparse-get-other-backends "odt")))))
+			       `(const :tag ,c ,c))
+			     (org-lparse-reachable-formats "odt")))))
 
 ;;;###autoload
 (defun org-export-as-odt-and-open (arg)
@@ -608,7 +603,10 @@ This is set during `org-odt-begin-table'.")
 (defvar org-odt-table-style-spec nil
   "Entry for `org-odt-table-style' in `org-export-odt-table-styles'.")
 
-(defcustom org-export-odt-table-styles nil
+(defcustom org-export-odt-table-styles
+  '(("OrgEquation" "OrgEquation"
+     ((use-first-column-styles . t)
+      (use-last-column-styles . t))))
   "Specify how Table Styles should be derived from a Table Template.
 This is a list where each element is of the
 form (TABLE-STYLE-NAME TABLE-TEMPLATE-NAME TABLE-CELL-OPTIONS).
@@ -673,22 +671,26 @@ TABLE-TEMPLATE-NAME TABLE-CELL-OPTIONS) correspond to
 \"table:template-name\" and \"table:use-first-row-styles\" etc
 attributes of \"<table:table>\" element.  Refer ODF-1.2
 specification for more information.  Also consult the
-implementation filed under `org-odt-get-table-cell-styles'."
+implementation filed under `org-odt-get-table-cell-styles'.
+
+The TABLE-STYLE-NAME \"OrgEquation\" is used internally for
+formatting of numbered display equations.  Do not delete this
+style from the list."
   :group 'org-export-odt
   :type '(choice
           (const :tag "None" nil)
           (repeat :tag "Table Styles"
                   (list :tag "Table Style Specification"
-                   (string :tag "Table Style Name")
-                   (string  :tag "Table Template Name")
-                   (alist :options (use-first-row-styles
-                                    use-last-row-styles
-                                    use-first-column-styles
-                                    use-last-column-styles
-                                    use-banding-rows-styles
-                                    use-banding-columns-styles)
-                          :key-type symbol
-                          :value-type (const :tag "True" t))))))
+			(string :tag "Table Style Name")
+			(string  :tag "Table Template Name")
+			(alist :options (use-first-row-styles
+					 use-last-row-styles
+					 use-first-column-styles
+					 use-last-column-styles
+					 use-banding-rows-styles
+					 use-banding-columns-styles)
+			       :key-type symbol
+			       :value-type (const :tag "True" t))))))
 
 (defun org-odt-begin-table (caption label attributes)
   (setq org-odt-table-style attributes)
@@ -703,14 +705,20 @@ implementation filed under `org-odt-get-table-cell-styles'."
    (or label "") (or (nth 1 org-odt-table-style-spec) "OrgTable"))
   (setq org-lparse-table-begin-marker (point)))
 
+(defvar org-lparse-table-colalign-info)
 (defun org-odt-end-table ()
   (goto-char org-lparse-table-begin-marker)
   (loop for level from 0 below org-lparse-table-ncols
-	do (insert
-	    (org-odt-format-tags
-	     "<table:table-column table:style-name=\"%sColumn\"/>"
-	     "" (or (nth 1 org-odt-table-style-spec) "OrgTable"))))
-
+	do (let* ((col-cookie (and org-lparse-table-is-styled
+				   (cdr (assoc (1+ level)
+					       org-lparse-table-colalign-info))))
+		  (extra-columns (or (nth 1 col-cookie) 0)))
+	     (dotimes (i (1+ extra-columns))
+	       (insert
+		(org-odt-format-tags
+		 "<table:table-column table:style-name=\"%sColumn\"/>"
+		 "" (or (nth 1 org-odt-table-style-spec) "OrgTable"))))
+	     (insert "\n")))
   ;; fill style attributes for table cells
   (when org-lparse-table-is-styled
     (while (re-search-forward "@@\\(table-cell:p\\|table-cell:style-name\\)@@\\([0-9]+\\)@@\\([0-9]+\\)@@" nil t)
@@ -837,17 +845,26 @@ styles congruent with the ODF-1.2 specification."
   (when org-lparse-table-is-styled
     (format "@@table-cell:style-name@@%03d@@%03d@@" r c)))
 
-(defun org-odt-format-table-cell (data r c)
-  (let* ((paragraph-style-cookie
-	  (org-odt-get-paragraph-style-cookie-for-table-cell r c))
-	 (style-name-cookie
-	  (org-odt-get-style-name-cookie-for-table-cell r c))
-	 (extra (if style-name-cookie
-		    (format " table:style-name=\"%s\""  style-name-cookie) "")))
-    (org-odt-format-tags
-     '("<table:table-cell%s>" . "</table:table-cell>")
-     (if org-lparse-list-table-p data
-       (org-odt-format-stylized-paragraph paragraph-style-cookie data)) extra)))
+(defun org-odt-format-table-cell (data r c horiz-span)
+  (concat
+   (let* ((paragraph-style-cookie
+	   (org-odt-get-paragraph-style-cookie-for-table-cell r c))
+	  (style-name-cookie
+	   (org-odt-get-style-name-cookie-for-table-cell r c))
+	  (extra (and style-name-cookie
+		      (format " table:style-name=\"%s\""  style-name-cookie)))
+	  (extra (concat extra
+			 (and (> horiz-span 0)
+			      (format " table:number-columns-spanned=\"%d\""
+				      (1+ horiz-span))))))
+     (org-odt-format-tags
+      '("<table:table-cell%s>" . "</table:table-cell>")
+      (if org-lparse-list-table-p data
+	(org-odt-format-stylized-paragraph paragraph-style-cookie data)) extra))
+   (let (s)
+     (dotimes (i horiz-span)
+       (setq s (concat s "\n<table:covered-table-cell/>"))) s)
+   "\n"))
 
 (defun org-odt-begin-footnote-definition (n)
   (org-lparse-begin-paragraph 'footnote))
@@ -917,10 +934,13 @@ styles congruent with the ODF-1.2 specification."
   (cond
    ((and (= (string-to-char href) ?#) (not org-odt-suppress-xref))
     (setq href (concat org-export-odt-bookmark-prefix (substring href 1)))
-    (org-odt-format-tags
-     '("<text:bookmark-ref text:reference-format=\"text\" text:ref-name=\"%s\">" .
-       "</text:bookmark-ref>")
-     desc href))
+    (let ((xref-format "text"))
+      (when (numberp desc)
+	(setq desc (format "%d" desc) xref-format "number"))
+      (org-odt-format-tags
+       '("<text:bookmark-ref text:reference-format=\"%s\" text:ref-name=\"%s\">" .
+	 "</text:bookmark-ref>")
+       desc xref-format href)))
    (org-lparse-link-description-is-image
     (org-odt-format-tags
      '("<draw:a xlink:type=\"simple\" xlink:href=\"%s\" %s>" . "</draw:a>")
@@ -970,7 +990,7 @@ styles congruent with the ODF-1.2 specification."
 				((string= s "\t") (org-odt-format-tabs))
 				(t (org-odt-format-spaces (length s))))) line))
 
-(defcustom org-export-odt-use-htmlfontify t
+(defcustom org-export-odt-fontify-srcblocks t
   "Specify whether or not source blocks need to be fontified.
 Turn this option on if you want to colorize the source code
 blocks in the exported file.  For colorization to work, you need
@@ -978,18 +998,36 @@ to make available an enhanced version of `htmlfontify' library."
   :type 'boolean
   :group 'org-export-odt)
 
+(defun org-odt-format-source-line-with-line-number-and-label
+  (line rpllbl num fontifier par-style)
+
+  (let ((keep-label (not (numberp rpllbl)))
+	(ref (org-find-text-property-in-string 'org-coderef line)))
+    (setq line (concat line (and keep-label ref (format "(%s)" ref))))
+    (setq line (funcall fontifier line))
+    (when ref
+      (setq line (org-odt-format-target line (concat "coderef-" ref))))
+    (setq line (org-odt-format-stylized-paragraph par-style line))
+    (when num
+      (org-odt-format-tags '("<text:list-item>" . "</text:list-item>") line))))
+
 (defun org-odt-format-source-code-or-example-plain
   (lines lang caption textareap cols rows num cont rpllbl fmt)
   "Format source or example blocks much like fixedwidth blocks.
-Use this when `org-export-odt-use-htmlfontify' option is turned
+Use this when `org-export-odt-fontify-srcblocks' option is turned
 off."
-  (setq lines (org-export-number-lines (org-xml-encode-plain-text-lines lines)
-				       0 0 num cont rpllbl fmt))
+  (let* ((lines (org-split-string lines "[\r\n]"))
+	 (line-count (length lines))
+	 (i 0))
     (mapconcat
      (lambda (line)
-       (org-odt-format-stylized-paragraph
-	'fixedwidth (org-odt-fill-tabs-and-spaces line)))
-     (org-split-string lines "[\r\n]") "\n"))
+       (incf i)
+       (org-odt-format-source-line-with-line-number-and-label
+	line rpllbl num (lambda (line)
+			  (org-odt-fill-tabs-and-spaces
+			   (org-xml-encode-plain-text line)))
+	(if (= i line-count) "OrgFixedWidthBlockLastLine" "OrgFixedWidthBlock")))
+     lines "\n")))
 
 (defvar org-src-block-paragraph-format
   "<style:style style:name=\"OrgSrcBlock\" style:family=\"paragraph\" style:parent-style-name=\"Preformatted_20_Text\">
@@ -1052,7 +1090,7 @@ based on your current display settings.  It is necessary that the
 styles.xml already contains needed styles for colorizing to work.
 
 This variable is effective only if
-`org-export-odt-use-htmlfontify' is turned on."
+`org-export-odt-fontify-srcblocks' is turned on."
   :group 'org-export-odt
   :type 'boolean)
 
@@ -1071,8 +1109,8 @@ Update styles.xml with styles that were collected as part of
 (defun org-odt-format-source-code-or-example-colored
   (lines lang caption textareap cols rows num cont rpllbl fmt)
   "Format source or example blocks using `htmlfontify-string'.
-Use this routine when `org-export-odt-use-htmlfontify' option is
-turned on."
+Use this routine when `org-export-odt-fontify-srcblocks' option
+is turned on."
   (let* ((lang-m (and lang (or (cdr (assoc lang org-src-lang-modes)) lang)))
 	 (mode (and lang-m (intern (concat (if (symbolp lang-m)
 					       (symbol-name lang-m)
@@ -1100,10 +1138,16 @@ turned on."
 	    (insert (format "<text:span text:style-name=\"%s\">" style))))
 	 (hfy-end-span-handler (lambda nil (insert "</text:span>"))))
     (when (fboundp 'htmlfontify-string)
-      (mapconcat
-       (lambda (line)
-	 (org-odt-format-stylized-paragraph 'src (htmlfontify-string line)))
-       (org-split-string lines "[\r\n]") "\n"))))
+      (let* ((lines (org-split-string lines "[\r\n]"))
+	     (line-count (length lines))
+	     (i 0))
+	(mapconcat
+	 (lambda (line)
+	   (incf i)
+	   (org-odt-format-source-line-with-line-number-and-label
+	    line rpllbl num 'htmlfontify-string
+	    (if (= i line-count) "OrgSrcBlockLastLine" "OrgSrcBlock")))
+	 lines "\n")))))
 
 (defun org-odt-format-source-code-or-example (lines lang caption textareap
 						    cols rows num cont
@@ -1111,17 +1155,23 @@ turned on."
   "Format source or example blocks for export.
 Use `org-odt-format-source-code-or-example-plain' or
 `org-odt-format-source-code-or-example-colored' depending on the
-value of `org-export-odt-use-htmlfontify."
-  (funcall
-   (if (and org-export-odt-use-htmlfontify
-	    (or (featurep 'htmlfontify) (require 'htmlfontify))
-	    (fboundp 'htmlfontify-string))
-       'org-odt-format-source-code-or-example-colored
-     'org-odt-format-source-code-or-example-plain)
-   lines lang caption textareap cols rows num cont rpllbl fmt))
-
-(defun org-xml-encode-plain-text-lines (rtn)
-  (mapconcat 'org-xml-encode-plain-text (org-split-string rtn "[\r\n]") "\n"))
+value of `org-export-odt-fontify-srcblocks."
+  (setq lines (org-export-number-lines
+	       lines 0 0 num cont rpllbl fmt 'preprocess)
+	lines (funcall
+	       (or (and org-export-odt-fontify-srcblocks
+			(or (featurep 'htmlfontify)
+			    (require 'htmlfontify))
+			(fboundp 'htmlfontify-string)
+			'org-odt-format-source-code-or-example-colored)
+		   'org-odt-format-source-code-or-example-plain)
+	       lines lang caption textareap cols rows num cont rpllbl fmt))
+  (if (not num) lines
+    (let ((extra (format " text:continue-numbering=\"%s\""
+			 (if cont "true" "false"))))
+      (org-odt-format-tags
+       '("<text:list text:style-name=\"OrgSrcBlockNumberedLine\"%s>"
+	 . "</text:list>") lines extra))))
 
 (defun org-odt-remap-stylenames (style-name)
   (or
@@ -1229,7 +1279,8 @@ value of `org-export-odt-use-htmlfontify."
     (org-export-odt-format-formula thefile href)))
 
 (defun org-odt-is-formula-link-p (file)
-  (member (downcase (file-name-extension file)) '("mathml")))
+  (let ((case-fold-search nil))
+    (string-match "\\.mathml\\'" file)))
 
 (defun org-odt-format-org-link (opt-plist type-1 path fragment desc attr
 					  descp)
@@ -1255,9 +1306,9 @@ MAY-INLINE-P allows inlining it as an image."
        ((and (member type '("file"))
 	     (not fragment)
 	     (org-file-image-p
-	      filename org-odt-export-inline-image-extensions)
-	     (or (eq t org-odt-export-inline-images)
-		 (and org-odt-export-inline-images (not descp))))
+	      filename org-export-odt-inline-image-extensions)
+	     (or (eq t org-export-odt-inline-images)
+		 (and org-export-odt-inline-images (not descp))))
 	(org-odt-format-inline-image thefile))
        ;; check for embedded formulas
        ((and (member type '("file"))
@@ -1265,6 +1316,28 @@ MAY-INLINE-P allows inlining it as an image."
 	     (org-odt-is-formula-link-p filename)
 	     (or (not descp)))
 	(org-odt-format-inline-formula thefile))
+       ((string= type "coderef")
+	(let* ((ref fragment)
+	       (lineno-or-ref (cdr (assoc ref org-export-code-refs)))
+	       (desc (and descp desc))
+	       (org-odt-suppress-xref nil)
+	       (href (org-xml-format-href (concat "#coderef-" ref))))
+	  (cond
+	   ((and (numberp lineno-or-ref) (not desc))
+	    (org-odt-format-link lineno-or-ref href))
+	   ((and (numberp lineno-or-ref) desc
+		 (string-match (regexp-quote (concat "(" ref ")")) desc))
+	    (format (replace-match "%s" t t desc)
+		    (org-odt-format-link lineno-or-ref href)))
+	   (t
+	    (setq desc (format
+			(if (and desc (string-match
+				       (regexp-quote (concat "(" ref ")"))
+				       desc))
+			    (replace-match "%s" t t desc)
+			  (or desc "%s"))
+			lineno-or-ref))
+	    (org-odt-format-link (org-xml-format-desc desc) href)))))
        (t
 	(when (string= type "file")
 	  (setq thefile
@@ -1274,16 +1347,15 @@ MAY-INLINE-P allows inlining it as an image."
 		 (t (org-odt-relocate-relative-path
 		     thefile org-current-export-file)))))
 
-	(when (and (member type '("" "http" "https" "file" "coderef"))
-		   fragment)
+	(when (and (member type '("" "http" "https" "file")) fragment)
 	  (setq thefile (concat thefile "#" fragment)))
 
 	(setq thefile (org-xml-format-href thefile))
 
-	(when (not (member type '("" "file" "coderef")))
+	(when (not (member type '("" "file")))
 	  (setq thefile (concat type ":" thefile)))
 
-	(let ((org-odt-suppress-xref (string= type "coderef")))
+	(let ((org-odt-suppress-xref nil))
 	  (org-odt-format-link
 	   (org-xml-format-desc desc) thefile attr)))))))
 
@@ -1593,9 +1665,13 @@ See `org-odt-entity-labels-alist' and
 `org-odt-label-def-ref-spec'."
   (let* ((label-props (assoc label org-odt-entity-labels-alist))
 	 (category (nth 1 label-props)))
-    (append label-props
-	    (cddr (or (assoc-string category org-odt-label-def-ref-spec t)
-		      (assoc-string "" org-odt-label-def-ref-spec t))))))
+    (unless label-props
+      (org-lparse-warn
+       (format "Unable to resolve reference to label \"%s\"" label)))
+    (when label-props
+      (append label-props
+	      (cddr (or (assoc-string category org-odt-label-def-ref-spec t)
+			(assoc-string "" org-odt-label-def-ref-spec t)))))))
 
 (defun org-odt-format-label-definition (label category caption)
   (assert label)
@@ -1624,10 +1700,11 @@ See `org-odt-entity-labels-alist' and
   (goto-char (point-min))
   (while (re-search-forward
 	  "<text:sequence-ref text:ref-name=\"\\([^\"]+\\)\"/>" nil t)
-    (let* ((label (match-string 1)))
-      (replace-match
-       (apply 'org-odt-format-label-reference
-	      (org-odt-get-label-definition label)) t t))))
+    (let* ((label (match-string 1))
+	   (label-def (org-odt-get-label-definition label))
+	   (rpl (and label-def
+		     (apply 'org-odt-format-label-reference label-def))))
+      (when rpl (replace-match rpl t t)))))
 
 (defun org-odt-format-entity-caption (label caption category)
   (or (and label (org-odt-format-label-definition label category caption))
@@ -1676,7 +1753,9 @@ visually."
   (org-odt-update-meta-file opt-plist)
 
   ;; write styles file
-  (org-odt-copy-styles-file)
+  (let ((styles-file (plist-get opt-plist :odt-styles-file)))
+    (org-odt-copy-styles-file (and styles-file
+				   (read (org-trim styles-file)))))
 
   ;; Update styles.xml - take care of outline numbering
   (with-current-buffer
@@ -1736,14 +1815,18 @@ visually."
 	;; FIXME: If the file is locked this throws a cryptic error
 	(delete-file target))
 
-      (let ((coding-system-for-write 'no-conversion) exitcode)
+      (let ((coding-system-for-write 'no-conversion) exitcode err-string)
 	(message "Creating odt file...")
 	(mapc
 	 (lambda (cmd)
 	   (message "Running %s" (mapconcat 'identity cmd " "))
-	   (setq exitcode
-		 (apply 'call-process (car cmd) nil nil nil (cdr cmd)))
+	   (setq err-string
+		 (with-output-to-string
+		   (setq exitcode
+			 (apply 'call-process (car cmd)
+				nil standard-output nil (cdr cmd)))))
 	   (or (zerop exitcode)
+	       (ignore (message "%s" err-string))
 	       (error "Unable to create odt file (%S)" exitcode)))
 	 cmds))
 
@@ -1865,6 +1948,126 @@ visually."
     (while (re-search-forward (format "%s[ \r\n\t]*%s" open close) nil t)
       (replace-match ""))))
 
+(defcustom org-export-odt-convert-processes
+  '(("BasicODConverter"
+     ("soffice" "-norestore" "-invisible" "-headless"
+      "\"macro:///BasicODConverter.Main.Convert(%I,%f,%O)\""))
+    ("unoconv"
+     ("unoconv" "-f" "%f" "-o" "%d" "%i")))
+  "Specify a list of document converters and their usage.
+The converters in this list are offered as choices while
+customizing `org-export-odt-convert-process'.
+
+This variable is an alist where each element is of the
+form (CONVERTER-NAME CONVERTER-PROCESS).  CONVERTER-NAME is name
+of the converter.  CONVERTER-PROCESS specifies the command-line
+syntax of the converter and is of the form (CONVERTER-PROGRAM
+ARG1 ARG2 ...).  CONVERTER-PROGRAM is the name of the executable.
+ARG1, ARG2 etc are command line options that are passed to
+CONVERTER-PROGRAM.  Format specifiers can be used in the ARGs and
+they are interpreted as below:
+
+%i input file name in full
+%I input file name as a URL
+%f format of the output file
+%o output file name in full
+%O output file name as a URL
+%d output dir in full
+%D output dir as a URL."
+  :group 'org-export-odt
+  :type
+  '(choice
+    (const :tag "None" nil)
+    (alist :tag "Converters"
+	   :key-type (string :tag "Converter Name")
+	   :value-type (group (cons (string :tag "Executable")
+				    (repeat (string :tag "Command line args")))))))
+
+(defcustom org-export-odt-convert-process nil
+  "Use this converter to convert from \"odt\" format to other formats.
+During customization, the list of converter names are populated
+from `org-export-odt-convert-processes'."
+  :group 'org-export-odt
+  :type '(choice :convert-widget
+		 (lambda (w)
+		   (apply 'widget-convert (widget-type w)
+			  (eval (car (widget-get w :args)))))
+		 `((const :tag "None" nil)
+		   ,@(mapcar (lambda (c)
+			       `(const :tag ,(car c) ,(car c)))
+			     org-export-odt-convert-processes))))
+
+(defcustom org-export-odt-convert-capabilities
+  '(("Text"
+     ("odt" "ott" "doc" "rtf")
+     (("pdf" "pdf") ("odt" "odt") ("xhtml" "html") ("rtf" "rtf")
+      ("ott" "ott") ("doc" "doc") ("ooxml" "xml") ("html" "html")))
+    ("Web"
+     ("html" "xhtml") (("pdf" "pdf") ("odt" "txt") ("html" "html")))
+    ("Spreadsheet"
+     ("ods" "ots" "xls" "csv")
+     (("pdf" "pdf") ("ots" "ots") ("html" "html") ("csv" "csv")
+      ("ods" "ods") ("xls" "xls") ("xhtml" "xhtml") ("ooxml" "xml")))
+    ("Presentation"
+     ("odp" "otp" "ppt")
+     (("pdf" "pdf") ("swf" "swf") ("odp" "odp") ("xhtml" "xml")
+      ("otp" "otp") ("ppt" "ppt") ("odg" "odg") ("html" "html"))))
+  "Specify input and output formats of `org-export-odt-convert-process'.
+More correctly, specify the set of input and output formats that
+the user is actually interested in.
+
+This variable is an alist where each element is of the
+form (DOCUMENT-CLASS INPUT-FMT-LIST OUTPUT-FMT-ALIST).
+INPUT-FMT-LIST is a list of INPUT-FMTs.  OUTPUT-FMT-ALIST is an
+alist where each element is of the form (OUTPUT-FMT
+OUTPUT-FILE-EXTENSION).
+
+The variable is interpreted as follows:
+`org-export-odt-convert-process' can take any document that is in
+INPUT-FMT-LIST and produce any document that is in the
+OUTPUT-FMT-LIST.  A document converted to OUTPUT-FMT will have
+OUTPUT-FILE-EXTENSION as the file name extension.  OUTPUT-FMT
+serves dual purposes:
+- It is used for populating completion candidates during
+  `org-export-odt-convert' commands.
+- It is used as the value of \"%f\" specifier in
+  `org-export-odt-convert-process'.
+
+DOCUMENT-CLASS is used to group a set of file formats in
+INPUT-FMT-LIST in to a single class.
+
+Note that this variable inherently captures how LibreOffice based
+converters work.  LibreOffice maps documents of various formats
+to classes like Text, Web, Spreadsheet, Presentation etc and
+allow document of a given class (irrespective of it's source
+format) to be converted to any of the export formats associated
+with that class.
+
+See default setting of this variable for an typical
+configuration."
+  :group 'org-export-odt
+  :type
+  '(choice
+    (const :tag "None" nil)
+    (alist :key-type (string :tag "Document Class")
+	   :value-type
+	   (group (repeat :tag "Input formats" (string :tag "Input format"))
+		  (alist :tag "Output formats"
+			 :key-type (string :tag "Output format")
+			 :value-type
+			 (group (string :tag "Output file extension")))))))
+
+(defun org-export-odt-convert (&optional in-file out-fmt prefix-arg)
+  "Convert IN-FILE to format OUT-FMT using a command line converter.
+IN-FILE is the file to be converted.  If unspecified, it defaults
+to variable `buffer-file-name'.  OUT-FMT is the desired output
+format.  Use `org-export-odt-convert-process' as the converter.
+If PREFIX-ARG is non-nil then the newly converted file is opened
+using `org-open-file'."
+  (interactive
+   (append (org-lparse-convert-read-params) current-prefix-arg))
+  (org-lparse-do-convert in-file out-fmt prefix-arg))
+
 (defun org-odt-get (what &optional opt-plist)
   (case what
     (BACKEND 'odt)
@@ -1876,8 +2079,15 @@ visually."
     (INIT-METHOD 'org-odt-init-outfile)
     (FINAL-METHOD 'org-odt-finalize-outfile)
     (SAVE-METHOD 'org-odt-save-as-outfile)
-    ;; (OTHER-BACKENDS)			; see note in `org-xhtml-get'
-    ;; (CONVERT-METHOD)			; see note in `org-xhtml-get'
+    (CONVERT-METHOD
+     (and org-export-odt-convert-process
+	  (cadr (assoc-string org-export-odt-convert-process
+			      org-export-odt-convert-processes t))))
+    (CONVERT-CAPABILITIES
+     (and org-export-odt-convert-process
+	  (cadr (assoc-string org-export-odt-convert-process
+			      org-export-odt-convert-processes t))
+	  org-export-odt-convert-capabilities))
     (TOPLEVEL-HLEVEL 1)
     (SPECIAL-STRING-REGEXPS org-export-odt-special-string-regexps)
     (INLINE-IMAGES 'maybe)
@@ -2021,7 +2231,7 @@ visually."
 To disable outline numbering pass a LEVEL of 0."
   (goto-char (point-min))
   (let ((regex
-	 "<text:outline-level-style\\(.*\\)text:level=\"\\([^\"]*\\)\"\\(.*\\)>")
+	 "<text:outline-level-style\\([^>]*\\)text:level=\"\\([^\"]*\\)\"\\([^>]*\\)>")
 	(replacement
 	 "<text:outline-level-style\\1text:level=\"\\2\" style:num-format=\"\">"))
     (while (re-search-forward regex nil t)

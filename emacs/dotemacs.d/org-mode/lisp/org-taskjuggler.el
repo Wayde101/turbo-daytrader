@@ -211,7 +211,7 @@ with `org-export-taskjuggler-project-tag'"
   formats html
   columns no, name, freework, chart
   loadunit shortauto
-  sorttasks startup
+  sorttasks start.up
   hidetask ~isleaf()
 }")
   "Default reports for the project."

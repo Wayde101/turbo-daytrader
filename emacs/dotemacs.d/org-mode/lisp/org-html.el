@@ -713,7 +713,7 @@ command to convert it."
   (interactive "r")
   (let (reg html buf pop-up-frames)
     (save-window-excursion
-      (if (org-mode-p)
+      (if (eq major-mode 'org-mode)
 	  (setq html (org-export-region-as-html
 		      beg end t 'string))
 	(setq reg (buffer-substring beg end)
@@ -1046,9 +1046,9 @@ OPT-PLIST is the export options list."
 
        (t
 	;; just publish the path, as default
-	(setq rpl (concat "@<i>&lt;" type ":"
+	(setq rpl (concat "<i>&lt;" type ":"
 			  (save-match-data (org-link-unescape path))
-			  "&gt;@</i>"))))
+			  "&gt;</i>"))))
       (setq line (replace-match rpl t t line)
 	    start (+ start (length rpl))))
     line))
@@ -1175,8 +1175,9 @@ PUB-DIR is set, use this as the publishing directory."
 			 (plist-get opt-plist :link-home)))
 	 (dummy (setq opt-plist (plist-put opt-plist :title title)))
 	 (html-table-tag (plist-get opt-plist :html-table-tag))
-	 (quote-re0   (concat "^[ \t]*" org-quote-string "\\>"))
-	 (quote-re    (concat "^\\(\\*+\\)\\([ \t]+" org-quote-string "\\>\\)"))
+	 (quote-re0   (concat "^ *" org-quote-string "\\( +\\|[ \t]*$\\)"))
+	 (quote-re    (format org-heading-keyword-regexp-format
+			      org-quote-string))
 	 (inquote     nil)
 	 (infixed     nil)
 	 (inverse     nil)
@@ -1297,11 +1298,11 @@ PUB-DIR is set, use this as the publishing directory."
 		 "%s
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"
                \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
-<html xmlns=\"http://www.w3.org/1999/xhtml\"
-lang=\"%s\" xml:lang=\"%s\">
+<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"%s\" xml:lang=\"%s\">
 <head>
 <title>%s</title>
 <meta http-equiv=\"Content-Type\" content=\"text/html;charset=%s\"/>
+<meta name=\"title\" content=\"%s\"/>
 <meta name=\"generator\" content=\"Org-mode\"/>
 <meta name=\"generated\" content=\"%s\"/>
 <meta name=\"author\" content=\"%s\"/>
@@ -1324,7 +1325,7 @@ lang=\"%s\" xml:lang=\"%s\">
 		 language language
 		 title
 		 (or charset "iso-8859-1")
-		 date author description keywords
+		 title date author description keywords
 		 style
 		 mathjax
 		 (if (or link-up link-home)
@@ -1598,7 +1599,8 @@ lang=\"%s\" xml:lang=\"%s\">
 	  (setq line (org-html-handle-links line opt-plist))
 
 	  ;; TODO items
-	  (if (and (string-match org-todo-line-regexp line)
+	  (if (and org-todo-line-regexp
+		   (string-match org-todo-line-regexp line)
 		   (match-beginning 2))
 
 	      (setq line
@@ -1646,7 +1648,7 @@ lang=\"%s\" xml:lang=\"%s\">
 			 t t line))))))
 
 	  (cond
-	   ((string-match "^\\(\\*+\\)[ \t]+\\(.*\\)" line)
+	   ((string-match "^\\(\\*+\\)\\(?: +\\(.*?\\)\\)?[ \t]*$" line)
 	    ;; This is a headline
 	    (setq level (org-tr-level (- (match-end 1) (match-beginning 1)
 					 level-offset))
@@ -1979,8 +1981,8 @@ for formatting.  This is required for the DocBook exporter."
 
   (let* ((caption (org-find-text-property-in-string 'org-caption (car lines)))
 	 (label (org-find-text-property-in-string 'org-label (car lines)))
-	 (forced-aligns (org-find-text-property-in-string 'org-forced-aligns
-							  (car lines)))
+	 (col-cookies (org-find-text-property-in-string 'org-col-cookies
+							(car lines)))
 	 (attributes (org-find-text-property-in-string 'org-attributes
 						       (car lines)))
 	 (html-table-tag (org-export-splice-attributes
@@ -1993,9 +1995,9 @@ for formatting.  This is required for the DocBook exporter."
 	 tbopen line fields html gr colgropen rowstart rowend
 	 ali align aligns n)
     (setq caption (and caption (org-html-do-expand caption)))
-    (when (and forced-aligns org-table-clean-did-remove-column)
-    (setq forced-aligns
-	  (mapcar (lambda (x) (cons (1- (car x)) (cdr x))) forced-aligns)))
+    (when (and col-cookies org-table-clean-did-remove-column)
+      (setq col-cookies
+	    (mapcar (lambda (x) (cons (1- (car x)) (cdr x))) col-cookies)))
     (if splice (setq head nil))
     (unless splice (push (if head "<thead>" "<tbody>") html))
     (setq tbopen t)
@@ -2056,8 +2058,8 @@ for formatting.  This is required for the DocBook exporter."
 	     (lambda (x)
 	       (setq gr (pop org-table-colgroup-info)
 		     i (1+ i)
-		     align (if (assoc i forced-aligns)
-			       (cdr (assoc (cdr (assoc i forced-aligns))
+		     align (if (nth 1 (assoc i col-cookies))
+			       (cdr (assoc (nth 1 (assoc i col-cookies))
 					   '(("l" . "left") ("r" . "right")
 					     ("c" . "center"))))
 			     (if (> (/ (float x) nline)
@@ -2213,19 +2215,20 @@ for further information."
   "Format time stamps in string S, or remove them."
   (catch 'exit
     (let (r b)
-      (while (string-match org-maybe-keyword-time-regexp s)
-	(or b (setq b (substring s 0 (match-beginning 0))))
-	(setq r (concat
-		 r (substring s 0 (match-beginning 0))
-		 " @<span class=\"timestamp-wrapper\">"
-		 (if (match-end 1)
-		     (format "@<span class=\"timestamp-kwd\">%s @</span>"
-			     (match-string 1 s)))
-		 (format " @<span class=\"timestamp\">%s@</span>"
-			 (substring
-			  (org-translate-time (match-string 3 s)) 1 -1))
-		 "@</span>")
-	      s (substring s (match-end 0))))
+      (when org-maybe-keyword-time-regexp
+	(while (string-match org-maybe-keyword-time-regexp s)
+	  (or b (setq b (substring s 0 (match-beginning 0))))
+	  (setq r (concat
+		   r (substring s 0 (match-beginning 0))
+		   " @<span class=\"timestamp-wrapper\">"
+		   (if (match-end 1)
+		       (format "@<span class=\"timestamp-kwd\">%s @</span>"
+			       (match-string 1 s)))
+		   (format " @<span class=\"timestamp\">%s@</span>"
+			   (substring
+			    (org-translate-time (match-string 3 s)) 1 -1))
+		   "@</span>")
+		s (substring s (match-end 0)))))
       ;; Line break if line started and ended with time stamp stuff
       (if (not r)
 	  s

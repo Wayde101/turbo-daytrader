@@ -4,8 +4,8 @@
 ;;;;;;  org-map-entries org-open-link-from-string org-open-at-point-global
 ;;;;;;  org-insert-link-global org-store-link org-run-like-in-org-mode
 ;;;;;;  turn-on-orgstruct++ turn-on-orgstruct orgstruct-mode org-global-cycle
-;;;;;;  org-mode org-babel-do-load-languages) "org" "org.el" (20087
-;;;;;;  2180))
+;;;;;;  org-mode org-babel-do-load-languages) "org" "org.el" (20136
+;;;;;;  57484))
 ;;; Generated autoloads from org.el
 
 (autoload 'org-babel-do-load-languages "org" "\
@@ -177,7 +177,7 @@ a *different* entry, you cannot use these techniques.
 
 (autoload 'org-switchb "org" "\
 Switch between Org buffers.
-With a prefix argument, restrict available to files.
+With one prefix argument, restrict available buffers to files.
 With two prefix arguments, restrict available buffers to agenda files.
 
 Defaults to `iswitchb' for buffer name completion.
@@ -229,7 +229,7 @@ Call the customize function with org as argument.
 ;;;;;;  org-diary org-agenda-list-stuck-projects org-tags-view org-todo-list
 ;;;;;;  org-search-view org-agenda-list org-batch-store-agenda-views
 ;;;;;;  org-store-agenda-views org-batch-agenda-csv org-batch-agenda
-;;;;;;  org-agenda) "org-agenda" "org-agenda.el" (20056 16912))
+;;;;;;  org-agenda) "org-agenda" "org-agenda.el" (20136 57484))
 ;;; Generated autoloads from org-agenda.el
 
 (autoload 'org-agenda "org-agenda" "\
@@ -459,6 +459,10 @@ expression, and filter out entries that don't match it.
 If FILTER is a string, use this string as a regular expression
 for filtering entries out.
 
+If FILTER is a function, filter out entries against which
+calling the function returns nil.  This function takes one
+argument: an entry from `org-agenda-get-day-entries'.
+
 FILTER can also be an alist with the car of each cell being
 either 'headline or 'category.  For example:
 
@@ -468,14 +472,19 @@ either 'headline or 'category.  For example:
 will only add headlines containing IMPORTANT or headlines
 belonging to the \"Work\" category.
 
-\(fn &optional REFRESH FILTER)" t nil)
+ARGS are symbols indicating what kind of entries to consider.
+By default `org-agenda-to-appt' will use :deadline, :scheduled
+and :timestamp entries.  See the docstring of `org-diary' for
+details and examples.
+
+\(fn &optional REFRESH FILTER &rest ARGS)" t nil)
 
 ;;;***
 
 ;;;### (autoloads (org-export-as-ascii org-export-region-as-ascii
 ;;;;;;  org-replace-region-by-ascii org-export-as-ascii-to-buffer
 ;;;;;;  org-export-as-utf8-to-buffer org-export-as-utf8 org-export-as-latin1-to-buffer
-;;;;;;  org-export-as-latin1) "org-ascii" "org-ascii.el" (20056 16912))
+;;;;;;  org-export-as-latin1) "org-ascii" "org-ascii.el" (20136 57484))
 ;;; Generated autoloads from org-ascii.el
 
 (autoload 'org-export-as-latin1 "org-ascii" "\
@@ -562,7 +571,7 @@ Shows a list of commands and prompts for another key to execute a command.
 
 ;;;### (autoloads (org-archive-subtree-default-with-confirmation
 ;;;;;;  org-archive-subtree-default) "org-archive" "org-archive.el"
-;;;;;;  (20056 16912))
+;;;;;;  (20136 57484))
 ;;; Generated autoloads from org-archive.el
 
 (autoload 'org-archive-subtree-default "org-archive" "\
@@ -591,7 +600,7 @@ Extract anniversaries from BBDB for display in the agenda.
 ;;;***
 
 ;;;### (autoloads (org-capture-import-remember-templates org-capture-insert-template-here
-;;;;;;  org-capture) "org-capture" "org-capture.el" (20056 16912))
+;;;;;;  org-capture) "org-capture" "org-capture.el" (20136 57484))
 ;;; Generated autoloads from org-capture.el
 
 (autoload 'org-capture "org-capture" "\
@@ -661,8 +670,8 @@ tree can be found.
 ;;;***
 
 ;;;### (autoloads (org-insert-export-options-template org-export-as-org
-;;;;;;  org-export-visible org-export) "org-exp" "org-exp.el" (20087
-;;;;;;  2180))
+;;;;;;  org-export-visible org-export) "org-exp" "org-exp.el" (20136
+;;;;;;  57484))
 ;;; Generated autoloads from org-exp.el
 
 (autoload 'org-export "org-exp" "\
@@ -725,7 +734,7 @@ Insert into the buffer a template with information for exporting.
 ;;;### (autoloads (org-export-as-docbook org-export-as-docbook-pdf-and-open
 ;;;;;;  org-export-as-docbook-pdf org-export-region-as-docbook org-replace-region-by-docbook
 ;;;;;;  org-export-as-docbook-to-buffer org-export-as-docbook-batch)
-;;;;;;  "org-docbook" "org-docbook.el" (20056 16912))
+;;;;;;  "org-docbook" "org-docbook.el" (20136 57484))
 ;;; Generated autoloads from org-docbook.el
 
 (autoload 'org-export-as-docbook-batch "org-docbook" "\
@@ -829,7 +838,7 @@ Show the raw feed buffer of a feed.
 ;;;***
 
 ;;;### (autoloads (org-footnote-normalize org-footnote-action) "org-footnote"
-;;;;;;  "org-footnote.el" (20087 2180))
+;;;;;;  "org-footnote.el" (20136 57484))
 ;;; Generated autoloads from org-footnote.el
 
 (autoload 'org-footnote-action "org-footnote" "\
@@ -941,7 +950,7 @@ Convert FreeMind file MM-FILE to `org-mode' file ORG-FILE.
 ;;;### (autoloads (org-export-htmlize-generate-css org-export-as-html
 ;;;;;;  org-export-region-as-html org-replace-region-by-html org-export-as-html-to-buffer
 ;;;;;;  org-export-as-html-batch org-export-as-html-and-open) "org-html"
-;;;;;;  "org-html.el" (20087 2180))
+;;;;;;  "org-html.el" (20136 57484))
 ;;; Generated autoloads from org-html.el
 
 (put 'org-export-html-style-include-default 'safe-local-variable 'booleanp)
@@ -1063,7 +1072,7 @@ The file is stored under the name `org-combined-agenda-icalendar-file'.
 ;;;### (autoloads (org-id-store-link org-id-find-id-file org-id-find
 ;;;;;;  org-id-goto org-id-get-with-outline-drilling org-id-get-with-outline-path-completion
 ;;;;;;  org-id-get org-id-copy org-id-get-create) "org-id" "org-id.el"
-;;;;;;  (20056 16912))
+;;;;;;  (20136 57484))
 ;;; Generated autoloads from org-id.el
 
 (autoload 'org-id-get-create "org-id" "\
@@ -1132,7 +1141,7 @@ Store a link to the current entry, using its ID.
 ;;;***
 
 ;;;### (autoloads (org-indent-mode) "org-indent" "org-indent.el"
-;;;;;;  (20056 16912))
+;;;;;;  (20136 57484))
 ;;; Generated autoloads from org-indent.el
 
 (autoload 'org-indent-mode "org-indent" "\
@@ -1162,8 +1171,8 @@ Dispatch to the appropriate function to store a link to an IRC session.
 
 ;;;### (autoloads (org-export-as-pdf-and-open org-export-as-pdf org-export-as-latex
 ;;;;;;  org-export-region-as-latex org-replace-region-by-latex org-export-as-latex-to-buffer
-;;;;;;  org-export-as-latex-batch) "org-latex" "org-latex.el" (20056
-;;;;;;  16912))
+;;;;;;  org-export-as-latex-batch) "org-latex" "org-latex.el" (20136
+;;;;;;  57484))
 ;;; Generated autoloads from org-latex.el
 
 (autoload 'org-export-as-latex-batch "org-latex" "\
@@ -1269,7 +1278,7 @@ Create a file that contains all custom agenda views.
 
 ;;;### (autoloads (org-publish-current-project org-publish-current-file
 ;;;;;;  org-publish-all org-publish) "org-publish" "org-publish.el"
-;;;;;;  (20056 16912))
+;;;;;;  (20136 57484))
 ;;; Generated autoloads from org-publish.el
 
 (defalias 'org-publish-project 'org-publish)
@@ -1316,7 +1325,7 @@ line directly before or after the table.
 
 ;;;### (autoloads (org-remember-handler org-remember org-remember-apply-template
 ;;;;;;  org-remember-annotation org-remember-insinuate) "org-remember"
-;;;;;;  "org-remember.el" (20056 16912))
+;;;;;;  "org-remember.el" (20136 57484))
 ;;; Generated autoloads from org-remember.el
 
 (autoload 'org-remember-insinuate "org-remember" "\
@@ -1392,7 +1401,7 @@ See also the variable `org-reverse-note-order'.
 ;;;***
 
 ;;;### (autoloads (org-table-to-lisp orgtbl-mode turn-on-orgtbl)
-;;;;;;  "org-table" "org-table.el" (20056 16912))
+;;;;;;  "org-table" "org-table.el" (20136 57484))
 ;;; Generated autoloads from org-table.el
 
 (autoload 'turn-on-orgtbl "org-table" "\
@@ -1416,7 +1425,7 @@ The table is taken from the parameter TXT, or from the buffer at point.
 ;;;***
 
 ;;;### (autoloads (org-export-as-taskjuggler-and-open org-export-as-taskjuggler)
-;;;;;;  "org-taskjuggler" "org-taskjuggler.el" (20087 2180))
+;;;;;;  "org-taskjuggler" "org-taskjuggler.el" (20136 55879))
 ;;; Generated autoloads from org-taskjuggler.el
 
 (autoload 'org-export-as-taskjuggler "org-taskjuggler" "\
@@ -1443,8 +1452,8 @@ with the TaskJuggler GUI.
 ;;;***
 
 ;;;### (autoloads (org-timer-set-timer org-timer-item org-timer-change-times-in-region
-;;;;;;  org-timer org-timer-start) "org-timer" "org-timer.el" (20056
-;;;;;;  16912))
+;;;;;;  org-timer org-timer-start) "org-timer" "org-timer.el" (20136
+;;;;;;  57484))
 ;;; Generated autoloads from org-timer.el
 
 (autoload 'org-timer-start "org-timer" "\
@@ -1523,11 +1532,11 @@ The XOXO buffer is named *xoxo-<source buffer name>*
 ;;;;;;  org-babel-map-inline-src-blocks org-babel-map-src-blocks
 ;;;;;;  org-babel-open-src-block-result org-babel-switch-to-session-with-code
 ;;;;;;  org-babel-switch-to-session org-babel-initiate-session org-babel-load-in-session
-;;;;;;  org-babel-check-src-block org-babel-expand-src-block org-babel-execute-src-block
-;;;;;;  org-babel-pop-to-session-maybe org-babel-load-in-session-maybe
-;;;;;;  org-babel-expand-src-block-maybe org-babel-view-src-block-info
-;;;;;;  org-babel-execute-maybe org-babel-execute-safely-maybe) "ob"
-;;;;;;  "ob.el" (20087 2180))
+;;;;;;  org-babel-insert-header-arg org-babel-check-src-block org-babel-expand-src-block
+;;;;;;  org-babel-execute-src-block org-babel-pop-to-session-maybe
+;;;;;;  org-babel-load-in-session-maybe org-babel-expand-src-block-maybe
+;;;;;;  org-babel-view-src-block-info org-babel-execute-maybe org-babel-execute-safely-maybe)
+;;;;;;  "ob" "ob.el" (20136 57484))
 ;;; Generated autoloads from ob.el
 
 (autoload 'org-babel-execute-safely-maybe "ob" "\
@@ -1596,6 +1605,11 @@ arguments and pop open the results in a preview buffer.
 
 (autoload 'org-babel-check-src-block "ob" "\
 Check for misspelled header arguments in the current code block.
+
+\(fn)" t nil)
+
+(autoload 'org-babel-insert-header-arg "ob" "\
+Insert a header argument selecting from lists of common args and values.
 
 \(fn)" t nil)
 
@@ -1726,7 +1740,7 @@ Mark current src block
 ;;;***
 
 ;;;### (autoloads (org-babel-lob-get-info org-babel-lob-execute-maybe
-;;;;;;  org-babel-lob-ingest) "ob-lob" "ob-lob.el" (20056 16912))
+;;;;;;  org-babel-lob-ingest) "ob-lob" "ob-lob.el" (20136 57484))
 ;;; Generated autoloads from ob-lob.el
 
 (autoload 'org-babel-lob-ingest "ob-lob" "\
@@ -1793,7 +1807,7 @@ exported source code blocks by language.
 ;;;***
 
 ;;;### (autoloads (org-babel-describe-bindings) "ob-keys" "ob-keys.el"
-;;;;;;  (20056 16912))
+;;;;;;  (20136 57484))
 ;;; Generated autoloads from ob-keys.el
 
 (autoload 'org-babel-describe-bindings "ob-keys" "\
