@@ -41,7 +41,7 @@
    :Effort:   50d
    :END:
 
-** Milestones
+** 里程碑
 *** Project start
 *** Technology Preview
 *** Beta version

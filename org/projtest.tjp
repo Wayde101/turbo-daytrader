@@ -1,0 +1,81 @@
+project accounting "Accounting Software" "1.0" 2011-10-27 +280d {
+ }
+shift s40 "Part time shift" {
+  workinghours wed, thu, fri off
+}
+
+resource yuting "Ting Yu" {
+ 
+}
+task accounting "Accounting Software" {
+ purge allocate
+ allocate yuting
+start 2011-10-27
+task specification "Specification" {
+ effort 160.0h
+
+}
+task software "Software Development" {
+
+task database "Database coupling" {
+ effort 160.0h
+
+}
+task back_end "Back-End Functions" {
+ effort 240.0h
+
+}
+task graphical "Graphical User Interface" {
+ effort 280.0h
+
+}
+}
+task software_testing "Software testing" {
+
+task alpha "Alpha Test" {
+ effort 40.0h
+
+}
+task beta "Beta Test" {
+ effort 160.0h
+
+}
+}
+task manual "Manual" {
+ effort 400.0h
+
+}
+task milestones "Milestones" {
+
+task project "Project start" {
+ milestone
+
+}
+task technology "Technology Preview" {
+ milestone
+
+}
+task beta "Beta version" {
+ milestone
+
+}
+task ship "Ship Product to Customer" {
+ milestone
+
+}
+}
+}
+taskreport "Gantt Chart" {
+  headline "Project Gantt Chart"
+  columns hierarchindex, name, start, end, effort, duration, completed, chart
+  timeformat "%Y-%m-%d"
+  hideresource 1
+  loadunit shortauto
+}
+resourcereport "Resource Graph" {
+  headline "Resource Allocation Graph"
+  columns no, name, utilization, freeload, chart
+  loadunit shortauto
+  sorttasks startup
+  hidetask ~isleaf()
+}

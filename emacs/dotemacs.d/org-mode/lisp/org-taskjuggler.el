@@ -199,6 +199,7 @@ with `org-export-taskjuggler-project-tag'"
 
 (defcustom org-export-taskjuggler-default-reports
   '("taskreport \"Gantt Chart\" {
+  formats html
   headline \"Project Gantt Chart\"
   columns hierarchindex, name, start, end, effort, duration, completed, chart
   timeformat \"%Y-%m-%d\"
@@ -207,7 +208,8 @@ with `org-export-taskjuggler-project-tag'"
 }"
 "resourcereport \"Resource Graph\" {
   headline \"Resource Allocation Graph\"
-  columns no, name, utilization, freeload, chart
+  formats html
+  columns no, name, freework, chart
   loadunit shortauto
   sorttasks startup
   hidetask ~isleaf()

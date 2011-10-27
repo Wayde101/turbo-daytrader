@@ -3,6 +3,7 @@
 (setq load-path (add-to-list 'load-path "~/.emacs.d/org-mode/lisp"))
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 (require 'org-install)
+(require 'org-taskjuggler)
 
 
 (define-key global-map "\C-cl" 'org-store-link)
