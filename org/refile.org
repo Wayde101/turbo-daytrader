@@ -69,7 +69,7 @@ https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94
 	关于包管理上如何做? 
 * DNS/YUM/LVS/NTP 服务器运维 					       :NOTE:
    :LOGBOOK:
-   CLOCK: [2011-10-26 Wed 10:18]
+   CLOCK: [2011-10-26 Wed 10:18]--[2011-10-27 四 08:01] => 21:43
    :END:
 [2011-10-26 Wed 10:18]
 [[file:~/org/gemstone.org::*gemserver.rsync][gemserver.rsync]]
@@ -78,3 +78,17 @@ https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94
 	- CNZ 的帐号问题. 在CNZ的机器上部署gemclient-run .
 	- NTP
 	- SYSLOG-NG
+* TODO 给 cnz 3000台部署 gemstone . [0/0]
+  :LOGBOOK:
+  CLOCK: [2011-10-27 四 08:01]--[2011-10-27 四 08:04] =>  0:03
+  :END:
+[2011-10-27 四 08:01]
+   - 确定  gemserver 并且部署.
+   - 确定 cnz 的服务器的型号和操作系统版本.
+   - 明确 为这些系统做包.
+   - 关于 yum.conf 的配置. 如何同步更新.
+* TODO 使用 task juggle + org-mode 实现基于内容和plaintext的项目管理工具.
+  :LOGBOOK:
+  :END:
+[2011-10-27 四 08:05]
+[[file:~/src/turbo-daytrader/org/gemstone.org::*%E7%A1%AE%E5%AE%9A%E4%BB%A5%E5%8F%8A%E9%83%A8%E7%BD%B2%20gemserver][确定以及部署 gemserver]]
