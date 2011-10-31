@@ -49,4 +49,3 @@
 [2011-09-21 Wed 16:54]
 [[file:~/org/refile.org::*%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AAgnus%20mail][配置一个gnus mail]]
 
-
