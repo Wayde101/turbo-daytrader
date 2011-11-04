@@ -1,2 +1,2 @@
-;; org-persist.el - tingbox at <2011-11-02 Wed 18:09>
-(setq stored-clock-history '(("/home/yuting/src/turbo-daytrader/org/learning-orgmode.org" . 1220) ("/home/yuting/src/turbo-daytrader/org/learning-orgmode.org" . 1521) ("/home/yuting/src/turbo-daytrader/org/refile.org" . 2385) ("/home/yuting/src/turbo-daytrader/org/todolist.org" . 30) ("/home/yuting/src/turbo-daytrader/org/refile.org" . 2576) ("/home/yuting/org/tradeplan.org" . 7940)))
+;; org-persist.el - tingbox at <2011-11-03 Thu 18:03>
+(setq stored-clock-history '(("/home/yuting/src/turbo-daytrader/org/learning-orgmode.org" . 1220) ("/home/yuting/src/turbo-daytrader/org/learning-orgmode.org" . 1521) ("/home/yuting/src/turbo-daytrader/org/refile.org" . 2385) ("/home/yuting/src/turbo-daytrader/org/todolist.org" . 30) ("/home/yuting/src/turbo-daytrader/org/refile.org" . 2576) ("/home/yuting/org/tradeplan.org" . 8133)))
