@@ -258,3 +258,9 @@ alibaba 计划
 alibaba @7.6 9w   
 alibaba @4.0 15w
 alibaba @3.7 10w 
+* TRADEPLAN (tradeplan)  :TRADEPLAN:
+  :LOGBOOK:
+  CLOCK: [2011-11-07 Mon 09:53]
+  :END:
+[2011-11-07 Mon 09:53]
+
