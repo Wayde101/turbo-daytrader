@@ -536,7 +536,8 @@ to display in menu and the header of buffer instead of the page-name."
 				   :size 50
 				   :format (concat  tfi "分化: %v " )
 				   :notify `(lambda (widget &rest ignore)
-					     (tpvar-update ,(concat "usdx-" tfi) :dsum (widget-value widget ))))
+					     (tpvar-update ,(concat "usdx-" tfi) :dsum (widget-value widget )))
+				   (tpvar-get (concat "usdx-" tfi) :dsum))
 		    (widget-insert "\n"))
 	     ))
 
