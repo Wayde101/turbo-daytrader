@@ -203,7 +203,7 @@ macd 反弹依然成立，但是考虑到如果到达价位可能逆向动能过
 目前在仓位上可以确定 标准手 1.2 为标准仓位 0.6 为清仓.  当遇到纯粹的分析形的机会的时候使用 0.3
 的仓位.
 
-* TRADEPLAN (tradeplan)  :TRADEPLAN:
+* TRADEPLAN  (tradeplan) 					  :TRADEPLAN:
   :LOGBOOK:
   CLOCK: [2011-10-24 Mon 09:54]--[2011-10-24 Mon 10:34] =>  0:40
   :END:
@@ -255,9 +255,12 @@ macd 反弹依然成立，但是考虑到如果到达价位可能逆向动能过
 澳元做多， 
 
 alibaba 计划
-alibaba @7.6 9w   
+alibaba @8.65  8w
 alibaba @4.0 15w
 alibaba @3.7 10w 
+
+total 150m
+8.92 130m
 * TRADEPLAN (tradeplan)  :TRADEPLAN:
   :LOGBOOK:
   CLOCK: [2011-11-07 Mon 09:53]
