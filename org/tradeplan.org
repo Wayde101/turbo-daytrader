@@ -255,7 +255,7 @@ macd 反弹依然成立，但是考虑到如果到达价位可能逆向动能过
 澳元做多， 
 
 alibaba 计划
-alibaba @8.65  8w
+alibaba @8.65 - @11.44  10w    5w
 alibaba @4.0 15w
 alibaba @3.7 10w 
 
