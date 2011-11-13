@@ -1,20 +1,27 @@
 (setq load-path (add-to-list 'load-path "~/.emacs.d/misc"))
+
+
+(require 'paredit)
+
+(autoload 'enable-paredit-mode "paredit"
+    "Turn on pseudo-structural editing of Lisp code."
+    t)
+
+(define-key paredit-mode-map (kbd ")")
+    'paredit-close-round-and-newline)
+(define-key paredit-mode-map (kbd "M-)")
+    'paredit-close-round)
+
 (provide 'misc-init)
 (require 'ido)
 (ido-mode t)
 
-(setq inferior-lisp-program "/usr/bin/sbcl")
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
-(require 'slime)
-(slime-setup)
+(require 'w3m-load)
+(setq mm-text-html-renderer 'w3m)
+(setq browse-url-browser-function 'w3m-browse-url)
+(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
 
 
-(setq user-home-dir (getenv "HOME")
-      conf-root-dir (concat user-home-dir "/.emacs.d"))
-
-(defun add-search-path (path)
-  (add-to-list 'load-path (concat conf-root-dir "/" path))
-  (message (concat "misc-init: load-path added: " path)))
 
 (set-language-environment 'UTF-8) 
 (set-locale-environment "UTF-8") 
@@ -257,12 +264,15 @@ Return only one group for each buffer."
       )
      )))
 
+
+
 (defun ysl/set-x-font () 
    (let ((fontset "fontset-default"))
    (set-default-font ysl/x-font-en) 
    (dolist (charset '(kana han symbol cjk-misc bopomofo)) 
    (set-fontset-font fontset charset ysl/x-font-zh))))
    (setq ysl/x-font-en "Consolas:size=14:weight=bold"  ysl/x-font-zh "Microsoft YaHei:size=16:weight=light")
+
 
 ;; (display-time)
 ;; ;;(unset-font)
@@ -279,6 +289,3 @@ Return only one group for each buffer."
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-
-;; (define-key global-map (kbd "<f9> r") 'remember)
-;; (define-key global-map (kbd "<f9> R") 'remember-region)

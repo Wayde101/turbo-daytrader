@@ -59,3 +59,18 @@
    :END:
 [2011-09-27 Tue 11:51]
 [[file:~/org/docs/orgmode-tut.org::*Drop%20old%20style%20references%20in%20tables][Drop old style references in tables]]
+
+** sblc / slime 
+   \* return the *previous values
+   # what's does # means??
+   *help* in mimibuffer can lisp shortcut for slime
+   
+   translate morse code  to lisp charactor
+
+   - defun a package
+     - c-c c-d c-d  slime-describe-symbol
+     - defpackage  
+     - C-M x  runs the command slime-eval-defun, which is an interactive Lisp
+     - C-x C-e runs the command slime-eval-last-expression, which is an
+     
+     
