@@ -72,5 +72,9 @@
      - defpackage  
      - C-M x  runs the command slime-eval-defun, which is an interactive Lisp
      - C-x C-e runs the command slime-eval-last-expression, which is an
+     - paredit.el  is usefull parenth editor 
+       - ( can auto complete another )
+       
+     
      
      

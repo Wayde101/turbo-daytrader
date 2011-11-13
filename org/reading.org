@@ -176,6 +176,8 @@
    43. [X] 摄影集
    44. [X] 资料来源
 
+** TODO 《slime 入门》
+   
 ** TODO 《Practical Common Lisp》
    1. [X] Introduction: Why Lisp?
       korn-like motto: a programble programing language
