@@ -260,9 +260,15 @@ alibaba 计划
 alibaba @8.65 - @11.44  10w    5w
 alibaba @4.0 15w
 alibaba @3.7 10w 
-
 total 150m
 8.92 130m
+
+当前:
+alibaba
+
+@6.9  4950
+@9.2  20000
+
 * TRADEPLAN (tradeplan)  :TRADEPLAN:
   :LOGBOOK:
   CLOCK: [2011-11-07 Mon 09:53]
