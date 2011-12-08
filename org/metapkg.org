@@ -2,10 +2,8 @@
 ** metapkg
 ** tops-seco-core
 ** DONE checkout 一份本地的 metapkgs... 确保大部分工作可以在本机上调试修改.减少网络依赖 :Project:Writing:
-  CLOCK: [2011-09-21 Wed 10:36]--[2011-09-21 Wed 10:44] =>  0:08
-  CLOCK: [2011-09-20 Tue 09:22]--[2011-09-20 Tue 09:23] =>  0:01
   :PROPERTIES:
-  :Effort:  whateffort?
+  :Effort:  2d
   :END:
   1. 是否可以直接从newbie 上rsync 下来当clone?
 [2011-09-20 Tue 09:22]
