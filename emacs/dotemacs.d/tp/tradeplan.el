@@ -250,6 +250,7 @@ to display in menu and the header of buffer instead of the page-name."
 			  (tpvar-update (concat fxs "-" tf) :sub "NA")
 			  (tpvar-update (concat fxs "-" tf) :dsum "NA")
 			  (tpvar-update (concat fxs "-" tf) :sel "NA")
+			  (tpvar-update (concat fxs "-" tf) :qr 0)
 			  (tpvar-update (concat fxs "-" tf) :gfx "NA"))))
 	     "NA")
       )))
@@ -441,6 +442,10 @@ to display in menu and the header of buffer instead of the page-name."
   (widget-insert "\n   ----------------------------------------\n\n")
   )
 
+(defun tp-usdx-summary-trade()
+  "月内，周内，日内的交易方向"
+  
+  )
 
 (defun tp-usdx-summary-editor()
   "市场整体情况的结论"
@@ -492,7 +497,7 @@ to display in menu and the header of buffer instead of the page-name."
 		 (tp-create-anchor (concat fxs "-" tfi "-gfx" ))
 		 (widget-create 'link
 				:notify `(lambda (widget &rest ignore)
-					   (let ((choosed (widget-choose ,(concat fxs "-" tfi "-gfx") '((已经有中继或者次的迹象 . "zc") (已经有不规范的次的迹象 . "cc") (暂时还没有中继或者次的迹象 . "nc") (短时间内不太可能形成次 . "fc")))))
+					   (let ((choosed (widget-choose ,(concat fxs "-" tfi "-gfx") '((一等模型雏形 . "M1") (二等模型雏形 . "M2") (已经有中继或者次的迹象 . "zc") (已经有不规范的次的迹象 . "cc") (暂时还没有中继或者次的迹象 . "nc") (短时间内不太可能形成次 . "fc")))))
 					     (tpvar-update ,(concat fxs "-" tfi) :gfx choosed)
 					     (tp-goto ,(concat tp-current "#" fxs "-" tfi "-gfx"))))
 				(format "%s:   %s  " fxs (tpvar-get (concat fxs "-" tfi ) :gfx)))
@@ -554,8 +559,11 @@ to display in menu and the header of buffer instead of the page-name."
   "市场规范性选择"
   (dolist (tfi '("4hr" "1hr" "15m"))
     (widget-insert " \n  ------------------------------------\n" tfi ":规范性:\n")
-    (dolist (gfx '(("zc" . "已经有中继或者次的迹象") 
+    (dolist (gfx '(("M1" . "1等模型雏形")
+		   ("M2" . "2等模型雏形")
+		   ("zc" . "已经有中继或者次的迹象") 
 		   ("cc" . "已经有不规范的次的迹象") 
+		   
 		   ;; ("nc" . "暂时还没有中继或者次的迹象") 
 		   ;; ("fc" . "短时间内不太可能形成次") 
 		   ("NA" . "未更新规范性")))
