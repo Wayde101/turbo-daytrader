@@ -250,6 +250,7 @@ to display in menu and the header of buffer instead of the page-name."
 			  (tpvar-update (concat fxs "-" tf) :sub "NA")
 			  (tpvar-update (concat fxs "-" tf) :dsum "NA")
 			  (tpvar-update (concat fxs "-" tf) :sel "NA")
+			  (tpvar-update (concat fxs "-" tf) :trade "NA")
 			  (tpvar-update (concat fxs "-" tf) :qr 0)
 			  (tpvar-update (concat fxs "-" tf) :gfx "NA"))))
 	     "NA")
@@ -444,8 +445,16 @@ to display in menu and the header of buffer instead of the page-name."
 
 (defun tp-usdx-summary-trade()
   "月内，周内，日内的交易方向"
-  
-  )
+  (dolist-if (tfi time-frame)
+	     (or (string= tfi "1hr"))
+	     (progn (widget-create 'link
+		   :notify `(lambda (widget &rest ignore)
+			      (let ((choosed (widget-choose ,(concat "usdx-" tfi "-trade") '((上 . 做多) (下 . 做空) (不交易 . 不交易)))))
+				(tpvar-update ,(concat "usdx-" tfi) :trade choosed)
+				(tp-goto ,(concat tp-current "#uxdx-" tfi "-trade")))) 
+		   (format "日内考虑 %s 美元"  (tpvar-get (concat  "usdx-" tfi) :trade))
+		   )))
+  (widget-insert "\n"))
 
 (defun tp-usdx-summary-editor()
   "市场整体情况的结论"
@@ -521,7 +530,9 @@ to display in menu and the header of buffer instead of the page-name."
 (defun tp-usdx ()
   (widget-insert "*美元指数分析\n")
   (tp-os-matrix-print "usdx")
-  (widget-insert "*结论\n\n")
+  (widget-insert "*结论: ")
+  (tp-usdx-summary-trade)
+  (widget-insert "\n")
   (tp-usdx-summary-editor)
   (widget-insert "\n\n*货币分化表\n")
   (tp-usdx-market-diff-view)
@@ -566,7 +577,8 @@ to display in menu and the header of buffer instead of the page-name."
 		   
 		   ;; ("nc" . "暂时还没有中继或者次的迹象") 
 		   ;; ("fc" . "短时间内不太可能形成次") 
-		   ("NA" . "未更新规范性")))
+		   ;; ("NA" . "未更新规范性")
+		   ))
       (widget-insert (cdr gfx) ":")
       (dolist (fxs forex-symbol)
 	(if (string= (tpvar-get (concat fxs "-" tfi) :gfx) (car gfx))
