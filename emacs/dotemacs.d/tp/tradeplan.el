@@ -572,9 +572,10 @@ to display in menu and the header of buffer instead of the page-name."
     (widget-insert " \n  ------------------------------------\n" tfi ":规范性:\n")
     (dolist (gfx '(("M1" . "1等模型雏形")
 		   ("M2" . "2等模型雏形")
+		   ("MC" . "macd反弹模型")
+		   ("M3" . "3等反弹模型 ")
 		   ("zc" . "已经有中继或者次的迹象") 
 		   ("cc" . "已经有不规范的次的迹象") 
-		   
 		   ;; ("nc" . "暂时还没有中继或者次的迹象") 
 		   ;; ("fc" . "短时间内不太可能形成次") 
 		   ;; ("NA" . "未更新规范性")
