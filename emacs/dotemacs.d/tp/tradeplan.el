@@ -506,7 +506,7 @@ to display in menu and the header of buffer instead of the page-name."
 		 (tp-create-anchor (concat fxs "-" tfi "-gfx" ))
 		 (widget-create 'link
 				:notify `(lambda (widget &rest ignore)
-					   (let ((choosed (widget-choose ,(concat fxs "-" tfi "-gfx") '((一等模型雏形 . "M1") (二等模型雏形 . "M2") (已经有中继或者次的迹象 . "zc") (已经有不规范的次的迹象 . "cc") (暂时还没有中继或者次的迹象 . "nc") (短时间内不太可能形成次 . "fc")))))
+					   (let ((choosed (widget-choose ,(concat fxs "-" tfi "-gfx") '((一等模型雏形 . "M1") (二等模型雏形 . "M2")  (三等反弹模型雏形 . "M3") (MACD反弹模型 . "MC") (已经有中继或者次的迹象 . "zc") (已经有不规范的次的迹象 . "cc") (暂时还没有中继或者次的迹象 . "nc") (短时间内不太可能形成次 . "fc")))))
 					     (tpvar-update ,(concat fxs "-" tfi) :gfx choosed)
 					     (tp-goto ,(concat tp-current "#" fxs "-" tfi "-gfx"))))
 				(format "%s:   %s  " fxs (tpvar-get (concat fxs "-" tfi ) :gfx)))
