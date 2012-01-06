@@ -177,7 +177,6 @@
    44. [X] 资料来源
 
 ** TODO 《slime 入门》
-   
 ** TODO 《Practical Common Lisp》
    1. [X] Introduction: Why Lisp?
       korn-like motto: a programble programing language
@@ -406,7 +405,7 @@
 ** 《C programming language》
 ** 《C++ programming language》
 ** 《编译原理极其实践》
-   - 第一章 概论 [0/4]
+   - 第一章 概论 [0/7]
      - [ ] 为什么要使用编译器
      - [ ] 与编译器相关的程序
      - [ ] 编译步骤
