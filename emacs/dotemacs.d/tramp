@@ -40,4 +40,42 @@
   ("local-encoding" base64-encode-region)
   ("local-decoding" base64-decode-region)
   ("remote-encoding" "base64")
-  ("remote-decoding" "base64 -d")))
+  ("remote-decoding" "base64 -d"))
+ (["scp" nil "10.13.114.232" nil]
+  nil)
+ (["scp" nil "newbie" nil]
+  ("uname" "Linux 2.6.18-274.12.1.el5")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))
+  ("remote-shell" "/bin/sh")
+  ("file-exists" "test -e")
+  ("~" "/home/yuting"))
+ (["scp" nil "newbie.corp.linuxnote.net" nil]
+  ("uname" "Linux 2.6.18-274.12.1.el5")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))
+  ("remote-shell" "/bin/sh")
+  ("file-exists" "test -e")
+  ("~" "/home/yuting"))
+ (["ssh" nil "newbie.corp.linuxnote.net" nil]
+  ("uname" "Linux 2.6.18-274.12.1.el5")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))
+  ("remote-shell" "/bin/sh")
+  ("~" "/home/yuting")
+  ("file-exists" "test -e")
+  ("readlink" "\\readlink")
+  ("stat" "\\stat")
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("id" "/usr/bin/id")
+  ("uid-integer" 500)
+  ("gid-integer" 500)
+  ("local-encoding" base64-encode-region)
+  ("local-decoding" base64-decode-region)
+  ("remote-encoding" "base64")
+  ("remote-decoding" "base64 -d -i")))
