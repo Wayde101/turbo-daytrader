@@ -41,8 +41,6 @@
   ("local-decoding" base64-decode-region)
   ("remote-encoding" "base64")
   ("remote-decoding" "base64 -d"))
- (["scp" nil "10.13.114.232" nil]
-  nil)
  (["scp" nil "newbie" nil]
   ("uname" "Linux 2.6.18-274.12.1.el5")
   ("test" "test")
@@ -78,4 +76,6 @@
   ("local-encoding" base64-encode-region)
   ("local-decoding" base64-decode-region)
   ("remote-encoding" "base64")
-  ("remote-decoding" "base64 -d -i")))
+  ("remote-decoding" "base64 -d -i"))
+ (["scp" nil "localhost" nil]
+  nil))
