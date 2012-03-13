@@ -6,7 +6,7 @@
            (nnimap-address "mymailserver")
             (nnimap-server-port 55143)
            ;;(nnimap-server-port 993)
-           ;; (nnimap-authinfo-file "~/.imap-authinfo")
+            (nnimap-authinfo-file "~/.imap-authinfo")
            ;; (nnimap-stream ssl)))
               ))
 
@@ -41,7 +41,7 @@
 (setq gnus-posting-styles
       '(
         (".*"
-                                        ; (signature-file "~/emacs/gnus/.signature_english") 
+                                        ;; (signature-file "~/emacs/gnus/.signature_english") 
           (name "于霆")
            (address "yanzhuang@taobao.com"))
         ))
