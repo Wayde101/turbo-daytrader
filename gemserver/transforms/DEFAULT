@@ -1,0 +1,23 @@
+#resolv.conf     
+#        include resolv.conf
+#
+#rsyncd.conf
+#        include rsyncd.conf
+#
+##shosts  
+##        include shosts
+#
+##hosts.equiv
+##        include hosts.equiv
+#
+##manifest
+#	append # check the manifest
+#
+#
+#dpkg-list
+#        include dpkg-list
+#        #replace ethpinger.install ethpinger purge
+#        #appendunique ethpinger purge
+##	#appendunique cam-comps purge
+#    	#appendunique cam-core purge
+#
