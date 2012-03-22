@@ -1,0 +1,30 @@
+Host *
+        ForwardAgent yes
+
+Host  robin
+        Hostname www.17forex.com
+        User yuting
+        Port 55555
+
+Host www.pgsqldb.com
+        Port 18888
+
+Host zoro.mm.cnz.alimama.com
+        User yanzhuang
+
+Host forex
+        Hostname www.17forex.com
+        User yuting
+        Port 54321
+
+Host newbie
+        Hostname www.17forex.com
+        User yuting
+        Port 55556
+
+Host shake
+        Hostname 10.32.102.21
+        User yuting
+
+Host zoro
+        Hostname zoro.mm.cnz.alimama.com

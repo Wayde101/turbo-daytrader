@@ -3,6 +3,7 @@ package GemInstaller;
 use strict;
 use Seco::Gemstone::Utils qw/gem_copy gem_move read_file write_file write_template motd/;
 use File::Compare;
+use Seco::RunAs;
 
 sub new {
     my $class = shift;
@@ -304,6 +305,12 @@ sub group {
     gem_copy("out/group", "/etc/group");
 }
 
+sub yuting_home_ssh_config {
+    my $self = shift;
+    run {  gem_copy("out/yuting_home_ssh_config","/home/yuting/.ssh/config") } as user => 'yuting', group => "yuting" ;
+    # gem_copy("out/yuting_home_ssh_config","/home/yuting/.ssh/config") ;
+}
+
 sub hosts_allow {
     my $self = shift;
     gem_copy("out/hosts.allow", "/etc/hosts.allow");
@@ -560,44 +567,6 @@ sub reload_www {
     }
   }
 }
-
-
-sub webacl {
-    my $self = shift;
-    system("mkdir","-p","/www/conf") unless (-d "/www/conf");
-    gem_copy("out/webacl", "/www/conf/webacl");
-}
-
-sub webacl_conf {
-    my $self = shift;
-    system("mkdir","-p","/www/conf") unless (-d "/www/conf");
-    write_template("/www/conf/webacl.conf",read_file("out/webacl.conf"));
-#    gem_copy("out/webacl.conf", "/www/conf/webacl.conf");
-}
-
-sub webacl_yauth_ystcw {
-    my $self = shift;
-    system("mkdir","-p","/www/conf") unless (-d "/www/conf");
-    gem_copy("out/webacl.yauth-ystcw", "/www/conf/webacl.yauth-ystcw");
-    reload_www();
-}
-
-sub webacl_redir_byip {
-    my $self = shift;
-    system("mkdir","-p","/www/conf") unless (-d "/www/conf");
-#    gem_copy("out/webacl.redir-byip", "/www/conf/webacl.redir-byip");
-    write_template("/www/conf/webacl.redir-byip",read_file("out/webacl.redir-byip"));
-    reload_www();
-}
-
-sub webacl_allow_byip {
-    my $self = shift;
-    system("mkdir","-p","/www/conf") unless (-d "/www/conf");
-#    gem_copy("out/webacl.allow-byip", "/www/conf/webacl.allow-byip");
-    write_template("/www/conf/webacl.allow-byip",read_file("out/webacl.allow-byip"));
-    reload_www();
-}
-
 
 sub gemstonehints {
     my $self = shift;

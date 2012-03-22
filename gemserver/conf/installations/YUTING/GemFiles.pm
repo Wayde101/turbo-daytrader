@@ -67,11 +67,6 @@ sub setup {
     $self->add('postfix.canonical_recipient');
     $self->add('postfix.transport');
     $self->add('aliases');
-    $self->add('webacl');
-    $self->add('webacl.conf');
-    $self->add('webacl.yauth-ystcw');
-    $self->add('webacl.redir-byip');
-    $self->add('webacl.allow-byip');
     $self->add('gemstonehints');
     $self->add('pam-sshd');
     $self->add('pam-su');
@@ -108,6 +103,7 @@ sub setup {
     $self->add('prelink');
     $self->add('autofsck');
     $self->add('fsckoptions');
+    $self->add('yuting_home_ssh_config',comparator => sub { 1 });
 }
 
 1;
