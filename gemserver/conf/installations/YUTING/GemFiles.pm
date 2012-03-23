@@ -103,6 +103,7 @@ sub setup {
     $self->add('prelink');
     $self->add('autofsck');
     $self->add('fsckoptions');
+    $self->add('daemontools_svscanboot');
     $self->add('yuting_home_ssh_config',comparator => sub { 1 });
 }
 

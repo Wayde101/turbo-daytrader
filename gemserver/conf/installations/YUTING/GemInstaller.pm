@@ -28,6 +28,11 @@ sub fsckoptions {
     gem_copy("out/fsckoptions", "/fsckoptions");
 }
 
+sub daemontools_svscanboot {
+    my $self = shift;
+    gem_copy("out/daemontools_svscanboot /usr/bin/svscanboot");
+}
+
 sub readahead {
     my $self = shift;
     open my $fh, "<out/readahead" or do {
@@ -158,24 +163,6 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
     }
 }
 
-sub fix_orig_sources_list {
-    return if -e "/etc/apt/sources.list.fixed"; # if already fixed
-    
-    open my $fh, "</etc/apt/sources.list" or do {
-        warn "ERROR: can't open sources.list: $!\n";
-        return;
-    };
-    
-    open my $ofh, ">/etc/apt/sources.list.fixed";
-    while (<$fh>) {
-        s{boothost(:80)?/}{boothost:9999/}g;
-        print $ofh $_;
-    }
-    close $fh;
-    close $ofh;
-    gem_copy("/etc/apt/sources.list.fixed", "/etc/apt/sources.list");
-}
-
 sub i18n {
     my $self = shift;
     gem_copy("out/i18n", "/etc/sysconfig/i18n");
@@ -232,17 +219,8 @@ sub chkconfig_list {
 sub dpkg_list {
     my $self = shift;
     if (-d "/etc/apt") {
-        if (-e "out/sources.list") {
-            gem_copy("out/sources.list", "/etc/apt/sources.list.admin");
-        } elsif (-e "processed/sources.list") {
-            gem_copy("processed/sources.list", "/etc/apt/sources.list.admin");
-        }
-        
-        # This is valid for YST. We're running httpd on port 9999 now
-        # not on port 80 because that's wide open
-        fix_orig_sources_list();
-        gem_copy("/etc/apt/sources.list", "/etc/apt/sources.list.orig$$") and
-        gem_copy("/etc/apt/sources.list.admin", "/etc/apt/sources.list") and
+
+	# source.list use ubuntu 's 
         system(qq/ ulimit -t 300; apt-get -qq update/);
         if ($self->is_redhat) {
             my @pkgs = $self->get_packages_to_install;
@@ -250,6 +228,7 @@ sub dpkg_list {
                 system(" ulimit -t 300; apt-get -q -y install $pkg\n");
             }
         } else { # debian
+		 # <package_name> <install|hold|deinstall|purge>
             system(<<'');
 ulimit -t 300
 dpkg --set-selections < out/dpkg-list
@@ -287,7 +266,7 @@ sub get_packages_to_remove {
     my $self = shift;
     my @lines = grep { !/^\s*$/ and !/^#/ } split("\n", read_file("out/dpkg-list"));
     my @pkgs = map { @_=split; $_[0] } 
-        grep { @_=split; $_[1] and $_[1] eq "remove" } @lines;
+        grep { @_=split; $_[1] and ( $_[1] eq "remove" or $_[1] "purge" ) } @lines;
     return @pkgs;
 }
 
@@ -415,22 +394,6 @@ sub shosts {
     chmod 0400, "/root/.shosts";
 }
 
-sub sources_list_literal {
-    my $self = shift;
-    if (-d "/etc/apt") {
-	gem_copy("out/sources.list.literal", "/etc/apt/sources.list");
-	gem_copy("out/sources.list.literal", "/etc/apt/sources.list.fixed");
-    } 
-    return 1;
-}
-
-sub sources_list {
-    my $self = shift;
-    if (-d "/etc/apt") {
-        return gem_copy("out/sources.list", "/etc/apt/sources.list.admin");
-    }
-    return 1;
-}
 
 sub sudoers {
     my $self = shift;
