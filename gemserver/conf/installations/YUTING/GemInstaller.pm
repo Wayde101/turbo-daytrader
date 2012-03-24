@@ -266,7 +266,7 @@ sub get_packages_to_remove {
     my $self = shift;
     my @lines = grep { !/^\s*$/ and !/^#/ } split("\n", read_file("out/dpkg-list"));
     my @pkgs = map { @_=split; $_[0] } 
-        grep { @_=split; $_[1] and ( $_[1] eq "remove" or $_[1] "purge" ) } @lines;
+        grep { @_=split; $_[1] and ( $_[1] eq "remove" or $_[1] eq "purge" ) } @lines;
     return @pkgs;
 }
 
@@ -286,8 +286,8 @@ sub group {
 
 sub yuting_home_ssh_config {
     my $self = shift;
-    run {  gem_copy("out/yuting_home_ssh_config","/home/yuting/.ssh/config") } as user => 'yuting', group => "yuting" ;
-    # gem_copy("out/yuting_home_ssh_config","/home/yuting/.ssh/config") ;
+    run {  gem_copy("out/yuting_home_ssh_config","/home/yuting/.ssh/config") } 
+	as user => 'yuting', group => "yuting" ;
 }
 
 sub hosts_allow {
