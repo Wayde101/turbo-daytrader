@@ -86,14 +86,16 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+export SECOLIB=/usr/local/share/perl/5.12.4/Seco
 
-alias '.sl=ls /etc/service'
+# Alias definitions.
+
+alias '.sl=ls /service'
 alias '.cds=cd /etc/service'
 alias '.gs=cd ~/turbo-daytrader/gemserver'
+alias '.gc=cd /usr/local/gemclient'
+alias '.gmfile=cd /home/yuting/turbo-daytrader/gemserver/conf/installations/YUTING' 
+
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -101,3 +103,5 @@ alias '.gs=cd ~/turbo-daytrader/gemserver'
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+

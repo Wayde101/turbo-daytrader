@@ -1,8 +1,0 @@
-#!/bin/sh
-LOGDIR=./main
-if [ ! -d $LOGDIR ]; then
-    mkdir -pv $LOGDIR
-    chown nobody. $LOGDIR
-fi
-
-exec setuidgid nobody multilog t I s200000 n5 $LOGDIR

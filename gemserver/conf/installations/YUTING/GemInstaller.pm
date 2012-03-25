@@ -28,11 +28,6 @@ sub fsckoptions {
     gem_copy("out/fsckoptions", "/fsckoptions");
 }
 
-sub daemontools_svscanboot {
-    my $self = shift;
-    gem_copy("out/daemontools_svscanboot /usr/bin/svscanboot");
-}
-
 sub readahead {
     my $self = shift;
     open my $fh, "<out/readahead" or do {
@@ -236,7 +231,6 @@ apt-get -q -y dselect-upgrade
 apt-get -q -y install
 
         }
-        gem_move("/etc/apt/sources.list.orig$$", "/etc/apt/sources.list");
         system(qq/ ulimit -t 300; apt-get -q update/);
         system(qq/ ulimit -t 300; apt-get clean/);
     } elsif (-e "/etc/yum.conf") {
@@ -279,15 +273,28 @@ sub get_packages_to_install {
     return @pkgs;
 }
 
-sub group {
+sub daemontools_svscanboot {
     my $self = shift;
-    gem_copy("out/group", "/etc/group");
+    mkdir "/service" unless -d "/service";
+    mkdir "/etc/service" unless -d "/etc/service";
+    gem_copy("out/daemontools_svscanboot", "/usr/bin/svscanboot");
 }
 
 sub yuting_home_ssh_config {
     my $self = shift;
     run {  gem_copy("out/yuting_home_ssh_config","/home/yuting/.ssh/config") } 
 	as user => 'yuting', group => "yuting" ;
+}
+
+sub yuting_home_bashrc {
+    my $self = shift;
+    run {  gem_copy("out/yuting_home_bashrc","/home/yuting/.bashrc") } 
+	as user => 'yuting', group => "yuting" ;
+}
+
+sub group {
+    my $self = shift;
+    gem_copy("out/group", "/etc/group");
 }
 
 sub hosts_allow {

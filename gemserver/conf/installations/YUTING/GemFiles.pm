@@ -39,15 +39,7 @@ sub setup {
     $self->add('sources.list');
     $self->add('i18n');
     $self->add('yum.conf');
-    # HACK to support old versions of seco-gemstone
-    if (-e "/usr/local/lib/perl5/site_perl/Seco/Gemstone/PackageConstructor.pm") {
-        $self->add('dpkg-list', 
-            priority => -1, # do this last
-            constructor => 'Seco::Gemstone::PackageConstructor',
-            comparator => sub { 1 });
-    } else {
-        $self->add('dpkg-list', comparator => sub { 1 });
-    }
+    $self->add('dpkg-list', comparator => sub { 1 });
     $self->add('chkconfig-list', comparator => sub { 1 });
     $self->add('ssh_known_hosts');
     $self->add('ssh_known_hosts2');
@@ -103,8 +95,10 @@ sub setup {
     $self->add('prelink');
     $self->add('autofsck');
     $self->add('fsckoptions');
-    $self->add('daemontools_svscanboot');
+    $self->add('daemontools_svscanboot', priority => -1, # do this last
+		comparator => sub { 1 });
     $self->add('yuting_home_ssh_config',comparator => sub { 1 });
+    $self->add('yuting_home_bashrc',    comparator => sub { 1 });
 }
 
 1;
