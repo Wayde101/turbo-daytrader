@@ -1,0 +1,17 @@
+# nothing now
+
+dpkg-list
+     append daemontools install
+     append daemontools-run install
+
+
+daemontools_svscanboot
+    include svscanboot
+
+
+yuting_home_ssh_config
+   include yuting_home_ssh_config
+
+
+yuting_home_bashrc
+   include homebashrc

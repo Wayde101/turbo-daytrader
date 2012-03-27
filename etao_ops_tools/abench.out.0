@@ -1,0 +1,23 @@
+--- FROM(11/23/10 17:11:58) TO(11/23/10 17:26:58) TIME-USED(0h-15min-0s) ---
+CMD: abench 2.0.8 -p 20 -s 900 --apsara nuwa://10.249.49.2:10240/admin/daogou_combo/QueryResultServerRole//qrs_partitionid_0 Search /apsarapangu/disk5/daogou/crontab/pe_code/index_switcher/src/../query_log/zixun_query.txt
+QPS:                           1380.03
+Latency:                       12.89 ms
+Query Success Number:          1242025
+Connect Failed Number:         0
+Query Failed Number:           0
+Query Timeout Number:          0
+Match Failed Number:           0
+No DocsReturn Number:          873181 (70.30%)
+Average DocsReturn Number:     8.05
+No DocsFound Number:           873181 (70.30%)
+Average DocsFound Number:      9009.68
+Average Return Length(Bytes):  3896
+Min Response Time:             0.3 ms
+Max Response Time:             5605.1 ms
+25 Percentile:                 1.3 ms
+50 Percentile:                 4.9 ms
+75 Percentile:                 10.6 ms
+90 Percentile:                 27.3 ms
+95 Percentile:                 63.1 ms
+99 Percentile:                 124.0 ms
+

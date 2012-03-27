@@ -1,0 +1,19 @@
+* orgmode
+  :PROPERTIES:
+  :CATEGORY: ORGMODE
+  :END:   
+
+[2011-09-20 Tue 09:21]
+[[file:~/org/todolist.org::*Notes][Notes]]
+** DONE 需要搞清楚什么是project. 通常的使用情景是什么
+   CLOCK: [2011-09-21 Wed 09:58]--[2011-09-21 Wed 10:01] =>  0:03
+   CLOCK: [2011-09-20 Tue 09:20]--[2011-09-20 Tue 09:21] =>  0:01
+   [2011-09-20 Tue 09:20]
+
+   1. 初步判断一个 project 就是一个文件，每个文件里面应该有子task. 
+   2. project 内部应该可以做任务分解.
+   3. 判断 task 和 project 的却别，project 有task 和 sub task.
+
+** 如何找到最后一个clockin 的任务.
+   <f11>   'org-clock-goto
+

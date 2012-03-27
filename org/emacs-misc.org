@@ -1,0 +1,3 @@
+* emacs & elisp
+** DONE 需要在emacs 里面配置一个w3m.
+  - State "SOMEDAY"    from "STARTED"    [2011-09-21 Wed 14:03]
