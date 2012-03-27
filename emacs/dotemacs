@@ -7,3 +7,4 @@
 (require 'tp-init)
 (require 'global-key-init)
 (require 'slime-init)
+(require 'mql-mode)
