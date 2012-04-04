@@ -1,20 +1,58 @@
 from twisted.internet import protocol, reactor
 from twisted.protocols import basic
+import struct
+import cjson
+
 
 class mt4srvProtocol(basic.LineReceiver):
-    def lineReceived(self, mt4in):
-#        self.transport.write(self.factory.getUser(user)+"\r\n")
-        print mt4in
+    def dataReceived(self, input_str):
+        json_payload = input_str[2:]
+        print json_payload
+        read_status = self.factory.read_into_bb(json_payload)
+        if read_status[0:2] != 'OK':
+            print read_status
+            self.transport.write(self.factory.mtr(read_status))
+
+        if read_status == 'OKmt4':
+            print self.factory.bb
+            self.transport.write(self.factory.mtr("in_mt4_proc"))
+
+        if read_status == 'OKconsole':
+            print "console proc"
+
+        
+        
 
 class mt4srvFactory(protocol.ServerFactory):
     protocol = mt4srvProtocol
     def __init__(self, **kwargs):
-        print kwargs
-        self.users = kwargs
+        self.bb = {'EURUSD' : ['null','null'],
+                   'GBPUSD' : ['null','null'],
+                   'USDCHF' : ['null','null'],
+                   'AUDUSD' : ['null','null'],
+                   'USDCAD' : ['null','null'],
+                   'USDJPY' : ['null','null']
+                   }
+        
+    def read_into_bb(self,jstr):
+        jdict=cjson.decode(jstr)
+        rt='OKmt4'
+        if jdict.has_key('Symbol') and jdict.has_key('Client'):
+            if jdict['Client'] == 'mt4':
+                self.bb[jdict['Symbol']][0]=jstr
+                rt='OKmt4'
+            elif jdict['Client'] == 'console':
+                self.bb[jdict['Symbol']][1]=jstr
+                rt='OKconsole'
+            else:
+                rt="NonMt4orConsole"
+        else:
+            rt="MissSymbolOrClientKey"
+        return rt
+            
+    def mtr(self,string):
+        return struct.pack(">H",len(string)) + string
 
-    def getUser(self, user):
-        return self.users.get(user, "No such user")
-
-reactor.listenTCP(1984, mt4srvFactory(moshez='Happy and well'))
+reactor.listenTCP(1984, mt4srvFactory())
 reactor.run()
 
