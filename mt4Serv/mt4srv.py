@@ -20,29 +20,27 @@ class mt4srvProtocol(basic.LineReceiver):
         if read_status == 'OKconsole':
             print "console proc"
 
-        
-        
-
 class mt4srvFactory(protocol.ServerFactory):
     protocol = mt4srvProtocol
     def __init__(self, **kwargs):
-        self.bb = {'EURUSD' : ['null','null'],
-                   'GBPUSD' : ['null','null'],
-                   'USDCHF' : ['null','null'],
-                   'AUDUSD' : ['null','null'],
-                   'USDCAD' : ['null','null'],
-                   'USDJPY' : ['null','null']
+        self.bb = {'EURUSD_60' : ['null','null'],
+                   'EURUSD_5' : ['null','null'],
+                   'GBPUSD_60' : ['null','null'],
+                   'USDCHF_60' : ['null','null'],
+                   'AUDUSD_60' : ['null','null'],
+                   'USDCAD_60' : ['null','null'],
+                   'USDJPY_60' : ['null','null']
                    }
         
     def read_into_bb(self,jstr):
         jdict=cjson.decode(jstr)
         rt='OKmt4'
-        if jdict.has_key('Symbol') and jdict.has_key('Client'):
-            if jdict['Client'] == 'mt4':
-                self.bb[jdict['Symbol']][0]=jstr
+        if jdict.has_key('CID'):
+            if jdict['CLIENT'] == 'MetaTrader4':
+                self.bb[jdict['CID']][0]=jstr
                 rt='OKmt4'
-            elif jdict['Client'] == 'console':
-                self.bb[jdict['Symbol']][1]=jstr
+            elif jdict['CLIENT'] == 'console':
+                self.bb[jdict['CID']][1]=jstr
                 rt='OKconsole'
             else:
                 rt="NonMt4orConsole"
