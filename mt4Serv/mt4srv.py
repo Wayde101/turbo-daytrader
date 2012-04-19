@@ -3,7 +3,6 @@ from twisted.protocols import basic
 import struct
 import cjson
 
-
 class mt4srvProtocol(basic.LineReceiver):
     def dataReceived(self, input_str):
         json_payload = input_str[2:]
