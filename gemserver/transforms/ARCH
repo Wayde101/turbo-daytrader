@@ -4,3 +4,16 @@ yuting_home_ssh_config
    append      User yanzhuang
    append      ProxyCommand ssh yanzhuang@login1.cm4.taobao.org 'nc %h %p'
 
+
+yuting_home_bashrc
+   include homebashrc
+   append alias '.gf=cd ~/project/turbo-daytrader/gemserver/conf/installations/YUTING'
+   append alias '.gs=cd ~/project/turbo-daytrader/gemserver'
+   append alias '.gc=cd ~/project/gmclient'
+   append alias .a='source ~/.python2/bin/activate'
+   append alias .mama='ssh yuting@login1.corp.alimama.com'
+   append alias .ad2='ssh accountdb2.cm4'
+   append alias .ad1='ssh accountdb1.cm4'
+
+
+
