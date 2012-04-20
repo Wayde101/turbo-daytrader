@@ -92,9 +92,6 @@ export SECOLIB=/usr/local/share/perl/5.12.4/Seco
 
 alias '.sl=ls /service'
 alias '.cds=cd /etc/service'
-alias '.gs=cd ~/turbo-daytrader/gemserver'
-alias '.gc=cd /usr/local/gemclient'
-alias '.gmfile=cd /home/yuting/turbo-daytrader/gemserver/conf/installations/YUTING' 
 
 
 # enable programmable completion features (you don't need to enable
