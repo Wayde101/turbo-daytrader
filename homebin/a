@@ -1,0 +1,2 @@
+rdesktop -g 1024x768 -u caiya -5 -a 16 -P -D -K -xl -z -r disk:D=$HOME/windrv -r clipboard:PRIMARYCLIPBOARD -r sound:local -T '$TITLE'  shake.corp.linuxnote.net -p '!QAZ2wsx' 
+
