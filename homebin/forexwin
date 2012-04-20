@@ -3,4 +3,4 @@
 #console
 #exec rdesktop -g 1024x768 shake.corp.linuxnote.net:3366
 
-exec rdesktop -g 1024x768 localhost:3389
+rdesktop -g 1024x768 -P -K -xl -r sound:local -T '$TITLE'  localhost:3389 
