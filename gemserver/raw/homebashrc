@@ -74,6 +74,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+
+eval `keychain --eval id_dsa id_rsa`
+
 # Alias definitions.
 # some more ls aliases
 alias ll='ls -alF'
