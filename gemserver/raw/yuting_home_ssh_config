@@ -22,3 +22,9 @@ Host newbie
      User yuting
      Port 55556
 
+Host linuxnote.net
+     Hostname linuxnote.net
+     User yuting
+     Port 55555
+
+
