@@ -1,0 +1,6 @@
+yuting_home_ssh_config
+   include yuting_home_ssh_config
+   append  Host accountdb*.cm4
+   append      User yanzhuang
+   append      ProxyCommand ssh yanzhuang@login1.cm4.taobao.org 'nc %h %p'
+
