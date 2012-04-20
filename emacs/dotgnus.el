@@ -10,6 +10,16 @@
            ;; (nnimap-stream ssl)))
               ))
 
+(add-to-list 'gnus-secondary-select-methods '(nnfolder "archive"))
+(setq nnfolder-directory "~/.emacs.d/mail/archive")
+
+(setq gnus-message-archive-method
+      '(nnfolder "archive"
+       (nnfolder-inhibit-expiry t)
+       (nnfolder-active-file "~/.emacs.d/mail/archive/active")
+       (nnfolder-directory "~/.emacs.d/mail/archive")))
+
+
 
 (setq message-send-mail-function 'smtpmail-send-it
       smtpmail-starttls-credentials '(("email.alibaba-inc.com" 587 nil nil))
