@@ -251,6 +251,10 @@ apt-get -q -y install
                 system("ulimit -t 300; rpm -q $pkg && yum -y -e 1 -d 1 remove $pkg");
             }
         }
+    } elsif ( -e "/etc/pacman.conf" ) {
+	print STDERR "ArchLinux have no dpkg-list support now";
+    } elsif ( -e "/etc/slackware-version" ) {
+	print STDERR "Slackware have no dpkg-list support now"
     }
     return 1;
 }
