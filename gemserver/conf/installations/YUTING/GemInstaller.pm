@@ -224,7 +224,7 @@ sub dpkg_list {
         #    }
         #} else { # debian
 	#	 # <package_name> <install|hold|deinstall|purge>
-            system(<<'');
+     system(<<'');
 ulimit -t 300
 dpkg --set-selections < out/dpkg-list
 apt-get -q -y dselect-upgrade
