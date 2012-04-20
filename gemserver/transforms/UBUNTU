@@ -15,6 +15,6 @@ yuting_home_ssh_config
 
 yuting_home_bashrc
    include homebashrc
-   append alias '.gmfile=cd /home/yuting/project/turbo-daytrader/gemserver/conf/installations/YUTING'
+   append alias '.gf=cd ~/project/turbo-daytrader/gemserver/conf/installations/YUTING'
    append alias '.gs=cd ~/project/turbo-daytrader/gemserver'
    append alias '.gc=cd ~/project/gmclient'
