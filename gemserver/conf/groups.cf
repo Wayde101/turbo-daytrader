@@ -1,6 +1,10 @@
 ALL
     INCLUDE tingbox
+    INCLUDE x200
 
 
 UBUNTU
     INCLUDE tingbox
+
+ARCHLINUX
+    INCLUDE x200
