@@ -1,0 +1,319 @@
+From MAILER-DAEMON  Tue Mar 13 13:08:18 2012
+Return-Path: <>
+X-Original-To: yuting@localhost.localdomain
+Delivered-To: yuting@localhost.localdomain
+Received: by localhost.localdomain (Postfix)
+	id 745374387B; Tue, 13 Mar 2012 13:08:18 +0800 (CST)
+Date: Tue, 13 Mar 2012 13:08:18 +0800 (CST)
+From: MAILER-DAEMON@localhost.localdomain (Mail Delivery System)
+Subject: Undelivered Mail Returned to Sender
+To: yuting@localhost.localdomain
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status;
+	boundary="1304441847.1331615298/localhost.localdomain"
+X-Gnus-Mail-Source: file:/var/mail/yuting
+Message-Id: <20120313050818.745374387B@localhost.localdomain>
+Lines: 59
+Xref: tingbox mail.misc:1
+X-Gnus-Article-Number: 1   Thu, 29 Mar 2012 17:32:29 +0800
+
+This is a MIME-encapsulated message.
+
+--1304441847.1331615298/localhost.localdomain
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host localhost.localdomain.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please send mail to postmaster.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+<yanzhuang@taobao.com>: host mail.alibaba-inc.com[121.0.29.157] said: 550 5.7.1
+    Client does not have permissions to send as this sender (in reply to end of
+    DATA command)
+
+--1304441847.1331615298/localhost.localdomain
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; localhost.localdomain
+X-Postfix-Queue-ID: 1304441847
+X-Postfix-Sender: rfc822; yuting@localhost.localdomain
+Arrival-Date: Tue, 13 Mar 2012 13:08:18 +0800 (CST)
+
+Final-Recipient: rfc822; yanzhuang@taobao.com
+Action: failed
+Status: 5.7.1
+Remote-MTA: dns; mail.alibaba-inc.com
+Diagnostic-Code: smtp; 550 5.7.1 Client does not have permissions to send as
+    this sender
+
+--1304441847.1331615298/localhost.localdomain
+Content-Description: Undelivered Message
+Content-Type: message/rfc822
+
+Return-Path: <yuting@localhost.localdomain>
+Received: by localhost.localdomain (Postfix, from userid 1000)
+	id 1304441847; Tue, 13 Mar 2012 13:08:18 +0800 (CST)
+Date: Tue, 13 Mar 2012 13:08:18 +0800
+From: yuting@tingbox.taobao.ali.com
+To: yanzhuang@taobao.com
+Subject: hello from now
+Message-ID: <20120313050817.GA6418@tingbox.taobao.ali.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+
+asdasd
+
+--1304441847.1331615298/localhost.localdomain--
+
+From MAILER-DAEMON  Tue Mar 13 13:10:25 2012
+Return-Path: <>
+X-Original-To: yuting@localhost.localdomain
+Delivered-To: yuting@localhost.localdomain
+Received: by localhost.localdomain (Postfix)
+	id 3C8E6438B5; Tue, 13 Mar 2012 13:10:25 +0800 (CST)
+Date: Tue, 13 Mar 2012 13:10:25 +0800 (CST)
+From: MAILER-DAEMON@localhost.localdomain (Mail Delivery System)
+Subject: Undelivered Mail Returned to Sender
+To: yuting@localhost.localdomain
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status;
+	boundary="CF8F94387B.1331615425/localhost.localdomain"
+X-Gnus-Mail-Source: file:/var/mail/yuting
+Message-Id: <20120313051025.3C8E6438B5@localhost.localdomain>
+Lines: 59
+Xref: tingbox mail.misc:2
+X-Gnus-Article-Number: 2   Thu, 29 Mar 2012 17:32:30 +0800
+
+This is a MIME-encapsulated message.
+
+--CF8F94387B.1331615425/localhost.localdomain
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host localhost.localdomain.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please send mail to postmaster.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+<tingle2008@gmail.com>: host mail.alibaba-inc.com[121.0.29.157] said: 550 5.7.1
+    Client does not have permissions to send as this sender (in reply to end of
+    DATA command)
+
+--CF8F94387B.1331615425/localhost.localdomain
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; localhost.localdomain
+X-Postfix-Queue-ID: CF8F94387B
+X-Postfix-Sender: rfc822; yuting@localhost.localdomain
+Arrival-Date: Tue, 13 Mar 2012 13:10:24 +0800 (CST)
+
+Final-Recipient: rfc822; tingle2008@gmail.com
+Action: failed
+Status: 5.7.1
+Remote-MTA: dns; mail.alibaba-inc.com
+Diagnostic-Code: smtp; 550 5.7.1 Client does not have permissions to send as
+    this sender
+
+--CF8F94387B.1331615425/localhost.localdomain
+Content-Description: Undelivered Message
+Content-Type: message/rfc822
+
+Return-Path: <yuting@localhost.localdomain>
+Received: by localhost.localdomain (Postfix, from userid 1000)
+	id CF8F94387B; Tue, 13 Mar 2012 13:10:24 +0800 (CST)
+Date: Tue, 13 Mar 2012 13:10:24 +0800
+From: yuting@tingbox.taobao.ali.com
+To: tingle2008@gmail.com
+Subject: hello
+Message-ID: <20120313051024.GA7026@tingbox.taobao.ali.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+
+sdasdf
+
+--CF8F94387B.1331615425/localhost.localdomain--
+
+From MAILER-DAEMON  Tue Mar 13 13:13:14 2012
+Return-Path: <>
+X-Original-To: yuting@localhost.localdomain
+Delivered-To: yuting@localhost.localdomain
+Received: by localhost.localdomain (Postfix)
+	id C1B17438B5; Tue, 13 Mar 2012 13:13:14 +0800 (CST)
+Date: Tue, 13 Mar 2012 13:13:14 +0800 (CST)
+From: MAILER-DAEMON@localhost.localdomain (Mail Delivery System)
+Subject: Undelivered Mail Returned to Sender
+To: yuting@localhost.localdomain
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status;
+	boundary="632054387B.1331615594/localhost.localdomain"
+X-Gnus-Mail-Source: file:/var/mail/yuting
+Message-Id: <20120313051314.C1B17438B5@localhost.localdomain>
+Lines: 59
+Xref: tingbox mail.misc:3
+X-Gnus-Article-Number: 3   Thu, 29 Mar 2012 17:32:30 +0800
+
+This is a MIME-encapsulated message.
+
+--632054387B.1331615594/localhost.localdomain
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host localhost.localdomain.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please send mail to postmaster.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+<yanzhuang@taobao.com>: host mail.alibaba-inc.com[121.0.29.157] said: 550 5.7.1
+    Client does not have permissions to send as this sender (in reply to end of
+    DATA command)
+
+--632054387B.1331615594/localhost.localdomain
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; localhost.localdomain
+X-Postfix-Queue-ID: 632054387B
+X-Postfix-Sender: rfc822; yuting@localhost.localdomain
+Arrival-Date: Tue, 13 Mar 2012 13:13:14 +0800 (CST)
+
+Final-Recipient: rfc822; yanzhuang@taobao.com
+Action: failed
+Status: 5.7.1
+Remote-MTA: dns; mail.alibaba-inc.com
+Diagnostic-Code: smtp; 550 5.7.1 Client does not have permissions to send as
+    this sender
+
+--632054387B.1331615594/localhost.localdomain
+Content-Description: Undelivered Message
+Content-Type: message/rfc822
+
+Return-Path: <yuting@localhost.localdomain>
+Received: by localhost.localdomain (Postfix, from userid 1000)
+	id 632054387B; Tue, 13 Mar 2012 13:13:14 +0800 (CST)
+Date: Tue, 13 Mar 2012 13:13:14 +0800
+From: yuting@tingbox.taobao.ali.com
+To: yanzhuang@taobao.com
+Subject: a;sldfja;sldkfj
+Message-ID: <20120313051314.GA8070@tingbox.taobao.ali.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+
+asdfasf
+
+--632054387B.1331615594/localhost.localdomain--
+
+From MAILER-DAEMON  Tue Mar 13 14:28:13 2012
+Return-Path: <>
+X-Original-To: yuting@localhost.localdomain
+Delivered-To: yuting@localhost.localdomain
+Received: by localhost.localdomain (Postfix)
+	id 3D594438B8; Tue, 13 Mar 2012 14:28:13 +0800 (CST)
+Date: Tue, 13 Mar 2012 14:28:13 +0800 (CST)
+From: MAILER-DAEMON@localhost.localdomain (Mail Delivery System)
+Subject: Undelivered Mail Returned to Sender
+To: yuting@localhost.localdomain
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status;
+	boundary="BD3BD438B7.1331620093/localhost.localdomain"
+Content-Transfer-Encoding: 8bit
+X-Gnus-Mail-Source: file:/var/mail/yuting
+Message-Id: <20120313062813.3D594438B8@localhost.localdomain>
+Lines: 61
+Xref: tingbox mail.misc:4
+X-Gnus-Article-Number: 4   Thu, 29 Mar 2012 17:32:30 +0800
+
+This is a MIME-encapsulated message.
+
+--BD3BD438B7.1331620093/localhost.localdomain
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host localhost.localdomain.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please send mail to postmaster.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+<yanzhuang@taobao.com>: host mail.alibaba-inc.com[121.0.29.157] said: 550 5.7.1
+    Client does not have permissions to send as this sender (in reply to end of
+    DATA command)
+
+--BD3BD438B7.1331620093/localhost.localdomain
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; localhost.localdomain
+X-Postfix-Queue-ID: BD3BD438B7
+X-Postfix-Sender: rfc822; yuting@localhost.localdomain
+Arrival-Date: Tue, 13 Mar 2012 14:28:12 +0800 (CST)
+
+Final-Recipient: rfc822; yanzhuang@taobao.com
+Action: failed
+Status: 5.7.1
+Remote-MTA: dns; mail.alibaba-inc.com
+Diagnostic-Code: smtp; 550 5.7.1 Client does not have permissions to send as
+    this sender
+
+--BD3BD438B7.1331620093/localhost.localdomain
+Content-Description: Undelivered Message
+Content-Type: message/rfc822
+Content-Transfer-Encoding: 8bit
+
+Return-Path: <yuting@localhost.localdomain>
+Received: by localhost.localdomain (Postfix, from userid 1000)
+	id BD3BD438B7; Tue, 13 Mar 2012 14:28:12 +0800 (CST)
+Date: Tue, 13 Mar 2012 14:28:12 +0800
+From: yuting@tingbox.taobao.ali.com
+To: yanzhuang@taobao.com
+Subject: =?utf-8?B?5rWL6K+V5Lit5paH?=
+Message-ID: <20120313062812.GA32542@tingbox.taobao.ali.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.5.21 (2010-09-15)
+
+中文
+
+--BD3BD438B7.1331620093/localhost.localdomain--
+
