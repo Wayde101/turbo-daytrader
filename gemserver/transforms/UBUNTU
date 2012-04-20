@@ -11,7 +11,13 @@ daemontools_svscanboot
 
 yuting_home_ssh_config
    include yuting_home_ssh_config
-
+   append Host ros
+   append     Hostname 192.168.88.1
+   append     User admin
+   append     Port 22222
+   append Host ddwrt
+   append     Hostname 192.168.2.2
+   append     User root
 
 
 yuting_home_bashrc
@@ -19,3 +25,7 @@ yuting_home_bashrc
    append alias '.gf=cd ~/project/turbo-daytrader/gemserver/conf/installations/YUTING'
    append alias '.gs=cd ~/project/turbo-daytrader/gemserver'
    append alias '.gc=cd ~/project/gmclient'
+   append alias '.ros=ssh ros'
+   append alias '.wrt=ssh ddwrt'
+   append PATH=/home/yuting/project/gmclient/bin:$PATH
+   append export PATH
