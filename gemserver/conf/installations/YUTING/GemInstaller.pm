@@ -216,23 +216,23 @@ sub dpkg_list {
     if (-d "/etc/apt") {
 
 	# source.list use ubuntu 's 
-        system(qq/ ulimit -t 300; apt-get -qq update/);
-        if ($self->is_redhat) {
-            my @pkgs = $self->get_packages_to_install;
-            for my $pkg (@pkgs) {
-                system(" ulimit -t 300; apt-get -q -y install $pkg\n");
-            }
-        } else { # debian
-		 # <package_name> <install|hold|deinstall|purge>
+        #system(qq/ ulimit -t 300; apt-get -qq update/);
+        #if ($self->is_redhat) {
+        #    my @pkgs = $self->get_packages_to_install;
+        #    for my $pkg (@pkgs) {
+        #        system(" ulimit -t 300; apt-get -q -y install $pkg\n");
+        #    }
+        #} else { # debian
+	#	 # <package_name> <install|hold|deinstall|purge>
             system(<<'');
 ulimit -t 300
 dpkg --set-selections < out/dpkg-list
 apt-get -q -y dselect-upgrade
 apt-get -q -y install
 
-        }
-        system(qq/ ulimit -t 300; apt-get -q update/);
-        system(qq/ ulimit -t 300; apt-get clean/);
+#        }
+#        system(qq/ ulimit -t 300; apt-get -q update/);
+#        system(qq/ ulimit -t 300; apt-get clean/);
     } elsif (-e "/etc/yum.conf") {
         print STDERR "INFO: updating packages using yum\n";
         system(qq/ ulimit -t 300; yum -y -e 1 -d 1 update --enablerepo=ops* --disablerepo=rhel* --disablerepo=taobao* --disableplugin=branch /);
