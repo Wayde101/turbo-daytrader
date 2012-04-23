@@ -6,5 +6,5 @@ ALL
 UBUNTU
     INCLUDE tingbox
 
-ARCHLINUX
+ARCH
     INCLUDE x200
