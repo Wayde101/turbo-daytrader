@@ -17,11 +17,6 @@ Host robin
         Port 55555
 
 
-Host newbie
-     Hostname www.17forex.com
-     User yuting
-     Port 55556
-
 Host linuxnote.net
      Hostname linuxnote.net
      User yuting
