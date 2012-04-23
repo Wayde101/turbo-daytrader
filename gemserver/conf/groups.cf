@@ -1,6 +1,7 @@
 ALL
     INCLUDE tingbox
     INCLUDE x200
+    INCLUDE gaoyang
 
 
 UBUNTU
@@ -8,3 +9,6 @@ UBUNTU
 
 ARCH
     INCLUDE x200
+
+GAOYANG
+    INCLUDE gaoyang
