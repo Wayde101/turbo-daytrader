@@ -1,3 +1,4 @@
+
 #resolv.conf     
 #        include resolv.conf
 #
@@ -14,10 +15,17 @@
 #	append # check the manifest
 #
 #
-#dpkg-list
-#        include dpkg-list
-#        #replace ethpinger.install ethpinger purge
-#        #appendunique ethpinger purge
-##	#appendunique cam-comps purge
-#    	#appendunique cam-core purge
-#
+yuting_home_ssh_config
+   include yuting_home_ssh_config
+
+dpkg-list
+       include dpkg-list
+       append daemontools install
+
+yuting_home_bashrc
+      include homebashrc
+      append PATH=/home/yuting/project/gmclient/bin:$PATH
+      append export PATH
+      append alias '.gf=cd ~/project/turbo-daytrader/gemserver/conf/installations/YUTING'
+      append alias '.gs=cd ~/project/turbo-daytrader/gemserver'
+      append alias '.gc=cd ~/project/gmclient'
