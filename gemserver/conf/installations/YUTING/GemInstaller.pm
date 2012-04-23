@@ -252,9 +252,9 @@ apt-get -q -y install
             }
         }
     } elsif ( -e "/etc/pacman.conf" ) {
-	print STDERR "ArchLinux have no dpkg-list support now";
+	print STDERR "ArchLinux have no dpkg-list support now\n";
     } elsif ( -e "/etc/slackware-version" ) {
-	print STDERR "Slackware have no dpkg-list support now"
+	print STDERR "Slackware have no dpkg-list support now\n"
     }
     return 1;
 }
