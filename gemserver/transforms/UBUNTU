@@ -17,11 +17,7 @@ yuting_home_ssh_config
    append     Hostname 192.168.88.1
    append     User admin
    append     Port 22222
-   append Host ddwrt
-   append     Hostname 192.168.2.2
-   append     User root
 
 
 yuting_home_bashrc
    append alias '.ros=ssh ros'
-   append alias '.wrt=ssh ddwrt'
