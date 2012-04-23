@@ -29,3 +29,4 @@ yuting_home_bashrc
       append alias '.gf=cd ~/project/turbo-daytrader/gemserver/conf/installations/YUTING'
       append alias '.gs=cd ~/project/turbo-daytrader/gemserver'
       append alias '.gc=cd ~/project/gmclient'
+      append alias '.newbie=ssh newbie'
