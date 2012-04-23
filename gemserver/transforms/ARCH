@@ -6,6 +6,10 @@ yuting_home_ssh_config
    append      Hostname newbie.corp.linuxnote.net
    append      User yuting
 
+hosts
+   include hosts
+   append 127.0.0.1  x200 
+
 
 
 yuting_home_bashrc
@@ -14,5 +18,6 @@ yuting_home_bashrc
    append alias .ad2='ssh accountdb2.cm4'
    append alias .ad1='ssh accountdb1.cm4'
    append alias .moderate='ssh moderate.corp.linuxnote.net'
+
 
 
