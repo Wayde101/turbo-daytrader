@@ -1,0 +1,2 @@
+alias '.sl=ls /etc/service'
+alias '.cds=cd /etc/service'

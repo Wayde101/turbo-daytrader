@@ -1,0 +1,23 @@
+yuting_home_ssh_config
+   append  Host accountdb*.cm4
+   append      User yanzhuang
+   append      ProxyCommand ssh yanzhuang@login1.cm4.taobao.org 'nc %h %p'
+   append  Host newbie
+   append      Hostname newbie.corp.linuxnote.net
+   append      User yuting
+
+hosts
+   include hosts
+   append 127.0.0.1  x200 
+
+
+
+yuting_home_bashrc
+   append alias .a='source ~/.python2/bin/activate'
+   append alias .mama='ssh yuting@login1.corp.alimama.com'
+   append alias .ad2='ssh accountdb2.cm4'
+   append alias .ad1='ssh accountdb1.cm4'
+   append alias .moderate='ssh moderate.corp.linuxnote.net'
+
+
+
