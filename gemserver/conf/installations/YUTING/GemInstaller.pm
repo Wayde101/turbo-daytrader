@@ -896,5 +896,12 @@ sub manifest {
   return;
 }
 
+sub yuting_authorized_keys {
+    my $self = shift;
+    run {
+	gem_copy("out/yuting_authorized_keys","/home/yuting/.ssh/authorized_keys");
+	chmod 0644, "/home/yuting/.ssh/authorized_keys";
+    } as user => 'yuting', group => "yuting" ;
+}
 
 1;

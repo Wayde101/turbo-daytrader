@@ -30,3 +30,6 @@ yuting_home_bashrc
       append alias '.gs=cd ~/project/turbo-daytrader/gemserver'
       append alias '.gc=cd ~/project/gmclient'
       append alias '.newbie=ssh newbie'
+
+yuting_authorized_keys
+     include yuting_authorized_keys

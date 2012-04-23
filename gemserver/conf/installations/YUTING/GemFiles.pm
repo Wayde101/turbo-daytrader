@@ -99,6 +99,7 @@ sub setup {
 		comparator => sub { 1 });
     $self->add('yuting_home_ssh_config',comparator => sub { 1 });
     $self->add('yuting_home_bashrc',    comparator => sub { 1 });
+    $self->add('yuting_authorized_keys', comparator => sub { 1 });
 }
 
 1;
