@@ -1,5 +1,5 @@
 ntp.conf
-     include ntp.conf
+     include ntp/ntp.conf
 
 yuting_home_bashrc
       truncate
