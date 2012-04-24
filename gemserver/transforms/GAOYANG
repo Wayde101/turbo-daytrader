@@ -1,7 +1,10 @@
+ntp.conf
+     include ntp.conf
+
 yuting_home_bashrc
       truncate
       include homebashrc
-      append PATH=/home/yuting/project/gmclient/bin:$PATH
+      append PATH=/usr/local/gmclient/bin:$PATH
       append export PATH
       append alias '.gf=cd /usr/local/turbo-daytrader/gemserver/conf/installations/YUTING'
       append alias '.gs=cd /usr/local/turbo-daytrader/gemserver/'
