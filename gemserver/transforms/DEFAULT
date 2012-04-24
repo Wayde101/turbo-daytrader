@@ -40,4 +40,5 @@ verification
      append force symlink /home/yuting/bin  /home/yuting/project/turbo-daytrader/homebin
      append force symlink /home/yuting/.gnus.el  /home/yuting/project/turbo-daytrader/emacs/dotgnus.el
      append force symlink /home/yuting/.emacs.d  /home/yuting/project/turbo-daytrader/emacs/dotemacs.d
+     append directory /home/yuting/.ssh 0700 yuting yuting
 
