@@ -1,0 +1,11 @@
+yuting_home_bashrc
+      truncate
+      include homebashrc
+      append PATH=/home/yuting/project/gmclient/bin:$PATH
+      append export PATH
+      append alias '.gf=cd /usr/local/turbo-daytrader/gemserver/conf/installations/YUTING'
+      append alias '.gs=cd /usr/local/turbo-daytrader/gemserver/'
+      append alias '.gc=cd /usr/local/gmclient'
+      append alias '.17forex=ssh 17forex'
+      append alias '.loadrc=source ${HOME}/.bashrc'
+
