@@ -1,6 +1,9 @@
 ntp.conf
      include ntp/ntp.conf
 
+resolv.conf
+     include resolv.conf.gaoyang
+
 yuting_home_bashrc
       truncate
       include homebashrc
