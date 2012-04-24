@@ -730,7 +730,13 @@ sub restart_inetd {
 
 sub restart_ntpd {
     my $self = shift;
-    system("killall ntpd"); # supervise restarts it
+    if( -e "/service/ntpd ") {
+        system("svc -t /service/ntpd");
+    } elsif ( -x "/etc/init.d/ntpd" ) {
+	system("nice -n -10 /etc/init.d/ntpd restart");
+    } else {
+        print STDERR "ERROR: Need to restart ntpd and don't know how.\n";
+    }
 }
 
 sub restart_rsyncd {
