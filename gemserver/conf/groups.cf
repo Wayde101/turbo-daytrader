@@ -1,7 +1,7 @@
 ALL
     INCLUDE tingbox
     INCLUDE x200
-    INCLUDE gaoyang
+    INCLUDE gao-yang.com
 
 
 UBUNTU

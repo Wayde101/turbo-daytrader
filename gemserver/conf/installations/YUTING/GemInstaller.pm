@@ -1,6 +1,7 @@
 package GemInstaller;
 
 use strict;
+use Data::Dumper;  # for debug hash
 use Seco::Gemstone::Utils qw/gem_copy gem_move read_file write_file write_template motd/;
 use File::Compare;
 use Seco::RunAs;
@@ -213,6 +214,7 @@ sub chkconfig_list {
 
 sub dpkg_list {
     my $self = shift;
+    my $dpkg_parms = $self->get_parms("out/dpkg-list");
     if (-d "/etc/apt") {
 
 	# source.list use ubuntu 's 
@@ -235,8 +237,14 @@ apt-get -q -y install
 #        system(qq/ ulimit -t 300; apt-get clean/);
     } elsif (-e "/etc/yum.conf") {
         print STDERR "INFO: updating packages using yum\n";
-        system(qq/ ulimit -t 300; yum -y -e 1 -d 1 update --enablerepo=ops* --disablerepo=rhel* --disablerepo=taobao* --disableplugin=branch /);
-        
+	if ( ! exists $dpkg_parms->{"update"} || $dpkg_parms->{"update"}=~m/[disabled|0]/g) {
+        	print STDERR "INFO: Does not run any yum update\n";
+	}
+	if (exists $dpkg_parms->{"update"} && $dpkg_parms->{"update"} eq 'gaoyang') {
+        	print STDERR "running gaoyang yum update\n";
+        	system(qq/ ulimit -t 300; yum -y -e 1 -d 1 update /);
+	}
+
         my $yum_usage = `yum -h`;
         if ($yum_usage =~ /process-selections/) {
             system("ulimit -t 300; yum -y -e 1 -d 1 process-selections out/dpkg-list");
@@ -266,6 +274,23 @@ sub get_packages_to_remove {
     my @pkgs = map { @_=split; $_[0] } 
         grep { @_=split; $_[1] and ( $_[1] eq "remove" or $_[1] eq "purge" ) } @lines;
     return @pkgs;
+}
+
+sub get_parms {
+   my ($self,$file) = (shift,shift);
+   if ( not -e $file ) {  return {} ;}
+   local @_;
+   my %parms;
+   my @lines = grep { /^#/ and /\{/ and /\}/} split("\n", read_file($file));
+   my @kvs;
+   foreach (@lines) {
+     if(/\{(.*)\}/g) {
+       @kvs = split(',',$1);
+       foreach (@kvs) {
+          if (/\s*(.*?)\s*\=\s*(.*)/) {
+		$parms{$1}=$2;
+	  }}}}
+   return \%parms;
 }
 
 sub get_packages_to_install {
