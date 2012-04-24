@@ -20,6 +20,7 @@ yuting_home_ssh_config
 
 dpkg-list
        include dpkg-list
+       append #{update=disabled}
        append daemontools install
 
 yuting_home_bashrc
