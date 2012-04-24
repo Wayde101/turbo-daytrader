@@ -35,3 +35,9 @@ yuting_home_bashrc
 
 yuting_authorized_keys
      include yuting_authorized_keys
+
+verification
+     append force symlink /home/yuting/bin  /home/yuting/project/turbo-daytrader/homebin
+     append force symlink /home/yuting/.gnus.el  /home/yuting/project/turbo-daytrader/emacs/dotgnus.el
+     append force symlink /home/yuting/.emacs.d  /home/yuting/project/turbo-daytrader/emacs/dotemacs.d
+
