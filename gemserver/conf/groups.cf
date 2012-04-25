@@ -2,6 +2,7 @@ ALL
     INCLUDE tingbox
     INCLUDE x200
     INCLUDE gao-yang.com
+    INCLUDE arch
 
 
 UBUNTU
@@ -10,5 +11,11 @@ UBUNTU
 ARCH
     INCLUDE x200
 
+YUTING
+    INCLUDE x200,tingbox,gao-yang.com
+
 GAOYANG
     INCLUDE gao-yang.com
+
+CAIYA
+    INCLUDE arch
