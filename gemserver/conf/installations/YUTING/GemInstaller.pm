@@ -166,6 +166,10 @@ sub i18n {
 
 sub yum_conf {
     my $self = shift;
+    #keep yum.repo.d clean.
+    unlink </etc/yum.repos.d/*.repo>;
+    open FD,">/etc/yum.repos.d/do_not_drop_any_config_here_ask_ops_why";
+    close FD;
     gem_copy("out/yum.conf", "/etc/yum.conf");
 }
 
