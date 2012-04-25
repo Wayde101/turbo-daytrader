@@ -166,28 +166,7 @@ sub i18n {
 
 sub yum_conf {
     my $self = shift;
-    if(open my $yumconf, "<out/yum.conf") {
-        my $cmd = qq(echo "GET /jumpstart/get-yum-server.cgi" | nc boothost 9999);
-        my $yumrepo = `$cmd`;
-        chomp $yumrepo;
-        
-        if($yumrepo !~ /^\S+$/) {
-            close $yumconf;
-            unlink "out/yum.conf";
-            warn "ERROR: can't get a good yum repo from boothost\n";
-            return 1;
-        }
-        
-        $yumrepo .= ":9999";
-        open my $newyumconf, ">/etc/yum.conf.fixed";
-        while(<$yumconf>) {
-            s/%yumrepo%/$yumrepo/;
-            print $newyumconf $_;
-        }
-        close $yumconf;
-        close $newyumconf;
-        gem_copy("/etc/yum.conf.fixed", "/etc/yum.conf");
-    }
+    gem_copy("out/yum.conf", "/etc/yum.conf");
 }
 
 sub chkconfig_list {
