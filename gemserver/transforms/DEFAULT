@@ -15,31 +15,8 @@
 #	append # check the manifest
 #
 #
-yuting_home_ssh_config
-   include yuting_home_ssh_config
-
 dpkg-list
        include dpkg-list
        append #{update=disabled}
        append daemontools install
-
-yuting_home_bashrc
-      include homebashrc
-      append PATH=/home/yuting/project/gmclient/bin:$PATH
-      append export PATH
-      append alias '.gf=cd ~/project/turbo-daytrader/gemserver/conf/installations/YUTING'
-      append alias '.gs=cd ~/project/turbo-daytrader/gemserver'
-      append alias '.gc=cd ~/project/gmclient'
-      append alias '.newbie=ssh newbie'
-      append alias '.17forex=ssh 17forex'
-      append alias '.loadrc=source ${HOME}/.bashrc'
-
-yuting_authorized_keys
-     include yuting_authorized_keys
-
-verification
-     append force symlink /home/yuting/bin  /home/yuting/project/turbo-daytrader/homebin
-     append force symlink /home/yuting/.gnus.el  /home/yuting/project/turbo-daytrader/emacs/dotgnus.el
-     append force symlink /home/yuting/.emacs.d  /home/yuting/project/turbo-daytrader/emacs/dotemacs.d
-     append directory /home/yuting/.ssh 0700 yuting yuting
 
