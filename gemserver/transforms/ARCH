@@ -20,6 +20,7 @@ yuting_home_bashrc
    append alias .ad2='ssh accountdb2.cm4'
    append alias .ad1='ssh accountdb1.cm4'
    append alias .backhome='ssh tingbox'
+   append alias .gaoyang='ssh gao-yang.com'
    append alias .moderate='ssh moderate.corp.linuxnote.net'
 
 
