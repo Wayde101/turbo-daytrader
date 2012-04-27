@@ -10,6 +10,7 @@ yuting_home_bashrc
       append alias '.gc=cd ~/project/gmclient'
       append alias '.newbie=ssh newbie'
       append alias '.17forex=ssh 17forex'
+      append alias '.gaoyang=ssh gao-yang.com'
       append alias '.loadrc=source ${HOME}/.bashrc'
 
 yuting_authorized_keys
