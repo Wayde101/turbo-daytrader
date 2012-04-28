@@ -75,7 +75,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 
-eval `keychain --eval id_dsa id_rsa`
+[[ -e ~/.ssh/id_dsa || -e ~/.ssh/id_rsa ]] && eval `keychain --eval id_dsa id_rsa`
 
 # Alias definitions.
 # some more ls aliases
