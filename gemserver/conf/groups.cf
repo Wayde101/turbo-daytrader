@@ -12,11 +12,17 @@ ALL
 B_CENTOS5
     INCLUDE gao-yang.com
 
-UBUNTU
+B_UBUNTU
     INCLUDE tingbox
 
-ARCH
+B_ARCH
     INCLUDE x200
+
+X200
+    INCLUDE x200
+
+TINBOX
+    INCLUDE tingbox
 
 YUTING
     INCLUDE x200,tingbox,gao-yang.com
