@@ -298,12 +298,6 @@ sub yuting_home_ssh_config {
 	as user => 'yuting', group => "yuting" ;
 }
 
-sub yuting_home_bashrc {
-    my $self = shift;
-    run {  gem_copy("out/yuting_home_bashrc","/home/yuting/.bashrc") } 
-	as user => 'yuting', group => "yuting" ;
-}
-
 sub group {
     my $self = shift;
     gem_copy("out/group", "/etc/group");

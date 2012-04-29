@@ -1,5 +1,5 @@
-yuting_home_ssh_config
-   include yuting_home_ssh_config
+ssh_config
+   include ssh/ssh_config_yuting_home
 
 yuting_home_bashrc
       include homebashrc

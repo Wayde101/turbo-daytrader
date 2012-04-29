@@ -20,3 +20,5 @@ dpkg-list
        append #{update=disabled}
        append daemontools install
 
+ssh_config
+	include ssh/ssh_config
