@@ -292,10 +292,10 @@ sub daemontools_svscanboot {
     gem_copy("out/daemontools_svscanboot", "/usr/bin/svscanboot");
 }
 
-sub yuting_home_ssh_config {
+sub yuting_home_bashrc {
     my $self = shift;
-    run {  gem_copy("out/yuting_home_ssh_config","/home/yuting/.ssh/config") } 
-	as user => 'yuting', group => "yuting" ;
+    run {  gem_copy("out/yuting_home_bashrc","/home/yuting/.bashrc") } 
+        as user => 'yuting', group => "yuting" ;
 }
 
 sub group {
