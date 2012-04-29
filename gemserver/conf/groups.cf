@@ -1,0 +1,34 @@
+# 注意 INCLUDE 一定要大写.  key 和 INCLUDE 之间不要有空行，如果
+# 一定有需要用 # 链接起来.
+ALL
+    INCLUDE tingbox
+    INCLUDE x200
+    INCLUDE gao-yang.com
+    INCLUDE arch
+
+# 因为是按照字母序来依次 enable 每一个 group 的transform 文件.
+# B_ 前缀仅此于 B_ 主要考虑是一些通用的操作系统配置. 合理性等
+# 日后来验证.
+B_CENTOS5
+    INCLUDE gao-yang.com
+
+B_UBUNTU
+    INCLUDE tingbox
+
+B_ARCH
+    INCLUDE x200
+
+X200
+    INCLUDE x200
+
+TINGBOX
+    INCLUDE tingbox
+
+YUTING
+    INCLUDE x200,tingbox,gao-yang.com
+
+GAOYANG
+    INCLUDE gao-yang.com
+
+CAIYA
+    INCLUDE arch

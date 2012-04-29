@@ -1,0 +1,16 @@
+{
+	"sourceType":"HDFS",
+	"sourceDetail":
+	"{
+		\"Path\":\"/user/daogou/incrDump/data/current/1290660702_1290663405\",
+		\"Host\":\"10.249.69.101\",
+		\"User\":\"hadoop\",
+		\"Groups\":[\"supergroup\"]
+	}",
+	"targetType":"PANGU",
+	"targetDetail":
+	"{
+		\"Path\":\"pangu://10.249.49.2:10240/home/admin/daogou/incr_data/1290660702_1290663405\",
+		\"Capability\":\"eAAAA+A==AAAAAAAAAIAa+o3HY94TRXarA/zREvgNKout+Urg5EGgpPpIrtZEWMtoWpV2ZZxC0p2BwnfFXBJ9xtSlFclrLem/meLQbv/JIEn+k4e+RXVm5MKwEIYFxYz8tJ5OBaCGOGvyZZwM+u1gEsBHL4fPzhreFSSHQQopKEnfRq/6/XFPKbvEulZeEgAAACwAAAABGFScGucgrpubsBS4ue7/YwAAAABNLugaAAAADHBhbmd1Oi8v/////w==\"
+	}"
+}
