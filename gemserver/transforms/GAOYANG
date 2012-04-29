@@ -4,6 +4,9 @@ ntp.conf
 resolv.conf
      include resolv.conf.gaoyang
 
+nginx.conf
+     include nginx/nginx.conf.gaoyang
+
 yuting_home_bashrc
       truncate
       include homebashrc

@@ -164,6 +164,14 @@ sub i18n {
     gem_copy("out/i18n", "/etc/sysconfig/i18n");
 }
 
+sub nginx_conf {
+	my $self = shift;
+	gem_copy("out/nginx.conf","/usr/local/nginx/conf/nginx.conf");
+	print STDERR "INFO: restarting nginx.\n";
+	system("kill -HUP `cat /usr/local/nginx/nginx.pid`");
+	
+}
+
 sub yum_conf {
     my $self = shift;
     #keep yum.repo.d clean.
