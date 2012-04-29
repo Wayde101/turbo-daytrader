@@ -1,4 +1,3 @@
-# common section
 Host *
         ForwardAgent yes
 

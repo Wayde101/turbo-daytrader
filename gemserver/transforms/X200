@@ -1,0 +1,18 @@
+ssh_config
+   include ssh/ssh_config_yuting_office
+
+hosts
+   include hosts
+   append 127.0.0.1  x200 
+
+yuting_home_bashrc
+   append alias .a='source ~/.python2/bin/activate'
+   append alias .mama='ssh yuting@login1.corp.alimama.com'
+   append alias .ad2='ssh accountdb2.cm4'
+   append alias .ad1='ssh accountdb1.cm4'
+   append alias .backhome='ssh tingbox'
+   append alias .gaoyang='ssh gao-yang.com'
+   append alias .moderate='ssh moderate.corp.linuxnote.net'
+
+
+
