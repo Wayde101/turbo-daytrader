@@ -97,6 +97,7 @@ sub setup {
     $self->add('fsckoptions');
     $self->add('daemontools_svscanboot', priority => -1, # do this last
 		comparator => sub { 1 });
+    $self->add('nginx.conf');
     $self->add('yuting_home_bashrc',    comparator => sub { 1 });
     $self->add('yuting_authorized_keys', comparator => sub { 1 });
 }
