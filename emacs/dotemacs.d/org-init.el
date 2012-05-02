@@ -11,6 +11,8 @@
 (define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map "\C-cb" 'org-iswitchb)
 
+
+
 ;; ;; orgstruct++-mode is enabled in Gnus message buffers to aid in creating structured email messages.
 ;; (add-hook 'message-mode-hook 'orgstruct++-mode 'append)
 ;; (add-hook 'message-mode-hook 'turn-on-auto-fill 'append)
@@ -21,6 +23,7 @@
 ;; (add-hook 'message-mode-hook '(lambda () (local-set-key (kbd "C-c M-o") 'org-mime-htmlize)) 'append)
 
 
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
 ;; Custom Key Bindings
 (global-set-key (kbd "<f12>") 'org-agenda)
 (global-set-key (kbd "<f5>") 'bh/org-todo)
@@ -99,7 +102,7 @@
 
 (setq org-log-done t)
 (setq org-fontify-emphasized-text t
-      org-descriptive-links nil
+      org-descriptive-links t
       org-agenda-include-diary nil
       org-agenda-start-on-weekday nil
       org-agenda-include-all-todo t
