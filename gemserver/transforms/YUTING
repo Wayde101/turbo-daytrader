@@ -3,7 +3,7 @@ ssh_config
 
 yuting_home_bashrc
       include homebashrc
-      append PATH=/home/yuting/project/gmclient/bin:$PATH
+      append PATH=$HOME/bin:/home/yuting/project/gmclient/bin:$PATH
       append export PATH
       append alias '.gf=cd ~/project/turbo-daytrader/gemserver/conf/installations/YUTING'
       append alias '.gs=cd ~/project/turbo-daytrader/gemserver'
