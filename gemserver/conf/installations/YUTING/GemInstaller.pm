@@ -47,6 +47,7 @@ sub readahead {
     close $fh;
 }
 
+
 sub verification {
     my $self = shift;
     open my $fh, "<out/verification" or do {
@@ -170,6 +171,21 @@ sub nginx_conf {
 	print STDERR "INFO: restarting nginx.\n";
 	system("kill -HUP `cat /usr/local/nginx/nginx.pid`");
 	
+}
+
+sub clean_dir_with_msg {
+    my  $self = shift;
+    my  ($dir,$msg) = (shift,shift);
+    if ( not -d $dir ) {
+        print "WARN: $dir does not exist \n";
+	return ;
+    }
+    $msg = "INFO: clean_dir msg: " . $msg;
+    unlink <$dir/*>;
+    open FD,">$dir/clean_dir_by_ops";
+    print FD $msg;
+    close FD;
+    return ;
 }
 
 sub yum_conf {
