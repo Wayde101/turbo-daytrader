@@ -1,2 +1,0 @@
-;; org-persist.el - tingbox at <2011-12-26 Mon 16:19>
-(setq stored-clock-history '( ))
