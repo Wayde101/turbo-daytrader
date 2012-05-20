@@ -1,7 +1,3 @@
-Host accountdb*.cm4
-     User yanzhuang
-     ProxyCommand ssh yanzhuang@login1.cm4.taobao.org 'nc %h %p'
-
 Host newbie
      Hostname newbie.corp.linuxnote.net
      Host tingbox
