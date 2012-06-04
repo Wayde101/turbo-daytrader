@@ -2,7 +2,7 @@ MT4_TOP=D:/MinGW/msys/1.0/home/yuting/Alpari
 
 .PHONY: all install run
 
-all: snapshot.ex4 
+all: mon.ex4 snapshot.ex4 mwcc.ex4
 
 %.ex4: %.mq4
 	$(MT4_TOP)/metalang $<
@@ -10,6 +10,7 @@ all: snapshot.ex4
 install: all
 	cp *.mq4 $(MT4_TOP)/experts/
 	cp *.ex4 $(MT4_TOP)/experts/
+	cp *.tpl $(MT4_TOP)/templates/
 	cp *.mq4 $(MT4_TOP)/experts/indicators/
 	cp *.ex4 $(MT4_TOP)/experts/indicators/
 
