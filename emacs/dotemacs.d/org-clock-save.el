@@ -1,1 +1,1 @@
-;; org-persist.el - tingbox at <2012-05-08 二 20:11>
+;; org-persist.el - tingbox at <2012-06-25 一 06:55>
