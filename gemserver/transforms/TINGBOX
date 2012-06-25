@@ -1,0 +1,9 @@
+ssh_config
+   append Host newbie
+   append   Hostname www.17forex.com
+   append   Port 55556
+   append Host ros
+   append     Hostname 192.168.88.1
+   append     User admin
+   append     Port 22222
+

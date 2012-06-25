@@ -1,0 +1,28 @@
+Host *
+        ForwardAgent yes
+
+Host accountdb*.cm4
+     User yanzhuang
+     ProxyCommand ssh yanzhuang@login1.cm4.taobao.org 'nc %h %p'
+
+Host www.pgsqldb.com
+        Port 18888
+
+
+Host 17forex
+        Hostname www.17forex.com
+        User yuting
+        Port 54321
+
+Host robin
+        Hostname www.17forex.com
+        User yuting
+        Port 55555
+
+
+Host linuxnote.net
+     Hostname linuxnote.net
+     User yuting
+     Port 55555
+
+

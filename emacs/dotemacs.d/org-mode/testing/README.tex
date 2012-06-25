@@ -1,0 +1,144 @@
+% Created 2011-08-27 Sat 10:55
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+
+\title{Org-mode Testing}
+\author{Ting Yu}
+\date{27 August 2011}
+
+\begin{document}
+
+\maketitle
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+\vspace*{1cm}
+
+The following instructions describe how to get started using the
+Org-mode test framework.
+
+\section{To run the tests interactively}
+\label{sec-1}
+
+\begin{enumerate}
+\item Install the jump.el testing dependency which is included as a git
+   submodule in the org-mode repository.  To do so run the following
+   git submodule commands from inside the base of the Org-mode
+   directory (or just execute the following code block).
+
+
+\begin{verbatim}
+cd ..
+git submodule init
+git submodule update
+\end{verbatim}
+\item Load the \href{file:///home/yuting/src/org-mode/testing/org-test.el}{org-test.el} file
+
+\begin{verbatim}
+(load-file "org-test.el")
+\end{verbatim}
+\item The \texttt{org-test-jump} command is now bound to \texttt{M-C-j} in all
+   emacs-lisp files.  Call this command from any file in the \texttt{lisp/}
+   directory of the org-mode repository to jump to the related test
+   file in the \texttt{testing/} directory.  Call this functions with a
+   prefix argument, and the corresponding test file will be stubbed
+   out if it doesn't already exist.
+\item Ingest the library-of-babel.org file since some tests require this.
+
+\begin{verbatim}
+(org-babel-lob-ingest "../contrib/babel/library-of-babel.org")
+\end{verbatim}
+\item \texttt{Review the ERT documentation}
+\item A number of org-mode-specific functions and macros are provided in
+   \texttt{org-test.el} see the \href{file:///home/yuting/src/org-mode/testing/org-test.el}{;;; Functions for Writing Tests} subsection of
+   that file.  Some of these functions make use of example org-mode
+   files located in the \href{file:///home/yuting/src/org-mode/testing/examples}{examples/} directory.
+\item Functions for loading and running the Org-mode tests are provided
+   in the \href{file:///home/yuting/src/org-mode/testing/org-test.el}{;;; Load and Run Tests} subsection, the most important of
+   which are
+
+\begin{itemize}
+\item \texttt{org-test-load} which loads the entire Org-mode test suite
+\item \texttt{org-test-current-defun} which runs all tests for the current
+     function around point (should be called from inside of an
+     Org-mode elisp file)
+\item \texttt{org-test-run-all-tests} which runs the entire Org-mode test suite
+\item also note that the \texttt{ert} command can also be used to run tests
+\end{itemize}
+
+\item Load and run all tests
+
+\begin{verbatim}
+(load-file "org-test.el")
+(org-babel-lob-ingest "../contrib/babel/library-of-babel.org")
+(org-test-load)
+(org-test-run-all-tests)
+\end{verbatim}
+\end{enumerate}
+\section{To run the tests in batch mode}
+\label{sec-2}
+
+First tangle this file out to your desktop.
+
+\begin{verbatim}
+;; add to the load path
+(add-to-list 'load-path (concat org-dir "/lisp/"))
+(add-to-list 'load-path (concat org-dir "/lisp/testing/"))
+(add-to-list 'load-path (concat org-dir "/lisp/testing/ert/"))
+
+;; load Org-mode
+(require 'org)
+
+;; setup the ID locations used in tests
+(require 'org-id)
+(org-id-update-id-locations
+ (list (concat org-dir "/testing/examples/babel.org")
+       (concat org-dir "/testing/examples/normal.org")
+       (concat org-dir "/testing/examples/ob-awk-test.org")
+       (concat org-dir "/testing/examples/ob-fortran-test.org")
+       (concat org-dir "/testing/examples/link-in-heading.org")
+       (concat org-dir "/testing/examples/links.org")))
+
+;; ensure that the latest Org-mode is loaded
+(org-reload)
+
+;; load the test suite
+(load-file (concat org-dir "/testing/org-test.el"))
+
+;; configure Babel
+(org-babel-lob-ingest (concat org-dir "/contrib/babel/library-of-babel.org"))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (sh . t)))
+(setq org-confirm-babel-evaluate nil)
+
+;; run the test suite
+(org-test-run-all-tests)
+
+;; print the results
+(with-current-buffer "*ert*"
+  (print (buffer-string)))
+\end{verbatim}
+
+
+
+Then run the test suite with the following command which could use any
+version of Emacs.
+
+\begin{verbatim}
+emacs --batch -Q -l ~/Desktop/run-org-tests.el
+\end{verbatim}
+
+
+
+\end{document}
