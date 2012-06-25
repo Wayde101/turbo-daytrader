@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/home/tops/bin/python
 # log.py
 
 import os

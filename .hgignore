@@ -14,5 +14,6 @@ tingbox.corp.linuxnote.net.*
 tinghome.corp.linuxnote.net.*
 .*.swp
 core
+org-clock-save.el
 *.pyc
 CVS
