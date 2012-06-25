@@ -1,1 +1,1 @@
-;; org-persist.el - tingbox at <2012-05-08 二 20:11>
+;; org-persist.el - guru.corp.linuxnote.net at <2012-06-03 日 10:18>
