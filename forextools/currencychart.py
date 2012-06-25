@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/home/tops/bin/python
 
 import os, sys ,re,string
 from glob import glob
