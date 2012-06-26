@@ -7,9 +7,10 @@ class Configuration:
     
     webgallerypath = '/home/yuting/src/3.0.5/examples'
     convertbin     = '/usr/bin/convert'
-    template_list  = ['5m.tpl','1h.tpl']
-    currency_list  = ['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy']
-    timeframe_list = ['60','240','1440','10080','43200']
+    webgallerytpl  = '/tmp/g.tpl'
+    webgalleryout  = '/tmp/g.out.html'
+    timeframe_row  = ['60','240','1440','10080','43200']
+    currency_col   = ['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy']
 
     webgallery_map = {
         "eurusd_60"    : '001',

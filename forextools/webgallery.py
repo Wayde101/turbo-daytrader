@@ -9,10 +9,14 @@ from currencychart import CurrencyChart
 
 class WebGallery:
     def __init__(self, config = configuration.Configuration()):
-        self.wmap       = config.webgallery_map
+        self.wmap       = dict()
         self.wpath      = config.webgallerypath
         self.wfullpath  = "%s/images/full" % self.wpath
         self.wthumbpath = "%s/images/thumb" % self.wpath
+        self.t_row      = config.timeframe_row
+        self.c_col      = config.currency_col
+        self.tpl_file   = config.webgallerytpl
+        self.out_file   = config.webgalleryout
         return
 
 
@@ -26,19 +30,49 @@ class WebGallery:
             p.runInConsole()
             p = process.Process(cp_thumb_cmd)
             p.runInConsole()
-        return 
+        return
 
-    def build(self):
+    def expand(self):
+        total_num = len(self.t_row) * len(self.c_col)
+        a=self.wmap
+        
+        OUT_str=''
+        for i in range(1, total_num + 1):
+            OUT_str = OUT_str + "<li><a href=\"images/full/%0.3d.gif\"><img src=\"images/thumb/%0.3d.gif\" alt=\"%s\" /></a></li>\n" % (i,i,dict(zip(a.itervalues(), a.iterkeys()))["%0.3d" % i])
+
+        return OUT_str
+
+    def build(self,**kargs):
+        idx = 1
+        if kargs.has_key('t_row'):
+            self.t_row = kargs['t_row']
+        if kargs.has_key('c_col'):
+            self.c_col = kargs['c_col']
+        if kargs.has_key('htmlfile'):
+            self.out_file = kargs['htmlfile']
+
+        for c in self.c_col:
+            for t in self.t_row:
+                self.wmap[c + '_' + t] = '%0.3d' % idx
+                idx = idx + 1
+
+        self.update()
+
         context = dict()
-        context['site'] = 'www.17forex.com'
-        t = Template(filename = '/tmp/g.tpl')
-        print t.render(**context)
+        context['title']    = kargs['title'] if kargs.has_key('title') else 'ForexGallary'
+        context['site']     = 'http://www.17forex.com'
+        context['sitelogo'] =  'http://www.17forex.com/bbs/images/default/logo.gif'
+        context['expand'] = self.expand
+        t = Template(filename = self.tpl_file)
+        f = open(self.out_file,'w')
+        f.write(t.render(**context))
+        f.close()
 
 
 if __name__ == '__main__':
     g = WebGallery()
-    g.update()
-    g.build()
+    #g.update()
+    g.build(htmlfile='/home/yuting/src/3.0.5/examples/g.out.html',title='ForexGallary',t_row=['60','240','1440'],c_col=['eurusd','gbpusd'])
         
 
     
