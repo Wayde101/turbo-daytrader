@@ -19,5 +19,6 @@ thumb/*.gif
 thumb/*.jpg
 full/*.gif
 full/*.jpg
+html/*_*
 *.pyc
 CVS

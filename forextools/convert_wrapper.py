@@ -1,10 +1,11 @@
-#! /usr/bin/env python
+#!/home/tops/bin/python
 
 import os, sys
 import logging
 import log
 import process
 import configuration
+import magickpy
 
 
 class ConvertWrapper:
@@ -15,6 +16,12 @@ class ConvertWrapper:
         print args
         
     def convert_copy(self,f,t):
+        cp_cmd  = "cp -avf %s %s" % (f, t)
+        p = process.Process(cp_cmd)
+        p.runInConsole()
+        return
+    
+    
         
         
 if __name__ == '__main__':
