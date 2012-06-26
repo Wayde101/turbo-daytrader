@@ -15,9 +15,9 @@ tinghome.corp.linuxnote.net.*
 .*.swp
 core
 org-clock-save.el
-thumb/*.gif
-thumb/*.jpg
 full/*.gif
+thumb/*.gif
 full/*.jpg
+thumb/*.jpg
 *.pyc
 CVS
