@@ -20,5 +20,6 @@ thumb/*.jpg
 full/*.gif
 full/*.jpg
 html/*_*
+vars/*
 *.pyc
 CVS
