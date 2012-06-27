@@ -91,4 +91,3 @@ if __name__ == '__main__':
     g = WebGallery()
     g.build(title='ForexGallery_1h',t_col=['60','240','1440','10080','43200'],c_row=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
     g.build(title='ForexGallery_5m',t_col=['5','15','60','240'],c_row=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
-    g.build(title='juehai_5m',t_col=['5','15','60'],c_row=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
