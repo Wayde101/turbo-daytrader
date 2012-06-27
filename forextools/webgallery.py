@@ -12,8 +12,9 @@ class WebGallery:
         self.ftpath    = '/home/yuting/project/turbo-daytrader/forextools'
         self.gbasedir   = '%s/html' % self.ftpath
         self.wmap       = dict()
-        self.t_row      = config.timeframe_row
-        self.c_col      = config.currency_col
+        self.t_col      = config.timeframe_col
+        self.c_row      = config.currency_row
+        self.flip_list  = config.currency_flip
         return
 
     def init_gallery(self,gname):
@@ -25,14 +26,18 @@ class WebGallery:
     def update(self,gname):
         for item in self.wmap.keys():
             cname,tf = item.split('_')
+            flp = False
             c  = CurrencyChart(cname,tf)
-            cp = ConvertWrapper();
+            cp = ConvertWrapper()
+            if cname in self.flip_list:
+                flp = True
+            cp.set_parm(text=item.replace('usd',''),flip=flp)
             cp.convert_copy(c.get_latest_gif() , "%s/%s/images/full/%s.gif" % (self.gbasedir, gname , self.wmap[item]))
             cp.convert_copy(c.get_latest_gif() , "%s/%s/images/thumb/%s.gif" % (self.gbasedir, gname , self.wmap[item]))
         return
 
     def expand(self):
-        total_num = len(self.t_row) * len(self.c_col)
+        total_num = len(self.t_col) * len(self.c_row)
         a=self.wmap
         
         OUT_str=''
@@ -46,20 +51,20 @@ class WebGallery:
         idx   = 1
         g_title = kargs['title'] if kargs.has_key('title') else 'notitle'
         
-        if kargs.has_key('t_row'):
-            self.t_row = kargs['t_row']
-        if kargs.has_key('c_col'):
-            self.c_col = kargs['c_col']
+        if kargs.has_key('t_col'):
+            self.t_col = kargs['t_col']
+        if kargs.has_key('c_row'):
+            self.c_row = kargs['c_row']
             
         gallery_tpl      = "%s/tpl/gallery.tpl" % self.ftpath
-        gallery_file     = "%s/%s/%s.html" % (self.gbasedir,g_title,g_title)
+        gallery_file     = "%s/%s/%s.html" % (self.gbasedir,g_title,'index')
         styles_css_tpl   = "%s/tpl/styles.css.tpl"% self.ftpath
         styles_css_file  = "%s/%s/styles.css" % (self.gbasedir,g_title)
 
-        rpercent  = float(100) / float(len(self.t_row))
+        rpercent  = float(100) / float(len(self.t_col))
 
-        for c in self.c_col:
-            for t in self.t_row:
+        for c in self.c_row:
+            for t in self.t_col:
                 self.wmap[c + '_' + t] = '%0.3d' % idx
                 idx = idx + 1
         self.init_gallery(g_title)
@@ -84,9 +89,6 @@ class WebGallery:
 
 if __name__ == '__main__':
     g = WebGallery()
-    g.build(title='ForexGallery_1h',t_row=['60','240','1440','10080','43200'],c_col=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
-    g.build(title='ForexGallery_5m',t_row=['5','15','60','240'],c_col=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
-    g.build(title='juehai_5m',t_row=['5','15','60'],c_col=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
-        
-
-    
+    g.build(title='ForexGallery_1h',t_col=['60','240','1440','10080','43200'],c_row=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
+    g.build(title='ForexGallery_5m',t_col=['5','15','60','240'],c_row=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
+    g.build(title='juehai_5m',t_col=['5','15','60'],c_row=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
