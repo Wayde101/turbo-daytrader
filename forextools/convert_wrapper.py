@@ -5,8 +5,6 @@ import logging
 import log
 import process
 import configuration
-import magickpy
-
 
 class ConvertWrapper:
     def __init__(self, config = configuration.Configuration()):
