@@ -1,8 +1,10 @@
 #!/home/tops/bin/python
 
 import os, sys ,re,string
+import time
 from glob import glob
 import configuration
+from ft_utils import *
 
 class CurrencyChart:
     def __init__(self, cur_name,cur_tf, config = configuration.Configuration()):
@@ -18,18 +20,17 @@ class CurrencyChart:
                 self.fullpath = p
                 print "Found:", self.fullpath
                 pass
+
+        self.status_file   = '%s/status.csv' % self.fullpath
+
         return
         
     def get_latest_gif(self):
         imgs = glob('%s/*.gif' % self.fullpath)
         imgs.sort()
         return imgs[-1]
-
+    
     def get_status(self):
-        status = '%s/status.csv' % self.fullpath
-        return status
-
-    def dump_status(self):
         def splitLine(line):
             items = map(lambda x: tuple(x.strip().split('=')),
                         line.split(';'))
@@ -38,7 +39,7 @@ class CurrencyChart:
         content = list()
         items = dict()
         
-        with open(self.get_status(), 'r') as f:
+        with open(self.status_file, 'r') as f:
             content = f.xreadlines()
             content = map(lambda x: splitLine(x.strip()), content)
             for line in content:
@@ -47,13 +48,46 @@ class CurrencyChart:
             f.close()
         return items
 
-    def get_status_a(self):
-        return
+    def get_range_gifs_to_now(self,rg):
+        time_range = read_time(rg)
+        time_now   = time.time()
+        time_from  = time_now - time_range
+        gifs_ret   = []
+        
+        gifs = glob('%s/*.gif' % self.fullpath)
 
-    def get_status_b(self):
-        return 
+        for gif in gifs:
+            p = re.compile('_\d+\/(\d+)\.gif$')
+            c = int(p.search(gif).groups(1)[0])
+            if time_from < c:
+                gifs_ret.append(gif)
+
+        return gifs_ret
+
+    def get_out_of_range_gifs(self,rg):
+        time_range = read_time(rg)
+        time_now   = time.time()
+        time_from  = time_now - time_range
+        gifs_ret   = []
+        
+        gifs = glob('%s/*.gif' % self.fullpath)
+
+        for gif in gifs:
+            p = re.compile('_\d+\/(\d+)\.gif$')
+            c = int(p.search(gif).groups(1)[0])
+            if time_from > c:
+                gifs_ret.append(gif)
+
+        return gifs_ret
+
+
+    
+        
+
 
 if __name__ == '__main__':
-    c = CurrencyChart("EURUSD","60")
-    print c.dump_status()
+    c = CurrencyChart("EURUSD","240")
+    #print c.get_status()
+    #print c.get_range_gifs_to_now('2days')
+    print len(c.get_out_of_range_gifs('4days'))
 
