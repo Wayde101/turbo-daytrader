@@ -22,4 +22,5 @@ full/*.jpg
 html/*_*
 vars/*
 *.pyc
+*_coding.py*
 CVS
