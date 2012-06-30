@@ -19,6 +19,10 @@ class ConvertWrapper:
     def convert_copy(self,f,t):
         flip_opt = text_opt = pointsize_opt = ''
 
+        if f == 'noimgs':
+            print "NoImgs to convert ."
+            return
+
         if self.flip:
             flip_opt = '-flip'
 
@@ -33,7 +37,6 @@ class ConvertWrapper:
         p = process.Process(cv_cmd)
         p.runInConsole()
         return
-        
         
         
 if __name__ == '__main__':

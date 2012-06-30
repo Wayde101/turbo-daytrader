@@ -18,7 +18,7 @@ int start()
   string snapfile     = StringConcatenate("shots\\",
 					  Symbol(), "_" ,
 					  Period(), "\\" , 
-					  TimeCurrent(),
+					  iTime(NULL,0,0),
 					  ".gif");
 
   string csvfile      = StringConcatenate("shots\\",
@@ -47,7 +47,7 @@ int start()
 
 string DumpObjCsv(string ObjName)
 {
-  string rtcsvstr=StringConcatenate("ON=",ObjName,";","NotFound");
+  string rtcsvstr=StringConcatenate("OBJNAME=",ObjName,";","STATUS=NA");
   if(ObjectFind(ObjName) == -1) {
     return(rtcsvstr);
   }
