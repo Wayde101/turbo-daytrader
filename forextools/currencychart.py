@@ -28,7 +28,8 @@ class CurrencyChart:
     def get_latest_gif(self):
         imgs = glob('%s/*.gif' % self.fullpath)
         imgs.sort()
-        return imgs[-1]
+        ret = 'noimgs' if len(imgs) == 0 else imgs[-1]
+        return ret
     
     def get_status(self):
         def splitLine(line):
@@ -79,15 +80,13 @@ class CurrencyChart:
                 gifs_ret.append(gif)
 
         return gifs_ret
-
-
-    
         
 
 
 if __name__ == '__main__':
-    c = CurrencyChart("EURUSD","240")
+    c = CurrencyChart("EURUSD","60")
     #print c.get_status()
     #print c.get_range_gifs_to_now('2days')
+    print c.get_latest_gif()
     print len(c.get_out_of_range_gifs('4days'))
 

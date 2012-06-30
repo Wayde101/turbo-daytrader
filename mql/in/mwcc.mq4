@@ -9,8 +9,6 @@
 extern int g_cc_min_k=11,
 	   g_mw_width=55;    // global Window Width
 
-
-
 int init()
 {
   return(0);
@@ -19,6 +17,7 @@ int init()
 int start()
 {
   MW_set(Period(),Yellow,g_mw_width);
+  MW_prop_set();
   CC_set(Period(),get_nearest_zpoint(),g_cc_min_k);
   return(0);
 }
@@ -148,8 +147,6 @@ double GetChannelDist(string cn)
 int MW_set(int tf,int Color ,int n)
 {
   int ret_code = Color;
-  string mw_desc = "";
-  int mstatus= 0;  // 0 表示非依托压制,-1 表示 压制, 1 表示依托.
   if(ObjectFind("MW") == -1) {
     ObjectCreate("MW",
 		 OBJ_RECTANGLE,
@@ -196,38 +193,51 @@ int MW_set(int tf,int Color ,int n)
 	      OBJPROP_PRICE1,
 	      Low[LowestN]);
 
-    okv("MW_UP_TIME",Time[HighestN]);
-    okv("MW_UP_PRICE",High[HighestN]);
-    okv("MW_DOWN_TIME",Time[LowestN]);
-    okv("MW_DOWN_PRICE",Low[LowestN]);
     ret_code = 0 ;    // 0 : mw is 
     ret_code = Yellow;
   }
-
-  if(iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,tf,34,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,tf,21,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,tf,13,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,tf,8,0,MODE_EMA,PRICE_MEDIAN,0 ) &&
-     iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,tf,5,0,MODE_EMA,PRICE_MEDIAN,0)) {
-    mstatus = -1;
-  }
-
-  if(iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,tf,34,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,tf,21,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,tf,13,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,tf,8,0,MODE_EMA,PRICE_MEDIAN,0 ) &&
-     iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,tf,5,0,MODE_EMA,PRICE_MEDIAN,0)) {
-    mstatus = 1;
-  }
-
-  mw_desc = StringConcatenate("mstat=",mstatus);
-  ObjectSetText("MW",mw_desc,10,"Times New Roman",Green);
-  
 
   okv("MW_WIDTH",n);
   okv("MW_NAME","MW");
   return(ret_code);
 }
+
+void MW_prop_set() {
+  string mw_desc = "";
+  int mstatus= 0;  // 0 表示非依托压制,-1 表示 压制, 1 表示依托.
+
+  if(ObjectFind("MW") == -1) {
+    return(0);
+  }
+
+  // iMA system status condition part.
+  if(iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,34,0,MODE_EMA,PRICE_MEDIAN,0) &&
+     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,21,0,MODE_EMA,PRICE_MEDIAN,0) &&
+     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,13,0,MODE_EMA,PRICE_MEDIAN,0) &&
+     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,8,0,MODE_EMA,PRICE_MEDIAN,0 ) &&
+     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,5,0,MODE_EMA,PRICE_MEDIAN,0))
+    {
+      mstatus = -1;
+    }
+
+  if(iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,34,0,MODE_EMA,PRICE_MEDIAN,0) &&
+     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,21,0,MODE_EMA,PRICE_MEDIAN,0) &&
+     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,13,0,MODE_EMA,PRICE_MEDIAN,0) &&
+     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,8,0,MODE_EMA,PRICE_MEDIAN,0 ) &&
+     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,5,0,MODE_EMA,PRICE_MEDIAN,0))
+    {
+      mstatus = 1;
+    }
+
+  mw_desc = StringConcatenate("mstat=",mstatus);
+
+  // ATR status part.  取最近14天的 ATR 值.
+  mw_desc = StringConcatenate(mw_desc, ";" , "atr1d" , "=" , iATR(NULL,PERIOD_D1,14,0));
+
+  ObjectSetText("MW",mw_desc,10,"Times New Roman",Green);
+}
+
+
 
 string get_nearest_zpoint()
 {

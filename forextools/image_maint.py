@@ -20,9 +20,10 @@ class ImgMaint:
             p.runInConsole()
 
     def runClean(self):
-        delcmd = 'find . -name "*.gif" -ctime +1 -exec rm -f {} \;'
+
         for path in self.srcpath:
-            findcmd = '%s' % (delcmd)
+            # clean 1 day ago files
+            delcmd = 'find %s -name "*.gif" -ctime +1 -exec rm -f {} \;' % path
             p = process.Process(delcmd)
             p.runInConsole()
         return
