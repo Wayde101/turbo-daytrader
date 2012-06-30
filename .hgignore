@@ -14,4 +14,13 @@ tingbox.corp.linuxnote.net.*
 tinghome.corp.linuxnote.net.*
 .*.swp
 core
+org-clock-save.el
+thumb/*.gif
+thumb/*.jpg
+full/*.gif
+full/*.jpg
+html/*_*
+vars/*
+*.pyc
+*_coding.py*
 CVS
