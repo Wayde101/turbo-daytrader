@@ -1,0 +1,12 @@
+# nothing now
+
+dpkg-list
+     append daemontools-run install
+
+
+daemontools_svscanboot
+    include svscanboot
+
+
+yuting_home_bashrc
+   append alias '.ros=ssh ros'
