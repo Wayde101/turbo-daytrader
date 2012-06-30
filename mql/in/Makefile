@@ -1,4 +1,4 @@
-MT4_TOP=D:/MinGW/msys/1.0/home/yuting/Alpari
+MT4_TOP=D:/MinGW/msys/1.0/home/yuting/Alpari.dev
 
 .PHONY: all install run
 
