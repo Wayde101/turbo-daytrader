@@ -23,4 +23,6 @@ html/*_*
 vars/*
 *.pyc
 *_coding.py*
+*.ex4
+*.log
 CVS
