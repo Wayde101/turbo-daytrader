@@ -3,5 +3,4 @@
 #console
 #exec rdesktop -g 1024x768 shake.corp.linuxnote.net:3366
 
-rdesktop -g 1024x768 -u yuting -5 -a 16 -P -D -K -xl -z -r disk:D=$HOME/windrv -r clipboard:PRIMARYCLIPBOARD -r sound:local -T '$TITLE'  shake.corp.linuxnote.net -p '!QAZ2wsx'
-
+rdesktop -g 1024x768 -u yuting -5 -a 16 -P -D -K -xl -z -r disk:D=$HOME/windrv -r clipboard:PRIMARYCLIPBOARD -r sound:local -T 'shakeDesktop'  shake.corp.linuxnote.net -p '!QAZ2wsx'
