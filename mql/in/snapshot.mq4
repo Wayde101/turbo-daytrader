@@ -6,8 +6,11 @@
 int counted_bars = 0;
 int img_width = 1024;
 int img_high  = 768;
+int shot_int  = 300;
+datetime shot_time;
 int init()
 {
+  shot_time = TimeCurrent();
   return(0);
 }
 
@@ -32,6 +35,13 @@ int start()
     if(!WindowScreenShot(snapfile,img_width,img_high)) {
       Print("save faild with msg:",GetLastError());
     }
+  }
+
+  if(TimeCurrent() - shot_time > shot_int ) {
+    if(!WindowScreenShot(snapfile,img_width,img_high)) {
+      Print("save faild with msg:",GetLastError());
+    }
+    shot_time = TimeCurrent();
   }
 
   handle = FileOpen(csvfile,FILE_CSV|FILE_WRITE,";");
