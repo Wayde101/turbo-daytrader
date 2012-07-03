@@ -85,7 +85,7 @@ class CurrencyChart:
 
 if __name__ == '__main__':
     c = CurrencyChart("EURUSD","60")
-    #print c.get_status()
+    print c.get_status()
     #print c.get_range_gifs_to_now('2days')
     print c.get_latest_gif()
     print len(c.get_out_of_range_gifs('4days'))

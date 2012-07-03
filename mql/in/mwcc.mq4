@@ -19,6 +19,7 @@ int start()
   MW_set(Period(),Yellow,g_mw_width);
   MW_prop_set();
   CC_set(Period(),get_nearest_zpoint(),g_cc_min_k);
+  CC_prop_set();
   return(0);
 }
 
@@ -104,10 +105,6 @@ int CC_set(int tf,string zpoint,int least)
     }
   }
 
-  cc_desc = StringConcatenate("ccDist=",width,";",
-			      "zpoint=",zpoint);
-
-  ObjectSetText("CC",cc_desc,10,"Times New Roman",Green);
   
   // 当 a点时间大于 b 点的时候，旗形失败. 并且清除之. ret code : 2
   if(za_time > zb_time ) {
@@ -199,7 +196,7 @@ void MW_prop_set() {
   string mw_desc = "";
 
   if(ObjectFind("MW") == -1) {
-    return(0);
+    return;
   }
 
   // ATR status part.  取最近14天的 ATR 值.
@@ -208,6 +205,20 @@ void MW_prop_set() {
   ObjectSetText("MW",mw_desc,10,"Times New Roman",Green);
 }
 
+void CC_prop_set() {
+  string cc_desc =  "";
+  string zpoint  =  get_nearest_zpoint();
+  double width   =  GetChannelDist("CC");
+  
+  if(ObjectFind("MW") == -1) {
+    return(1);
+  }
+
+  cc_desc = StringConcatenate("CCDIST=",width,";",
+			      "ZPOINT=",zpoint);
+  ObjectSetText("CC",cc_desc,10,"Times New Roman",Green);
+  return;
+}
 
 
 string get_nearest_zpoint()
