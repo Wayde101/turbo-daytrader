@@ -151,12 +151,11 @@ int ticket_proc() {
     double mod_takeprofit = StrToDouble(ticket_in[3]);
     Print("OrderModify recieved, ticket:",mod_ticket);
     OrderSelect(mod_ticket,SELECT_BY_TICKET);
-    if(OrderModify(OrderTicket(),OrderOpenPrice(),mod_stoploss,mod_takeprofit)) {
+    if(OrderModify(OrderTicket(),OrderOpenPrice(),mod_stoploss,mod_takeprofit,0,Blue)) {
       Print("OrderModify failed:",GetLastError());
     }
   }
 }
-
 
 int rm_obj(string objname,string rmsg="")
 {

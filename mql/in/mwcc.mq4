@@ -46,8 +46,6 @@ int CC_set(int tf,string zpoint,int least)
 	   swb_price = 0;
 
   string   cc_desc = "";
-  // masysflag 表示顶点到当前价格的均线系统状态, 0 表示依托压制. !0 表示依托或者压制.
-  int      mstatus = 0;
 
 
   if(ObjectFind("CC") == -1 ) {
@@ -90,10 +88,6 @@ int CC_set(int tf,string zpoint,int least)
       mva_price = iHigh(NULL,tf,i);
     }
 
-    if(mva_price * factor < iMA(NULL,tf,55,0,MODE_EMA,PRICE_MEDIAN,i) * factor) {
-      mstatus = 1;
-    }
-
     
     sfa_price = sfb_price - (factor * width);
 
@@ -111,7 +105,6 @@ int CC_set(int tf,string zpoint,int least)
   }
 
   cc_desc = StringConcatenate("ccDist=",width,";",
-			      "mstat=",mstatus,";",
 			      "zpoint=",zpoint);
 
   ObjectSetText("CC",cc_desc,10,"Times New Roman",Green);
@@ -204,35 +197,13 @@ int MW_set(int tf,int Color ,int n)
 
 void MW_prop_set() {
   string mw_desc = "";
-  int mstatus= 0;  // 0 表示非依托压制,-1 表示 压制, 1 表示依托.
 
   if(ObjectFind("MW") == -1) {
     return(0);
   }
 
-  // iMA system status condition part.
-  if(iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,34,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,21,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,13,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,8,0,MODE_EMA,PRICE_MEDIAN,0 ) &&
-     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)>iMA(NULL,0,5,0,MODE_EMA,PRICE_MEDIAN,0))
-    {
-      mstatus = -1;
-    }
-
-  if(iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,34,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,21,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,13,0,MODE_EMA,PRICE_MEDIAN,0) &&
-     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,8,0,MODE_EMA,PRICE_MEDIAN,0 ) &&
-     iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)<iMA(NULL,0,5,0,MODE_EMA,PRICE_MEDIAN,0))
-    {
-      mstatus = 1;
-    }
-
-  mw_desc = StringConcatenate("mstat=",mstatus);
-
   // ATR status part.  取最近14天的 ATR 值.
-  mw_desc = StringConcatenate(mw_desc, ";" , "atr1d" , "=" , iATR(NULL,PERIOD_D1,14,0));
+  mw_desc = StringConcatenate("atr55=" , iATR(NULL,0,55,0));
 
   ObjectSetText("MW",mw_desc,10,"Times New Roman",Green);
 }

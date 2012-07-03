@@ -41,8 +41,10 @@ int start()
     FileWrite(handle,GetObjCsv("MW"));
     FileWrite(handle,GetObjCsv("MW_up"));
     FileWrite(handle,GetObjCsv("MW_down"));
-    DumpOrderCsv(handle);
-    DumpAccountCsv(handle);
+    DumpOrderTicket(handle);
+    DumpAccountInfo(handle);
+    DumpTrendSys(handle);
+    DumpMarketInfo(handle);
     FileClose(handle);
   }
 }
@@ -68,7 +70,7 @@ string GetObjCsv(string ObjName)
   return(rtcsvstr);
 }
 
-string DumpOrderCsv(int status_handle) {
+string DumpOrderTicket(int status_handle) {
   int    total=OrdersTotal();
 
   for(int pos=0;pos<total;pos++) {
@@ -95,7 +97,7 @@ string DumpOrderCsv(int status_handle) {
   }
 }
 
-string DumpAccountCsv(int status_handle) {
+string DumpAccountInfo(int status_handle) {
 
   FileWrite(status_handle,
 	    "OBJNAME=AccountInfo",
@@ -106,5 +108,49 @@ string DumpAccountCsv(int status_handle) {
 	    StringConcatenate("AccountEquity=", AccountEquity()),
 	    StringConcatenate("AccountFreeMargin=",  AccountFreeMargin()),
 	    StringConcatenate("AccountProfit=",AccountProfit()));
-  FileClose(status_handle);
+}
+
+string DumpTrendSys(int status_handle) {
+
+  FileWrite(status_handle,
+	    "OBJNAME=TrendSys",
+	    StringConcatenate("M5=", iMA(NULL,0,5,0,MODE_EMA,PRICE_MEDIAN,0)),
+	    StringConcatenate("M8=", iMA(NULL,0,8,0,MODE_EMA,PRICE_MEDIAN,0)),
+	    StringConcatenate("M13=",iMA(NULL,0,13,0,MODE_EMA,PRICE_MEDIAN,0)),
+	    StringConcatenate("M21=",iMA(NULL,0,21,0,MODE_EMA,PRICE_MEDIAN,0)),
+	    StringConcatenate("M34=",iMA(NULL,0,34,0,MODE_EMA,PRICE_MEDIAN,0)),
+	    StringConcatenate("M55=",iMA(NULL,0,55,0,MODE_EMA,PRICE_MEDIAN,0)));
+}
+
+string DumpMarketInfo(int status_handle) {
+  FileWrite(status_handle,
+	    "OBJNAME=MarcketInfo",
+	    StringConcatenate("LOW=",MarketInfo(Symbol(),MODE_LOW)),
+	    StringConcatenate("HIGH=",MarketInfo(Symbol(),MODE_HIGH)),
+	    StringConcatenate("TIME=",MarketInfo(Symbol(),MODE_TIME)),
+	    StringConcatenate("BID=",MarketInfo(Symbol(),MODE_BID)),
+	    StringConcatenate("ASK=",MarketInfo(Symbol(),MODE_ASK)),
+	    StringConcatenate("POINT=",MarketInfo(Symbol(),MODE_POINT)),
+	    StringConcatenate("DIGITS=",MarketInfo(Symbol(),MODE_DIGITS)),
+	    StringConcatenate("SPREAD=",MarketInfo(Symbol(),MODE_SPREAD)),
+	    StringConcatenate("STOPLEVEL=",MarketInfo(Symbol(),MODE_STOPLEVEL)),
+	    StringConcatenate("LOTSIZE=",MarketInfo(Symbol(),MODE_LOTSIZE)),
+	    StringConcatenate("TICKVALUE=",MarketInfo(Symbol(),MODE_TICKVALUE)),
+	    StringConcatenate("TICKSIZE=",MarketInfo(Symbol(),MODE_TICKSIZE)),
+	    StringConcatenate("SWAPLONG=",MarketInfo(Symbol(),MODE_SWAPLONG)),
+	    StringConcatenate("SWAPSHORT=",MarketInfo(Symbol(),MODE_SWAPSHORT)),
+	    StringConcatenate("STARTING=",MarketInfo(Symbol(),MODE_STARTING)),
+	    StringConcatenate("EXPIRATION=",MarketInfo(Symbol(),MODE_EXPIRATION)),
+	    StringConcatenate("TRADEALLOWED=",MarketInfo(Symbol(),MODE_TRADEALLOWED)),
+	    StringConcatenate("MINLOT=",MarketInfo(Symbol(),MODE_MINLOT)),
+	    StringConcatenate("LOTSTEP=",MarketInfo(Symbol(),MODE_LOTSTEP)),
+	    StringConcatenate("MAXLOT=",MarketInfo(Symbol(),MODE_MAXLOT)),
+	    StringConcatenate("SWAPTYPE=",MarketInfo(Symbol(),MODE_SWAPTYPE)),
+	    StringConcatenate("PROFITCALCMODE=",MarketInfo(Symbol(),MODE_PROFITCALCMODE)),
+	    StringConcatenate("MARGINCALCMODE=",MarketInfo(Symbol(),MODE_MARGINCALCMODE)),
+	    StringConcatenate("MARGININIT=",MarketInfo(Symbol(),MODE_MARGININIT)),
+	    StringConcatenate("MARGINMAINTENANCE=",MarketInfo(Symbol(),MODE_MARGINMAINTENANCE)),
+	    StringConcatenate("MARGINHEDGED=",MarketInfo(Symbol(),MODE_MARGINHEDGED)),
+	    StringConcatenate("MARGINREQUIRED=",MarketInfo(Symbol(),MODE_MARGINREQUIRED)),
+	    StringConcatenate("FREEZELEVEL=",MarketInfo(Symbol(),MODE_FREEZELEVEL)));
 }
