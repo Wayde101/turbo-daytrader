@@ -18,14 +18,20 @@ int start()
 {
   int    lasterror    = 0;
   int    handle;
+  string sym = Symbol();
+  
+  if ( sym == "SPT_DXY") {
+    sym = "SPTDXY";
+  }
+  
   string snapfile     = StringConcatenate("shots\\",
-					  Symbol(), "_" ,
+					  sym, "_" ,
 					  Period(), "\\" , 
 					  iTime(NULL,0,0),
 					  ".gif");
 
   string csvfile      = StringConcatenate("shots\\",
-					  Symbol(), "_" ,
+					  sym, "_" ,
 					  Period(), "\\" , 
 					  "status",
 					  ".csv");
