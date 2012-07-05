@@ -2,7 +2,8 @@
 
 class Configuration:
     mt4shotpath = [
-        '/home/yuting/project/yuting/Alpari/experts/files/shots'
+        '/home/yuting/project/yuting/Alpari/experts/files/shots',
+        '/home/yuting/project/yuting/MTidx/experts/files/shots',
         ]
 
     imgbakuppath   = '/home/forexchart/'

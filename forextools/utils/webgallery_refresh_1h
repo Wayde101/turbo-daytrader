@@ -6,6 +6,6 @@ sys.path.append('/home/yuting/project/turbo-daytrader/forextools')
 from webgallery import WebGallery
 
 g = WebGallery()
-g.build(title='ForexGallery_1h',t_col=['60','240','1440','10080','43200'],c_row=['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
+g.build(title='ForexGallery_1h',t_col=['60','240','1440','10080','43200'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
 
 
