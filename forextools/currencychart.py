@@ -22,6 +22,7 @@ class CurrencyChart:
                 pass
 
         self.status_file   = '%s/status.csv' % self.fullpath
+        self.status        = self.get_status();
 
         return
         
@@ -62,7 +63,6 @@ class CurrencyChart:
             c = int(p.search(gif).groups(1)[0])
             if time_from < c:
                 gifs_ret.append(gif)
-
         return gifs_ret
 
     def get_out_of_range_gifs(self,rg):
@@ -80,13 +80,14 @@ class CurrencyChart:
                 gifs_ret.append(gif)
 
         return gifs_ret
-        
 
+    
+    
 
 if __name__ == '__main__':
-    c = CurrencyChart("EURUSD","60")
-    print c.get_status()
+    c = CurrencyChart("USDCHF","15")
+    # print c.get_status()
     #print c.get_range_gifs_to_now('2days')
-    print c.get_latest_gif()
-    print len(c.get_out_of_range_gifs('4days'))
+    # print c.get_latest_gif()
+    # print len(c.get_out_of_range_gifs('4days'))
 
