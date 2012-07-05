@@ -14,7 +14,7 @@ class WebGallery:
         self.wmap       = dict()
         self.t_col      = config.timeframe_col
         self.c_row      = config.currency_row
-        self.flip_list  = config.currency_flip
+        self.flip_list  = map(lambda x: x.upper(), config.currency_flip)
         return
 
     def init_gallery(self,gname):
@@ -29,7 +29,7 @@ class WebGallery:
             flp = False
             c  = CurrencyChart(cname,tf)
             cp = ConvertWrapper()
-            if cname in self.flip_list:
+            if cname.upper() in self.flip_list:
                 flp = True
             cp.set_parm(text=item.replace('usd',''),flip=flp)
             cp.convert_copy(c.get_latest_gif() , "%s/%s/images/full/%s.gif" % (self.gbasedir, gname , self.wmap[item]))
