@@ -12,6 +12,7 @@ class Ticket:
     def __init__(self,cur_name,cur_tf,config = configuration.Configuration()):
         self.cur_name           = cur_name.upper()
         self.cur_tf             = cur_tf
+        self.ticket_path        = '%s/ticket' % config.forexbase
         
         pass
 
@@ -22,7 +23,7 @@ class Ticket:
         pass
 
     def current(self):
-        
+        pass 
 
     def parser(self):
         ticket_in = '/home/yuting/project/yuting/turbo-daytrader/mql/in/ticket.ordersend'
