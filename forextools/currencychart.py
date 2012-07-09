@@ -18,7 +18,7 @@ class CurrencyChart:
             p = '%s/%s_%s' % (path,self.cur_name,self.tf)
             if os.path.exists(p):
                 self.fullpath = p
-                print "Found:", self.fullpath
+                #print "Found:", self.fullpath
                 pass
 
         self.status_file   = '%s/status.csv' % self.fullpath
@@ -81,8 +81,6 @@ class CurrencyChart:
 
         return gifs_ret
 
-    
-    
 
 if __name__ == '__main__':
     c = CurrencyChart("USDCHF","15")

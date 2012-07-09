@@ -5,8 +5,7 @@ class Configuration:
         '/home/yuting/project/yuting/Alpari/experts/files/shots',
         '/home/yuting/project/yuting/MTidx/experts/files/shots',
         ]
-
-    imgbakuppath   = '/home/forexchart/'
+    forexbase      = '/home/forexchart'
     convertbin     = '/usr/bin/convert'
     rsyncbin       = '/usr/bin/rsync'
     timeframe_col  = ['60','240','1440','10080','43200']

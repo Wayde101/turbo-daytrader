@@ -8,7 +8,7 @@ import process
 class ImgMaint:
     def __init__(self, config = configuration.Configuration()):
         self.srcpath      = config.mt4shotpath
-        self.dstpath      = config.imgbakuppath
+        self.dstpath      = config.forexbase
         self.rcmd         = config.rsyncbin
         
 

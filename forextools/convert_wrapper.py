@@ -16,7 +16,7 @@ class ConvertWrapper:
         self.pointsize = kargs['pointsize'] if kargs.has_key('pointsize') else 40
         self.text      = kargs['text'] if kargs.has_key('text') else 'unknown'
         
-    def convert_copy(self,f,t):
+    def convert_copy(self, f, t):
         flip_opt = text_opt = pointsize_opt = ''
 
         if f == 'noimgs':
@@ -37,10 +37,18 @@ class ConvertWrapper:
         p = process.Process(cv_cmd)
         p.runInConsole()
         return
+
+    def convert_delay(self, d, f, t):
+
+        cv_cmd = "%s -delay %d %s %s" % (self.convert, d, ' '.join(f), t)
+        p = process.Process(cv_cmd)
+        p.runInConsole()
+        return
         
         
 if __name__ == '__main__':
     c = ConvertWrapper()
     c.set_parm(flip=False,text='usdjpy_43200')
     c.convert_copy('/home/yuting/project/yuting/Alpari/experts/files/shots/USDJPY_43200/1338508800.gif','/tmp/jpy.gif')
+    c.convert_delay(1,['hello','world'],'/tmp/a')
     
