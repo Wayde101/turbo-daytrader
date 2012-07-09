@@ -63,7 +63,6 @@ class CurrencyStatus:
             
         return ret_code
 
-    # 0 非多头，非空头 1 空头 0 多头
     def get_MSYS_status(self):
         flip      = -1 if self.cur_name.upper() in self.flip_list else 1
         ret_code  = 0
@@ -96,7 +95,16 @@ class CurrencyStatus:
 
     
 if __name__ == '__main__':
-    conf = config.Configuration()
+    conf      = configuration.Configuration()
+    timeframe = ['60','240','1440','10080','43200']
+    currency  = ['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy']
+    
+    for tf in timeframe:
+        c = CurrencyStatus("SPTDXY",tf)
+        print tf
+        print c.get_nearest_zpoint()
+        print c.get_MSYS_trend()
+        
     
     c = CurrencyStatus("USDCHF","15")
     # print c.status
