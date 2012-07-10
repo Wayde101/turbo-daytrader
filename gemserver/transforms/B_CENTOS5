@@ -1,0 +1,6 @@
+# cenos5 目前只使用一个 CentOS5 的 163 源头，自己其他私有源的定义
+# 在各自的 group 中定义.
+
+yum.conf
+	include yum.conf/yum.conf.common
+	include yum.conf/CentOS5-Base-163.repo

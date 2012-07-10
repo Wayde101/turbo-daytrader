@@ -1,0 +1,608 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>交易计划模板</title>
+    <style type="text/css">
+      #browser {
+      font-family: Verdana, helvetica, arial, sans-serif;
+      font-size: 100%;
+      }
+    </style>
+    <script src="js/jquery-latest.js" language="JavaScript" type="text/JavaScript"></script>
+    <link rel="stylesheet" href="js/treeview/jquery.treeview.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="js/treeview/jquery.treeview.js"></script>
+
+    <script type="text/javascript">
+      /*
+      var analysis_tree = {
+      main_cur   : new Array ("美元指数","欧元/美元","英镑/美元","瑞郎/美元","日元/美元","澳元/美元","加元/美元"),
+      root_steps : new Array ("市场整体状况","交易币种初步选择","选定币种趋势信息表","选定币种的交易分析","交易信息确认","图表分析","交易计划审核"),
+      time_frame : new Array ("月","周","日","4小时","小时"),
+      step1 :
+      {
+      name : "市场整体状况",
+      test : "test"
+      },
+      //genFrame  : function()  { $(body).append("<li><span class=\"folder\">hahahahah</span>") },
+	genFrame  : function()  { $("#analysis_tree_frame").append("hello world") },
+	root_show : function()  { this.genFrame() },
+	};
+	
+	$(document).ready(function(){
+	analysis_tree.root_show()
+	});
+	*/
+
+	$(document).ready(function(){
+	$("#browser").treeview(
+	{animated: "fast",collapsed: true,unique:true}
+	);
+
+	$("#add").click(function() {
+ 	var branches = $("<li><span class='folder'>New Sublist</span><ul>" + 
+ 	  "<li><span class='file'>Item1</span></li>" + 
+ 	  "<li><span class='file'>Item2</span></li>" +
+ 	  "</ul></li>").appendTo("#browser");
+      $("#browser").treeview({add: branches});
+      });
+      });
+
+    </script>
+    
+  </head>
+
+  <body>
+    <!--
+	<ul id="analysis_tree_frame" class="analysis_tree"></ul>
+	-->
+    <ul id="browser" class="anatree">
+      <li><span class="folder">整体市场氛围分析</span>
+	<ul>
+	  <li><span class="folder">美元指数</span>
+ 	    <ul>
+	      <div id="full_analysis" style="width:780px;height:250px">
+    		<table width="97%" height="74" cellpadding="0" cellspacing="0">
+		  <tr>
+      		    <td width="25%"><p align="center"><strong>美元指数 </strong></p></td>
+      		    <td width="15%"><p align="center"><strong>月 </strong></p></td>
+      		    <td width="15%"><p align="center"><strong>周 </strong></p></td>
+      		    <td width="15%"><p align="center"><strong>日 </strong></p></td>
+      		    <td width="15%"><p align="center"><strong>4 </strong><strong>小时 </strong></p></td>
+      		    <td width="15%"><p align="center"><strong>1 </strong><strong>小时 </strong></p></td>
+    		  </tr>
+		  <tr>
+		    <td width="22%" height="25"><p align="center">客观方向 </p></td>
+     		    <td width="15%">
+		      <p align="center">
+			<select name="usdx_k_m" id="usdx_m">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+		    </p></td>
+      		    <td width="15%">
+		      <p align="center">
+        		<select name="usdx_k_w" id="usdx_w">
+          		  <option value="u">上</option>
+          		  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+        	    </p></td>
+      		    <td width="15%">
+		      <p align="center">
+        		<select name="usdx_k_d" id="usdx_d">
+          		  <option value="u">上</option>
+          		  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+		    </p></td>
+      		    <td width="15%">
+		      <p align="center">
+        		<select name="usdx_k_q" id="usdx_q">
+          		  <option value="u">上</option>
+          		  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+        	    </p></td>
+      		    <td width="15%">
+		      <p align="center">
+        		<select name="usdx_k_h" id="usdx_h">
+          		  <option value="u">上</option>
+          		  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+        	    </p></td>
+    		  </tr>
+		  <tr>
+		    <td width="22%" height="25"><p align="center">主观方向 </p></td>
+     		    <td width="15%">
+		      <p align="center">
+			<select name="usdx_z_m" id="usdx_m">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+		    </p></td>
+      		    <td width="15%">
+		      <p align="center">
+        		<select name="usdx_z_w" id="usdx_w">
+          		  <option value="u">上</option>
+          		  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+        	    </p></td>
+      		    <td width="15%">
+		      <p align="center">
+        		<select name="usdx_z_d" id="usdx_d">
+          		  <option value="u">上</option>
+          		  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+		    </p></td>
+      		    <td width="15%">
+		      <p align="center">
+        		<select name="usdx_z_q" id="usdx_q">
+          		  <option value="u">上</option>
+          		  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+        	    </p></td>
+      		    <td width="15%">
+		      <p align="center">
+        		<select name="usdx_z_h" id="usdx_h">
+          		  <option value="u">上</option>
+          		  <option value="d">下</option>
+          		  <option value="t">转</option>
+          		  <option value="w">横</option>
+        		</select> 
+        	    </p></td>
+    		  </tr>
+		</table>
+		<p id="usdx_jl">结论：>>> </p>
+		<textarea name="n_usdx_res" id="i_usdx_res" class="c_usdx_res" cols="70" rows="3"></textarea>
+	      </div>
+ 	  </ul></li>
+
+	  <li><span class="folder">各货币分化表</span>
+	    <ul>
+	      <div id="i_hbfhb" style="width:780px;height:380px">
+		<table cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td width="22%"><p align="center"><strong>4 小时图分析</strong></p></td>
+		    <td width="12%"><p align="center"><strong>欧元 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>英镑 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>瑞郎 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>日元 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>澳元 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>加元 / 美元 </strong></p></td>
+		  </tr>
+		  <tr>
+		    <td width="22%"><p align="center">均线系统客观方向 </p></td>
+		    <td width="12%"><p align="center">
+			<select name="usdx_k_m" id="usdx_m">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select2" id="select2">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select4" id="select4">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select6" id="select6">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select8" id="select8">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select10" id="select10">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		  </tr>
+		  <tr>
+		    <td width="22%"><p align="center">主次节奏主观方向 </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select" id="select">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select3" id="select3">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select5" id="select5">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select7" id="select7">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select9" id="select9">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select11" id="select11">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		  </tr>
+		  <tr></tr>
+		  <tr>
+		    <td width="22%"><p align="center"><strong>1 小时图分析 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>欧元 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>英镑 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>瑞郎 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>日元 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>澳元 / 美元 </strong></p></td>
+		    <td width="12%"><p align="center"><strong>加元 / 美元 </strong></p></td>
+		  </tr>
+		  <tr>
+		    <td width="22%"><p align="center">均线系统客观方向 </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select12" id="select12">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select14" id="select14">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select16" id="select16">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select18" id="select18">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select20" id="select20">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select22" id="select22">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		  </tr>
+		  <tr>
+		    <td width="22%"><p align="center">主次节奏主观方向 </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select13" id="select13">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select15" id="select15">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select17" id="select17">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select19" id="select19">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select21" id="select21">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		    <td width="12%"><p align="center">
+			<select name="select23" id="select23">
+			  <option value="u">上</option>
+			  <option value="d">下</option>
+			  <option value="t">转</option>
+			  <option value="w">横</option>
+			</select> 
+		    </p></td>
+		  </tr>
+		</table>
+		<p id="hbfh_jl">结论：>>> </p>
+		<textarea name="n_usdx_res" id="i_usdx_res" class="c_usdx_res" cols="70" rows="3"></textarea>
+	      </div>
+ 	    </ul>
+	  </li>
+      </ul>
+      </li>
+      <li><span class="folder">交易币种初步选择</span>
+ 	    <ul>
+ 	      <li><span class="subitem">强弱筛选</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+				<p>强： </p>
+				<p>中： </p>
+				<p>弱： </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	      <li><span class="subitem">规范性筛选</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+				<p>&nbsp;</p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	      <li><span class="subitem">不可交易原则</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+				<p>&nbsp;</p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	    </ul>
+      </li>
+      <li><span class="folder">选定币种趋势信息表</span>
+ 	    <ul>
+	      <div id="i_hbfhb" style="width:780px;height:380px">
+		  <table cellspacing="0" cellpadding="0">
+			  <tr>
+				<td width="23%"><p align="center"><strong>货币对名称 </strong></p></td>
+				<td width="15%"><p align="center"><strong>月 </strong></p></td>
+				<td width="14%"><p align="center"><strong>周 </strong></p></td>
+				<td width="14%"><p align="center"><strong>日 </strong></p></td>
+				<td width="14%"><p align="center"><strong>4 小时 </strong></p></td>
+				<td width="17%"><p align="center"><strong>1 小时 </strong></p></td>
+			  </tr>
+			  <tr>
+				<td width="23%"><p align="center">客观方向 </p></td>
+				<td width="15%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="17%"><p align="center">&nbsp; </p></td>
+			  </tr>
+			  <tr>
+				<td width="23%"><p align="center">主观方向 </p></td>
+				<td width="15%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="17%"><p align="center">&nbsp; </p></td>
+			  </tr>
+			  <tr>
+				<td width="100%" colspan="6"><p align="center">&nbsp; </p></td>
+			  </tr>
+			  <tr>
+				<td width="23%"><p align="center"><strong>货币对名称 </strong></p></td>
+				<td width="15%"><p align="center"><strong>月 </strong></p></td>
+				<td width="14%"><p align="center"><strong>周 </strong></p></td>
+				<td width="14%"><p align="center"><strong>日 </strong></p></td>
+				<td width="14%"><p align="center"><strong>4 小时 </strong></p></td>
+				<td width="17%"><p align="center"><strong>1 小时 </strong></p></td>
+			  </tr>
+			  <tr>
+				<td width="23%"><p align="center">客观方向 </p></td>
+				<td width="15%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="17%"><p align="center">&nbsp; </p></td>
+			  </tr>
+			  <tr>
+				<td width="23%"><p align="center">主观方向 </p></td>
+				<td width="15%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="14%"><p align="center">&nbsp; </p></td>
+				<td width="17%"><p align="center">&nbsp; </p></td>
+			  </tr>
+		  </table>
+		  <p>结论（选定货币的各级别客观方向和主观方向分析）： </p>
+		  <textarea name="n_usdx_res" id="i_usdx_res" class="c_usdx_res" cols="70" rows="3"></textarea>
+		  </div>
+  	    </ul>
+      </li>
+      <li><span class="folder">选定币种的交易分析</span>
+ 	    <ul>
+ 	      <li><span class="subitem">趋势（道氏分析、趋势线通道分析、主次节奏分析）</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+			  <p>&nbsp; </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	      <li><span class="subitem">动能（ k 线、连续性、斜率、 k 线组合、摆动指标分析、主次节奏分析）</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+			  <p>&nbsp; </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	      <li><span class="subitem">形态（中继形态分析、反转形态分析）</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+			  <p>&nbsp; </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	      <li><span class="subitem">其他（波浪分析、周期分析、人气指标等其他信号）</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+			  <p>&nbsp; </p>
+			  <p><strong>4 小时图信号排列： </strong></p>
+			  <p>&nbsp; </p>
+			  <p>结论： </p>
+			  <textarea name="n_usdx_res" id="i_usdx_res" class="c_usdx_res" cols="70" rows="3"></textarea>
+			  <p>&nbsp; </p>
+			  <p><strong>1 小时图信号排列： </strong></p>
+			  <p>&nbsp; </p>
+			  <p>结论： </p>
+			  <textarea name="n_usdx_res" id="i_usdx_res" class="c_usdx_res" cols="70" rows="3"></textarea>
+			  <p>&nbsp; </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+  	    </ul>
+      </li>
+      <li><span class="folder">交易信息确认</span>
+ 	    <ul>
+ 	      <li><span class="subitem">交易货币对</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+			  <p>&nbsp; </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	      <li><span class="subitem">交易方向选择</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+			  <p>&nbsp; </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	      <li><span class="subitem">交易时机预判</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+			  <p>&nbsp; </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	      <li><span class="subitem">点位确认</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+			  <p>&nbsp; </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+ 	      <li><span class="subitem">交易机会等级描述</span>
+		    <ul>
+			  <div id="i_hbfhb" style="width:780px">
+			  <table cellspacing="0" cellpadding="0">
+			  <p>&nbsp; </p>
+			  </table>
+			  </div>
+			</ul>
+		  </li>
+  	    </ul>
+      </li>
+    </ul>
+
+  </body>
+</html>

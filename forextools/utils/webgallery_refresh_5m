@@ -1,0 +1,15 @@
+#!/home/tops/bin/python
+
+import os, sys ,re,string
+import time
+sys.path.append('/home/yuting/project/turbo-daytrader/forextools')
+from webgallery import WebGallery
+
+g = WebGallery()
+g.build(title='ForexGallery_5m',t_col=['5','15','60'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
+
+s = WebGallery()
+s.build(title='ForexGallery_1h',t_col=['60','240','1440','10080','43200'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
+
+
+
