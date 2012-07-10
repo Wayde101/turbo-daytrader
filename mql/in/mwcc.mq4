@@ -67,12 +67,13 @@ int CC_set(int tf,string zpoint,int least)
     zb_price = ObjectGet("CC",OBJPROP_PRICE2);
   }
   
-  double width = GetChannelDist("CC");
+
   // 选举 a 点. 
   // 选举 b 点. 在 0 点和当前价格点位中间选取 
   //     diff 最大(上升旗形的时候)或者最小(下降旗型的时候)的点.
   // sfa/sfb  : shift_a shift_b
   for(int i=0; i < flag_len; i++) {
+    double width = GetChannelDist("CC");
     double sfb_price = ObjectGetValueByShift("CC",i),
 	   sfa_price,
 	   mva_price,
@@ -92,31 +93,28 @@ int CC_set(int tf,string zpoint,int least)
     
     sfa_price = sfb_price - (factor * width);
 
-    if(swb_price < (factor * (mvb_price - sfb_price))) {
-       swb_price = (factor * (mvb_price - sfb_price));
+    if(0 < (factor * (mvb_price - sfb_price))) {
        zb_price  = mvb_price;
        zb_time   = iTime(NULL,tf,i);
     }
     
-    if(swa_price > (factor * (mva_price - sfa_price))) {
-      swa_price  =  (factor * (mva_price - sfa_price));
+    if(0 > (factor * (mva_price - sfa_price))) {
       za_price   =  mva_price;
       za_time    = iTime(NULL,tf,i);
     }
+    
+    ObjectSet("CC",OBJPROP_COLOR,Blue);
+    ObjectSet("CC",OBJPROP_TIME2,zb_time);
+    ObjectSet("CC",OBJPROP_PRICE2,zb_price);
+    ObjectSet("CC",OBJPROP_TIME3,za_time);
+    ObjectSet("CC",OBJPROP_PRICE3,za_price);
   }
 
-  
   // 当 a点时间大于 b 点的时候，旗形失败. 并且清除之. ret code : 2
   if(za_time > zb_time ) {
-    rm_obj("CC","a point time great than b point ");
+    rm_obj("CC","a point time great than b point aaaaaaaa");
     return(2);
   }
-
-  ObjectSet("CC",OBJPROP_COLOR,Blue);
-  ObjectSet("CC",OBJPROP_TIME2,zb_time);
-  ObjectSet("CC",OBJPROP_PRICE2,zb_price);
-  ObjectSet("CC",OBJPROP_TIME3,za_time);
-  ObjectSet("CC",OBJPROP_PRICE3,za_price);
 
   return(0);
 
@@ -201,7 +199,6 @@ void MW_prop_set() {
 
   // ATR status part.  取最近14天的 ATR 值.
   mw_desc = StringConcatenate("atr55=" , iATR(NULL,0,55,0));
-
   ObjectSetText("MW",mw_desc,10,"Times New Roman",Green);
 }
 
@@ -209,12 +206,19 @@ void CC_prop_set() {
   string cc_desc =  "";
   string zpoint  =  get_nearest_zpoint();
   double width   =  GetChannelDist("CC");
+  int	 factor  = 1;
   
-  if(ObjectFind("MW") == -1) {
+  if(ObjectFind("CC") == -1) {
     return(1);
   }
-
+  
+  if(zpoint == "MW_down") {
+    factor = -1; 
+  }
+  
   cc_desc = StringConcatenate("CCDIST=",width,";",
+			      "CC0P=",ObjectGetValueByShift("CC",0), ";",
+			      "CC1P=",ObjectGetValueByShift("CC",0) - width * factor, ";" ,
 			      "ZPOINT=",zpoint);
   ObjectSetText("CC",cc_desc,10,"Times New Roman",Green);
   return;
