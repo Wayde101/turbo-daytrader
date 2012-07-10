@@ -14,7 +14,11 @@ class CurrencyStatus:
         self.chart         = CurrencyChart(cur_name,cur_tf)
         self.status        = self.chart.get_status()
         self.flip_list     = map(lambda x: x.upper(), config.currency_flip)
-
+        self.cc_cache      = '%s/cc/%s_%s' % (config.forexbase, \
+                                              self.cur_name, \
+                                              self.tf)
+        self.cache_status = dict()
+        
     def has_cc(self):
         if self.status['CC'].has_key('CCDIST'):
             return True
@@ -42,6 +46,13 @@ class CurrencyStatus:
             print "MW does not have %s" % key
             return 'NA'
 
+    def get_bid(self):
+        return self.status['MarketInfo']['BID']
+    
+    def get_ask(self):
+        return self.status['MarketInfo']['ASK']
+
+        
     def get_MSYS_trend(self):
         flip      = -1 if self.cur_name.upper() in self.flip_list else 1
         ret_code  = 0
@@ -93,24 +104,66 @@ class CurrencyStatus:
 
         return ret_point
 
+    def has_cc_cache(self):
+        return os.path.exists(self.cc_cache)
+
+    def load_cc_cache(self):
+        if not self.has_cc_cache():
+            return
+
+        def splitLine(line):
+            items = map(lambda x: tuple(x.strip().split('=')),
+                        line.split(';'))
+            return dict(items)
+        
+        content = list()
+        self.cache_status = dict()
+        
+        with open(self.cc_cache, 'r') as f:
+            content = f.xreadlines()
+            content = map(lambda x: splitLine(x.strip()), content)
+            for line in content:
+                self.cache_status[line['OBJNAME']] = line
+            f.seek(0)
+            f.close()
+
+    def cc_A_changed(self):
+        if not self.has_cc():
+            return False
+        return self.status['CC']['OBJPROP_PRICE1'] != \
+            self.cache_status['CC']['OBJPROP_PRICE1']
+
+    def cc_B_changed(self):
+        if not self.has_cc():
+            return False
+        return self.status['CC']['OBJPROP_PRICE2'] != \
+            self.cache_status['CC']['OBJPROP_PRICE2']
+    
+    def cc_C_changed(self):
+        if not self.has_cc():
+            return False
+        return self.status['CC']['OBJPROP_PRICE3'] != \
+            self.cache_status['CC']['OBJPROP_PRICE3']
+
+
+    def update_cc_cache(self):
+        if self.has_cc():
+            with open(self.cc_cache,'w') as f:
+                f.write(self.chart.ccstr)
+                f.close()
+
+    
     
 if __name__ == '__main__':
     conf      = configuration.Configuration()
     timeframe = ['60','240','1440','10080','43200']
     currency  = ['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy']
     
-    for tf in timeframe:
-        c = CurrencyStatus("SPTDXY",tf)
-        print tf
-        print c.get_nearest_zpoint()
-        print c.get_MSYS_trend()
-        
+    c = CurrencyStatus('eurusd','60')
+    c.load_cc_cache()
+    print c.cache_status
+    c.update_cc_cache()
+            
     
-    c = CurrencyStatus("USDCHF","15")
-    # print c.status
-    # print c.get_CC_keys()
-    # print c.get_CC_value("CCDIST")
-    # print c.get_MW_keys()
-    # print c.get_MW_value("atr55")
-    print c.get_nearest_zpoint()
     
+            

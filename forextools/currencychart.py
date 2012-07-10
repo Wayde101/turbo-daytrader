@@ -11,6 +11,7 @@ class CurrencyChart:
         self.cur_name      = cur_name.upper()
         self.tf            = cur_tf
         self.fullpath      = ''
+        self.ccstr         = ''
 
         # some status keys define at below
 
@@ -34,6 +35,8 @@ class CurrencyChart:
     
     def get_status(self):
         def splitLine(line):
+            if re.search('OBJNAME=CC',line):
+                self.ccstr = line
             items = map(lambda x: tuple(x.strip().split('=')),
                         line.split(';'))
             return dict(items)
@@ -83,7 +86,8 @@ class CurrencyChart:
 
 
 if __name__ == '__main__':
-    c = CurrencyChart("USDCHF","15")
+    c = CurrencyChart("EURUSD","60")
+    #print c.ccstr
     # print c.get_status()
     #print c.get_range_gifs_to_now('2days')
     # print c.get_latest_gif()
