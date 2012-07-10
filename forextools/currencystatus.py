@@ -153,7 +153,6 @@ class CurrencyStatus:
                 f.close()
 
     
-    
 if __name__ == '__main__':
     conf      = configuration.Configuration()
     timeframe = ['60','240','1440','10080','43200']
@@ -163,7 +162,3 @@ if __name__ == '__main__':
     c.load_cc_cache()
     print c.cache_status
     c.update_cc_cache()
-            
-    
-    
-            

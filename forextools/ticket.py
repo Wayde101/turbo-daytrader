@@ -119,7 +119,3 @@ if __name__ == '__main__':
         print t.status
         
 
-    
-    #print t.remove()
-    #print t.new(ordertype = 'ordermod',orderbody = {'ticket':1,'stoploss':1.4888,'takeprofit':1.9999})
-    

@@ -25,7 +25,6 @@ class CurrencyChart:
         self.status_file   = '%s/status.csv' % self.fullpath
         self.status        = self.get_status();
 
-        return
         
     def get_latest_gif(self):
         imgs = glob('%s/*.gif' % self.fullpath)
@@ -87,8 +86,8 @@ class CurrencyChart:
 
 if __name__ == '__main__':
     c = CurrencyChart("EURUSD","60")
-    #print c.ccstr
-    # print c.get_status()
+    print c.ccstr
+    print c.get_status()
     #print c.get_range_gifs_to_now('2days')
     # print c.get_latest_gif()
     # print len(c.get_out_of_range_gifs('4days'))
