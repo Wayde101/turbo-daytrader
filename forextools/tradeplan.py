@@ -27,31 +27,13 @@ class TradePlan:
         print self.ticket_in
         ret = True if os.path.isfile(self.ticket_in) else False
         return ret
-    
-    def has_plan(self):
+
+
         
-        pass
 
-    def get_vol(self):
-        pass
-
-    def get_entry(self):
-        pass
-
-    def get_cmd(self):
-        pass
-
-    def get_stoploss(self):
-        pass
-
-    def get_takeprofit(self):
-        pass
-
-    def get_takeprofit(self):
-        pass
         
 if __name__ == '__main__':
-    t = TradePlan('eurusd','1440')
+    t = TradePlan('eurusd','60')
     print t.has_ticket()
     
     

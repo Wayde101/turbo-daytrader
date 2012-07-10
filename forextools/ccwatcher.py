@@ -11,11 +11,10 @@ from ft_utils import *
 
 class CcWatcher:
     def __init__(self, config = configuration.Configuration()):
-        
-        pass
+        self.timeframe = ['60','240','1440','10080','43200']
+        self.currency  = ['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy']
     
-    def load_status(self):
-        
-        return
     
-
+    
+    
+    

@@ -9,7 +9,6 @@ from convert_wrapper import ConvertWrapper
 
 class WebGallery:
     def __init__(self, config = configuration.Configuration()):
-        #self.ftpath    = '/home/yuting/project/turbo-daytrader/forextools'
         self.ftpath    = '%s/forextools' % config.forexbase
         self.gbasedir   = '%s/html' % self.ftpath
         self.wmap       = dict()
