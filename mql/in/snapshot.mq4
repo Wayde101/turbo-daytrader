@@ -140,7 +140,7 @@ string DumpTrendSys(int status_handle) {
 
 string DumpMarketInfo(int status_handle) {
   FileWrite(status_handle,
-	    "OBJNAME=MarcketInfo",
+	    "OBJNAME=MarketInfo",
 	    StringConcatenate("LOW=",MarketInfo(Symbol(),MODE_LOW)),
 	    StringConcatenate("HIGH=",MarketInfo(Symbol(),MODE_HIGH)),
 	    StringConcatenate("TIME=",MarketInfo(Symbol(),MODE_TIME)),
