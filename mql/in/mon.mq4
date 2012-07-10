@@ -1,8 +1,6 @@
 #property copyright "Copyright (c) 2011, TingYu"
 #property link      "http://www.17forex.com"
 
-#property indicator_chart_window
-
 string ticket_in[12];
 string ticket_path;
 string ticket_in_file;
@@ -41,6 +39,9 @@ int ticket_read() {
   ticket_handle = FileOpen(ticket_in_file,FILE_CSV|FILE_READ);
     
   if(ticket_handle < 1) {
+    rm_obj("PendingLine","No ticket.in found!");
+    rm_obj("StopLossLine","No ticket.in found!");
+    rm_obj("TakeProfit","No ticket.in found!");
     return(1);
   }
   
@@ -99,6 +100,8 @@ int ticket_proc() {
     if(order_cmd == OP_SELL)  {
       current_price     = Bid;
       ObjectSet("PendingLine",OBJPROP_COLOR,Green);
+      ObjectSet("StopLossLine",OBJPROP_COLOR,Green);
+      ObjectSet("TakeProfit",OBJPROP_COLOR,Green);
       if( current_price >= expect_price ) {
 	order_trigger = 1;
       }
@@ -106,6 +109,8 @@ int ticket_proc() {
     else if (order_cmd == OP_BUY) {
       current_price     = Ask;
       ObjectSet("PendingLine",OBJPROP_COLOR,Red);
+      ObjectSet("StopLossLine",OBJPROP_COLOR,Red);
+      ObjectSet("TakeProfit",OBJPROP_COLOR,Red);
       if( current_price <= expect_price ) {
 	order_trigger = 1;
       }
@@ -171,6 +176,7 @@ int rm_obj(string objname,string rmsg="")
 int hline_reprice(string objname,double p) {
   if(ObjectFind(objname) == -1) {
     ObjectCreate(objname,OBJ_HLINE,0,0,p);
+    ObjectSet(objname,OBJPROP_STYLE,STYLE_DOT);
     return(0);
   }
   ObjectSet(objname,OBJPROP_PRICE1,p);
