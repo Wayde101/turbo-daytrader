@@ -151,7 +151,7 @@ class CurrencyStatus:
             with open(self.cc_cache,'w') as f:
                 f.write(self.chart.ccstr)
                 f.close()
-
+    
     
 if __name__ == '__main__':
     conf      = configuration.Configuration()
