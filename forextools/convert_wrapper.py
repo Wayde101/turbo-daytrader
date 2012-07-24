@@ -15,6 +15,7 @@ class ConvertWrapper:
         self.flip      = kargs['flip'] if kargs.has_key('flip') else False
         self.pointsize = kargs['pointsize'] if kargs.has_key('pointsize') else 40
         self.text      = kargs['text'] if kargs.has_key('text') else 'unknown'
+        self.tmpdir    = kargs['tmpdir'] if kargs.has_key('tmpdir') else '/tmp/jpeg'
         
     def convert_copy(self, f, t):
         flip_opt = text_opt = pointsize_opt = ''
@@ -51,7 +52,6 @@ class ConvertWrapper:
 
         for gif in f:
             print '%s %03d' % (gif , f.index(gif))
-
 
     
 if __name__ == '__main__':

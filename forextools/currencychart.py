@@ -53,8 +53,9 @@ class CurrencyChart:
         return items
 
     def get_range_gifs_to_now(self,rg):
+        timezone   = 3
         time_range = read_time(rg)
-        time_now   = time.time()
+        time_now   = time.time() + timezone * 3600
         time_from  = time_now - time_range
         gifs_ret   = []
         
@@ -68,8 +69,9 @@ class CurrencyChart:
         return gifs_ret
 
     def get_out_of_range_gifs(self,rg):
+        timezone   = 3
         time_range = read_time(rg)
-        time_now   = time.time()
+        time_now   = time.time() + timezone * 3600
         time_from  = time_now - time_range
         gifs_ret   = []
         
