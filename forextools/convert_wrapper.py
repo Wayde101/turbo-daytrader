@@ -44,8 +44,16 @@ class ConvertWrapper:
         p = process.Process(cv_cmd)
         p.runInConsole()
         return
-        
-        
+
+    def ffmpeg_range(self, f, t):
+        if not os.path.exists(self.tmpdir):
+            os.makedirs(self.tmpdir)
+
+        for gif in f:
+            print '%s %03d' % (gif , f.index(gif))
+
+
+    
 if __name__ == '__main__':
     c = ConvertWrapper()
     c.set_parm(flip=False,text='usdjpy_43200')

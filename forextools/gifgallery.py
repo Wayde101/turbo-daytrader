@@ -18,7 +18,12 @@ class GifGallery:
         c = ConvertWrapper()
         c.convert_delay(1,self.chart.get_range_gifs_to_now(rg),'/tmp/7day.gif')
 
+    def build_mpeg(self,rg):
+        c = ConvertWrapper()
+        c.ffmpeg_range(self.chart.get_range_gifs_to_now(rg),'/tmp/a.gif')
 
 if __name__ == '__main__':
-    g = GifGallery('eurusd','60')
-    g.build_moving_gifs('7day')
+    g = GifGallery('eurusd','5')
+    #g.build_moving_gifs('7day')
+    g.build_mpeg('1day')
+
