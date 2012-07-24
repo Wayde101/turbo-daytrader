@@ -1,0 +1,51 @@
+* Forex
+  :PROPERTIES:
+  :CATEGORY: Forex
+  :END:   
+** DONE tradplan 代码 checkin
+   CLOCK: [2011-09-20 Tue 17:50]--[2011-09-20 Tue 18:05] =>  0:15
+   将代码 checkin 到 google code 中. 便于日后维护更新
+
+** DONE 改造 newtp.el 能够生成可读的交易用的summary
+  SCHEDULED: <2011-09-20 Tue>
+  CLOCK: [2011-09-22 Thu 16:17]--[2011-09-22 Thu 16:21] =>  0:04
+  CLOCK: [2011-09-22 Thu 12:54]--[2011-09-22 Thu 13:19] =>  0:25
+  CLOCK: [2011-09-22 Thu 08:43]--[2011-09-22 Thu 12:54] =>  4:11
+[2011-09-20 Tue 02:04]
+
+   summary 包含:
+   1. 强弱选择.
+   2. 规范性选择. 生成brife done
+
+** TODO 整理一个 forex.org 将日常的交易方面的东西放在这个文件里
+  CLOCK: [2011-09-22 Thu 08:42]--[2011-09-22 Thu 08:43] =>  0:01
+  CLOCK: [2011-09-21 Wed 11:06]--[2011-09-21 Wed 12:03] =>  0:57
+  CLOCK: [2011-09-20 Tue 09:14]--[2011-09-20 Tue 09:18] =>  0:04
+[2011-09-20 Tue 09:14]
+[[file:~/org/todolist.org::*PackWork][PackWork]]
+
+   大体的org struct.
+
+1. 日常交易计划 [每日都要做的]  需要可以计算每次功课所花费的时间，并且是和tradeplan.el结合
+2. 有交易记录表，可以对日常的交易做一些行为分析。
+3. 交易心得和总结 。
+
+** TODO 每日功课 (如何让每天都提醒这个任务进行)
+  CLOCK: [2011-09-26 Mon 10:40]--[2011-09-26 Mon 11:14] =>  0:34
+[2011-09-26 Mon 10:38]
+做多加元
+
+** DONE daily trading plan
+  CLOSED: [2011-09-29 Thu 11:20]
+  - State "DONE"       from "STARTED"    [2011-09-29 Thu 11:20]
+  :LOGBOOK:
+  CLOCK: [2011-09-29 Thu 10:33]--[2011-09-29 Thu 11:20] =>  0:47
+  CLOCK: [2011-09-27 Tue 11:51]--[2011-09-27 Tue 12:25] =>  0:34
+  :END:
+[2011-09-27 Tue 11:51]
+	今日交易重点 ，澳元，加元, 但是目前短线上都没有次要节奏出现. 若没有次要节奏出现按照主观+日波幅进场
+
+** TODO 升级 www.17forex.com 的系统软件。
+[2011-09-21 Wed 16:54]
+[[file:~/org/refile.org::*%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AAgnus%20mail][配置一个gnus mail]]
+
