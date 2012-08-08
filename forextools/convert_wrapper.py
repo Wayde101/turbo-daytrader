@@ -47,13 +47,14 @@ class ConvertWrapper:
         return
 
     def ffmpeg_range(self, f, t):
+        fmt_opt = inf_opt = ''
         if not os.path.exists(self.tmpdir):
             os.makedirs(self.tmpdir)
 
         for gif in f:
-            print '%s %03d' % (gif , f.index(gif))
+            self.convert_copy(gif, "%s/image%d.jpg" % (self.tmpdir,f.index(gif)))
 
-    
+            
 if __name__ == '__main__':
     c = ConvertWrapper()
     c.set_parm(flip=False,text='usdjpy_43200')
