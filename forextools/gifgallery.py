@@ -5,7 +5,6 @@ import configuration
 from currencychart import CurrencyChart
 from convert_wrapper import ConvertWrapper
 
-
 class GifGallery:
     def __init__(self,cur_name,cur_tf,config = configuration.Configuration()):
         self.ftpath    = '/home/yuting/project/turbo-daytrader/forextools'
@@ -23,7 +22,7 @@ class GifGallery:
         c.ffmpeg_range(self.chart.get_range_gifs_to_now(rg),'/tmp/a.gif')
 
 if __name__ == '__main__':
-    g = GifGallery('eurusd','5')
+    g = GifGallery('eurusd','60')
     #g.build_moving_gifs('7day')
     g.build_mpeg('1day')
 

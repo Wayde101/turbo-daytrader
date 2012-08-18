@@ -50,7 +50,7 @@ class ConvertWrapper:
         fmt_opt = inf_opt = ''
         if not os.path.exists(self.tmpdir):
             os.makedirs(self.tmpdir)
-
+            
         for gif in f:
             self.convert_copy(gif, "%s/image%d.jpg" % (self.tmpdir,f.index(gif)))
 

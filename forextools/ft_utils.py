@@ -3,6 +3,12 @@
 import os, sys ,re,string
 
 
+# only needs an extra lambda function (virtually, there are two)
+def match(pattern, text):
+    m = re.match(pattern, text)
+    return m and setattr(match, 'found', m.groups()) == None
+
+
 def read_time(rg):
     time_seg = -1
     p=re.compile('^\s*(\d+)\s*(\w*)')
