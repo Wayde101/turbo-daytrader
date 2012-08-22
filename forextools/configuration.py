@@ -11,7 +11,7 @@ class Configuration:
     #    ]
     forexbase      = '/home/forexchart'
     ticketbase     = '/home/yuting/project/yuting/Alpari/experts/files/shots'
-    ffmpegbin      = '/home/yuting/tmp/ffmpeg-0.11.1/ffmpeg'
+    ffmpegbin      = '/home/tops/bin/ffmpeg'
     #ticketbase     = '/home/yuting/project/yuting/Alpari.dev/tester/files/shots'
     convertbin     = '/usr/bin/convert'
     rsyncbin       = '/usr/bin/rsync'

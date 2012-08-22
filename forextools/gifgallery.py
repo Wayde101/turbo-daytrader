@@ -19,7 +19,7 @@ class GifGallery:
 
     def build_mpeg(self,rg):
         c = ConvertWrapper()
-        c.ffmpeg_range(self.chart.get_range_gifs_to_now(rg),'/tmp/a.gif')
+        c.ffmpeg_prepare(self.chart.get_range_gifs_to_now(rg),'/tmp/a.gif')
 
 if __name__ == '__main__':
     g = GifGallery('eurusd','60')
