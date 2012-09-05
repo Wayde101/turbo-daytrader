@@ -26,3 +26,5 @@ vars/*
 *.ex4
 *.log
 CVS
+*.db
+session.*
