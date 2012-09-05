@@ -84,7 +84,9 @@ class TimeFrame(models.Model):
 
 class TradeFrame(models.Model):
     tradeframe = models.CharField(max_length=10,choices=TRADEFRAME)
-    timeframe  = models.ForeignKey(TimeFrame)
+
+    def __unicode__(self):
+        return '%s' % self.tradeframe
 
 class MarketDirect(models.Model):
     symbol_name = models.ForeignKey(Symbol)
@@ -97,6 +99,26 @@ class MarketDirect(models.Model):
     def __unicode__(self):
         return '%s %s %s %s' % (self.symbol_name,self.obj_dir,self.sub_dir,self.pub_date)
 
+class MarketOverView(models.Model):
+    market_direct = models.ForeignKey(MarketDirect)
+    market_result = models.CharField(max_length=500,blank=True)
+    # if trade_frame = 15M then 1st:15M 2th:1H 3th:4H 4th:1D 5th:1W
+    # if trade_frame = 1H then 1st:1H 2th:4H 3th:1D 4th:1W 5th:1M
+
+
+class TradePlanModel(models.Model):
+    begin_time       = models.DateTimeField()
+    end_time         = models.DateTimeField()
+    completion       = models.IntegerField()
+    tradeframe       = models.CharField(max_length=10,choices=TRADEFRAME)
+    tradetype        = models.CharField(max_length=10,choices=TRADETYPE)
+    #tradeplan_action = models.ForeignKey(TradePlanAction) # 一个TradePlan 可能会对0个或多个 TradePlanAction , 当0 个的时候表示不交易，等待下一个交易计划周期
+    market_overview  = models.ForeignKey(MarketOverView,related_name='market_overview')
+    diff_b_overview  = models.ForeignKey(MarketOverView,related_name='diff_b_overview')
+    diff_s_overview  = models.ForeignKey(MarketOverView,related_name='diff_s_overview')
+    diff_result      = models.CharField(max_length=500,blank=True)
+    plan_result      = models.CharField(max_length=500,blank=True)
+
 class TradePlanAction(models.Model):
     symbol_name = models.ForeignKey(Symbol)
     tradeplan   = models.ForeignKey(TradePlanModel)
@@ -104,15 +126,9 @@ class TradePlanAction(models.Model):
     enter_price = models.FloatField()
     sl_price    = models.FloatField()
     tp_price    = models.FloatField()
-    trade_analysis = models.CharField(max_length=500)
     holding_log = models.CharField(max_length=5000)
 
 
-class MarketOverView(models.Model):
-    market_direct = models.ForeignKey(MarketDirect)
-    market_result = models.CharField(max_length=500,blank=True)
-    # if trade_frame = 15M then 1st:15M 2th:1H 3th:4H 4th:1D 5th:1W
-    # if trade_frame = 1H then 1st:1H 2th:4H 3th:1D 4th:1W 5th:1M
 
 
 
@@ -122,17 +138,4 @@ class StrengthModel(models.Model):
     score       = models.FloatField()
     tradeplan   = models.ForeignKey(TradePlanModel)
     
-    
-class TradePlanModel(models.Model):
-    begin_time       = models.DateTimeField()
-    end_time         = models.DateTimeField()
-    completion       = models.IntField()
-    tradeframe       = models.CharField(max_length=10,choices=TRADEFRAME)
-    tradetype        = models.CharField(max_length=10,choices=TRADETYPE)
-    #tradeplan_action = models.ForeignKey(TradePlanAction) # 一个TradePlan 可能会对0个或多个 TradePlanAction , 当0 个的时候表示不交易，等待下一个交易计划周期
-    market_overview  = models.ForeignKey(MarketOverView)
-    diff_b_overview  = models.ForeignKey(MarketOverView)
-    diff_s_overview  = models.ForeignKey(MarketOverView)
-    diff_result      = models.CharField(max_length=500,blank=True)
-    plan_result      = models.CharField(max_length=500,blank=True)
     
