@@ -55,7 +55,7 @@ SUB_DIR = (
 
 class Symbol(models.Model):
     symbol_name = models.CharField(max_length = 20,choices = SYMBOL_NAME)
-    
+
     def __unicode__(self):
         return self.symbol_name
 
@@ -81,9 +81,7 @@ class MarketDirect(models.Model):
         return '%s %s %s %s' % (self.symbol_name,self.obj_dir,self.sub_dir,self.pub_date)
 
 
-class TradePlanModel(model.Model):
+class TradePlanModel(models.Model):
     begin_time = models.DateTimeField()
     end_time   = models.DateTimeField()
-    tradeframe = models.CharField(max_length=10,choices=TradeFrame)
-    
-    
+    tradeframe = models.CharField(max_length=10,choices=TRADEFRAME)
