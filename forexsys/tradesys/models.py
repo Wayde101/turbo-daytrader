@@ -122,15 +122,11 @@ class TradePlanModel(models.Model):
 class TradePlanAction(models.Model):
     symbol_name = models.ForeignKey(Symbol)
     tradeplan   = models.ForeignKey(TradePlanModel)
-    action_type  = models.CharField(max_length=10)  # buy/sell/buy_limit/sell_limit/buy_stop/sell_stop
+    action_type  = models.CharField(max_length=10)  # buy/sell/buy_limit/sell_limit/buy_stop/sell_stop/wait
     enter_price = models.FloatField()
     sl_price    = models.FloatField()
     tp_price    = models.FloatField()
     holding_log = models.CharField(max_length=5000)
-
-
-
-
 
     
 class StrengthModel(models.Model):
