@@ -9,17 +9,16 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView
 
 from tradesys.models import MarketDirect
-from tradesys.models import TradePlanModel
+from tradesys.models import TradePlanModel,TradePlanAction
 from tradesys.models import TRADEFRAME
 from tradesys.models import TradeFrame
 
 from tradesys.forms import TradeFrameForm
 
-class TradePlanSumView(TemplateView):
+class TradePlanSumView(ListView):
     form_class    = TradeFrameForm
-    # model         = TradePlanModel
+    model         = TradePlanAction
     template_name = "tradesys/TradePlanSumView.html"
-    
     sucess_url = "/"
 
 
