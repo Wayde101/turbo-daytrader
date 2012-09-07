@@ -108,14 +108,14 @@ class MarketOverView(models.Model):
 
 class TradePlanModel(models.Model):
     begin_time       = models.DateTimeField()
-    end_time         = models.DateTimeField()
+    end_time         = models.DateTimeField(blank=True)
     completion       = models.IntegerField()
     tradeframe       = models.CharField(max_length=10,choices=TRADEFRAME)
     tradetype        = models.CharField(max_length=10,choices=TRADETYPE)
     #tradeplan_action = models.ForeignKey(TradePlanAction) # 一个TradePlan 可能会对0个或多个 TradePlanAction , 当0 个的时候表示不交易，等待下一个交易计划周期
-    market_overview  = models.ForeignKey(MarketOverView,related_name='market_overview')
-    diff_b_overview  = models.ForeignKey(MarketOverView,related_name='diff_b_overview')
-    diff_s_overview  = models.ForeignKey(MarketOverView,related_name='diff_s_overview')
+    market_overview  = models.ForeignKey(MarketOverView,related_name='market_overview',blank=True,null=True)    
+    diff_b_overview  = models.ForeignKey(MarketOverView,related_name='diff_b_overview',blank=True,null=True)
+    diff_s_overview  = models.ForeignKey(MarketOverView,related_name='diff_s_overview',blank=True,null=True)
     diff_result      = models.CharField(max_length=500,blank=True)
     plan_result      = models.CharField(max_length=500,blank=True)
 
