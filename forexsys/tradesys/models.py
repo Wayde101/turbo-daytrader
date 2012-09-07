@@ -4,7 +4,7 @@ from django.db import models
 from django.forms import ModelForm
 import datetime
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 import sys
@@ -127,6 +127,7 @@ class TradePlanModel(models.Model):
     begin_time       = models.DateTimeField()
     end_time         = models.DateTimeField(blank=True,null=True)
     completion       = models.IntegerField()
+    created_by       = models.ForeignKey(User,blank=True,null=True)
     tradeframe       = models.CharField(max_length=10,choices=TRADEFRAME)
     tradetype        = models.CharField(max_length=10,choices=TRADETYPE)
     #tradeplan_action = models.ForeignKey(TradePlanAction) # 一个TradePlan 可能会对0个或多个 TradePlanAction , 当0 个的时候表示不交易，等待下一个交易计划周期
@@ -136,6 +137,10 @@ class TradePlanModel(models.Model):
     diff_result      = models.CharField(max_length=500,blank=True)
     plan_result      = models.CharField(max_length=500,blank=True)
 
+
+    def isOwnedBy(self, user):
+        return self.created_by == user
+    
     def __unicode__(self):
         return 'ID:%s | @[%s]' % (self.id,self.begin_time)
 
