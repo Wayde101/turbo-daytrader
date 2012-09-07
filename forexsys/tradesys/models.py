@@ -59,6 +59,23 @@ TRADETYPE = (
     (u'G', u'贵金属'),
     )
 
+TRADEACTIONTYPE = (
+    (u'OP_BUY'      , u'市价买入'),
+    (u'OP_SELL'     , u'市价卖出'),
+    (u'OP_BUYLIMIT' , u'限价买入'),
+    (u'OP_SELLLIMIT', u'限价卖出'),
+    (u'OP_BUYSTOP'  , u'突破买入'),
+    (u'OP_SELLSTOP' , u'突破卖出')
+    )
+
+TRADESTATUS = (
+    (u'ST_PENDING'     , u'场外挂单中'),
+    (u'ST_HOLDING'     , u'场内持仓中'),
+    (u'ST_CANCEL'      , u'撤销挂单'),
+    (u'ST_TPOUT'       , u'盈利出局'),
+    (u'ST_SLOUT'       , u'亏损出局')
+    )
+
 NORMATIVE = (
     (u'1stClass', u'一等中继模型'),
     (u'2thClass', u'二等通道模型'),
@@ -108,7 +125,7 @@ class MarketOverView(models.Model):
 
 class TradePlanModel(models.Model):
     begin_time       = models.DateTimeField()
-    end_time         = models.DateTimeField(blank=True)
+    end_time         = models.DateTimeField(blank=True,null=True)
     completion       = models.IntegerField()
     tradeframe       = models.CharField(max_length=10,choices=TRADEFRAME)
     tradetype        = models.CharField(max_length=10,choices=TRADETYPE)
@@ -119,15 +136,21 @@ class TradePlanModel(models.Model):
     diff_result      = models.CharField(max_length=500,blank=True)
     plan_result      = models.CharField(max_length=500,blank=True)
 
+    def __unicode__(self):
+        return 'ID:%s | @[%s]' % (self.id,self.begin_time)
+
 class TradePlanAction(models.Model):
     symbol_name = models.ForeignKey(Symbol)
     tradeplan   = models.ForeignKey(TradePlanModel)
-    action_type  = models.CharField(max_length=10)  # buy/sell/buy_limit/sell_limit/buy_stop/sell_stop/wait
+    trade_type  = models.CharField(max_length=50,choices=TRADEACTIONTYPE)
+    trade_status  = models.CharField(max_length=50,choices=TRADESTATUS)
     enter_price = models.FloatField()
     sl_price    = models.FloatField()
     tp_price    = models.FloatField()
     holding_log = models.CharField(max_length=5000)
-
+    
+    def __unicode__(self):
+        return 'ID:%s | @[%s] | Action[%s]' % (self.id,self.symbol_name,self.trade_type)
     
 class StrengthModel(models.Model):
     symbol_name = models.ForeignKey(Symbol)
