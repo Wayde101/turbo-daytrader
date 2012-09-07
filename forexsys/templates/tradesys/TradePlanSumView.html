@@ -5,6 +5,10 @@
     <ol>
     <li><label>交易级别:</label><b></b></li>
     {{ form.as_ul }}
+
+    {% for tradeplan in object_list %}
+	{{ tradeplan.symbol_name }} | {{ tradeplan.trade_type }} | {{ tradeplan.tradeplan.tradeframe }} | {{ tradeplan.tradeplan.begin_time }}
+    {% endfor %}
     <li id="next">
         <button type="submit">Create</button>
     </li>
