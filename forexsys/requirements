@@ -1,6 +1,6 @@
 django
 django-tables2
 django-debug-toolbar
-south
+South
 django-grappelli
 django-piston
