@@ -1,3 +1,3 @@
 #!/bin/sh
 
-/usr/local/bin/rdesktop -g 1280x1024 -u yuting -5 -a 16 -P -D -K -xl -z -r disk:D=$HOME/windrv -r clipboard:PRIMARYCLIPBOARD -r sound:local -T 'tingbox'  192.168.2.8
+rdesktop -g 1280x1024 -u yuting -5 -a 16 -P -D -K -xl -z -r disk:D=$HOME/windrv -r clipboard:PRIMARYCLIPBOARD -r sound:local -T 'tingbox'  192.168.2.8
