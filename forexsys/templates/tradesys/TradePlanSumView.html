@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="" method="post" class="TradeFrame">
+<form action="/hah" method="get" class="TradeFrame">
     {% csrf_token %}
+    {{ tradeframe }}
+
 
     <label>目前已有的交易列表:</label><b></b>
     <ol>
@@ -17,5 +19,9 @@
         <!-- <button type="submit">Create</button> -->
     <!-- </li> -->
     </ol>
+
+        <button id="create_plan" type="submit">创建交易计划</button>
 </form>
+
+
 {% endblock %}
