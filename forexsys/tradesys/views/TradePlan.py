@@ -6,38 +6,45 @@ from django.contrib.auth.decorators import login_required
 
 from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
-from django.views.generic import ListView
+from django.views.generic import ListView,DetailView
 
-from tradesys.forms import MarketDirectForm
+from tradesys.forms import MarketDirectForm,MarketOverViewForm
+# from tradesys.forms import MarketDirectForm
 
 from tradesys.models import MarketDirect
 from tradesys.models import TradePlanModel,TradePlanAction
-from tradesys.models import TRADEFRAME
-from tradesys.models import TradeFrame
 
-from tradesys.forms import TradeFrameForm
+from tradesys.forms import TradeInfoForm
 from django.contrib.auth.models import User
 
 class MyTradePlanView(ListView):
-    # form_class    = TradeFrameForm
     model         = TradePlanAction
-    template_name = "tradesys/TradePlanSumView.html"
-
+    template_name = "tradesys/MyTradePlanView.html"
 
     def get_context_data(self, **kwargs):
         context = super(MyTradePlanView, self).get_context_data(**kwargs)
-        context['tradeframe'] = TradeFrameForm().as_ul()
+        context['tradeinfo'] = TradeInfoForm().as_ul()
         return context
 
-
-# class TradePlanTest(ListView):
-
     
-class TimeFrameMetrics(CreateView):
-    form_class = MarketDirectForm
-    model      = MarketDirect
-    template_name = "tradesys/market_overview.html"
-    success_url = "/"
+class MarketOverView(CreateView):
+    # form_class = MarketOverViewForm
+    model = TradePlanModel
+    template_name = "tradesys/MarketOverView.html"
+
+
+    def get_initial(self):
+        initial = super(MarketOverView, self).get_initial()
+        initial['tradeframe']=self.request.POST.get('tradeframe')
+        initial['tradetype'] =self.request.POST.get('tradetype')
+        return initial
+        
+    def get_context_data(self, **kwargs):
+        context = super(MarketOverView, self).get_context_data(**kwargs)
+        context['tradeframe'] = self.initial['tradeframe']
+        context['tradetype']  = self.initial['tradetype']
+        context['market_over_view']   = MarketOverViewForm().as_ul()
+        return context
 
 
 # @login_required
@@ -46,6 +53,6 @@ class TimeFrameMetrics(CreateView):
     # return render_to_response('tradesys/TradePlanSumView.html', {
             # 'latest_tp_list': latest_tp_list})
 
-create_view = login_required(TimeFrameMetrics.as_view())
+create_view = login_required(MarketOverView.as_view())
 tp_sum_view = login_required(MyTradePlanView.as_view())
 
