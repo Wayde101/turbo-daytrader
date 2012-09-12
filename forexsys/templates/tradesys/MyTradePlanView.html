@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="/hah" method="get" class="TradeFrame">
+<form action="create/" method="POST" class="TradeFrame">
     {% csrf_token %}
-    {{ tradeframe }}
-
-
+    {{ tradeinfo }}
     <label>目前已有的交易列表:</label><b></b>
     <ol>
     {% for tradeplan in object_list %}

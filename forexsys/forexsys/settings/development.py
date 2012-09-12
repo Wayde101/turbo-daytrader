@@ -174,7 +174,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
-)
+    )
+
+SESSION_ENGINE = (
+    "django.contrib.sessions.backends.signed_cookies"
+    )
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
 

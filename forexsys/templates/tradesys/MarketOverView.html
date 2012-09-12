@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<li>{{ tradeframe }} </li>
+<li>{{ tradetype }} </li>
+<form action="create" method="POST" class="MarketOverView">
+    {% csrf_token %}
+    {{ market_over_view }}
+    </ol>
+
+        <button id="create_plan" type="submit">创建交易计划</button>
+</form>
+
+
+{% endblock %}

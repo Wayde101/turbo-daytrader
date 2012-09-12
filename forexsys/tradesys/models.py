@@ -41,12 +41,14 @@ TRADEFRAME = (
     )
 
 OBJ_DIR = (
+    (u'N', u'N/A'),
     (u'U', u'上'),
     (u'D', u'下'),
     (u'H', u'横'),
     (u'Z', u'转'),
     )
 SUB_DIR = (
+    (u'N', u'N/A'),
     (u'U', u'上'),
     (u'D', u'下'),
     (u'*', u'*'),
@@ -54,9 +56,11 @@ SUB_DIR = (
 
 
 TRADETYPE = (
-    (u'U', u'美元直盘'),
-    (u'J', u'日元叉盘'),
-    (u'G', u'贵金属'),
+    (u'UX', u'美元直盘'),
+    (u'JX', u'日元叉盘'),
+    (u'EX', u'欧元叉盘'),
+    (u'GX', u'英镑叉盘'),
+    (u'AX', u'贵金属(黄金/白银)'),
     )
 
 TRADEACTIONTYPE = (
