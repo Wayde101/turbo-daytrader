@@ -16,6 +16,13 @@ from tradesys.models import TradePlanModel,TradePlanAction
 
 from tradesys.forms import TradeInfoForm
 from django.contrib.auth.models import User
+from django.utils import timezone
+
+def trade_frame_map(tradeframe):
+    if tradeframe == '5M':
+        return ['5M','15M','1H','4H','1D']
+    if tradeframe == '1H':
+        return ['1H','4H','1D','1W','1Mon']
 
 class MyTradePlanView(ListView):
     model         = TradePlanAction
@@ -26,33 +33,47 @@ class MyTradePlanView(ListView):
         context['tradeinfo'] = TradeInfoForm().as_ul()
         return context
 
+
+def lag_time(tradeframe):
+    if tradeframe == '1H':
+        return 60 * 60 * 4 * 4
+    if tradeframe == '5M':
+        return 60 * 5  * 3 * 4
     
 class MarketOverView(CreateView):
-    # form_class = MarketOverViewForm
+    # form_class = MarketDirectForm
     model = TradePlanModel
     template_name = "tradesys/MarketOverView.html"
 
-
     def get_initial(self):
         initial = super(MarketOverView, self).get_initial()
-        initial['tradeframe']=self.request.POST.get('tradeframe')
-        initial['tradetype'] =self.request.POST.get('tradetype')
+        initial = initial.copy()
+        initial['trader']     = self.request.user
+        initial['tradetype']  = self.request.POST.get('tradetype')
+        initial['tradeframe'] = self.request.POST.get('tradeframe')
+        
+        latest_tradeplan = TradePlanModel.objects.filter(tradeframe=initial['tradeframe'],tradetype=initial['tradetype']).order_by('-begin_time')[:1]
+
+        lag = (timezone.now() - latest_tradeplan[0].begin_time).total_seconds()
+        if len(latest_tradeplan) == 0 or  lag > lag_time(initial['tradeframe']):
+            p = TradePlanModel(begin_time = timezone.now(),
+                               completion = 1,
+                               created_by = initial['trader'],
+                               tradeframe = initial['tradeframe'],
+                               tradetype  = initial['tradetype'])
+            p.save()
+
+        
         return initial
         
     def get_context_data(self, **kwargs):
         context = super(MarketOverView, self).get_context_data(**kwargs)
-        context['tradeframe'] = self.initial['tradeframe']
-        context['tradetype']  = self.initial['tradetype']
-        context['market_over_view']   = MarketOverViewForm().as_ul()
+        print self.initial
+        context['tradeframe'] = self.request.POST.get('tradeframe')
+        context['tradetype']  = self.request.POST.get('tradetype')
+        context['market_over_view']   = MarketOverViewForm('USDX',trade_frame_map(context['tradeframe'])).as_ul()
         return context
 
-
-# @login_required
-# def tp_sum_view(request, *args, **kwargs):
-    # latest_tp_list = TradePlanAction.objects.all().order_by('-tradeplan__begin_time')[:10]
-    # return render_to_response('tradesys/TradePlanSumView.html', {
-            # 'latest_tp_list': latest_tp_list})
-
-create_view = login_required(MarketOverView.as_view())
+market_over_view = login_required(MarketOverView.as_view())
 tp_sum_view = login_required(MyTradePlanView.as_view())
 
