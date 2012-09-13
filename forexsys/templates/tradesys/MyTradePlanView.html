@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="create/" method="POST" class="TradeFrame">
+<form action="market_over_view/" method="POST" class="TradeFrame">
     {% csrf_token %}
     {{ tradeinfo }}
     <label>目前已有的交易列表:</label><b></b>
@@ -13,9 +13,6 @@
         {{ tradeplan.tradeplan.begin_time }}
     </li>
     {% endfor %}
-    <!-- <li id="next"> -->
-        <!-- <button type="submit">Create</button> -->
-    <!-- </li> -->
     </ol>
 
         <button id="create_plan" type="submit">创建交易计划</button>

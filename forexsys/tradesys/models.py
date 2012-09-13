@@ -34,10 +34,7 @@ TIMEFRAME = (
 
 TRADEFRAME = (
     (u'5M', u'超短计划(以5分钟为最小交易级别)'),
-    (u'15M',u'超短计划(以15分钟为最小交易级别)'),
     (u'1H', u'日计划(以1小时为最小交易级别)'),
-    (u'4H', u'周计划(以4小时为最小交易级别)'),
-    (u'1D', u'月计划(以日图为最小交易级别)'),
     )
 
 OBJ_DIR = (
@@ -123,7 +120,8 @@ class MarketDirect(models.Model):
 class MarketOverView(models.Model):
     market_direct = models.ForeignKey(MarketDirect)
     market_result = models.CharField(max_length=500,blank=True)
-    # if trade_frame = 15M then 1st:15M 2th:1H 3th:4H 4th:1D 5th:1W
+    
+    # if trade_frame = 5M then 1st:5M 2th:15M 3th:1H 4th:4H
     # if trade_frame = 1H then 1st:1H 2th:4H 3th:1D 4th:1W 5th:1M
 
 
@@ -167,3 +165,5 @@ class StrengthModel(models.Model):
     tradeplan   = models.ForeignKey(TradePlanModel)
     
     
+
+

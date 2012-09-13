@@ -2,13 +2,12 @@
 {% block content %}
 <li>{{ tradeframe }} </li>
 <li>{{ tradetype }} </li>
-<form action="create" method="POST" class="MarketOverView">
+<form action="diff_analysis" method="POST" class="MarketOverView">
     {% csrf_token %}
     {{ market_over_view }}
     </ol>
 
-        <button id="create_plan" type="submit">创建交易计划</button>
+        <button id="save_and_next" type="submit">保存并下一步</button>
 </form>
-
 
 {% endblock %}
