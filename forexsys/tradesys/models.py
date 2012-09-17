@@ -105,23 +105,24 @@ class TradeFrame(models.Model):
     def __unicode__(self):
         return '%s' % self.tradeframe
 
+class MarketOverView(models.Model):
+    market_result = models.CharField(max_length=500,blank=True)
+    pub_date      = models.DateTimeField()
+    # if trade_frame = 5M then 1st:5M 2th:15M 3th:1H 4th:4H
+    # if trade_frame = 1H then 1st:1H 2th:4H 3th:1D 4th:1W 5th:1M
+    def __unicode__(self):
+        return '%s' % self.pub_date
+
 class MarketDirect(models.Model):
     symbol_name = models.ForeignKey(Symbol)
     timeframe   = models.ForeignKey(TimeFrame)
     obj_dir     = models.CharField(max_length=10,choices=OBJ_DIR)
     sub_dir     = models.CharField(max_length=10,choices=SUB_DIR)
     normative   = models.CharField(max_length=20,choices=NORMATIVE)
-    pub_date    = models.DateTimeField()
+    market_overview = models.ForeignKey(MarketOverView)
 
     def __unicode__(self):
-        return '%s %s %s %s' % (self.symbol_name,self.obj_dir,self.sub_dir,self.pub_date)
-
-class MarketOverView(models.Model):
-    market_direct = models.ForeignKey(MarketDirect)
-    market_result = models.CharField(max_length=500,blank=True)
-    
-    # if trade_frame = 5M then 1st:5M 2th:15M 3th:1H 4th:4H
-    # if trade_frame = 1H then 1st:1H 2th:4H 3th:1D 4th:1W 5th:1M
+        return '%s %s %s' % (self.symbol_name,self.obj_dir,self.sub_dir)
 
 
 class TradePlanModel(models.Model):
@@ -135,9 +136,6 @@ class TradePlanModel(models.Model):
     market_overview  = models.ForeignKey(MarketOverView,related_name='market_overview',blank=True,null=True)    
     diff_b_overview  = models.ForeignKey(MarketOverView,related_name='diff_b_overview',blank=True,null=True)
     diff_s_overview  = models.ForeignKey(MarketOverView,related_name='diff_s_overview',blank=True,null=True)
-    diff_result      = models.CharField(max_length=500,blank=True)
-    plan_result      = models.CharField(max_length=500,blank=True)
-
 
     def isOwnedBy(self, user):
         return self.created_by == user

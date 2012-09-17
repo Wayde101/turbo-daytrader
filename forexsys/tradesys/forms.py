@@ -1,5 +1,5 @@
 from django import forms
-from models import SUB_DIR,OBJ_DIR
+from models import SUB_DIR,OBJ_DIR,NORMATIVE
 from models import MarketDirect
 from models import TRADEFRAME,TRADETYPE
 
@@ -18,9 +18,15 @@ class MarketOverViewForm(forms.Form):
         
         choose = lambda x: SUB_DIR if x == 'sub_dir' else OBJ_DIR
         
-        for zk in ['obj_dir','sub_dir']:
+        for zk in ['obj_dir','sub_dir','normative']:
             for tm in trademap:
                 n = '%s_%s_%s' % (symbol,zk,tm)
+
+                if zk == 'normative':
+                    self.fields[n] = forms.CharField(max_length=20,
+                                                     widget=forms.Select(choices=NORMATIVE),initial = 'NoCC')
+                    continue
+
                 self.fields[n] = forms.CharField(max_length=10,
                                                  widget=forms.Select(choices=choose(zk)),initial = 'U')
     
