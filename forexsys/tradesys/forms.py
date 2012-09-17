@@ -16,13 +16,35 @@ class MarketOverViewForm(forms.Form):
     def __init__(self,symbol,trademap,*args,**kwargs):
         super(MarketOverViewForm, self).__init__(*args,**kwargs)
         
+        choose = lambda x: SUB_DIR if x == 'sub_dir' else OBJ_DIR
+        
         for zk in ['obj_dir','sub_dir']:
             for tm in trademap:
                 n = '%s_%s_%s' % (symbol,zk,tm)
                 self.fields[n] = forms.CharField(max_length=10,
-                                                 widget=forms.Select(choices=SUB_DIR),initial = 'U')
+                                                 widget=forms.Select(choices=choose(zk)),initial = 'U')
     
     market_result = forms.CharField(max_length=200,widget = forms.Textarea())
     plan_result   = forms.CharField(max_length=200,widget = forms.Textarea())
     
     
+class MarketDiffViewForm(forms.Form):
+    def __init__(self,symbols,trademap,*args,**kwargs):
+        super(MarketDiffViewForm, self).__init__(*args,**kwargs)
+        choose = lambda x: SUB_DIR if x == 'sub_dir' else OBJ_DIR
+                                                 
+        for symbol in symbols:
+            for zk in ['obj_dir', 'sub_dir']:
+                n = '%s_%s_%s' % (symbol,zk,trademap[0])
+                self.fields[n] = forms.CharField(max_length=10,
+                                                 widget=forms.Select(choices=choose(zk)),initial = 'U')
+                n = '%s_%s_%s' % (symbol,zk,trademap[1])
+                self.fields[n] = forms.CharField(max_length=10,
+                                                 widget=forms.Select(choices=choose(zk)),initial = 'U')
+    diff_result =  forms.CharField(max_length=200,widget = forms.Textarea())
+        
+
+        
+        
+        
+        
