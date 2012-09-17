@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="market_over_view/" method="POST" class="TradeFrame">
+<form action="/tradesys/MyTradePlan/market_over_view/" method="POST" class="TradeFrame">
     {% csrf_token %}
     {{ tradeinfo }}
     <label>目前已有的交易列表:</label><b></b>

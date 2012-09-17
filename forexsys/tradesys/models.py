@@ -19,6 +19,7 @@ SYMBOL_NAME = (
     (u'CADUSD', u'CADUSD'),
     (u'CHFUSD', u'CHFUSD'),
     (u'AUXUSD', u'AUXUSD'),
+    (u'XAGUSD', u'XAGUSD'),
     (u'USDX', u'USDX'),
     )
 
@@ -53,11 +54,9 @@ SUB_DIR = (
 
 
 TRADETYPE = (
-    (u'UX', u'美元直盘'),
-    (u'JX', u'日元叉盘'),
-    (u'EX', u'欧元叉盘'),
-    (u'GX', u'英镑叉盘'),
-    (u'AX', u'贵金属(黄金/白银)'),
+    (u'USDX', u'美元直盘'),
+    (u'AUXUSD', u'黄金'),
+    (u'XAGUSD', u'白银'),
     )
 
 TRADEACTIONTYPE = (
