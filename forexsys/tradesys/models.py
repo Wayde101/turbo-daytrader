@@ -45,13 +45,13 @@ OBJ_DIR = (
     (u'H', u'横'),
     (u'Z', u'转'),
     )
+
 SUB_DIR = (
     (u'N', u'N/A'),
     (u'U', u'上'),
     (u'D', u'下'),
     (u'*', u'*'),
     )
-
 
 TRADETYPE = (
     (u'USDX', u'美元直盘'),
@@ -76,6 +76,16 @@ TRADESTATUS = (
     (u'ST_SLOUT'       , u'亏损出局')
     )
 
+STRENGTHSCORE = (
+    ('4', '4'),
+    ('3.75', '3.75'),
+    ('3.5', '3.5'),
+    ('3.25', '3.25'),
+    ('3', '3'),
+    ('2','2'),
+    ('0','0')
+    )
+
 NORMATIVE = (
     (u'1stClass', u'一等中继模型'),
     (u'2thClass', u'二等通道模型'),
@@ -87,24 +97,6 @@ NORMATIVE = (
     (u'LongNoCC','段时间不太可能形成次')   # 比如在一个横盘区间，不划分主次，突破之后有次要节奏调整才认定主次
     )
 
-class Symbol(models.Model):
-    symbol_name = models.CharField(max_length = 20,choices = SYMBOL_NAME)
-
-    def __unicode__(self):
-        return self.symbol_name
-
-class TimeFrame(models.Model):
-    timeframe = models.CharField(max_length = 10,choices = TIMEFRAME)
-
-    def __unicode__(self):
-        return self.timeframe
-
-class TradeFrame(models.Model):
-    tradeframe = models.CharField(max_length=10,choices=TRADEFRAME)
-
-    def __unicode__(self):
-        return '%s' % self.tradeframe
-
 class MarketOverView(models.Model):
     market_result = models.CharField(max_length=500,blank=True)
     pub_date      = models.DateTimeField()
@@ -113,14 +105,15 @@ class MarketOverView(models.Model):
     def __unicode__(self):
         return '%s' % self.pub_date
 
-class MarketDirect(models.Model):
-    symbol_name = models.ForeignKey(Symbol)
-    timeframe   = models.ForeignKey(TimeFrame)
+class MarketDetailInfo(models.Model):
+    symbol_name = models.CharField(max_length = 20,choices = SYMBOL_NAME)
+    timeframe   = models.CharField(max_length = 10,choices = TIMEFRAME)
     obj_dir     = models.CharField(max_length=10,choices=OBJ_DIR)
     sub_dir     = models.CharField(max_length=10,choices=SUB_DIR)
-    normative   = models.CharField(max_length=20,choices=NORMATIVE)
+    strength    = models.FloatField(max_length=5,choices=STRENGTHSCORE,blank=True,null=True)
+    normative   = models.CharField(max_length=20,choices=NORMATIVE,blank=True,null=True)
     market_overview = models.ForeignKey(MarketOverView)
-
+    
     def __unicode__(self):
         return '%s %s %s' % (self.symbol_name,self.obj_dir,self.sub_dir)
 
@@ -144,7 +137,7 @@ class TradePlanModel(models.Model):
         return 'ID:%s | @[%s]' % (self.id,self.begin_time)
 
 class TradePlanAction(models.Model):
-    symbol_name = models.ForeignKey(Symbol)
+    symbol_name = models.CharField(max_length = 20,choices = SYMBOL_NAME)
     tradeplan   = models.ForeignKey(TradePlanModel)
     trade_type  = models.CharField(max_length=50,choices=TRADEACTIONTYPE)
     trade_status  = models.CharField(max_length=50,choices=TRADESTATUS)
@@ -156,11 +149,3 @@ class TradePlanAction(models.Model):
     def __unicode__(self):
         return 'ID:%s | @[%s] | Action[%s]' % (self.id,self.symbol_name,self.trade_type)
     
-class StrengthModel(models.Model):
-    symbol_name = models.ForeignKey(Symbol)
-    score       = models.FloatField()
-    tradeplan   = models.ForeignKey(TradePlanModel)
-    
-    
-
-

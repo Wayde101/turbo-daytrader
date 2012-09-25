@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="POST" class="TradeFrame">
+    {% csrf_token %}
+    <label>强弱筛选:</label><b></b>
+    <label>规范性筛选:</label><b></b>
+    <label>不可交易原则:</label><b></b>
+    <label>结论(选择哪些货币作为日内交易重点):</label><b></b>
+
+        <button id="selected" type="submit">选定币种趋势分析</button>
+</form>
+
+
+{% endblock %}

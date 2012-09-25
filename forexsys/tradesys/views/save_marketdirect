@@ -1,0 +1,45 @@
+def save_market_overview(request):
+    dir_list = filter(lambda x: re.search('_dir_',x), request.POST.keys())
+    tp = TradePlanModel.objects.get(id = request.session['TradePlanModel_id'])
+    if tp.market_overview  is None:
+        mov_obj = MarketOverView(market_result = request.POST['market_result'],
+                                 pub_date = timezone.now())
+
+        mov_obj.save()
+        tp.market_overview = mov_obj
+        tp.save()
+        
+        
+    for each_tf in dir_list:
+        tf_item = each_tf.split('_')
+        sym_object = tf_item[0]
+        tf_object  = tf_item[3]
+
+        try:
+            md = MarketDetailInfo.objects.get(symbol_name = sym_object,timeframe = tf_object,market_overview = tp.market_overview)
+        except MarketDetailInfo.DoesNotExist:
+            if tf_item[1]  == 'obj':
+                md = MarketDetailInfo(symbol_name = sym_object,
+                                      timeframe   = tf_object,
+                                      obj_dir     = request.POST[each_tf],
+                                      normative   = request.POST['%s_normative_%s' % (tf_item[0],tf_item[3])],
+                                      market_overview = tp.market_overview
+                                  )
+            if tf_item[1]  == 'sub':
+                md = MarketDetailInfo(symbol_name = sym_object,
+                                  timeframe   = tf_object,
+                                  sub_dir     = request.POST[each_tf],
+                                  normative   = request.POST['%s_normative_%s' % (tf_item[0],tf_item[3])],
+                                  market_overview = tp.market_overview
+                                  )
+
+                md.save()
+                continue
+            
+        if tf_item[1]  == 'sub':
+            md.sub_dir = request.POST[each_tf]
+        if tf_item[1]  == 'obj':
+            md.obj_dir = request.POST[each_tf]
+
+        md.normative = request.POST['%s_normative_%s' % (tf_item[0],tf_item[3])]
+        md.save()
