@@ -7,11 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView,UpdateView
 from django.views.generic import ListView,DetailView
 
-from tradesys.forms import MarketDirectForm,MarketOverViewForm,MarketDiffViewForm
-# from tradesys.forms import MarketDirectForm
+from tradesys.forms import MarketDetailInfoForm,MarketOverViewForm,MarketDiffViewForm
+# from tradesys.forms import MarketDetailInfoForm
 
-from tradesys.models import MarketDirect,TradePlanModel,TradePlanAction
-from tradesys.models import Symbol,TradeFrame,TimeFrame,MarketOverView
+from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
+from tradesys.models import MarketOverView
 
 from tradesys.forms import TradeInfoForm
 from django.contrib.auth.models import User
@@ -41,7 +41,7 @@ def tradeplan_lag_time(tradeframe):
         return 60 * 5  * 3 * 4
     
 class MarketOview(CreateView):
-    # form_class = MarketDirectForm
+    # form_class = MarketDetailInfoForm
     model = TradePlanModel
     template_name = "tradesys/MarketOverView.html"
 
@@ -51,9 +51,11 @@ class MarketOview(CreateView):
         self.request.session['tradetype']  = self.request.POST.get('tradetype')
         self.request.session['tradeframe'] = self.request.POST.get('tradeframe')
         
-        latest_tradeplan = TradePlanModel.objects.filter(tradeframe = self.request.session['tradeframe'],tradetype = self.request.session['tradetype'],created_by = self.request.user).order_by('-begin_time')[:1]
+        latest_tradeplan = TradePlanModel.objects.filter(tradeframe = self.request.session['tradeframe'],
+                                                         tradetype = self.request.session['tradetype'],
+                                                         created_by = self.request.user).order_by('-begin_time')[:1]
 
-        if len(latest_tradeplan) == 0 or  (timezone.now() - latest_tradeplan[0].begin_time).total_seconds() > tradeplan_lag_time(self.request.session['tradeframe']):
+        if len(latest_tradeplan) == 0 or (timezone.now() - latest_tradeplan[0].begin_time).total_seconds() > tradeplan_lag_time(self.request.session['tradeframe']):
             p = TradePlanModel(begin_time = timezone.now(),
                                completion = 1,
                                created_by = self.request.user,
@@ -62,31 +64,31 @@ class MarketOview(CreateView):
             p.save()
             self.request.session['TradePlanModel_id'] = p.id
         else:
-            market_info_list = ['%s_%s_%s' % (x,y,z) for x in [self.request.session['tradetype']] for y in ['obj_dir','sub_dir','normative'] for z in trade_frame_map(self.request.session['tradeframe'])]
+            s_d_t_list = ['%s_%s_%s' % (x,y,z) for x in [self.request.session['tradetype']] for y in ['obj_dir','sub_dir'] for z in trade_frame_map(self.request.session['tradeframe'])]
             
             self.request.session['TradePlanModel_id'] = latest_tradeplan[0].id
             
             if latest_tradeplan[0].market_overview is None:
-                for market_info in market_info_list:
-                    self.request.session[market_info] = 'N/A'
+                for s_d_t in s_d_t_list:
+                    self.request.session[s_d_t] = 'N/A'
             else:
-                for zk in ['obj_dir','sub_dir','normative']:
+                for zk in ['obj_dir','sub_dir']:
                     for tm in trade_frame_map(self.request.session['tradeframe']):
-                        market_info = '%s_%s_%s' % (self.request.session['tradetype'],zk,tm)
-                        sym_obj     = Symbol.objects.get(symbol_name = self.request.session['tradetype'])
-                        tf_obj      = TimeFrame.objects.get(timeframe = tm)
+                        s_d_t = '%s_%s_%s' % (self.request.session['tradetype'],zk,tm)
                         if zk == 'obj_dir':
                             try:
-                                self.request.session[market_info] = MarketDirect.objects.get(symbol_name = sym_obj,
-                                                                                             timeframe   = tf_obj,
-                                                                                             market_overview = latest_tradeplan[0].market_overview).obj_dir
-                            except MarketDirect.DoesNotExist:
-                                self.request.session[market_info] = 'N/A'
+                                self.request.session[s_d_t] = MarketDetailInfo.objects.get(symbol_name = self.request.session['tradetype'],
+                                                                                           timeframe   = tm,
+                                                                                           market_overview = latest_tradeplan[0].market_overview).obj_dir
+                            except MarketDetailInfo.DoesNotExist:
+                                self.request.session[s_d_t] = 'N/A'
                         if zk == 'sub_dir':
                             try:
-                                self.request.session[market_info] = MarketDirect.objects.get(market_overview = latest_tradeplan[0].market_overview).sub_dir
-                            except MarketDirect.DoesNotExist:
-                                self.request.session[market_info] = 'N/A'
+                                self.request.session[s_d_t] = MarketDetailInfo.objects.get(symbol_name = self.request.session['tradetype'],
+                                                                                           timeframe   = tm,
+                                                                                           market_overview = latest_tradeplan[0].market_overview).sub_dir
+                            except MarketDetailInfo.DoesNotExist:
+                                self.request.session[s_d_t] = 'N/A'
             
         return initial
         
@@ -100,7 +102,7 @@ class MarketOview(CreateView):
         return context
 
 
-def save_marketdirect(request):
+def save_market_overview(request):
     dir_list = filter(lambda x: re.search('_dir_',x), request.POST.keys())
     tp = TradePlanModel.objects.get(id = request.session['TradePlanModel_id'])
     if tp.market_overview  is None:
@@ -114,38 +116,40 @@ def save_marketdirect(request):
         
     for each_tf in dir_list:
         tf_item = each_tf.split('_')
-        sym_object = Symbol.objects.get(symbol_name = tf_item[0])
-        tf_object  = TimeFrame.objects.get(timeframe = tf_item[3])
+        sym_object = tf_item[0]
+        tf_object  = tf_item[3]
 
         try:
-            md = MarketDirect.objects.get(symbol_name = sym_object,timeframe = tf_object,market_overview = tp.market_overview)
-        except MarketDirect.DoesNotExist:
+            md = MarketDetailInfo.objects.get(symbol_name = sym_object,
+                                              timeframe = tf_object,
+                                              market_overview = tp.market_overview)
+            
+        except MarketDetailInfo.DoesNotExist:
             if tf_item[1]  == 'obj':
-                md = MarketDirect(symbol_name = sym_object,
-                                  timeframe   = tf_object,
-                                  obj_dir     = request.POST[each_tf],
-                                  normative   = request.POST['%s_normative_%s' % (tf_item[0],tf_item[3])],
-                                  market_overview = tp.market_overview
+                md = MarketDetailInfo(symbol_name = sym_object,
+                                      timeframe   = tf_object,
+                                      obj_dir     = request.POST[each_tf],
+                                      market_overview = tp.market_overview
                                   )
             if tf_item[1]  == 'sub':
-                md = MarketDirect(symbol_name = sym_object,
+                md = MarketDetailInfo(symbol_name = sym_object,
                                   timeframe   = tf_object,
                                   sub_dir     = request.POST[each_tf],
-                                  normative   = request.POST['%s_normative_%s' % (tf_item[0],tf_item[3])],
                                   market_overview = tp.market_overview
                                   )
 
                 md.save()
                 continue
-
-
+            
         if tf_item[1]  == 'sub':
             md.sub_dir = request.POST[each_tf]
         if tf_item[1]  == 'obj':
             md.obj_dir = request.POST[each_tf]
 
-        md.normative = request.POST['%s_normative_%s' % (tf_item[0],tf_item[3])]
         md.save()
+
+def save_market_diffview(request):
+    pass
 
 
 class MarketDview(CreateView):
@@ -156,12 +160,7 @@ class MarketDview(CreateView):
         initial = super(MarketDview, self).get_initial()
         initial = initial.copy()
 
-        save_marketdirect(self.request)
-        # market_overview_symbol = 
-        print 'x' * 80
-        print Symbol(symbol_name=self.request.session['tradetype'])
-        print self.request.POST.keys()
-        print 'x' * 80
+        save_market_overview(self.request)
         return initial
 
     def get_context_data(self, **kwargs):
@@ -171,9 +170,23 @@ class MarketDview(CreateView):
         context['market_diff_view'] = MarketDiffViewForm(symbols,trade_frame_map(context['tradeframe'])).as_ul()
         return context
 
-    
-tp_sum_view      = login_required(MyTradePlanView.as_view())
-market_over_view = login_required(MarketOview.as_view())
-market_diff_view = login_required(MarketDview.as_view())
 
+class FirstSelectView(DetailView):
+    model  = MarketDetailInfo
+    template_name = 'tradesys/FirstSelectView.html'
 
+    def get_initial(self):
+        initial = super(FirstSelectView, self).get_initial()
+        initial = initial.copy()
+
+        save_market_diffview(self.request)
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super(FirstSelectView, self).get_context_data(**kwargs)
+        return context
+
+tp_sum_view       = login_required(MyTradePlanView.as_view())
+market_over_view  = login_required(MarketOview.as_view())
+market_diff_view  = login_required(MarketDview.as_view())
+first_select_view = login_required(FirstSelectView.as_view())
