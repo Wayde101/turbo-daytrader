@@ -1,7 +1,9 @@
+import operator
 from django import forms
 from models import SUB_DIR,OBJ_DIR,NORMATIVE
 from models import MarketDetailInfo
 from models import TRADEFRAME,TRADETYPE,STRENGTHSCORE,PLANRESULT
+from models import EXREASON
 
 class MarketDetailInfoForm(forms.ModelForm):
     class Meta:
@@ -45,8 +47,8 @@ class MarketDiffViewForm(forms.Form):
                         continue
 
                     if zk == 'strength' and tm == trademap[0]:
-                        self.fields[n] = forms.CharField(max_length = 20,
-                                                         widget = forms.Select(choices = STRENGTHSCORE),initial = '0')
+                        self.fields[n] = forms.FloatField(widget = forms.Select(choices = STRENGTHSCORE),
+                                                          initial = 0)
                         continue
                     
                     self.fields[n] = forms.CharField(max_length=10,
@@ -56,18 +58,25 @@ class MarketDiffViewForm(forms.Form):
     diff_s_result =  forms.CharField(max_length=200,widget = forms.Textarea())
 
 
-class MarketStrengthSeleted(forms.Form):
-    def __init__(self,symbols,mintf,*args,**kwargs):
-        super(MarketStrengthSeleted, self).__init__(*arg,**kwargs)
-        
-        for symbol in symbols:
-            
-        
-        
-    
-        
+class MarketStrengthSelected(forms.Form):
+    def __init__(self,symbol_strength,tf,*args,**kwargs):
+        super(MarketStrengthSelected, self).__init__(*args,**kwargs)
+        ss = sorted(symbol_strength.iteritems(),
+                         key=operator.itemgetter(1))
+
+        for symbol in ss:
+            self.fields[symbol[0]] = forms.FloatField(widget=forms.Select(choices=STRENGTHSCORE),
+                                                      initial = '%.f' % symbol[1])
 
         
-        
-        
-        
+
+class MarketExcludeSelected(forms.Form):
+    def __init__(self,symbol_exclude,tf,*args,**kwargs):
+        super(MarketExcludeSelected,self).__init__(*args,**kwargs)
+
+        for symbol in symbol_exclude.keys():
+            self.fields[symbol] = forms.CharField(max_length=100,
+                                                  widget=forms.Select(choices = EXREASON),initial = symbol_exclude[symbol])
+
+
+
