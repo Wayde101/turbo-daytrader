@@ -13,7 +13,9 @@ from tradesys.forms import MarketDetailInfoForm,MarketOverViewForm,MarketDiffVie
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
 from tradesys.models import MarketOverView
 
-from tradesys.forms import TradeInfoForm
+from tradesys.forms import TradeInfoForm,MarketStrengthSelected
+from tradesys.forms import MarketExcludeSelected
+
 from django.contrib.auth.models import User
 from django.utils import timezone
 import re
@@ -106,6 +108,7 @@ class MarketOview(CreateView):
 def save_market_overview(request):
     dir_list = filter(lambda x: re.search('_dir_',x), request.POST.keys())
     tp = TradePlanModel.objects.get(id = request.session['TradePlanModel_id'])
+    tp.completion = 2
     if tp.market_overview  is None:
         mov_obj = MarketOverView(market_result = request.POST['market_result'],
                                  pub_date      = timezone.now())
@@ -192,6 +195,7 @@ def save_market_diffview(request):
             if x == 's':
                 setattr(md,'strength',request.POST['%s_strength_%s' % (symbol,timeframe)])
                 
+                
             md.save()
 
 
@@ -230,14 +234,17 @@ class FirstSelectedView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(FirstSelectedView, self).get_context_data(**kwargs)
 
-        tp_obj  = TradePlanModel.objects.get(id = request.session['TradePlanModel_id'])
+        tp_obj  = TradePlanModel.objects.get(id = self.request.session['TradePlanModel_id'])
         mdi_obj = MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview.id)
 
-        # for mdi in mdi_obj:
-            
+        ss = dict([ (k.symbol_name,k.strength) for k in mdi_obj ])
+        se = dict([ (k.symbol_name,k.exclude_reason) for k in mdi_obj ])
+        tf = self.request.session['tradeframe']
         
-        # should be defind in models
-        symbols = ['EURUSD','GBPUSD','CHFUSD','AUDUSD','CADUSD','JPYUSD']
+        context['tradeframe'] = tf
+        context['symbol_strength'] = MarketStrengthSelected(ss,tf).as_ul()
+        context['symbol_excluded'] = MarketExcludeSelected(se,tf).as_ul()
+        
         
         return context
 

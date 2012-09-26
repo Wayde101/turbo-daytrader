@@ -92,6 +92,7 @@ PLANRESULT = (
     (u'N', u'不做交易')
     )
 
+
 NORMATIVE = (
     (u'1stClass', u'一等中继模型'),
     (u'2thClass', u'二等通道模型'),
@@ -101,6 +102,14 @@ NORMATIVE = (
     (u'HaveCC',  u'已有不规范的次'),
     (u'NoCC', u'暂时还没有中继或者次'),
     (u'LongNoCC','段时间不太可能形成次')   # 比如在一个横盘区间，不划分主次，突破之后有次要节奏调整才认定主次
+    )
+
+EXREASON = (
+    (u'N'   , u'暂无'),
+    (u'较弱' , u'相对较弱'),
+    (u'太强' , u'相对较强'),
+    (u'强(支撑/阻力)不顶着做'   , u'强(支撑/阻力)不做(多/空)'),
+    (u'macd 动能充盈不逆向交易' , u'macd 动能充盈不逆向交易')
     )
 
 class MarketOverView(models.Model):
@@ -114,10 +123,21 @@ class MarketOverView(models.Model):
 class MarketDetailInfo(models.Model):
     symbol_name = models.CharField(max_length = 20,choices = SYMBOL_NAME)
     timeframe   = models.CharField(max_length = 10,choices = TIMEFRAME)
-    obj_dir     = models.CharField(max_length=10,choices=OBJ_DIR)
-    sub_dir     = models.CharField(max_length=10,choices=SUB_DIR)
-    strength    = models.FloatField(max_length=5,choices=STRENGTHSCORE,blank=True,null=True)
-    normative   = models.CharField(max_length=20,choices=NORMATIVE,blank=True,null=True)
+    obj_dir     = models.CharField(max_length =10,choices  = OBJ_DIR)
+    sub_dir     = models.CharField(max_length =10,choices  = SUB_DIR)
+    strength    = models.FloatField(max_length=5,
+                                    choices=STRENGTHSCORE,
+                                    blank=True,
+                                    null=True)
+    normative   = models.CharField(max_length=20,
+                                   choices=NORMATIVE,
+                                   blank=True,
+                                   null=True)
+    exclude_reason = models.CharField(max_length = 100,
+                                      choices = EXREASON,
+                                      blank=True,
+                                      null=True)
+
     market_overview = models.ForeignKey(MarketOverView)
     
     def __unicode__(self):
@@ -133,6 +153,7 @@ class TradePlanModel(models.Model):
     tradetype        = models.CharField(max_length=10,choices=TRADETYPE)
     #tradeplan_action = models.ForeignKey(TradePlanAction)
     # 一个TradePlan 可能会对0个或多个 TradePlanAction , 当0 个的时候表示不交易，等待下一个交易计划周期
+    
     market_overview  = models.ForeignKey(MarketOverView,
                                          related_name='market_overview',
                                          blank=True,
