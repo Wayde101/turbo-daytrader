@@ -86,6 +86,12 @@ STRENGTHSCORE = (
     ('0','0')
     )
 
+PLANRESULT = (
+    (u'B', u'做多'),
+    (u'S', u'做空'),
+    (u'N', u'不做交易')
+    )
+
 NORMATIVE = (
     (u'1stClass', u'一等中继模型'),
     (u'2thClass', u'二等通道模型'),
@@ -125,10 +131,21 @@ class TradePlanModel(models.Model):
     created_by       = models.ForeignKey(User,blank=True,null=True)
     tradeframe       = models.CharField(max_length=10,choices=TRADEFRAME)
     tradetype        = models.CharField(max_length=10,choices=TRADETYPE)
-    #tradeplan_action = models.ForeignKey(TradePlanAction) # 一个TradePlan 可能会对0个或多个 TradePlanAction , 当0 个的时候表示不交易，等待下一个交易计划周期
-    market_overview  = models.ForeignKey(MarketOverView,related_name='market_overview',blank=True,null=True)    
-    diff_b_overview  = models.ForeignKey(MarketOverView,related_name='diff_b_overview',blank=True,null=True)
-    diff_s_overview  = models.ForeignKey(MarketOverView,related_name='diff_s_overview',blank=True,null=True)
+    #tradeplan_action = models.ForeignKey(TradePlanAction)
+    # 一个TradePlan 可能会对0个或多个 TradePlanAction , 当0 个的时候表示不交易，等待下一个交易计划周期
+    market_overview  = models.ForeignKey(MarketOverView,
+                                         related_name='market_overview',
+                                         blank=True,
+                                         null=True)    
+    diff_b_overview  = models.ForeignKey(MarketOverView,
+                                         related_name='diff_b_overview',
+                                         blank=True,
+                                         null=True)
+    diff_s_overview  = models.ForeignKey(MarketOverView,
+                                         related_name='diff_s_overview',
+                                         blank=True,
+                                         null=True)
+    plan_result      = models.CharField(max_length=5,choices=PLANRESULT,blank=True,null=True)
 
     def isOwnedBy(self, user):
         return self.created_by == user

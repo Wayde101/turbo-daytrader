@@ -2,6 +2,7 @@
 {% block content %}
 <form action="" method="POST" class="TradeFrame">
     {% csrf_token %}
+    {{ strength_list }}
     <label>强弱筛选:</label><b></b>
     <label>规范性筛选:</label><b></b>
     <label>不可交易原则:</label><b></b>

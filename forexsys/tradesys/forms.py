@@ -1,7 +1,7 @@
 from django import forms
 from models import SUB_DIR,OBJ_DIR,NORMATIVE
 from models import MarketDetailInfo
-from models import TRADEFRAME,TRADETYPE,STRENGTHSCORE
+from models import TRADEFRAME,TRADETYPE,STRENGTHSCORE,PLANRESULT
 
 class MarketDetailInfoForm(forms.ModelForm):
     class Meta:
@@ -24,8 +24,8 @@ class MarketOverViewForm(forms.Form):
                 self.fields[n] = forms.CharField(max_length=10,
                                                  widget=forms.Select(choices=choose(zk)),initial = 'U')
     
-    market_result = forms.CharField(max_length=200,widget = forms.Textarea())
-    plan_result   = forms.CharField(max_length=200,widget = forms.Textarea())
+    market_result = forms.CharField(max_length = 200,widget = forms.Textarea())
+    plan_result   = forms.CharField(max_length = 5,widget = forms.Select(choices = PLANRESULT))
 
     
 class MarketDiffViewForm(forms.Form):
@@ -52,7 +52,19 @@ class MarketDiffViewForm(forms.Form):
                     self.fields[n] = forms.CharField(max_length=10,
                                                      widget=forms.Select(choices=choose(zk)),initial = 'U')
                     
-    diff_result =  forms.CharField(max_length=200,widget = forms.Textarea())
+    diff_b_result =  forms.CharField(max_length=200,widget = forms.Textarea())
+    diff_s_result =  forms.CharField(max_length=200,widget = forms.Textarea())
+
+
+class MarketStrengthSeleted(forms.Form):
+    def __init__(self,symbols,mintf,*args,**kwargs):
+        super(MarketStrengthSeleted, self).__init__(*arg,**kwargs)
+        
+        for symbol in symbols:
+            
+        
+        
+    
         
 
         
