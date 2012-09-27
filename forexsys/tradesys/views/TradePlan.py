@@ -189,14 +189,15 @@ def save_market_diffview(request):
             setattr(md,'symbol_name',symbol)
             setattr(md,'timeframe',timeframe)
             setattr(md,'market_overview',diff_x_overview_obj)
-            setattr(md,'%s_dir' % zk, request.POST[each_dir])
-            setattr(md,'normative', request.POST['%s_normative_%s' % (symbol,timeframe)])
-
-            if x == 's':
-                setattr(md,'strength',request.POST['%s_strength_%s' % (symbol,timeframe)])
-                
-                
             md.save()
+
+
+        setattr(md,'%s_dir' % zk, request.POST[each_dir])
+        setattr(md,'normative', request.POST['%s_normative_%s' % (symbol,timeframe)])
+
+        if x == 's':
+            setattr(md,'strength',request.POST['%s_strength_%s' % (symbol,timeframe)])
+        md.save()
 
 
 class MarketDview(CreateView):

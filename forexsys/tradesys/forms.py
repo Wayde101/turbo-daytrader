@@ -43,7 +43,8 @@ class MarketDiffViewForm(forms.Form):
                     
                     if zk == 'normative':
                         self.fields[n] = forms.CharField(max_length = 20,
-                                                         widget = forms.Select(choices = NORMATIVE),initial = 'NoCC')
+                                                         widget = forms.Select(choices = NORMATIVE),
+                                                         initial = 'NoCC')
                         continue
 
                     if zk == 'strength' and tm == trademap[0]:
@@ -63,20 +64,19 @@ class MarketStrengthSelected(forms.Form):
         super(MarketStrengthSelected, self).__init__(*args,**kwargs)
         ss = sorted(symbol_strength.iteritems(),
                          key=operator.itemgetter(1))
-
+        print ss
         for symbol in ss:
-            self.fields[symbol[0]] = forms.FloatField(widget=forms.Select(choices=STRENGTHSCORE),
-                                                      initial = '%.f' % symbol[1])
-
-        
+            n = '%s_strength_%s' % (symbol[0],tf)
+            self.fields[n] = forms.FloatField(widget=forms.Select(choices=STRENGTHSCORE),
+                                                      initial =  symbol[1])
 
 class MarketExcludeSelected(forms.Form):
     def __init__(self,symbol_exclude,tf,*args,**kwargs):
         super(MarketExcludeSelected,self).__init__(*args,**kwargs)
 
         for symbol in symbol_exclude.keys():
-            self.fields[symbol] = forms.CharField(max_length=100,
-                                                  widget=forms.Select(choices = EXREASON),initial = symbol_exclude[symbol])
-
-
-
+            n = '%s_excluded_%s' % (symbol,tf)
+            self.fields[n] = forms.CharField(max_length=100,
+                                                  widget=forms.Select(choices = EXREASON),
+                                                  initial = symbol_exclude[symbol])
+            
