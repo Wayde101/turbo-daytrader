@@ -1,7 +1,7 @@
 # Create your views here.
 # from tradesys.models import Symbol
 from django import forms
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 
 from django.views.generic.edit import CreateView,UpdateView
@@ -13,7 +13,8 @@ from tradesys.forms import MarketDetailInfoForm,MarketOverViewForm,MarketDiffVie
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
 from tradesys.models import MarketOverView
 
-from tradesys.forms import TradeInfoForm,MarketStrengthSelected
+from tradesys.forms import MarketStrengthSelected
+from tradesys.forms import TradePlanInitForm
 from tradesys.forms import MarketExcludeSelected
 
 from django.contrib.auth.models import User
@@ -26,82 +27,82 @@ def trade_frame_map(tradeframe):
     if tradeframe == '1H':
         return ['1H','4H','1D','1W','1Mon']
 
-class MyTradePlanView(ListView):
-    model         = TradePlanAction
-    template_name = "tradesys/MyTradePlanView.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(MyTradePlanView, self).get_context_data(**kwargs)
-        context['tradeinfo'] = TradeInfoForm().as_ul()
-        return context
-
-
 def tradeplan_lag_time(tradeframe):
     if tradeframe == '1H':
         return 60 * 60 * 4 * 4
     if tradeframe == '5M':
         return 60 * 5  * 3 * 4
+
     
+class MyTradePlanView(CreateView):
+    form_class    = TradePlanInitForm
+    model         = TradePlanModel
+    template_name = "tradesys/MyTradePlanView.html"
+    success_url   = "/tradesys/MyTradePlan/market_over_view"
+
+    def get_context_data(self, **kwargs):
+        context = super(MyTradePlanView, self).get_context_data(**kwargs)
+        context['tradeinfo'] = TradePlanInitForm().as_ul()
+        return context
+
+    def form_valid(self,form):
+        if not form.is_valid():
+            print "invalid from info"
+
+        tt     =  form.cleaned_data['tradetype']
+        tf     =  form.cleaned_data['tradeframe']
+        user   =  self.request.user
+        tp_obj =  self.model.objects
+        now    = timezone.now()
+
+        ltp = tp_obj.filter(tradeframe = tf,
+                            tradetype =  tt,
+                            created_by = user).order_by('-begin_time')[:1]
+
+        lag_time = tradeplan_lag_time(tf)
+
+        if len(ltp) == 0 or (now - ltp[0].begin_time).total_seconds() > lag_time:
+            self.object = form.save(commit=False)
+            self.object.begin_time = now
+            self.object.completion = 1
+            self.object.created_by = user
+            self.object.save()
+        else:
+            self.object = ltp[0]
+
+        self.request.session['TradePlanModel_id'] = self.object.id
+        return redirect(self.success_url)
+
+        
 class MarketOview(CreateView):
     # form_class = MarketDetailInfoForm
-    model = TradePlanModel
+    model = MarketDetailInfo
     template_name = "tradesys/MarketOverView.html"
 
     def get_initial(self):
         initial = super(MarketOview, self).get_initial()
         initial = initial.copy()
-        self.request.session['tradetype']  = self.request.POST.get('tradetype')
-        self.request.session['tradeframe'] = self.request.POST.get('tradeframe')
+
+        # tp_obj = TradePlanModel
         
-        latest_tradeplan = TradePlanModel.objects.filter(tradeframe = self.request.session['tradeframe'],
-                                                         tradetype = self.request.session['tradetype'],
-                                                         created_by = self.request.user).order_by('-begin_time')[:1]
+        # s_d_t_list = ['%s_%s_%s' % (s,d,t)
+                      # for s in [self.request.session['tradetype']]
+                      # for d in ['obj_dir','sub_dir']
+                      # for t in trade_frame_map(self.request.session['tradeframe'])]
 
-        if len(latest_tradeplan) == 0 or (timezone.now() - latest_tradeplan[0].begin_time).total_seconds() > tradeplan_lag_time(self.request.session['tradeframe']):
-            p = TradePlanModel(begin_time = timezone.now(),
-                               completion = 1,
-                               created_by = self.request.user,
-                               tradeframe = self.request.session['tradeframe'],
-                               tradetype  = self.request.session['tradetype'])
-            p.save()
-            self.request.session['TradePlanModel_id'] = p.id
-        else:
-            # s_d_t : symbol_direct_timeframe
-            s_d_t_list = ['%s_%s_%s' % (s,d,t)
-                          for s in [self.request.session['tradetype']]
-                          for d in ['obj_dir','sub_dir']
-                          for t in trade_frame_map(self.request.session['tradeframe'])]
-            
-            self.request.session['TradePlanModel_id'] = latest_tradeplan[0].id
-            
-            if latest_tradeplan[0].market_overview is None:
-                for s_d_t in s_d_t_list:
-                    self.request.session[s_d_t] = 'N/A'
-            else:
-                for zk in ['obj_dir','sub_dir']:
-                    for tm in trade_frame_map(self.request.session['tradeframe']):
-                        s_d_t = '%s_%s_%s' % (self.request.session['tradetype'],zk,tm)
-                        latest_tradeplan
+        
 
-                        try:
-                            mdi_obj = MarketDetailInfo.objects.get(symbol_name = self.request.session['tradetype'],
-                                                                   timeframe   = tm,
-                                                                   market_overview = latest_tradeplan[0].market_overview)
-                        except MarketDetailInfo.DoesNotExist:
-                            self.request.session[s_d_t] = 'N/A'
-                            continue
-
-                        self.request.session[s_d_t] = getattr(mdi_obj,zk)
-
+        
         return initial
         
     def get_context_data(self, **kwargs):
         context = super(MarketOview, self).get_context_data(**kwargs)
         # print self.request.session.keys()
-        context['tradeframe'] = self.request.POST.get('tradeframe')
-        context['tradetype']  = self.request.POST.get('tradetype')
-        context['market_over_view']   = MarketOverViewForm(self.request.session['tradetype'],
-                                                           trade_frame_map(context['tradeframe'])).as_ul()
+        # context['tradeframe'] = self.request.POST.get('tradeframe')
+        # context['tradetype']  = self.request.POST.get('tradetype')
+        # context['market_over_view']   = MarketOverViewForm(self.request.session['tradetype'],
+        # trade_frame_map(context['tradeframe'])).as_ul()
+        context['market_over_view'] = MarketDetailInfoForm().as_ul
         return context
 
 
@@ -228,8 +229,6 @@ class FirstSelectedView(CreateView):
         initial = initial.copy()
         
         save_market_diffview(self.request)
-        
-        
         return initial
 
     def get_context_data(self, **kwargs):
@@ -245,11 +244,12 @@ class FirstSelectedView(CreateView):
         context['tradeframe'] = tf
         context['symbol_strength'] = MarketStrengthSelected(ss,tf).as_ul()
         context['symbol_excluded'] = MarketExcludeSelected(se,tf).as_ul()
-        
-        
+
         return context
+
 
 tp_sum_view       = login_required(MyTradePlanView.as_view())
 market_over_view  = login_required(MarketOview.as_view())
 market_diff_view  = login_required(MarketDview.as_view())
 first_select_view = login_required(FirstSelectedView.as_view())
+# select_view       = login_required(SelectedView.as_view())

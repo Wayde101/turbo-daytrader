@@ -2,7 +2,7 @@
 {% block content %}
 <li>{{ tradeframe }} </li>
 <li>{{ tradetype }} </li>
-<form action="/tradesys/MyTradePlan/market_diff_view/" method="POST" class="MarketOverView">
+<form action="" method="POST" class="MarketOverView">
     {% csrf_token %}
     {{ market_over_view }}
     </ol>

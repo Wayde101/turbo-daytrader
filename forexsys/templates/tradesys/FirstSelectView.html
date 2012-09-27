@@ -3,7 +3,7 @@
 <li>{{ tradeframe }} </li>
 <li>{{ tradetype }} </li>
 
-<form action="" method="POST" class="TradeFrame">
+<form action="/tradesys/MyTradePlan/selected_view/" method="POST" class="TradeFrame">
     {% csrf_token %}
     <label>强弱筛选:</label><b></b>
     {{ symbol_strength }}
@@ -16,6 +16,4 @@
 
         <button id="selected" type="submit">选定币种趋势分析</button>
 </form>
-
-
 {% endblock %}

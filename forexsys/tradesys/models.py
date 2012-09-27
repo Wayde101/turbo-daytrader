@@ -115,8 +115,6 @@ EXREASON = (
 class MarketOverView(models.Model):
     market_result = models.CharField(max_length=500,blank=True)
     pub_date      = models.DateTimeField()
-    # if trade_frame = 5M then 1st:5M 2th:15M 3th:1H 4th:4H
-    # if trade_frame = 1H then 1st:1H 2th:4H 3th:1D 4th:1W 5th:1M
     def __unicode__(self):
         return '%s' % self.pub_date
 
@@ -149,8 +147,13 @@ class TradePlanModel(models.Model):
     end_time         = models.DateTimeField(blank=True,null=True)
     completion       = models.IntegerField()
     created_by       = models.ForeignKey(User,blank=True,null=True)
-    tradeframe       = models.CharField(max_length=10,choices=TRADEFRAME)
-    tradetype        = models.CharField(max_length=10,choices=TRADETYPE)
+    tradeframe       = models.CharField(max_length=10,
+                                        choices=TRADEFRAME,
+                                        default = TRADEFRAME[1][0])
+    tradetype        = models.CharField(max_length=10,
+                                        choices=TRADETYPE,
+                                        default = TRADETYPE[0][0]
+                                        )
     #tradeplan_action = models.ForeignKey(TradePlanAction)
     # 一个TradePlan 可能会对0个或多个 TradePlanAction , 当0 个的时候表示不交易，等待下一个交易计划周期
     

@@ -43,3 +43,52 @@ def save_market_overview(request):
 
         md.normative = request.POST['%s_normative_%s' % (tf_item[0],tf_item[3])]
         md.save()
+
+
+    def get_initial(self):
+        initial = super(MarketOview, self).get_initial()
+        initial = initial.copy()
+        self.request.session['tradetype']  = self.request.POST.get('tradetype')
+        self.request.session['tradeframe'] = self.request.POST.get('tradeframe')
+        
+        
+        latest_tradeplan = TradePlanModel.objects.filter(tradeframe = self.request.session['tradeframe'],
+                                                         tradetype = self.request.session['tradetype'],
+                                                         created_by = self.request.user).order_by('-begin_time')[:1]
+
+        if len(latest_tradeplan) == 0 or (timezone.now() - latest_tradeplan[0].begin_time).total_seconds() > tradeplan_lag_time(self.request.session['tradeframe']):
+            p = TradePlanModel(begin_time = timezone.now(),
+                               completion = 1,
+                               created_by = self.request.user)
+            tp_init_form = TradePlanInitForm(self.request.POST,instance = p)
+            tp_init_form.save()
+            self.request.session['TradePlanModel_id'] = p.id
+        else:
+            # s_d_t : symbol_direct_timeframe
+            s_d_t_list = ['%s_%s_%s' % (s,d,t)
+                          for s in [self.request.session['tradetype']]
+                          for d in ['obj_dir','sub_dir']
+                          for t in trade_frame_map(self.request.session['tradeframe'])]
+            
+            self.request.session['TradePlanModel_id'] = latest_tradeplan[0].id
+            
+            if latest_tradeplan[0].market_overview is None:
+                for s_d_t in s_d_t_list:
+                    self.request.session[s_d_t] = 'N/A'
+            else:
+                for zk in ['obj_dir','sub_dir']:
+                    for tm in trade_frame_map(self.request.session['tradeframe']):
+                        s_d_t = '%s_%s_%s' % (self.request.session['tradetype'],zk,tm)
+                        latest_tradeplan
+
+                        try:
+                            mdi_obj = MarketDetailInfo.objects.get(symbol_name = self.request.session['tradetype'],
+                                                                   timeframe   = tm,
+                                                                   market_overview = latest_tradeplan[0].market_overview)
+                        except MarketDetailInfo.DoesNotExist:
+                            self.request.session[s_d_t] = 'N/A'
+                            continue
+
+                        self.request.session[s_d_t] = getattr(mdi_obj,zk)
+
+        return initial
