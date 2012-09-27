@@ -2,18 +2,27 @@ import operator
 from django import forms
 from models import SUB_DIR,OBJ_DIR,NORMATIVE
 from models import MarketDetailInfo
+from models import TradePlanModel
 from models import TRADEFRAME,TRADETYPE,STRENGTHSCORE,PLANRESULT
 from models import EXREASON
 
 class MarketDetailInfoForm(forms.ModelForm):
     class Meta:
         model  = MarketDetailInfo
-        fields = ('obj_dir','sub_dir')
+        fields = ('obj_dir','sub_dir','strength')
 
-class TradeInfoForm(forms.Form):
-    tradetype  = forms.CharField(max_length=10,widget=forms.Select(choices = TRADETYPE))
-    tradeframe = forms.CharField(max_length=10,widget=forms.Select(choices = TRADEFRAME))
+class TradePlanInitForm(forms.ModelForm):
+    class Meta:
+        model = TradePlanModel
+        fields = ('tradeframe','tradetype')
 
+
+class MarketOverViewForm(forms.ModelForm):
+    class Meta:
+        model = MarketOverView
+        fields = ('market_result')
+
+                
 class MarketOverViewForm(forms.Form):
     def __init__(self,symbol,trademap,*args,**kwargs):
         super(MarketOverViewForm, self).__init__(*args,**kwargs)
@@ -26,8 +35,10 @@ class MarketOverViewForm(forms.Form):
                 self.fields[n] = forms.CharField(max_length=10,
                                                  widget=forms.Select(choices=choose(zk)),initial = 'U')
     
-    market_result = forms.CharField(max_length = 200,widget = forms.Textarea())
-    plan_result   = forms.CharField(max_length = 5,widget = forms.Select(choices = PLANRESULT))
+    market_result = forms.CharField(max_length = 200,
+                                    widget = forms.Textarea())
+    plan_result   = forms.CharField(max_length = 5,
+                                    widget = forms.Select(choices=PLANRESULT))
 
     
 class MarketDiffViewForm(forms.Form):
