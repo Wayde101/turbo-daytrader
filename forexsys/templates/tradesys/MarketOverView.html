@@ -4,7 +4,9 @@
 <li>{{ tradetype }} </li>
 <form action="" method="POST" class="MarketOverView">
     {% csrf_token %}
-    {{ market_over_view }}
+    {{ market_overview }}
+    {{ market_overview_result }}
+    {{ plan_result }}
     </ol>
         <button id="save_and_next" type="submit">保存并下一步</button>
 </form>

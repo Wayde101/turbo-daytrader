@@ -79,7 +79,6 @@ def save_market_overview(request):
                 for zk in ['obj_dir','sub_dir']:
                     for tm in trade_frame_map(self.request.session['tradeframe']):
                         s_d_t = '%s_%s_%s' % (self.request.session['tradetype'],zk,tm)
-                        latest_tradeplan
 
                         try:
                             mdi_obj = MarketDetailInfo.objects.get(symbol_name = self.request.session['tradetype'],
