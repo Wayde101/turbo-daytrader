@@ -2,13 +2,16 @@
 # from tradesys.models import Symbol
 from django import forms
 from django.shortcuts import render_to_response, redirect
+from django.forms.formsets import formset_factory
 from django.contrib.auth.decorators import login_required
+from django.forms.models import modelformset_factory
+from django.forms.models import inlineformset_factory
 
 from django.views.generic.edit import CreateView,UpdateView
 from django.views.generic import ListView,DetailView
 
-from tradesys.forms import MarketDetailInfoForm,MarketOverViewForm,MarketDiffViewForm
-# from tradesys.forms import MarketDetailInfoForm
+from tradesys.forms import MarketOviewForm,MarketOverViewForm
+from tradesys.forms import MarketDiffViewForm
 
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
 from tradesys.models import MarketOverView
@@ -20,6 +23,7 @@ from tradesys.forms import MarketExcludeSelected
 from django.contrib.auth.models import User
 from django.utils import timezone
 import re
+
 
 def trade_frame_map(tradeframe):
     if tradeframe == '5M':
@@ -33,6 +37,20 @@ def tradeplan_lag_time(tradeframe):
     if tradeframe == '5M':
         return 60 * 5  * 3 * 4
 
+def market_overview_init(tradetype,tradeframe):
+    now    = timezone.now()
+    mov = MarketOverView(market_result = "", pub_date = now)
+    mov.save()
+    
+    for tf in trade_frame_map(tradeframe):
+        mdi = MarketDetailInfo(symbol_name = tradetype,
+                               timeframe   = tf ,
+                               obj_dir     = 'N',
+                               sub_dir     = 'N',
+                               market_overview = mov)
+
+        mdi.save()
+    return mov
     
 class MyTradePlanView(CreateView):
     form_class    = TradePlanInitForm
@@ -53,6 +71,7 @@ class MyTradePlanView(CreateView):
         tf     =  form.cleaned_data['tradeframe']
         user   =  self.request.user
         tp_obj =  self.model.objects
+        
         now    = timezone.now()
 
         ltp = tp_obj.filter(tradeframe = tf,
@@ -66,6 +85,7 @@ class MyTradePlanView(CreateView):
             self.object.begin_time = now
             self.object.completion = 1
             self.object.created_by = user
+            self.object.market_overview = market_overview_init(tt,tf)
             self.object.save()
         else:
             self.object = ltp[0]
@@ -75,37 +95,33 @@ class MyTradePlanView(CreateView):
 
         
 class MarketOview(CreateView):
-    # form_class = MarketDetailInfoForm
-    model = MarketDetailInfo
+    form_class = MarketOviewForm
+    model      = MarketDetailInfo
     template_name = "tradesys/MarketOverView.html"
 
     def get_initial(self):
         initial = super(MarketOview, self).get_initial()
         initial = initial.copy()
-
-        # tp_obj = TradePlanModel
-        
-        # s_d_t_list = ['%s_%s_%s' % (s,d,t)
-                      # for s in [self.request.session['tradetype']]
-                      # for d in ['obj_dir','sub_dir']
-                      # for t in trade_frame_map(self.request.session['tradeframe'])]
-
-        
-
+        tp_id    = self.request.session['TradePlanModel_id']
         
         return initial
-        
+    
     def get_context_data(self, **kwargs):
         context = super(MarketOview, self).get_context_data(**kwargs)
-        # print self.request.session.keys()
-        # context['tradeframe'] = self.request.POST.get('tradeframe')
-        # context['tradetype']  = self.request.POST.get('tradetype')
-        # context['market_over_view']   = MarketOverViewForm(self.request.session['tradetype'],
-        # trade_frame_map(context['tradeframe'])).as_ul()
-        context['market_over_view'] = MarketDetailInfoForm().as_ul
+        # context['market_overview']=MarketOviewForm(self.tt,
+                                                   # self.tf_map).as_ul()
+
+        context['market_overview']=MarketOviewForm().as_ul()
         return context
 
-
+    def form_valid(self,form):
+        if not form.is_valid():
+            print "invalid from info"
+        else:
+            print "x" * 80
+            
+            
+    
 def save_market_overview(request):
     dir_list = filter(lambda x: re.search('_dir_',x), request.POST.keys())
     tp = TradePlanModel.objects.get(id = request.session['TradePlanModel_id'])

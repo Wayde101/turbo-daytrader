@@ -159,14 +159,17 @@ class TradePlanModel(models.Model):
     
     market_overview  = models.ForeignKey(MarketOverView,
                                          related_name='market_overview',
+                                         editable = False,
                                          blank=True,
                                          null=True)    
     diff_b_overview  = models.ForeignKey(MarketOverView,
                                          related_name='diff_b_overview',
+                                         editable = False,
                                          blank=True,
                                          null=True)
     diff_s_overview  = models.ForeignKey(MarketOverView,
                                          related_name='diff_s_overview',
+                                         editable = False,
                                          blank=True,
                                          null=True)
     plan_result      = models.CharField(max_length=5,choices=PLANRESULT,blank=True,null=True)

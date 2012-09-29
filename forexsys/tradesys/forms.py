@@ -1,32 +1,32 @@
 import operator
 from django import forms
+
 from models import SUB_DIR,OBJ_DIR,NORMATIVE
-from models import MarketDetailInfo
+from models import MarketDetailInfo,MarketOverView
 from models import TradePlanModel
 from models import TRADEFRAME,TRADETYPE,STRENGTHSCORE,PLANRESULT
 from models import EXREASON
 
-class MarketDetailInfoForm(forms.ModelForm):
-    class Meta:
-        model  = MarketDetailInfo
-        fields = ('obj_dir','sub_dir','strength')
 
 class TradePlanInitForm(forms.ModelForm):
+    
     class Meta:
         model = TradePlanModel
         fields = ('tradeframe','tradetype')
 
 
 class MarketOverViewForm(forms.ModelForm):
+    
     class Meta:
         model = MarketOverView
-        fields = ('market_result')
-
+        fields = ('market_result',)
                 
-class MarketOverViewForm(forms.Form):
-    def __init__(self,symbol,trademap,*args,**kwargs):
-        super(MarketOverViewForm, self).__init__(*args,**kwargs)
-        
+class MarketOviewForm(forms.ModelForm):
+    # def __init__(self,symbol,trademap,*args,**kwargs):
+    def __init__(self,*args,**kwargs):
+        super(MarketOviewForm, self).__init__(*args,**kwargs)
+        symbol = 'USDX'
+        trademap = ['1H','4H','1D','1W','1Mon']
         choose = lambda x: SUB_DIR if x == 'sub_dir' else OBJ_DIR
         
         for zk in ['obj_dir','sub_dir']:
@@ -39,6 +39,10 @@ class MarketOverViewForm(forms.Form):
                                     widget = forms.Textarea())
     plan_result   = forms.CharField(max_length = 5,
                                     widget = forms.Select(choices=PLANRESULT))
+
+    class Meta:
+        model = TradePlanModel
+        fields = ('plan_result',)
 
     
 class MarketDiffViewForm(forms.Form):
