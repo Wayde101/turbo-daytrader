@@ -2,9 +2,14 @@
 {% block content %}
 <li>{{ tradeframe }} </li>
 <li>{{ tradetype }} </li>
-<form action="/tradesys/MyTradePlan/first_select_view/" method="POST" class="MarketDiffView">
+<form action="" method="POST" class="MarketDiffView">
     {% csrf_token %}
-    {{ market_diff_view }}
+
+    tradetype:{{ tradetype }}
+    {{ b_diffview }}
+    {{ s_diffview }}
+    {{ mov_b_form }}
+    {{ mov_s_form }}
     </ol>
         <button id="save_and_next" type="submit">保存并下一步</button>
 </form>
