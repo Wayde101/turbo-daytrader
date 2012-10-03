@@ -213,7 +213,6 @@ def market_over_view(request,tp_id=None):
                 tp_obj.diff_b_overview = diff_overview_init(tp_obj,'b')
                 tp_obj.save()
 
-            
             return redirect('/tradesys/MyTradePlan/market_diff_view')
     else:
         movd_formset = MovDetailInlineFormset(instance = tp_obj.market_overview)
@@ -267,7 +266,7 @@ def market_diff_view(request,tp_id = None):
 
     return render_to_response("tradesys/MarketDiffView.html", {
             "tradetype"  : tp_obj.tradetype,
-            "s_diffview" : s_diffview.as_ul(),
+            "s_diffview" : s_diffview,
             "mov_b_form" : mov_b_form.as_ul(),
             "mov_s_form" : mov_s_form.as_ul(),
             },context_instance=RequestContext(request))
