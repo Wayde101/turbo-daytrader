@@ -11,6 +11,8 @@ urlpatterns = patterns('tradesys.views',
                        url(r'^MyTradePlan/first_select_view/$', 'TradePlan.first_select_view'),
                        url(r'^MyTradePlan/first_select_view/(?P<tp_id>\d+)/$', 'TradePlan.first_select_view'),
                        url(r'^MyTradePlan/analysis_selected_view/$', 'TradePlan.analysis_selected_view'),
-                       url(r'^MyTradePlan/analysis_selected_view/(?P<tp_id>\d+)/$', 'TradePlan.analysis_selected_view')
+                       url(r'^MyTradePlan/analysis_selected_view/(?P<tp_id>\d+)/$', 'TradePlan.analysis_selected_view'),
+                       url(r'^MyTradePlan/tradeplan_action_view/$', 'TradePlan.tradeplan_action_view'),
+                       url(r'^MyTradePlan/tradeplan_action_view/(?P<tp_id>\d+)/$', 'TradePlan.tradeplan_action_view')
                        )
 
