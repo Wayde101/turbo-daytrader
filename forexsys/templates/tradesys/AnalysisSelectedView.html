@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<li>{{ tradeframe }} </li>
+<li>{{ tradetype }} </li>
+
+<form action="" method="POST" class="AnalysisSelectedView">
+    {% csrf_token %}
+    <label>交易类型:</label><b></b>
+    {{ tradetype }}
+    <label>重点货币分析:</label><b></b>
+    
+    {{ selected_view }}
+
+    
+
+        <button id="selected" type="submit">选定币种趋势分析</button>
+</form>
+{% endblock %}

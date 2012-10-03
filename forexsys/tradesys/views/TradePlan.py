@@ -10,15 +10,14 @@ from django.views.generic.edit import CreateView,UpdateView
 from django.views.generic import ListView,DetailView
 
 from tradesys.forms import MarketOverViewForm,PlanResultForm
-from tradesys.forms import FirstSelectFormset
+from tradesys.forms import FirstSelectFormset,SelectedFormset
 
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
-from tradesys.models import MarketOverView
+from tradesys.models import MarketOverView,TradePlanAction
 
-from tradesys.forms import MarketStrengthSelected,MovDetailInlineFormset
+from tradesys.forms import MovDetailInlineFormset,TradePlanActionFormset
 from tradesys.forms import TradePlanInitForm,MarketOverViewForm,MdvDetailInlineFormset
-from tradesys.forms import MarketExcludeSelected
-
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.utils import timezone
 import re
@@ -52,50 +51,99 @@ def market_overview_init(tradetype,tradeframe):
     return mov
 
 
-def diff_overview_init(tradetype,tradeframe,diff_flag):
+def diff_overview_init(tp_model,diff_flag):
     now    = timezone.now()
     mov = MarketOverView(market_result = "", pub_date = now)
     mov.save()
 
+    tf = trade_frame_map(tp_model.tradeframe)
     symbols = ['EURUSD','GBPUSD','CHFUSD','AUDUSD','CADUSD','JPYUSD']
-    tf = trade_frame_map(tradeframe)
-    
+
     for symbol in symbols:
         if diff_flag == 'b':
             tfm = tf[1]
+            mov = tp_model.diff_s_overview
         if diff_flag == 's':
             tfm = tf[0]
-            
+
         mdi = MarketDetailInfo(symbol_name = symbol,
                                timeframe   = tfm ,
                                obj_dir     = 'N' ,
                                sub_dir     = 'N' ,
                                market_overview = mov)
-
         mdi.save()
     return mov
 
-def selected_overview_init(tradetype,tradeframe,diff_s_overview):
+def selected_overview_init(tp_obj):
 
     try:
-        selected = MarketDetailInfo.objects.filter(market_overview = diff_s_overview,
-                                        exclude_reason = 'N')
+        selected = MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
+                                                   timeframe = tp_obj.tradeframe,
+                                                   exclude_reason = 'N')
     except MarketDetailInfo.DoesNotExist:
         return False
 
-    tfm = trade_frame_map(tradeframe)
-    
+    tfm = trade_frame_map(tp_obj.tradeframe)
+
     for mdi in selected:
         for tf in tfm:
-            if mdi.timeframe == tf:
-                continue
-            mdi_new=MarketDetailInfo(symbol_name = mdi.symbol_name,
-                             timeframe = tf,
-                             market_overview = diff_s_overview,
-                             obj_dir = 'N',
-                             sub_dir = 'N')
-            mdi_new.save()
-            
+            try:
+                mdi_new = MarketDetailInfo.objects.get(symbol_name = mdi.symbol_name,
+                                                       market_overview = tp_obj.diff_s_overview,
+                                                       timeframe = tf)
+
+            except MarketDetailInfo.DoesNotExist:
+                mdi_new=MarketDetailInfo(symbol_name = mdi.symbol_name,
+                                         timeframe = tf,
+                                         market_overview = tp_obj.diff_s_overview,
+                                         obj_dir = 'N',
+                                         sub_dir = 'N')
+                mdi_new.save()
+
+def get_selected_symbols(tradeframe,selected_overview):
+    mdi = MarketDetailInfo.objects.filter(timeframe = tradeframe,
+                                          exclude_reason = 'N',
+                                          market_overview = selected_overview)
+
+    if len(mdi) == 0:
+        return None
+
+    return [ '%s' % x.symbol_name for x in mdi ]
+
+
+def tradeplan_action_init(tp_obj):
+    
+    selected = MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
+                                               timeframe = tp_obj.tradeframe,
+                                               exclude_reason = 'N')
+
+    exist_action = TradePlanAction.objects.filter(tradeplan = tp_obj)
+
+    if len(exist_action) > 0:
+        s = set(['%s' % x.symbol_name for x in selected ])
+        e = set(['%s' % x.symbol_name for x in exist_action ])
+        for sym in  e - s:
+            del_tp = TradePlanAction.objects.get(tradeplan = tp_obj, symbol_name = sym)
+            del_tp.delete()
+        
+    if len(selected) == 0:
+        return False
+
+    for mdi in selected:
+        try:
+            TradePlanAction.objects.get(symbol_name = mdi.symbol_name,
+                                        tradeplan   = tp_obj)
+        except TradePlanAction.DoesNotExist:
+            plan_action_new=TradePlanAction(symbol_name = mdi.symbol_name,
+                                            tradeplan   = tp_obj,
+                                            enter_price = 0.0,
+                                            sl_price    = 0.0,
+                                            tp_price    = 0.0,
+                                            holding_log = 'Init:')
+            plan_action_new.save()
+
+        
+        
 class MyTradePlanView(CreateView):
     form_class    = TradePlanInitForm
     model         = TradePlanModel
@@ -138,34 +186,6 @@ class MyTradePlanView(CreateView):
         return redirect(self.success_url)
 
         
-class FirstSelectedView(CreateView):
-    model  = MarketDetailInfo
-    template_name = 'tradesys/FirstSelectView.html'
-
-    def get_initial(self):
-        initial = super(FirstSelectedView, self).get_initial()
-        initial = initial.copy()
-        
-        save_market_diffview(self.request)
-        return initial
-
-    def get_context_data(self, **kwargs):
-        context = super(FirstSelectedView, self).get_context_data(**kwargs)
-
-        tp_obj  = TradePlanModel.objects.get(id = self.request.session['TradePlanModel_id'])
-        mdi_obj = MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview.id)
-
-        ss = dict([ (k.symbol_name,k.strength) for k in mdi_obj ])
-        se = dict([ (k.symbol_name,k.exclude_reason) for k in mdi_obj ])
-        tf = self.request.session['tradeframe']
-        
-        context['tradeframe'] = tf
-        context['symbol_strength'] = MarketStrengthSelected(ss,tf).as_ul()
-        context['symbol_excluded'] = MarketExcludeSelected(se,tf).as_ul()
-
-        return context
-
-
 def market_over_view(request,tp_id=None):
 
     if tp_id == None:
@@ -183,15 +203,14 @@ def market_over_view(request,tp_id=None):
             md_formset.save()
             mov_form.save()
             plan_res_form.save()
-            if tp_obj.diff_b_overview is None:
-                tp_obj.diff_b_overview = diff_overview_init(tp_obj.tradetype,
-                                                            tp_obj.tradeframe,
-                                                            'b')
             if tp_obj.diff_s_overview is None:            
-                tp_obj.diff_s_overview = diff_overview_init(tp_obj.tradetype,
-                                                            tp_obj.tradeframe,
-                                                            's')
-            tp_obj.save()
+                tp_obj.diff_s_overview = diff_overview_init(tp_obj,'s')
+                tp_obj.save()
+            if tp_obj.diff_b_overview is None:
+                tp_obj.diff_b_overview = diff_overview_init(tp_obj,'b')
+                tp_obj.save()
+
+            
             return redirect('/tradesys/MyTradePlan/market_diff_view')
     else:
         md_formset = MovDetailInlineFormset(instance = tp_obj.market_overview)
@@ -213,50 +232,40 @@ def market_diff_view(request,tp_id = None):
     
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
     if request.method == "POST":
-        b_diffview  = MdvDetailInlineFormset(request.POST,
-                                             prefix = 'b',
-                                             instance = tp_obj.diff_b_overview)
-        mov_b_form  = MarketOverViewForm(request.POST,
-                                         prefix = 'b',
-                                         instance = tp_obj.diff_b_overview)
-        
         s_diffview = MdvDetailInlineFormset(request.POST,
                                             prefix = 's',
                                             instance = tp_obj.diff_s_overview)
+
+        mov_b_form  = MarketOverViewForm(request.POST,
+                                         prefix = 'b',
+                                         instance = tp_obj.diff_b_overview)
+
         mov_s_form  = MarketOverViewForm(request.POST,
                                          prefix = 's',
                                          instance = tp_obj.diff_s_overview)
 
-        if b_diffview.is_valid():
-            print '.' * 80
-            b_diffview.save()
-
-        if mov_b_form.is_valid():
-            print '.' * 80
-            mov_b_form.save()
 
         if s_diffview.is_valid():
-            print '.' * 80
             s_diffview.save()
 
+        if mov_b_form.is_valid():
+            mov_b_form.save()
+
         if mov_s_form.is_valid():
-            print '.' * 80
             mov_s_form.save()
 
         return redirect('/tradesys/MyTradePlan/first_select_view')
     
     else:
-        b_diffview =  MdvDetailInlineFormset(prefix='b',instance = tp_obj.diff_b_overview)
-        mov_b_form =  MarketOverViewForm(prefix = 'b',instance = tp_obj.diff_b_overview)
         s_diffview =  MdvDetailInlineFormset(prefix = 's',instance = tp_obj.diff_s_overview)
+        mov_b_form =  MarketOverViewForm(prefix = 'b',instance = tp_obj.diff_b_overview)
         mov_s_form =  MarketOverViewForm(prefix = 's',instance = tp_obj.diff_s_overview)
 
 
     return render_to_response("tradesys/MarketDiffView.html", {
             "tradetype"  : tp_obj.tradetype,
-            "b_diffview" : b_diffview.as_ul(),
-            "mov_b_form" : mov_b_form.as_ul(),
             "s_diffview" : s_diffview.as_ul(),
+            "mov_b_form" : mov_b_form.as_ul(),
             "mov_s_form" : mov_s_form.as_ul(),
             },context_instance=RequestContext(request))
 
@@ -274,18 +283,14 @@ def first_select_view(request,tp_id = None):
     if request.method == "POST":
         first_select_view = FirstSelectFormset( request.POST,
                                                 queryset = mdi_query_set )
-
         if first_select_view.is_valid():
             first_select_view.save()
             
-        selected_overview_init(tp_obj.tradetype,
-                               tp_obj.tradeframe,
-                               tp_obj.diff_s_overview)
+        selected_overview_init(tp_obj)
 
-        return redirect('/tradesys/MyTradePlan/first_select_view')
+        return redirect('/tradesys/MyTradePlan/analysis_selected_view')
     else:
         first_select_view = FirstSelectFormset( queryset = mdi_query_set )
-
     
     return render_to_response("tradesys/FirstSelectView.html", {
             "tradetype" :  tp_obj.tradetype,
@@ -298,7 +303,59 @@ def analysis_selected_view(request, tp_id = None):
     if tp_id == None:
         tp_id = request.session['TradePlanModel_id']
 
+    tp_obj  = TradePlanModel.objects.get(pk = tp_id)
+    selected = get_selected_symbols(tp_obj.tradeframe,tp_obj.diff_s_overview)
     
+    if selected is None:
+        return 'no symbol was selected'
+        # return redirect('/tradesys/MyTradePlan/no_selected_symbol')
+    
+    if request.method == "POST":
+        selected_view = SelectedFormset( request.POST,
+            queryset = MarketDetailInfo.objects.filter(
+                Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
+                Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
+                symbol_name__in=selected))
+        if selected_view.is_valid():
+            selected_view.save()
+            tradeplan_action_init(tp_obj)
+            
+        return redirect('/tradesys/MyTradePlan/tradeplan_action_view')
+    else:
+        selected_view = SelectedFormset(queryset = MarketDetailInfo.objects.filter(
+                Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
+                Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
+                symbol_name__in=selected))
+        
+    return render_to_response("tradesys/AnalysisSelectedView.html", {
+            "tradetype" :  tp_obj.tradetype,
+            "selected_view" : selected_view.as_ul()
+            },context_instance=RequestContext(request))
+
+def tradeplan_action_view(request, tp_id = None):
+
+    if tp_id == None:
+        tp_id = request.session['TradePlanModel_id']
+
+        
+    tp_obj  = TradePlanModel.objects.get(pk = tp_id)
+
+    tp_action_query = TradePlanAction.objects.filter(tradeplan = tp_obj)
+    
+    if request.method == "POST":
+        tradeplan_action_view = TradePlanActionFormset( request.POST,
+                                                        queryset = tp_action_query)
+        if tradeplan_action_view.is_valid():
+            tradeplan_action_view.save()
+        return redirect('/tradesys/MyTradePlan/tradeplan_action_view')
+    else:
+        tradeplan_action_view = TradePlanActionFormset( queryset = tp_action_query )
+
+    return render_to_response("tradesys/TradePlanActionView.html", {
+            "tradetype" :  tp_obj.tradetype,
+            "tradeplan_action_view" : tradeplan_action_view.as_ul()
+            },context_instance=RequestContext(request))
+
 
 tp_sum_view       = login_required(MyTradePlanView.as_view())
 # market_over_view  = login_required(MarketOview.as_view())

@@ -77,13 +77,13 @@ TRADESTATUS = (
     )
 
 STRENGTHSCORE = (
-    (4, 4),
+    (4.0, 4),
     (3.75, 3.75),
     (3.5, 3.5),
     (3.25, 3.25),
-    (3, 3),
-    (2,2),
-    (0,0)
+    (3.0, 3),
+    (2.0,2),
+    (0.0,0)
     )
 
 PLANRESULT = (
@@ -139,7 +139,12 @@ class MarketDetailInfo(models.Model):
     market_overview = models.ForeignKey(MarketOverView)
     
     def __unicode__(self):
-        return '%s %s %s' % (self.symbol_name,self.obj_dir,self.sub_dir)
+        return '%s %s %s %s %s @ %s' % (self.symbol_name,
+                                        self.timeframe,
+                                        self.obj_dir,
+                                        self.sub_dir,
+                                        self.exclude_reason,
+                                        self.market_overview)
 
 
 class TradePlanModel(models.Model):
@@ -181,14 +186,23 @@ class TradePlanModel(models.Model):
         return 'ID:%s | @[%s]' % (self.id,self.begin_time)
 
 class TradePlanAction(models.Model):
-    symbol_name = models.CharField(max_length = 20,choices = SYMBOL_NAME)
     tradeplan   = models.ForeignKey(TradePlanModel)
-    trade_type  = models.CharField(max_length=50,choices=TRADEACTIONTYPE)
-    trade_status  = models.CharField(max_length=50,choices=TRADESTATUS)
+    symbol_name = models.CharField(max_length = 20,
+                                   choices = SYMBOL_NAME)
+    trade_type  = models.CharField(max_length=50,
+                                   choices=TRADEACTIONTYPE,
+                                   blank = True,
+                                   null  = True)
+    trade_status= models.CharField(max_length=50,
+                                   choices=TRADESTATUS,
+                                   blank = True,
+                                   null  = True)
     enter_price = models.FloatField()
     sl_price    = models.FloatField()
     tp_price    = models.FloatField()
-    holding_log = models.CharField(max_length=5000)
+    holding_log = models.CharField(max_length=5000,
+                                   blank = True,
+                                   null  = True)
     
     def __unicode__(self):
         return 'ID:%s | @[%s] | Action[%s]' % (self.id,self.symbol_name,self.trade_type)
