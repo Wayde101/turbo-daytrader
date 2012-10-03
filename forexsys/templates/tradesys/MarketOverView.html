@@ -3,9 +3,49 @@
 <form action="" method="POST" class="MarketOverView">
     {% csrf_token %}
     tradetype:{{ tradetype }}
-    {{ md_formset }}
-    {{ mov_form }}
-    {{ plan_res_result }}
+    <br>    
+
+    <div class="diff_view">
+    {{ movd_formset.management_form }}
+
+    <div class="diff_view_row">
+    <div class="diff_title">
+      时间级别
+    </div>
+    {% for form in movd_formset reversed %}    
+        <div class="tf{{ form.timeframe.value }}">{{form.id}} {{form.timeframe.as_hidden}} {{ form.timeframe.value }}</div>
+    {% endfor %}
+    </div>
+
+    <div class="diff_view_row">
+    <div class="diff_title">
+      客观方向
+    </div>
+    {% for form in movd_formset reversed %}    
+        <div class="tf{{ form.timeframe.value }}">{{form.id}} {{ form.obj_dir }}</div>
+    {% endfor %}
+    </div>
+
+    <div class="diff_view_row">
+    <div class="diff_title">
+      主观方向
+    </div>
+    {% for form in movd_formset reversed %}    
+        <div class="tf{{ form.timeframe.value }}">{{form.id}} {{ form.sub_dir }}</div>
+    {% endfor %}
+    </div>
+
+    </div>
+    
+    <br>
+    <li> <label for="id_market_result">分析结论:</label>
+      {{ mov_form.market_result }}
+    </li>
+
+    <li> <label for="id_market_result">交易结论:</label>
+      {{ plan_res_result.plan_result }} {{ tradetype }}
+    </li>
+
     </ol>
         <button id="save_and_next" type="submit">保存并下一步</button>
 </form>

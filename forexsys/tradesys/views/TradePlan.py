@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# -*- mode: python -*-
 # Create your views here.
 # from tradesys.models import Symbol
 from django import forms
@@ -5,23 +7,24 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.forms.formsets import formset_factory
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.contrib.auth.models import User
+from django.utils import timezone
 
-from django.views.generic.edit import CreateView,UpdateView
-from django.views.generic import ListView,DetailView
-
-from tradesys.forms import MarketOverViewForm,PlanResultForm
-from tradesys.forms import FirstSelectFormset,SelectedFormset
+from django.views.generic.edit import CreateView
 
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
 from tradesys.models import MarketOverView,TradePlanAction
 
+from tradesys.forms import MarketOverViewForm,PlanResultForm
+from tradesys.forms import FirstSelectFormset,SelectedFormset
 from tradesys.forms import MovDetailInlineFormset,TradePlanActionFormset
 from tradesys.forms import TradePlanInitForm,MarketOverViewForm,MdvDetailInlineFormset
-from django.db.models import Q
-from django.contrib.auth.models import User
-from django.utils import timezone
 import re
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 def trade_frame_map(tradeframe):
     if tradeframe == '5M':
@@ -46,7 +49,6 @@ def market_overview_init(tradetype,tradeframe):
                                obj_dir     = 'N',
                                sub_dir     = 'N',
                                market_overview = mov)
-
         mdi.save()
     return mov
 
@@ -57,6 +59,8 @@ def diff_overview_init(tp_model,diff_flag):
     mov.save()
 
     tf = trade_frame_map(tp_model.tradeframe)
+    
+    # 目前实现上主要是处理 6 个非美货币的交易
     symbols = ['EURUSD','GBPUSD','CHFUSD','AUDUSD','CADUSD','JPYUSD']
 
     for symbol in symbols:
@@ -75,7 +79,6 @@ def diff_overview_init(tp_model,diff_flag):
     return mov
 
 def selected_overview_init(tp_obj):
-
     try:
         selected = MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
                                                    timeframe = tp_obj.tradeframe,
@@ -94,7 +97,7 @@ def selected_overview_init(tp_obj):
 
             except MarketDetailInfo.DoesNotExist:
                 mdi_new=MarketDetailInfo(symbol_name = mdi.symbol_name,
-                                         timeframe = tf,
+                                         timeframe   = tf,
                                          market_overview = tp_obj.diff_s_overview,
                                          obj_dir = 'N',
                                          sub_dir = 'N')
@@ -181,11 +184,11 @@ class MyTradePlanView(CreateView):
             self.object.save()
         else:
             self.object = ltp[0]
-
+            
         self.request.session['TradePlanModel_id'] = self.object.id
         return redirect(self.success_url)
 
-        
+# 可能需要 用 login_required 修饰一下，确保登录使用
 def market_over_view(request,tp_id=None):
 
     if tp_id == None:
@@ -194,13 +197,13 @@ def market_over_view(request,tp_id=None):
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
     
     if request.method == "POST":
-        md_formset = MovDetailInlineFormset(request.POST,
+        movd_formset = MovDetailInlineFormset(request.POST,
                                             request.FILES,
                                             instance = tp_obj.market_overview)
         mov_form   = MarketOverViewForm(request.POST,instance = tp_obj.market_overview)
         plan_res_form  = PlanResultForm(request.POST,instance = tp_obj)
-        if md_formset.is_valid():
-            md_formset.save()
+        if movd_formset.is_valid():
+            movd_formset.save()
             mov_form.save()
             plan_res_form.save()
             if tp_obj.diff_s_overview is None:            
@@ -213,18 +216,18 @@ def market_over_view(request,tp_id=None):
             
             return redirect('/tradesys/MyTradePlan/market_diff_view')
     else:
-        md_formset = MovDetailInlineFormset(instance = tp_obj.market_overview)
+        movd_formset = MovDetailInlineFormset(instance = tp_obj.market_overview)
         mov_form   = MarketOverViewForm(instance = tp_obj.market_overview)
         plan_res_form  = PlanResultForm(instance = tp_obj)
         
     return render_to_response("tradesys/MarketOverView.html", {
             "tradetype" : tp_obj.tradetype,
-            "md_formset" : md_formset.as_ul(),
-            "mov_form" : mov_form.as_ul(),
-            "plan_res_result" : plan_res_form.as_ul()
+            "movd_formset" : movd_formset,
+            "mov_form" : mov_form,
+            "plan_res_result" : plan_res_form
             },context_instance=RequestContext(request))
 
-
+# 可能需要 用 login_required 修饰一下，确保登录使用
 def market_diff_view(request,tp_id = None):
     
     if tp_id == None:
@@ -269,7 +272,7 @@ def market_diff_view(request,tp_id = None):
             "mov_s_form" : mov_s_form.as_ul(),
             },context_instance=RequestContext(request))
 
-
+# 可能需要 用 login_required 修饰一下，确保登录使用
 def first_select_view(request,tp_id = None):
 
     if tp_id == None:
@@ -297,7 +300,7 @@ def first_select_view(request,tp_id = None):
             "first_select_view" : first_select_view.as_ul()
             },context_instance=RequestContext(request))
 
-
+# 可能需要 用 login_required 修饰一下，确保登录使用
 def analysis_selected_view(request, tp_id = None):
     
     if tp_id == None:
@@ -307,7 +310,7 @@ def analysis_selected_view(request, tp_id = None):
     selected = get_selected_symbols(tp_obj.tradeframe,tp_obj.diff_s_overview)
     
     if selected is None:
-        return 'no symbol was selected'
+        return u'没有选出要交易的货币，之后需要一个逻辑来处理，比如场外等待多久继续做交易计划,因为不交易也是一种交易状态'
         # return redirect('/tradesys/MyTradePlan/no_selected_symbol')
     
     if request.method == "POST":
@@ -332,6 +335,7 @@ def analysis_selected_view(request, tp_id = None):
             "selected_view" : selected_view.as_ul()
             },context_instance=RequestContext(request))
 
+# 可能需要 用 login_required 修饰一下，确保登录使用
 def tradeplan_action_view(request, tp_id = None):
 
     if tp_id == None:
