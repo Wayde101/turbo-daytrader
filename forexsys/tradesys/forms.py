@@ -11,13 +11,13 @@ from models import EXREASON
 
 
 class TradePlanInitForm(forms.ModelForm):
-    
     class Meta:
         model = TradePlanModel
         fields = ('tradeframe','tradetype')
 
 
 class MarketOverViewForm(forms.ModelForm):
+    market_result = forms.CharField(widget=forms.Textarea(attrs={'class':'result_text'}))
     class Meta:
         model = MarketOverView
         fields = ('market_result',)
