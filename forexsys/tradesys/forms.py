@@ -46,20 +46,6 @@ MovDetailInlineFormset=inlineformset_factory(MarketOverView,
                                              )
 
 
-# form mixin needed maybe
-# refer to http://stackoverflow.com/questions/1610892/passing-custom-form-parameter-to-formset
-MdvDetailInlineFormset=inlineformset_factory(MarketOverView,
-                                             MarketDetailInfo,
-                                             extra=0,
-                                             can_delete = False,
-                                             fields = ('symbol_name',
-                                                       'timeframe',
-                                                       'obj_dir',
-                                                       'sub_dir',
-                                                       'strength',
-                                                       'normative')
-                                             )
-
 MdvDetailFormset = modelformset_factory(MarketDetailInfo,
                                         extra = 0,
                                         fields = ('symbol_name',
