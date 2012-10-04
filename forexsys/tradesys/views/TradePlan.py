@@ -19,7 +19,7 @@ from tradesys.models import MarketOverView,TradePlanAction
 from tradesys.forms import MarketOverViewForm,PlanResultForm
 from tradesys.forms import FirstSelectFormset,SelectedFormset
 from tradesys.forms import MovDetailInlineFormset,TradePlanActionFormset
-from tradesys.forms import TradePlanInitForm,MarketOverViewForm,MdvDetailInlineFormset
+from tradesys.forms import TradePlanInitForm,MarketOverViewForm
 from tradesys.forms import MdvDetailFormset
 import re
 
@@ -271,9 +271,6 @@ def market_diff_view(request,tp_id = None):
         b_diffview = MdvDetailFormset(request.POST, request.FILES,
                                       prefix = 'b',
                                       queryset = b_queryset)
-        # s_diffview = MdvDetailInlineFormset(request.POST,
-                                            # prefix = 's',
-                                            # instance = tp_obj.diff_s_overview)
 
         mov_b_form  = MarketOverViewForm(request.POST,
                                          prefix = 'b',
