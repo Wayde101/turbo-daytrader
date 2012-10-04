@@ -113,7 +113,6 @@ def get_selected_symbols(tradeframe,selected_overview):
 
     return [ '%s' % x.symbol_name for x in mdi ]
 
-
 def tradeplan_action_init(tp_obj):
     
     selected = MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
@@ -145,7 +144,6 @@ def tradeplan_action_init(tp_obj):
                                             holding_log = 'Init:')
             plan_action_new.save()
 
-        
         
 class MyTradePlanView(CreateView):
     form_class    = TradePlanInitForm
@@ -204,6 +202,9 @@ def market_over_view(request,tp_id=None):
         plan_res_form  = PlanResultForm(request.POST,instance = tp_obj)
         if movd_formset.is_valid():
             movd_formset.save()
+            # MarketOverViewForm 在 rewrite market_result 字段的之后，非空的valid 需要做一下
+            # 提示用户某个字段需要必须填写的.
+            # if mov_form.is_valid(): then xxx
             mov_form.save()
             plan_res_form.save()
             if tp_obj.diff_s_overview is None:            
@@ -233,6 +234,11 @@ def market_diff_view(request,tp_id = None):
         tp_id = request.session['TradePlanModel_id']
     
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
+
+    #  usdx 是六大非美货币的交易功课.
+    #  黄金/白银/交叉盘该如何设计，需要和小月月等专业人事共同设计.
+    # if tp_obj.tradeytype != 'USDX':
+    
     if request.method == "POST":
         s_diffview = MdvDetailInlineFormset(request.POST,
                                             prefix = 's',
