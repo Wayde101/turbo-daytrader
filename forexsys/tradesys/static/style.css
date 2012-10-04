@@ -7,6 +7,11 @@
      display:table-row;
  }
 
+
+ .diff_view_row div {		
+     display:table-cell;		
+ }
+ 
  .diff_view_row div.diff_title {
   width:10%;
  }
