@@ -60,6 +60,15 @@ MdvDetailInlineFormset=inlineformset_factory(MarketOverView,
                                                        'normative')
                                              )
 
+MdvDetailFormset = modelformset_factory(MarketDetailInfo,
+                                        extra = 0,
+                                        fields = ('symbol_name',
+                                                  'timeframe',
+                                                  'obj_dir',
+                                                  'sub_dir',
+                                                  'strength',
+                                                  'normative'))
+
 
 TradePlanActionFormset  = modelformset_factory(TradePlanAction,
                                                extra = 0,
