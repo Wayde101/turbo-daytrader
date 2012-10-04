@@ -20,6 +20,7 @@ from tradesys.forms import MarketOverViewForm,PlanResultForm
 from tradesys.forms import FirstSelectFormset,SelectedFormset
 from tradesys.forms import MovDetailInlineFormset,TradePlanActionFormset
 from tradesys.forms import TradePlanInitForm,MarketOverViewForm,MdvDetailInlineFormset
+from tradesys.forms import MdvDetailFormset
 import re
 
 import sys
@@ -103,15 +104,6 @@ def selected_overview_init(tp_obj):
                                          sub_dir = 'N')
                 mdi_new.save()
 
-def get_selected_symbols(tradeframe,selected_overview):
-    mdi = MarketDetailInfo.objects.filter(timeframe = tradeframe,
-                                          exclude_reason = 'N',
-                                          market_overview = selected_overview)
-
-    if len(mdi) == 0:
-        return None
-
-    return [ '%s' % x.symbol_name for x in mdi ]
 
 def tradeplan_action_init(tp_obj):
     
@@ -143,6 +135,16 @@ def tradeplan_action_init(tp_obj):
                                             tp_price    = 0.0,
                                             holding_log = 'Init:')
             plan_action_new.save()
+
+
+def get_selected_symbols(tradeframe,selected_overview):
+    mdi = MarketDetailInfo.objects.filter(timeframe = tradeframe,
+                                          exclude_reason = 'N',
+                                          market_overview = selected_overview)
+    if len(mdi) == 0:
+        return None
+
+    return [ '%s' % x.symbol_name for x in mdi ]
 
 
 def tp_id_proc(request,tp_id):
@@ -254,11 +256,24 @@ def market_diff_view(request,tp_id = None):
     #  usdx 是六大非美货币的交易功课.
     #  黄金/白银/交叉盘该如何设计，需要和小月月等专业人事共同设计.
     # if tp_obj.tradeytype != 'USDX':
+    mdi_obj = MarketDetailInfo.objects
+
+    s_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
+                                timeframe = trade_frame_map(tp_obj.tradeframe)[0])
+    b_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
+                                timeframe = trade_frame_map(tp_obj.tradeframe)[1])
     
     if request.method == "POST":
-        s_diffview = MdvDetailInlineFormset(request.POST,
-                                            prefix = 's',
-                                            instance = tp_obj.diff_s_overview)
+        s_diffview = MdvDetailFormset(request.POST, request.FILES,
+                                      prefix = 's',
+                                      queryset = s_queryset)
+
+        b_diffview = MdvDetailFormset(request.POST, request.FILES,
+                                      prefix = 'b',
+                                      queryset = b_queryset)
+        # s_diffview = MdvDetailInlineFormset(request.POST,
+                                            # prefix = 's',
+                                            # instance = tp_obj.diff_s_overview)
 
         mov_b_form  = MarketOverViewForm(request.POST,
                                          prefix = 'b',
@@ -272,6 +287,9 @@ def market_diff_view(request,tp_id = None):
         if s_diffview.is_valid():
             s_diffview.save()
 
+        if b_diffview.is_valid():
+            b_diffview.save()
+
         if mov_b_form.is_valid():
             mov_b_form.save()
 
@@ -281,18 +299,19 @@ def market_diff_view(request,tp_id = None):
         return redirect('/tradesys/MyTradePlan/first_select_view')
     
     else:
-        s_diffview =  MdvDetailInlineFormset(prefix = 's',instance = tp_obj.diff_s_overview)
+        b_diffview = MdvDetailFormset(prefix = 'b',queryset = b_queryset)
+        s_diffview = MdvDetailFormset(prefix = 's',queryset = s_queryset)
         mov_b_form =  MarketOverViewForm(prefix = 'b',instance = tp_obj.diff_b_overview)
         mov_s_form =  MarketOverViewForm(prefix = 's',instance = tp_obj.diff_s_overview)
 
 
     return render_to_response("tradesys/MarketDiffView.html", {
             "tradetype"  : tp_obj.tradetype,
+            "b_diffview" : b_diffview,
             "s_diffview" : s_diffview,
             "mov_b_form" : mov_b_form.as_ul(),
             "mov_s_form" : mov_s_form.as_ul(),
             },context_instance=RequestContext(request))
-
     
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
