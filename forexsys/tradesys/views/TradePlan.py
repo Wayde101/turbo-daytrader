@@ -144,6 +144,24 @@ def tradeplan_action_init(tp_obj):
                                             holding_log = 'Init:')
             plan_action_new.save()
 
+
+def tp_id_proc(request,tp_id):
+    # 如果直接通过GET 方法访问每个tradeplan step, 而且又没有GET 到 tp_id
+    # 参数那么将去 tradeplanmodel 里面去拿最近的一个 tradeplan id 作为
+    # 访问的目标.
+
+    if tp_id is not None:
+        return tp_id
+    if request.session.has_key('TradePlanModel_id'):
+        return request.session['TradePlanModel_id']
+
+    tp_obj =  TradePlanModel.objects
+    ltp    =  tp_obj.filter(created_by = request.user).order_by('-begin_time')[:1]
+    if len(ltp) == 0:
+        return 'empty TradePlanModel. failed'
+    request.session['TradePlanModel_id'] = ltp[0].pk
+    return request.session['TradePlanModel_id']
+
         
 class MyTradePlanView(CreateView):
     form_class    = TradePlanInitForm
@@ -229,10 +247,8 @@ def market_over_view(request,tp_id=None):
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def market_diff_view(request,tp_id = None):
-    
-    if tp_id == None:
-        tp_id = request.session['TradePlanModel_id']
-    
+
+    tp_id  = tp_id_proc(request,tp_id)    
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
 
     #  usdx 是六大非美货币的交易功课.
@@ -277,13 +293,12 @@ def market_diff_view(request,tp_id = None):
             "mov_s_form" : mov_s_form.as_ul(),
             },context_instance=RequestContext(request))
 
+    
+
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def first_select_view(request,tp_id = None):
 
-    if tp_id == None:
-        tp_id = request.session['TradePlanModel_id']
-
-
+    tp_id = tp_id_proc(request,tp_id)
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
 
     mdi_query_set =  MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
@@ -308,9 +323,7 @@ def first_select_view(request,tp_id = None):
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def analysis_selected_view(request, tp_id = None):
     
-    if tp_id == None:
-        tp_id = request.session['TradePlanModel_id']
-
+    tp_id = tp_id_proc(request,tp_id)    
     tp_obj  = TradePlanModel.objects.get(pk = tp_id)
     selected = get_selected_symbols(tp_obj.tradeframe,tp_obj.diff_s_overview)
     
@@ -343,10 +356,7 @@ def analysis_selected_view(request, tp_id = None):
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def tradeplan_action_view(request, tp_id = None):
 
-    if tp_id == None:
-        tp_id = request.session['TradePlanModel_id']
-
-        
+    tp_id = tp_id_proc(request,tp_id)    
     tp_obj  = TradePlanModel.objects.get(pk = tp_id)
 
     tp_action_query = TradePlanAction.objects.filter(tradeplan = tp_obj)
