@@ -9,10 +9,94 @@
 
     <br>
 
-    {{ b_diffview }}
-    {{ s_diffview }}
+    <div class="diff_view">
+      {{ b_diffview.management_form }}
+      {{ s_diffview.management_form }}
+      <div class="diff_view_row">
+	<div class="diff_title">
+	  货币
+	</div>
+	{% for form in b_diffview %}    
+        <div class="big">{{form.id}}
+			 {{form.symbol_name.as_hidden}}
+			 {{form.timeframe.as_hidden}}
+			 {{form.strength.as_hidden}}
+			 {{form.normative.as_hidden}}
+			 {{ form.symbol_name.value }}</div>
+	{% endfor %}
+      </div>
+
+      <div class="diff_view_row">
+	<div class="diff_title">
+	  客观方向
+	</div>
+	{% for form in b_diffview %}    
+        <div class="big">{{form.id}} {{ form.obj_dir }}</div>
+	{% endfor %}
+      </div>
+
+      <div class="diff_view_row">
+	<div class="diff_title">
+	  主观方向
+	</div>
+	{% for form in b_diffview %}    
+        <div class="big">{{form.id}} {{ form.sub_dir }}</div>
+	{% endfor %}
+      </div>
+
+      <div class="diff_view_row">
+	<div class="diff_title">
+	  货币
+	</div>
+	{% for form in s_diffview %}
+        <div class="big">{{form.id}}
+	  {{form.symbol_name.as_hidden}}
+	  {{form.timeframe.as_hidden}}
+	  {{ form.symbol_name.value }}</div>
+	{% endfor %}
+      </div>
+
+      <div class="diff_view_row">
+	<div class="diff_title">
+	  客观方向
+	</div>
+	{% for form in s_diffview %}    
+        <div class="big">{{form.id}} {{ form.obj_dir }}</div>
+	{% endfor %}
+      </div>
+
+      <div class="diff_view_row">
+	<div class="diff_title">
+	  主观方向
+	</div>
+	{% for form in s_diffview %}    
+        <div class="big">{{form.id}} {{ form.sub_dir }}</div>
+	{% endfor %}
+      </div>
+
+      <div class="diff_view_row">
+	<div class="diff_title">
+	  强弱
+	</div>
+	{% for form in s_diffview %}    
+        <div class="big">{{form.id}} {{ form.strength }}</div>
+	{% endfor %}
+      </div>
+
+      <div class="diff_view_row">
+	<div class="diff_title">
+	  规范性
+	</div>
+	{% for form in s_diffview %}    
+        <div class="big">{{form.id}} {{ form.normative }}</div>
+	{% endfor %}
+      </div>
+    </div>
+
+
     {{ mov_b_form }}
     {{ mov_s_form }}
+
     </ol>
         <button id="save_and_next" type="submit">下一步(货币初选)</button>
 </form>

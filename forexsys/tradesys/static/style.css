@@ -1,12 +1,11 @@
  .diff_view {
   display:table;
   /* border-collapse:separate; */
-  width:80%;
+  width:100%;
  }
  .diff_view_row {
      display:table-row;
  }
-
 
  .diff_view_row div {		
      display:table-cell;		
@@ -36,6 +35,15 @@
  .diff_view_row div.tf1Mon {
   width:18%;
  }
+
+ .diff_view_row div.big {
+  width:15%;
+ }
+
+ .diff_view_row div.small {
+  width:15%;
+ }
+
 
 
 form textarea {
