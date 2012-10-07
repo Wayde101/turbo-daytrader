@@ -209,8 +209,7 @@ class MyTradePlanView(CreateView):
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def market_over_view(request,tp_id=None):
 
-    if tp_id == None:
-        tp_id = request.session['TradePlanModel_id']
+    tp_id  = tp_id_proc(request,tp_id)    
 
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
     
