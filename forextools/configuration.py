@@ -15,6 +15,14 @@ class Configuration:
     #ticketbase     = '/home/yuting/project/yuting/Alpari.dev/tester/files/shots'
     convertbin     = '/usr/bin/convert'
     rsyncbin       = '/usr/bin/rsync'
+    timeframe_map  = {'5':'5M',
+                      '15':'15M',
+                      '60':'1H',
+                      '240':'4H',
+                      '1440':'1D',
+                      '10080':'1W',
+                      '43200':'1Mon'}
+    
     timeframe_list = ['5','15','60','240','1440','10080','43200']
     timeframe_col  = ['60','240','1440','10080','43200']
     currency_row   = ['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy']

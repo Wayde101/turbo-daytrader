@@ -12,5 +12,5 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^accounts/', include('accounts.urls')),
                        url(r'^tradesys/', include('tradesys.urls')),
-                       url(r'^$', redirect_to, {'url': '/accounts/profile'})
+                       url(r'^$', redirect_to, {'url': '/tradesys/MyTradePlan/'})
                        )

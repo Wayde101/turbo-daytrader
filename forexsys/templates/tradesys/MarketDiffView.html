@@ -1,100 +1,106 @@
 {% extends "base.html" %}
 {% block content %}
-<li>{{ tradeframe }} </li>
-<li>{{ tradetype }} </li>
+
 <form action="" method="POST" class="MarketDiffView">
     {% csrf_token %}
 
-    tradetype:{{ tradetype }}
+    交易类型:{{ tradetype }}
 
     <br>
 
     <div class="diff_view">
       {{ b_diffview.management_form }}
-      {{ s_diffview.management_form }}
+      {% for form in b_diffview %}    
+      {{ form.id }}
+      {{ form.symbol_name.as_hidden }}
+      {{ form.timeframe.as_hidden }}
+      {{ form.strength.as_hidden }}
+      {{ form.normative.as_hidden }}
+      {{ form.symbol_name.as_hidden }}
+      {% endfor %}
+
       <div class="diff_view_row">
-	<div class="diff_title">
-	  货币
+	<div class="diff_title"> 图表 </div>
+	{% for form in b_diffview %}
+	<div class="big"><a href="/static/images/full/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt="diff_view">
+	    <img src="/static/images/thumb/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt = "diff_view"/> </a>
 	</div>
-	{% for form in b_diffview %}    
-        <div class="big">{{form.id}}
-			 {{form.symbol_name.as_hidden}}
-			 {{form.timeframe.as_hidden}}
-			 {{form.strength.as_hidden}}
-			 {{form.normative.as_hidden}}
-			 {{ form.symbol_name.value }}</div>
 	{% endfor %}
       </div>
 
       <div class="diff_view_row">
-	<div class="diff_title">
-	  客观方向
-	</div>
+	<div class="diff_title">  客观 </div>
 	{% for form in b_diffview %}    
         <div class="big">{{form.id}} {{ form.obj_dir }}</div>
 	{% endfor %}
       </div>
 
       <div class="diff_view_row">
-	<div class="diff_title">
-	  主观方向
-	</div>
+	<div class="diff_title">  主观 </div>
 	{% for form in b_diffview %}    
         <div class="big">{{form.id}} {{ form.sub_dir }}</div>
-	{% endfor %}
-      </div>
-
-      <div class="diff_view_row">
-	<div class="diff_title">
-	  货币
-	</div>
-	{% for form in s_diffview %}
-        <div class="big">{{form.id}}
-	  {{form.symbol_name.as_hidden}}
-	  {{form.timeframe.as_hidden}}
-	  {{ form.symbol_name.value }}</div>
-	{% endfor %}
-      </div>
-
-      <div class="diff_view_row">
-	<div class="diff_title">
-	  客观方向
-	</div>
-	{% for form in s_diffview %}    
-        <div class="big">{{form.id}} {{ form.obj_dir }}</div>
-	{% endfor %}
-      </div>
-
-      <div class="diff_view_row">
-	<div class="diff_title">
-	  主观方向
-	</div>
-	{% for form in s_diffview %}    
-        <div class="big">{{form.id}} {{ form.sub_dir }}</div>
-	{% endfor %}
-      </div>
-
-      <div class="diff_view_row">
-	<div class="diff_title">
-	  强弱
-	</div>
-	{% for form in s_diffview %}    
-        <div class="big">{{form.id}} {{ form.strength }}</div>
-	{% endfor %}
-      </div>
-
-      <div class="diff_view_row">
-	<div class="diff_title">
-	  规范性
-	</div>
-	{% for form in s_diffview %}    
-        <div class="big">{{form.id}} {{ form.normative }}</div>
 	{% endfor %}
       </div>
     </div>
+    
+    <div class="diff_view">    
+    {{ s_diffview.management_form }}
+    {% for form in s_diffview %}
+    {{ form.id }}
+    {{ form.symbol_name.as_hidden }}
+    {{ form.timeframe.as_hidden }}
+    {{ form.symbol_name.as_hidden }}
+    {% endfor %}
 
-    {{ mov_b_form }}
-    {{ mov_s_form }}
+    <div class="diff_view_row">
+      <div class="diff_title"> 图表 </div>
+      {% for form in s_diffview %}
+      <div class="big"><a href="/static/images/full/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt="diff_view">
+	  <img src="/static/images/thumb/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt = "diff_view"/> </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="diff_view_row">
+      <div class="diff_title">
+	客观
+      </div>
+      {% for form in s_diffview %}    
+      <div class="big">{{form.id}} {{ form.obj_dir }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="diff_view_row">
+      <div class="diff_title">
+	主观
+      </div>
+      {% for form in s_diffview %}    
+      <div class="big">{{form.id}} {{ form.sub_dir }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="diff_view_row">
+      <div class="diff_title">
+	强弱
+      </div>
+      {% for form in s_diffview %}    
+      <div class="big">{{form.id}} {{ form.strength }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="diff_view_row">
+      <div class="diff_title">
+	规范性
+      </div>
+      {% for form in s_diffview %}    
+      <div class="big">{{form.id}} {{ form.normative }}</div>
+      {% endfor %}
+    </div>
+    </div>
+
+    {{ mov_b_form.id }} {{ mov_b_form.market_result }}
+    <br>
+    {{ mov_s_form.id }} {{ mov_s_form.market_result }}
 
     </ol>
         <button id="save_and_next" type="submit">下一步(货币初选)</button>

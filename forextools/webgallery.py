@@ -7,6 +7,24 @@ from currencychart import CurrencyChart
 from convert_wrapper import ConvertWrapper
 
 
+def symbol_file_map(symbol,timeframe):
+    smap = {'eurusd' : 'EURUSD',
+            'gbpusd' : 'GBPUSD',
+            'usdchf' : 'CHFUSD',
+            'audusd' : 'AUDUSD',
+            'usdjpy' : 'JPYUSD',
+            'usdcad' : 'CADUSD',
+            'SPTDXY' : 'USDX',}
+
+    timeframe_map  = {'5':'5M',
+                      '15':'15M',
+                      '60':'1H',
+                      '240':'4H',
+                      '1440':'1D',
+                      '10080':'1W',
+                      '43200':'1Mon'}
+    return '%s_%s' % (smap[symbol],timeframe_map[timeframe])
+
 class WebGallery:
     def __init__(self, config = configuration.Configuration()):
         self.ftpath    = '%s/forextools' % config.forexbase
@@ -14,6 +32,7 @@ class WebGallery:
         self.wmap       = dict()
         self.t_col      = config.timeframe_col
         self.c_row      = config.currency_row
+        self.conf       = config
         self.flip_list  = map(lambda x: x.upper(), config.currency_flip)
         return
 
@@ -31,9 +50,13 @@ class WebGallery:
             cp = ConvertWrapper()
             if cname.upper() in self.flip_list:
                 flp = True
-            cp.set_parm(text=item.replace('usd',''),flip=flp)
-            cp.convert_copy(c.get_latest_gif() , "%s/%s/images/full/%s.gif" % (self.gbasedir, gname , self.wmap[item]))
-            cp.convert_copy(c.get_latest_gif() , "%s/%s/images/thumb/%s.gif" % (self.gbasedir, gname , self.wmap[item]))
+            cp.set_parm(text=item.replace('usd','').replace('_%s' % tf,'_%s' % self.conf.timeframe_map[tf] ),flip=flp)
+            cp.convert_copy(c.get_latest_gif() , "%s/%s/images/full/%s.gif" % (self.gbasedir,
+                                                                               gname ,
+                                                                               symbol_file_map(cname,tf)))
+            cp.convert_copy(c.get_latest_gif() , "%s/%s/images/thumb/%s.gif" % (self.gbasedir,
+                                                                                gname ,
+                                                                                symbol_file_map(cname,tf)))
         return
 
     def expand(self):
@@ -46,6 +69,21 @@ class WebGallery:
 
         return OUT_str
 
+    def build_v2(self, **kargs):
+        
+        g_title = kargs['title'] if kargs.has_key('title') else 'notitle'
+        
+        if kargs.has_key('t_col'):
+            self.t_col = kargs['t_col']
+        if kargs.has_key('c_row'):
+            self.c_row = kargs['c_row']
+
+        for c in self.c_row:
+            for t in self.t_col:
+                self.wmap[c + '_' + t] = '%s_%s' % (c,self.conf.timeframe_map[t])
+
+        self.init_gallery(g_title)
+        self.update(g_title)
 
     def build(self,**kargs):
         idx   = 1
@@ -86,8 +124,8 @@ class WebGallery:
         s.write(st.render(**context))
         s.close()
 
-
 if __name__ == '__main__':
     g = WebGallery()
-    g.build(title='ForexGallery_1h',t_col=['60','240','1440','10080','43200'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
-    g.build(title='ForexGallery_5m',t_col=['5','15','60','240'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
+    # g.build(title='ForexGallery_1h',t_col=['60','240','1440','10080','43200'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
+    # g.build(title='ForexGallery_5m',t_col=['5','15','60','240'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
+    g.build_v2(title='forexsys',t_col=['5','15','60','240','1440','10080','43200'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
