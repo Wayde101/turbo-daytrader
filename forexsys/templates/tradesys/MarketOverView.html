@@ -1,40 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
+
+
 <form action="" method="POST" class="MarketOverView">
     {% csrf_token %}
-    tradetype:{{ tradetype }}
+    交易类型:{{ tradetype }}
     <br>    
-
     <div class="diff_view">
-    {{ movd_formset.management_form }}
+      {{ movd_formset.management_form }}
 
-    <div class="diff_view_row">
-    <div class="diff_title">
-      时间级别
-    </div>
-    {% for form in movd_formset reversed %}    
-        <div class="tf{{ form.timeframe.value }}">{{form.id}} {{form.timeframe.as_hidden}} {{ form.timeframe.value }}</div>
-    {% endfor %}
-    </div>
+      <div class="diff_view_row">
+	<div class="diff_title"> 图表 </div>
+	{% for form in movd_formset reversed %}
+	<div class="tf_mov">
+	  <a href="/static/images/full/USDX_{{form.timeframe.value}}.gif" alt="usdx">
+	  <img src="/static/images/thumb/USDX_{{form.timeframe.value}}.gif" alt = "usdx"/> </a>
+	</div>
+	{% endfor %}
+      </div>
 
-    <div class="diff_view_row">
-    <div class="diff_title">
-      客观方向
-    </div>
-    {% for form in movd_formset reversed %}    
-        <div class="tf{{ form.timeframe.value }}">{{form.id}} {{ form.obj_dir }}</div>
-    {% endfor %}
-    </div>
+      <div class="diff_view_row">
+	<div class="diff_title"> 级别 </div>
+	{% for form in movd_formset reversed %}
+	<div class="tf_mov">{{form.id}} {{form.timeframe.as_hidden}} {{ form.timeframe.value }}</div>
+	{% endfor %}
+      </div>
 
-    <div class="diff_view_row">
-    <div class="diff_title">
-      主观方向
-    </div>
-    {% for form in movd_formset reversed %}    
-        <div class="tf{{ form.timeframe.value }}">{{form.id}} {{ form.sub_dir }}</div>
-    {% endfor %}
-    </div>
+      <div class="diff_view_row">
+	<div class="diff_title">  客观 </div>
+	{% for form in movd_formset reversed %}    
+        <div class="tf_mov">{{form.id}} {{ form.obj_dir }}</div>
+	{% endfor %}
+      </div>
 
+      <div class="diff_view_row">
+	<div class="diff_title">  主观 </div>
+	{% for form in movd_formset reversed %}    
+	<div class="tf_mov">{{form.id}} {{ form.sub_dir }}</div>
+	{% endfor %}
+      </div>
+      
     </div>
     
     <br>

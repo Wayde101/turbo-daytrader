@@ -7,43 +7,28 @@
      display:table-row;
  }
 
- .diff_view_row div {		
+ .diff_view_row div {
      display:table-cell;		
  }
  
  .diff_view_row div.diff_title {
-  width:10%;
+  width:5%;
  }
- .diff_view_row div.tf5M {
-  width:18%;
- }
- .diff_view_row div.tf15M {
-  width:18%;
- }
- .diff_view_row div.tf1H {
-  width:18%;
- }
- .diff_view_row div.tf4H {
-  width:18%;
- }
- .diff_view_row div.tf1D {
-  width:18%;
- }
- .diff_view_row div.tf1W {
-  width:18%;
- }
- .diff_view_row div.tf1Mon {
-  width:18%;
+ .diff_view_row div.tf_mov {
+  width:19%;
  }
 
  .diff_view_row div.big {
-  width:15%;
+  width:15.833%;
  }
 
  .diff_view_row div.small {
-  width:15%;
+  width:15.833%;
  }
 
+.diff_view_row div img {
+    display: block; width: 100%; height: auto;
+}
 
 
 form textarea {

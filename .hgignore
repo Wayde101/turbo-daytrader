@@ -28,3 +28,4 @@ vars/*
 CVS
 *.db
 session.*
+images

@@ -67,15 +67,16 @@ def diff_overview_init(tp_model,diff_flag):
     for symbol in symbols:
         if diff_flag == 'b':
             tfm = tf[1]
-            mov = tp_model.diff_s_overview
+            mov_save = tp_model.diff_s_overview
         if diff_flag == 's':
             tfm = tf[0]
+            mov_save = mov
 
         mdi = MarketDetailInfo(symbol_name = symbol,
                                timeframe   = tfm ,
                                obj_dir     = 'N' ,
                                sub_dir     = 'N' ,
-                               market_overview = mov)
+                               market_overview = mov_save)
         mdi.save()
     return mov
 
@@ -271,13 +272,13 @@ def market_diff_view(request,tp_id = None):
                                       prefix = 'b',
                                       queryset = b_queryset)
 
-        mov_b_form  = MarketOverViewForm(request.POST,
-                                         prefix = 'b',
-                                         instance = tp_obj.diff_b_overview)
+        mov_b_form = MarketOverViewForm(request.POST,
+                                        prefix = 'b',
+                                        instance = tp_obj.diff_b_overview)
 
-        mov_s_form  = MarketOverViewForm(request.POST,
-                                         prefix = 's',
-                                         instance = tp_obj.diff_s_overview)
+        mov_s_form = MarketOverViewForm(request.POST,
+                                        prefix = 's',
+                                        instance = tp_obj.diff_s_overview)
 
 
         if s_diffview.is_valid():
@@ -305,8 +306,8 @@ def market_diff_view(request,tp_id = None):
             "tradetype"  : tp_obj.tradetype,
             "b_diffview" : b_diffview,
             "s_diffview" : s_diffview,
-            "mov_b_form" : mov_b_form.as_ul(),
-            "mov_s_form" : mov_s_form.as_ul(),
+            "mov_b_form" : mov_b_form,
+            "mov_s_form" : mov_s_form,
             },context_instance=RequestContext(request))
     
 
