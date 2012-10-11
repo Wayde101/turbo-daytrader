@@ -41,8 +41,22 @@ class WebGallery:
         if not os.path.exists(ghome):
             os.makedirs("%s/images/full"  % ghome )
             os.makedirs("%s/images/thumb" % ghome )
-    
+
     def update(self,gname):
+        for item in self.wmap.keys():
+            cname,tf = item.split('_')
+            flp = False
+            c  = CurrencyChart(cname,tf)
+            cp = ConvertWrapper()
+            if cname.upper() in self.flip_list:
+                flp = True
+            cp.set_parm(text=item.replace('usd',''),flip=flp)
+            cp.convert_copy(c.get_latest_gif() , "%s/%s/images/full/%s.gif" % (self.gbasedir, gname , self.wmap[item]))
+            cp.convert_copy(c.get_latest_gif() , "%s/%s/images/thumb/%s.gif" % (self.gbasedir, gname , self.wmap[item]))
+        return
+
+    
+    def update_v2(self,gname):
         for item in self.wmap.keys():
             cname,tf = item.split('_')
             flp = False
@@ -83,7 +97,7 @@ class WebGallery:
                 self.wmap[c + '_' + t] = '%s_%s' % (c,self.conf.timeframe_map[t])
 
         self.init_gallery(g_title)
-        self.update(g_title)
+        self.update_v2(g_title)
 
     def build(self,**kargs):
         idx   = 1
