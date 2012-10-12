@@ -12,4 +12,8 @@ s = WebGallery()
 s.build(title='ForexGallery_1h',t_col=['60','240','1440','10080','43200'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
 
 
+all = WebGallery()
+all.build_v2(title='forexsys',t_col=['5','15','60','240','1440','10080','43200'],c_row=['SPTDXY','eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy'])
+
+
 
