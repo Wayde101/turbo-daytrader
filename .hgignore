@@ -29,3 +29,4 @@ CVS
 *.db
 session.*
 images
+forexsys/tradesys/static/forexchart
