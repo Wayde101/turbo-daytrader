@@ -1,9 +1,9 @@
 {% load i18n %}
-
 <!doctype html>
 <html>
     <head>
         <title>{% block page_title %} {% endblock %}</title>
+        <link rel="stylesheet" href="{{ STATIC_URL }}base.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
     </head>
 
@@ -11,32 +11,20 @@
         <div id="container">
             <div id="header">
 	            <div id="logo">
-		            <h1>ForexSys</h1>
+                    Awesome Forex Trading
 	            </div>
-                <div id="topmenu">
+                <div id="toolbar">
                     {% if user.username %}
-                    <p>
                         Welcome {{ user.username }} [ <a href="{% url accounts.views.logout %}">{% trans "sign out" %}</a> ]
-                    </p>
-                    <p>
-                        <a href="/tradesys/MyTradePlan">我的计划</a> |
-                        <a href="/tradesys/MyTradePlan/market_over_view/">市场整体分析</a> |
-                        <a href="/tradesys/MyTradePlan/market_diff_view/">各货币分化分析</a> |
-                        <a href="/tradesys/MyTradePlan/first_select_view/">货币初选</a> |
-                        <a href="/tradesys/MyTradePlan/analysis_selected_view/">选定币种趋势分析</a> |
-                        <a href="/tradesys/MyTradePlan/tradeplan_action_view/">行动计划制定</a> |
-                        <a href="{% url accounts.views.profile %}">Profile</a>
-                    </p>
                     {% else %}
-                    <p>
                         <a href="{% url accounts.views.login %}">Sign In</a>
-                    </p>
                     {% endif %}
                 </div>
                 <div class="clear"></div>
             </div>
             <!-- end #header -->
             <div id="menu">
+                {% block menu %}{% endblock %}
             </div>
             <!-- end #menu -->
             <div id="main">

@@ -1,58 +1,66 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "tradesys/base.html" %}
+{% block menu %}
+    <a href="/tradesys/MyTradePlan">我的计划</a> &rarr;
+    <b>市场整体分析</b>
+{% endblock %}
 
+{% block content %}
 
 <form action="" method="POST" class="MarketOverView">
     {% csrf_token %}
-    交易类型:{{ tradetype }}
-    <br>
+    <h1>{{ tradetype }}</h1>
+    <table class="diffview">
+        <tr>
+	        <th>图表</th>
+	        {% for form in movd_formset reversed %}
+            <td class="thumb">
+	            <a href="{{ image_base_url }}/full/USDX_{{form.timeframe.value}}.gif" alt="usdx">
+	            <img src="{{ image_base_url}}/thumb/USDX_{{form.timeframe.value}}.gif" alt = "usdx"/> </a>
+	        </td>
+	        {% endfor %}
+        </tr>
+
+        <tr>
+	        <th>级别</th>
+	        {% for form in movd_formset reversed %}
+	        <td>{{form.id}} {{form.timeframe.as_hidden}} {{ form.timeframe.value }}</td>
+	        {% endfor %}
+        </tr>
+
+      <tr>
+	      <th>客观</th>
+	      {% for form in movd_formset reversed %}
+          <td>{{form.id}} {{ form.obj_dir }}</td>
+	      {% endfor %}
+      </tr>
+
+      <tr>
+	      <th>主观</th>
+	      {% for form in movd_formset reversed %}
+	      <td>{{form.id}} {{ form.sub_dir }}</td>
+	      {% endfor %}
+      </tr>
+
+      <tr>
+          <th>结论</th>
+          <td colspan=6>
+              {{ mov_form.market_result }}
+          </td>
+      </tr>
+
+      <tr>
+          <th>操作</th>
+          <td>{{ plan_res_result.plan_result }} {{ tradetype }}</td>
+      </tr>
+
+
+    </table>
+
     <div class="diff_view">
       {{ movd_formset.management_form }}
-
-      <div class="diff_view_row">
-	<div class="diff_title"> 图表 </div>
-	{% for form in movd_formset reversed %}
-	<div class="tf_mov">
-	  <a href="{{ image_base_url }}/full/USDX_{{form.timeframe.value}}.gif" alt="usdx">
-	  <img src="{{ image_base_url}}/thumb/USDX_{{form.timeframe.value}}.gif" alt = "usdx"/> </a>
-	</div>
-	{% endfor %}
-      </div>
-
-      <div class="diff_view_row">
-	<div class="diff_title"> 级别 </div>
-	{% for form in movd_formset reversed %}
-	<div class="tf_mov">{{form.id}} {{form.timeframe.as_hidden}} {{ form.timeframe.value }}</div>
-	{% endfor %}
-      </div>
-
-      <div class="diff_view_row">
-	<div class="diff_title">  客观 </div>
-	{% for form in movd_formset reversed %}
-        <div class="tf_mov">{{form.id}} {{ form.obj_dir }}</div>
-	{% endfor %}
-      </div>
-
-      <div class="diff_view_row">
-	<div class="diff_title">  主观 </div>
-	{% for form in movd_formset reversed %}
-	<div class="tf_mov">{{form.id}} {{ form.sub_dir }}</div>
-	{% endfor %}
-      </div>
-
     </div>
 
-    <br>
-    <li> <label for="id_market_result">分析结论:</label>
-      {{ mov_form.market_result }}
-    </li>
-
-    <li> <label for="id_market_result">交易结论:</label>
-      {{ plan_res_result.plan_result }} {{ tradetype }}
-    </li>
-
-    </ol>
-        <button id="save_and_next" type="submit">下一步(各货币分化分析)</button>
+    <button id="save_and_next" type="submit">下一步(各货币分化分析)</button>
 </form>
 
 {% endblock %}
