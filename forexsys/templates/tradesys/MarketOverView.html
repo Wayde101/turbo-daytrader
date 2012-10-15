@@ -5,7 +5,7 @@
 <form action="" method="POST" class="MarketOverView">
     {% csrf_token %}
     交易类型:{{ tradetype }}
-    <br>    
+    <br>
     <div class="diff_view">
       {{ movd_formset.management_form }}
 
@@ -13,8 +13,8 @@
 	<div class="diff_title"> 图表 </div>
 	{% for form in movd_formset reversed %}
 	<div class="tf_mov">
-	  <a href="/static/images/full/USDX_{{form.timeframe.value}}.gif" alt="usdx">
-	  <img src="/static/images/thumb/USDX_{{form.timeframe.value}}.gif" alt = "usdx"/> </a>
+	  <a href="{{ image_base_url }}/full/USDX_{{form.timeframe.value}}.gif" alt="usdx">
+	  <img src="{{ image_base_url}}/thumb/USDX_{{form.timeframe.value}}.gif" alt = "usdx"/> </a>
 	</div>
 	{% endfor %}
       </div>
@@ -28,20 +28,20 @@
 
       <div class="diff_view_row">
 	<div class="diff_title">  客观 </div>
-	{% for form in movd_formset reversed %}    
+	{% for form in movd_formset reversed %}
         <div class="tf_mov">{{form.id}} {{ form.obj_dir }}</div>
 	{% endfor %}
       </div>
 
       <div class="diff_view_row">
 	<div class="diff_title">  主观 </div>
-	{% for form in movd_formset reversed %}    
+	{% for form in movd_formset reversed %}
 	<div class="tf_mov">{{form.id}} {{ form.sub_dir }}</div>
 	{% endfor %}
       </div>
-      
+
     </div>
-    
+
     <br>
     <li> <label for="id_market_result">分析结论:</label>
       {{ mov_form.market_result }}
