@@ -1,21 +1,23 @@
-{% extends "base.html" %}
+{% extends "tradesys/base.html" %}
+{% block menu %}
+    <b>我的计划</b>
+{% endblock %}
 {% block content %}
+
+<h1>目前已有的交易</h1>
+<ol>
+    {% for tp in oldplans %}
+    <li>
+        <a href="/tradesys/MyTradePlan/market_over_view/{{ tp.id }}/">{{ tp.begin_time }} - {{ tp.tradetype }} - {{ tp.tradeframe }}</a>
+    </li>
+    {% endfor %}
+</ol>
+
+<h1>新建交易計劃</h1>
 <form action="" method="POST" class="MyTradePlan">
     {% csrf_token %}
     {{ tradeinfo }}
-    <label>目前已有的交易列表:</label><b></b>
-    <ol>
-    <!-- {% for tradeplan in object_list %} -->
-    <!-- <li> -->
-	<!-- {{ tradeplan.symbol_name }} | -->
-        <!-- {{ tradeplan.trade_type }}  | -->
-        <!-- {{ tradeplan.tradeplan.tradeframe }} | -->
-        <!-- {{ tradeplan.tradeplan.begin_time }} -->
-    <!-- </li> -->
-    <!-- {% endfor %} -->
-    </ol>
-
-        <button id="create_plan" type="submit">创建交易计划</button>
+    <button id="create_plan" type="submit">创建交易计划</button>
 </form>
 
 

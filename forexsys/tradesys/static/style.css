@@ -8,9 +8,9 @@
  }
 
  .diff_view_row div {
-     display:table-cell;		
+     display:table-cell;
  }
- 
+
  .diff_view_row div.diff_title {
   width:5%;
  }
@@ -40,6 +40,5 @@ form textarea {
 form textarea.result_text {
     width: 30em;
     height: 10em;
-    margin: 0 0 0.5em;    
+    margin: 0 0 0.5em;
 }
-

@@ -1,50 +1,116 @@
-{% extends "base.html" %}
+{% extends "tradesys/base.html" %}
+
+{% block menu %}
+    <a href="/tradesys/MyTradePlan">我的计划</a> &rarr;
+    <a href="/tradesys/MyTradePlan/market_over_view/">市场整体分析</a> &rarr;
+    <b>各货币分化分析</b>
+{% endblock %}
+
 {% block content %}
 
 <form action="" method="POST" class="MarketDiffView">
     {% csrf_token %}
 
-    交易类型:{{ tradetype }}
+    <h1>{{ tradetype }}</h1>
 
-    <br>
+    <table class="diffview">
+        <tr><td colspan=7><h2>長期</h2></td></tr>
+      <tr>
+	      <th>图表 </th>
+	      {% for form in b_diffview %}
+          <td class="thumb">
+	          <a href="{{image_base_url}}full/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt="diff_view">
+	              <img src="{{image_base_url}}thumb/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt = "diff_view"/>
+              </a>
+	          </td>
+	          {% endfor %}
+          </tr>
 
-    <div class="diff_view">
-      {{ b_diffview.management_form }}
-      {% for form in b_diffview %}    
-      {{ form.id }}
-      {{ form.symbol_name.as_hidden }}
-      {{ form.timeframe.as_hidden }}
-      {{ form.strength.as_hidden }}
-      {{ form.normative.as_hidden }}
-      {{ form.symbol_name.as_hidden }}
-      {% endfor %}
+          <tr>
+	          <th>客观</th>
+	          {% for form in b_diffview %}
+              <td>{{form.id}} {{ form.obj_dir }}</td>
+	          {% endfor %}
+          </tr>
 
-      <div class="diff_view_row">
-	<div class="diff_title"> 图表 </div>
-	{% for form in b_diffview %}
-	<div class="big"><a href="/static/images/full/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt="diff_view">
-	    <img src="/static/images/thumb/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt = "diff_view"/> </a>
-	</div>
-	{% endfor %}
+          <tr>
+	          <th>主观</th>
+	          {% for form in b_diffview %}
+              <td>{{form.id}} {{ form.sub_dir }}</td>
+	          {% endfor %}
+          </tr>
+
+          <tr><th>結論</th><td colspan=6>{{ mov_b_form.id }} {{ mov_b_form.market_result }}</td></tr>
+        <tr><td colspan=7><h2>短期</h2></td></tr>
+          <tr>
+              <th>圖表</th>
+              {% for form in s_diffview %}
+              <td class="thumb">
+                  <a href="{{image_base_url}}full/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt="diff_view">
+                      <img src="{{image_base_url}}thumb/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt = "diff_view"/>
+                  </a>
+              </td>
+              {% endfor %}
+          </tr>
+
+          <tr>
+	          <th>客观</th>
+              {% for form in s_diffview %}
+              <td>{{form.id}} {{ form.obj_dir }}</td>
+              {% endfor %}
+          </tr>
+
+          <tr>
+	          <th>主观</th>
+              {% for form in s_diffview %}
+              <td>{{form.id}} {{ form.sub_dir }}</td>
+              {% endfor %}
+          </tr>
+
+          <tr>
+	          <th>强弱</th>
+              {% for form in s_diffview %}
+              <td>{{form.id}} {{ form.strength }}</td>
+              {% endfor %}
+          </tr>
+
+          <tr>
+	          <th>规范</th>
+              {% for form in s_diffview %}
+              <td>{{form.id}} {{ form.normative }}</td>
+              {% endfor %}
+          </tr>
+
+          <tr>
+              <th>結論</th>
+              <td colspan=6>
+                  {{ mov_s_form.id }} {{ mov_s_form.market_result }}
+              </td>
+
+          </tr>
+
+
       </div>
 
-      <div class="diff_view_row">
-	<div class="diff_title">  客观 </div>
-	{% for form in b_diffview %}    
-        <div class="big">{{form.id}} {{ form.obj_dir }}</div>
-	{% endfor %}
       </div>
 
-      <div class="diff_view_row">
-	<div class="diff_title">  主观 </div>
-	{% for form in b_diffview %}    
-        <div class="big">{{form.id}} {{ form.sub_dir }}</div>
-	{% endfor %}
-      </div>
-    </div>
-    
-    <div class="diff_view">    
+
+    </table>
+
+    {{ b_diffview.management_form }}
+
+    {% for form in b_diffview %}
+    {{ form.id }}
+    {{ form.symbol_name.as_hidden }}
+    {{ form.timeframe.as_hidden }}
+    {{ form.strength.as_hidden }}
+    {{ form.normative.as_hidden }}
+    {{ form.symbol_name.as_hidden }}
+    {% endfor %}
+
+
     {{ s_diffview.management_form }}
+
     {% for form in s_diffview %}
     {{ form.id }}
     {{ form.symbol_name.as_hidden }}
@@ -52,58 +118,8 @@
     {{ form.symbol_name.as_hidden }}
     {% endfor %}
 
-    <div class="diff_view_row">
-      <div class="diff_title"> 图表 </div>
-      {% for form in s_diffview %}
-      <div class="big"><a href="/static/images/full/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt="diff_view">
-	  <img src="/static/images/thumb/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt = "diff_view"/> </a>
-      </div>
-      {% endfor %}
-    </div>
 
-    <div class="diff_view_row">
-      <div class="diff_title">
-	客观
-      </div>
-      {% for form in s_diffview %}    
-      <div class="big">{{form.id}} {{ form.obj_dir }}</div>
-      {% endfor %}
-    </div>
-
-    <div class="diff_view_row">
-      <div class="diff_title">
-	主观
-      </div>
-      {% for form in s_diffview %}    
-      <div class="big">{{form.id}} {{ form.sub_dir }}</div>
-      {% endfor %}
-    </div>
-
-    <div class="diff_view_row">
-      <div class="diff_title">
-	强弱
-      </div>
-      {% for form in s_diffview %}    
-      <div class="big">{{form.id}} {{ form.strength }}</div>
-      {% endfor %}
-    </div>
-
-    <div class="diff_view_row">
-      <div class="diff_title">
-	规范性
-      </div>
-      {% for form in s_diffview %}    
-      <div class="big">{{form.id}} {{ form.normative }}</div>
-      {% endfor %}
-    </div>
-    </div>
-
-    {{ mov_b_form.id }} {{ mov_b_form.market_result }}
-    <br>
-    {{ mov_s_form.id }} {{ mov_s_form.market_result }}
-
-    </ol>
-        <button id="save_and_next" type="submit">下一步(货币初选)</button>
+    <button id="save_and_next" type="submit">下一步(货币初选)</button>
 </form>
 
 {% endblock %}

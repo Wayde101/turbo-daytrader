@@ -176,6 +176,7 @@ class MyTradePlanView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(MyTradePlanView, self).get_context_data(**kwargs)
         context['tradeinfo'] = TradePlanInitForm().as_ul()
+        context['oldplans'] = self.model.objects.filter(created_by=self.request.user)
         return context
 
     def form_valid(self,form):
@@ -243,6 +244,7 @@ def market_over_view(request,tp_id=None):
 
     return render_to_response("tradesys/MarketOverView.html", {
             "tradetype" : tp_obj.tradetype,
+
             "movd_formset" : movd_formset,
             "mov_form" : mov_form,
             "plan_res_result" : plan_res_form,
@@ -310,6 +312,7 @@ def market_diff_view(request,tp_id = None):
             "s_diffview" : s_diffview,
             "mov_b_form" : mov_b_form,
             "mov_s_form" : mov_s_form,
+            "image_base_url": settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
 
