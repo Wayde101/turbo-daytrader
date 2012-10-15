@@ -1,0 +1,88 @@
+/* shared */
+
+.clear {
+   clear: both;
+}
+
+/* baseic */
+
+html {
+   font-family: Sans;
+   font-size: 12px;
+   line-height: 1.5;
+}
+
+body {
+   margin: 0;
+   padding: 0;
+}
+
+/* header */
+div#header {
+   color: #eee;
+   background-color: #111;
+   padding: 3px 8px;
+}
+
+div#logo  {
+   font-family: Verdana;
+   margin: 0;
+   line-height: 1.5;
+}
+
+div#logo {float: left;}
+div#toolbar {float: right;}
+
+
+/* menu */
+div#menu {
+   background-color: #b0b0b0;
+   color: #333;
+   font-size: 150%;
+   padding: 3px 7px;
+}
+
+
+/* body */
+
+div#content {
+   width: 90%;
+   margin: .5em auto;
+}
+
+/* footer */
+
+div#footer {
+   width: 100%;
+   text-align: center;
+   margin-top: 64px;
+}
+
+
+/* tradesys app */
+
+h1 {
+   font-family: Arial Black;
+   color: maroon;
+   font-weight: bold;
+   padding: .5em 2px;
+}
+table.diffview {
+   border-collapse: collapse;
+}
+table.diffview th {
+   text-align: center;
+   width: 2.5em;
+}
+table.diffview td {
+   text-align: center;
+}
+table.diffview td textarea {
+   width: 98%;
+   height: 2.5em;
+   padding: .25em .5em;
+   margin: .25em;
+}
+table.diffview td.thumb img {
+   width: 98%;
+}
