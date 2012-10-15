@@ -135,3 +135,8 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
+
+# Forexsys Settings
+
+IMAGE_BASE_URL = 'http://www.gao-yang.com:55580/static/images/'

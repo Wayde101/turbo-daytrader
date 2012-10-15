@@ -2,6 +2,7 @@
 # -*- mode: python -*-
 # Create your views here.
 # from tradesys.models import Symbol
+from django.conf import settings
 from django import forms
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
@@ -43,7 +44,7 @@ def market_overview_init(tradetype,tradeframe):
     now    = timezone.now()
     mov = MarketOverView(market_result = "", pub_date = now)
     mov.save()
-    
+
     for tf in trade_frame_map(tradeframe):
         mdi = MarketDetailInfo(symbol_name = tradetype,
                                timeframe   = tf ,
@@ -60,7 +61,7 @@ def diff_overview_init(tp_model,diff_flag):
     mov.save()
 
     tf = trade_frame_map(tp_model.tradeframe)
-    
+
     # 目前实现上主要是处理 6 个非美货币的交易
     symbols = ['EURUSD','GBPUSD','CHFUSD','AUDUSD','CADUSD','JPYUSD']
 
@@ -107,7 +108,7 @@ def selected_overview_init(tp_obj):
 
 
 def tradeplan_action_init(tp_obj):
-    
+
     selected = MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
                                                timeframe = tp_obj.tradeframe,
                                                exclude_reason = 'N')
@@ -120,7 +121,7 @@ def tradeplan_action_init(tp_obj):
         for sym in  e - s:
             del_tp = TradePlanAction.objects.get(tradeplan = tp_obj, symbol_name = sym)
             del_tp.delete()
-        
+
     if len(selected) == 0:
         return False
 
@@ -165,7 +166,7 @@ def tp_id_proc(request,tp_id):
     request.session['TradePlanModel_id'] = ltp[0].pk
     return request.session['TradePlanModel_id']
 
-        
+
 class MyTradePlanView(CreateView):
     form_class    = TradePlanInitForm
     model         = TradePlanModel
@@ -185,7 +186,7 @@ class MyTradePlanView(CreateView):
         tf     =  form.cleaned_data['tradeframe']
         user   =  self.request.user
         tp_obj =  self.model.objects
-        
+
         now    = timezone.now()
 
         ltp = tp_obj.filter(tradeframe = tf,
@@ -203,17 +204,17 @@ class MyTradePlanView(CreateView):
             self.object.save()
         else:
             self.object = ltp[0]
-            
+
         self.request.session['TradePlanModel_id'] = self.object.id
         return redirect(self.success_url)
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def market_over_view(request,tp_id=None):
 
-    tp_id  = tp_id_proc(request,tp_id)    
+    tp_id  = tp_id_proc(request,tp_id)
 
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
-    
+
     if request.method == "POST":
         movd_formset = MovDetailInlineFormset(request.POST,
                                             request.FILES,
@@ -227,7 +228,7 @@ def market_over_view(request,tp_id=None):
             # if mov_form.is_valid(): then xxx
             mov_form.save()
             plan_res_form.save()
-            if tp_obj.diff_s_overview is None:            
+            if tp_obj.diff_s_overview is None:
                 tp_obj.diff_s_overview = diff_overview_init(tp_obj,'s')
                 tp_obj.save()
             if tp_obj.diff_b_overview is None:
@@ -239,18 +240,19 @@ def market_over_view(request,tp_id=None):
         movd_formset = MovDetailInlineFormset(instance = tp_obj.market_overview)
         mov_form   = MarketOverViewForm(instance = tp_obj.market_overview)
         plan_res_form  = PlanResultForm(instance = tp_obj)
-        
+
     return render_to_response("tradesys/MarketOverView.html", {
             "tradetype" : tp_obj.tradetype,
             "movd_formset" : movd_formset,
             "mov_form" : mov_form,
-            "plan_res_result" : plan_res_form
+            "plan_res_result" : plan_res_form,
+            "image_base_url": settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def market_diff_view(request,tp_id = None):
 
-    tp_id  = tp_id_proc(request,tp_id)    
+    tp_id  = tp_id_proc(request,tp_id)
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
 
     #  usdx 是六大非美货币的交易功课.
@@ -262,7 +264,7 @@ def market_diff_view(request,tp_id = None):
                                 timeframe = trade_frame_map(tp_obj.tradeframe)[0])
     b_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
                                 timeframe = trade_frame_map(tp_obj.tradeframe)[1])
-    
+
     if request.method == "POST":
         s_diffview = MdvDetailFormset(request.POST, request.FILES,
                                       prefix = 's',
@@ -294,7 +296,7 @@ def market_diff_view(request,tp_id = None):
             mov_s_form.save()
 
         return redirect('/tradesys/MyTradePlan/first_select_view')
-    
+
     else:
         b_diffview = MdvDetailFormset(prefix = 'b',queryset = b_queryset)
         s_diffview = MdvDetailFormset(prefix = 's',queryset = s_queryset)
@@ -309,7 +311,7 @@ def market_diff_view(request,tp_id = None):
             "mov_b_form" : mov_b_form,
             "mov_s_form" : mov_s_form,
             },context_instance=RequestContext(request))
-    
+
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def first_select_view(request,tp_id = None):
@@ -324,13 +326,13 @@ def first_select_view(request,tp_id = None):
                                                 queryset = mdi_query_set )
         if first_select_view.is_valid():
             first_select_view.save()
-            
+
         selected_overview_init(tp_obj)
 
         return redirect('/tradesys/MyTradePlan/analysis_selected_view')
     else:
         first_select_view = FirstSelectFormset( queryset = mdi_query_set )
-    
+
     return render_to_response("tradesys/FirstSelectView.html", {
             "tradetype" :  tp_obj.tradetype,
             "first_select_view" : first_select_view.as_ul()
@@ -338,15 +340,15 @@ def first_select_view(request,tp_id = None):
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def analysis_selected_view(request, tp_id = None):
-    
-    tp_id = tp_id_proc(request,tp_id)    
+
+    tp_id = tp_id_proc(request,tp_id)
     tp_obj  = TradePlanModel.objects.get(pk = tp_id)
     selected = get_selected_symbols(tp_obj.tradeframe,tp_obj.diff_s_overview)
-    
+
     if selected is None:
         return u'没有选出要交易的货币，之后需要一个逻辑来处理，比如场外等待多久继续做交易计划,因为不交易也是一种交易状态'
         # return redirect('/tradesys/MyTradePlan/no_selected_symbol')
-    
+
     if request.method == "POST":
         selected_view = SelectedFormset( request.POST,
             queryset = MarketDetailInfo.objects.filter(
@@ -356,14 +358,14 @@ def analysis_selected_view(request, tp_id = None):
         if selected_view.is_valid():
             selected_view.save()
             tradeplan_action_init(tp_obj)
-            
+
         return redirect('/tradesys/MyTradePlan/tradeplan_action_view')
     else:
         selected_view = SelectedFormset(queryset = MarketDetailInfo.objects.filter(
                 Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
                 Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
                 symbol_name__in=selected))
-        
+
     return render_to_response("tradesys/AnalysisSelectedView.html", {
             "tradetype" :  tp_obj.tradetype,
             "selected_view" : selected_view.as_ul()
@@ -372,11 +374,11 @@ def analysis_selected_view(request, tp_id = None):
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def tradeplan_action_view(request, tp_id = None):
 
-    tp_id = tp_id_proc(request,tp_id)    
+    tp_id = tp_id_proc(request,tp_id)
     tp_obj  = TradePlanModel.objects.get(pk = tp_id)
 
     tp_action_query = TradePlanAction.objects.filter(tradeplan = tp_obj)
-    
+
     if request.method == "POST":
         tradeplan_action_view = TradePlanActionFormset( request.POST,
                                                         queryset = tp_action_query)
