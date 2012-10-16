@@ -117,11 +117,19 @@ function abort_step() {
     $('.popup').trigger('close');
 }
 
+function next_if_complete(id) {
+    var v1 = $('#id_marketdetailinfo_set-' + id + '-obj_dir').val();
+    var v2 = $('#id_marketdetailinfo_set-' + id + '-sub_dir').val();
+
+    if (v1 != 'N' && v2 != 'N') next_step();
+}
+
 $('.obj-selector a').click(function(e) {
     var arg = $(this).attr('id').split('-');
     $('#id_marketdetailinfo_set-' + (5 - arg[2]) + '-obj_dir').val(arg[3]);
     $("#obj-selector-" + arg[2] + " a").removeClass("selected");
     $(this).addClass('selected');
+    next_if_complete(5 - arg[2]);
 });
 
 $('.sub-selector a').click(function(e) {
@@ -129,6 +137,7 @@ $('.sub-selector a').click(function(e) {
     $('#id_marketdetailinfo_set-' + (5 - arg[2]) + '-sub_dir').val(arg[3]);
     $("#sub-selector-" + arg[2] + " a").removeClass("selected");
     $(this).addClass('selected');
+    next_if_complete(5 - arg[2]);
 });
 
 $('a.start-at-step').click(function(e) {
