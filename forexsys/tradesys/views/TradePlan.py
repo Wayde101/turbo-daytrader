@@ -220,31 +220,39 @@ def market_over_view(request,tp_id=None):
         movd_formset = MovDetailInlineFormset(request.POST,
                                             request.FILES,
                                             instance = tp_obj.market_overview)
-        mov_form   = MarketOverViewForm(request.POST,instance = tp_obj.market_overview)
+        mov_form     = MarketOverViewForm(request.POST,instance = tp_obj.market_overview)
         plan_res_form  = PlanResultForm(request.POST,instance = tp_obj)
         if movd_formset.is_valid():
             movd_formset.save()
             # MarketOverViewForm 在 rewrite market_result 字段的之后，非空的valid 需要做一下
             # 提示用户某个字段需要必须填写的.
             # if mov_form.is_valid(): then xxx
+        if mov_form.is_valid():
             mov_form.save()
+        else:
+            return redirect('tradesys.views.TradePlan.market_over_view')
+        
+        if plan_res_form.is_valid() and plan_res_form.cleaned_data['plan_result'] is not None:
             plan_res_form.save()
-            if tp_obj.diff_s_overview is None:
-                tp_obj.diff_s_overview = diff_overview_init(tp_obj,'s')
-                tp_obj.save()
-            if tp_obj.diff_b_overview is None:
-                tp_obj.diff_b_overview = diff_overview_init(tp_obj,'b')
-                tp_obj.save()
+        else:
+            return redirect('tradesys.views.TradePlan.market_over_view')
 
-            return redirect('/tradesys/MyTradePlan/market_diff_view')
+        if tp_obj.diff_s_overview is None:
+            tp_obj.diff_s_overview = diff_overview_init(tp_obj,'s')
+            tp_obj.save()
+            
+        if tp_obj.diff_b_overview is None:
+            tp_obj.diff_b_overview = diff_overview_init(tp_obj,'b')
+            tp_obj.save()
+
+        return redirect('tradesys.views.TradePlan.market_diff_view')
     else:
-        movd_formset = MovDetailInlineFormset(instance = tp_obj.market_overview)
-        mov_form   = MarketOverViewForm(instance = tp_obj.market_overview)
+        movd_formset   = MovDetailInlineFormset(instance = tp_obj.market_overview)
+        mov_form       = MarketOverViewForm(instance = tp_obj.market_overview)
         plan_res_form  = PlanResultForm(instance = tp_obj)
 
     return render_to_response("tradesys/MarketOverView.html", {
             "tradetype" : tp_obj.tradetype,
-
             "movd_formset" : movd_formset,
             "mov_form" : mov_form,
             "plan_res_result" : plan_res_form,
@@ -257,8 +265,8 @@ def market_diff_view(request,tp_id = None):
     tp_id  = tp_id_proc(request,tp_id)
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
 
-    #  usdx 是六大非美货币的交易功课.
-    #  黄金/白银/交叉盘该如何设计，需要和小月月等专业人事共同设计.
+    # usdx 是六大非美货币的交易功课.
+    # 黄金/白银/交叉盘该如何设计，需要和小月月等专业人事共同设计.
     # if tp_obj.tradeytype != 'USDX':
     mdi_obj = MarketDetailInfo.objects
 

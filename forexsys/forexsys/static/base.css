@@ -4,6 +4,8 @@
    clear: both;
 }
 
+.required {color:red;}
+
 /* baseic */
 
 html {
@@ -57,6 +59,7 @@ div#footer {
    text-align: center;
    margin-top: 64px;
 }
+
 
 
 /* tradesys app */
