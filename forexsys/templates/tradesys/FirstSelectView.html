@@ -5,6 +5,12 @@
 <li>{{ tradetype }} </li>
 
 
+
+
+
+<form action="" method="POST" class="FirstSelectView">
+    {% csrf_token %}
+
 <table class="diffview">
   <tr><td colspan=7><h2>長期</h2></td></tr>
   <tr>
@@ -38,7 +44,7 @@
   
   <tr>
     <th>圖表</th>
-    {% for item in s_diffview_set %}
+    {% for item in s_diffview_set reversed %}
     <td class="thumb">
       <a href="{{image_base_url}}full/{{item.symbol_name}}_{{item.timeframe}}.gif" alt="diff_view">
         <img src="{{image_base_url}}thumb/{{item.symbol_name}}_{{item.timeframe}}.gif" alt = "diff_view"/>
@@ -71,7 +77,7 @@
   <tr>
     <th>规范</th>
     {% for item in s_diffview_set reversed %}
-    <td> {{ item.normative }}</td>
+    <td> {{ normative|hash:item.normative }}</td>
     {% endfor %}
   </tr>
 
@@ -80,19 +86,15 @@
     <td colspan=6>
       {{ mov_s_res }}
     </td>
-
   </tr>
-</div>
-</div>
+  <tr>
+    <th>过滤</th>
+    {% for form in first_select_view %}
+    <td>{{form.id}} {{ form.exclude_reason }}</td>
+    {% endfor %}
+  </tr>
 </table>
-
-
-
-<form action="" method="POST" class="FirstSelectView">
-    {% csrf_token %}
-    {{ first_select_view }}
-    <label>结论(选择哪些货币作为日内交易重点):</label><b></b>
-
+      {{ first_select_view.management_form }}
         <button id="selected" type="submit">选定币种趋势分析</button>
 </form>
 {% endblock %}

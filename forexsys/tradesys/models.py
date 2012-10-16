@@ -94,14 +94,13 @@ PLANRESULT = (
 
 
 NORMATIVE = (
-    (u'1stClass', u'一等中继模型'),
-    (u'2thClass', u'二等通道模型'),
-    (u'3thClass', u'三等反弹模型'),
-    (u'MacdClass', u'MACD反弹模型'),
-    (u'HaveRelay', u'已有中继或者次'),
-    (u'HaveCC',  u'已有不规范的次'),
-    (u'NoCC', u'暂时还没有中继或者次'),
-    (u'LongNoCC','段时间不太可能形成次')   # 比如在一个横盘区间，不划分主次，突破之后有次要节奏调整才认定主次
+    (u'NoCC',      u'暂无中继/次'),
+    (u'HaveRelay', u'中继或者次'),
+    (u'HaveCC',    u'不规范的次'),
+    (u'1stClass',  u'一等中继模型'),
+    (u'2thClass',  u'二等通道模型'),
+    (u'3thClass',  u'三等反弹模型'),
+    (u'MacdClass', u'MACD反弹模型')
     )
 
 EXREASON = (

@@ -31,7 +31,7 @@ class PlanResultForm(forms.ModelForm):
 
 FirstSelectFormset  = modelformset_factory(MarketDetailInfo,
                                            extra = 0,
-                                           fields = ('strength','exclude_reason'))
+                                           fields = ('exclude_reason',))
 
 SelectedFormset  = modelformset_factory(MarketDetailInfo,
                                         extra = 0,
@@ -65,4 +65,3 @@ TradePlanActionFormset  = modelformset_factory(TradePlanAction,
                                                          'sl_price',
                                                          'tp_price',
                                                          'holding_log'))
-

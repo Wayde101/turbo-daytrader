@@ -16,7 +16,7 @@ from django.views.generic.edit import CreateView
 
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
 from tradesys.models import MarketOverView,TradePlanAction
-from tradesys.models import SUB_DIR,OBJ_DIR,TRADEFRAME,TRADETYPE
+from tradesys.models import SUB_DIR,OBJ_DIR,TRADEFRAME,TRADETYPE,NORMATIVE
 
 from tradesys.forms import MarketOverViewForm,PlanResultForm
 from tradesys.forms import FirstSelectFormset,SelectedFormset
@@ -362,12 +362,13 @@ def first_select_view(request,tp_id = None):
             "tt" : dict(TRADETYPE),
             "sub_dir" : dict(SUB_DIR),
             "obj_dir" : dict(OBJ_DIR),
+            "normative" : dict(NORMATIVE),
             "b_diffview_set" : b_queryset,
             "s_diffview_set" : s_queryset,
             "mov_b_res" : mov_b_res,
             "mov_s_res" : mov_s_res,
             "tradetype" :  tp_obj.tradetype,
-            "first_select_view" : first_select_view.as_ul(),
+            "first_select_view" : first_select_view,
             "image_base_url" : settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
