@@ -5,17 +5,18 @@
 {% endblock %}
 
 {% block content %}
-
 <form action="" method="POST" class="MarketOverView">
     {% csrf_token %}
-    <h1>{{ tradetype }}</h1>
+    <h1>{{ tradetype }} &rarr; <a href="javascript:start();" class="next_step">开始</a>
+    </h1>
     <table class="diffview">
         <tr>
 	        <th>图表</th>
 	        {% for form in movd_formset reversed %}
             <td class="thumb">
-	            <a href="{{ image_base_url }}/full/USDX_{{form.timeframe.value}}.gif" alt="usdx">
-	            <img src="{{ image_base_url}}/thumb/USDX_{{form.timeframe.value}}.gif" alt = "usdx"/> </a>
+	            <a href="#" id="start-at-step-{{ forloop.counter }}" class="start-at-step">
+	                <img id="img-{{ forloop.counter }}" src="{{ image_base_url}}/thumb/USDX_{{form.timeframe.value}}.gif" alt = "usdx"/>
+                </a>
 	        </td>
 	        {% endfor %}
         </tr>
@@ -62,5 +63,80 @@
 
     <button id="save_and_next" type="submit">下一步(各货币分化分析)</button>
 </form>
+<!-- 弹出菜单部分  -->
+<!-- TODO: 用 MODEL 数据替换写死的上下横 -->
+{% for form in movd_formset reversed %}
+<div id="step-{{ forloop.counter }}" class="stepview popup hidden">
+    <div>
+	    <img src="{{ image_base_url}}/full/USDX_{{form.timeframe.value}}.gif" />
+    </div>
+<div class="selector">
+    <h3>客观</h3>
+    <ul id="obj-selector-{{ forloop.counter }}" class="obj-selector">
+        <li><a href="#" id="obj-selector-{{ forloop.counter }}-U">上</a></li>
+        <li><a href="#" id="obj-selector-{{ forloop.counter }}-D">下</a></li>
+        <li><a href="#" id="obj-selector-{{ forloop.counter }}-Z">转</a></li>
+        <li><a href="#" id="obj-selector-{{ forloop.counter }}-H">横</a></li>
+    </ul>
+    <h3>主观</h3>
+    <ul id="sub-selector-{{ forloop.counter }}" class="sub-selector">
+        <li><a href="#" id="sub-selector-{{ forloop.counter }}-U">上</a></li>
+        <li><a href="#" id="sub-selector-{{ forloop.counter }}-D">下</a></li>
+        <li><a href="#" id="sub-selector-{{ forloop.counter }}-*">*</a></li>
+    </ul>
+    <div class="right">
+    <a href="javascript:next_step();" class="next_step">下一步</a>
+    <a href="javascript:abort_step();" class="abort_step">离开</a>
+    </div>
+    <div class="clear"></div>
+</div>
+</td>
+{% endfor %}
 
+<script type="text/javascript">
+var step = 1;
+function start() {
+    step = 1;
+    next_step();
+}
+function next_step() {
+    if (step < 6) {
+	$('.popup').hide();
+
+	$('#step-' + step).lightbox_me({
+	    centered: true,
+	});
+	step = step + 1;
+    } else {
+	step = 0;
+	$('.popup').trigger('close');
+    }
+}
+
+function abort_step() {
+    $('.popup').trigger('close');
+}
+
+$('.obj-selector a').click(function(e) {
+    var arg = $(this).attr('id').split('-');
+    $('#id_marketdetailinfo_set-' + (5 - arg[2]) + '-obj_dir').val(arg[3]);
+    $("#obj-selector-" + arg[2] + " a").removeClass("selected");
+    $(this).addClass('selected');
+});
+
+$('.sub-selector a').click(function(e) {
+    var arg = $(this).attr('id').split('-');
+    $('#id_marketdetailinfo_set-' + (5 - arg[2]) + '-sub_dir').val(arg[3]);
+    $("#sub-selector-" + arg[2] + " a").removeClass("selected");
+    $(this).addClass('selected');
+});
+
+$('a.start-at-step').click(function(e) {
+    var arg = $(this).attr('id').split('-');
+    var id = arg[3];
+    step = id;
+    next_step();
+});
+
+</script>
 {% endblock %}
