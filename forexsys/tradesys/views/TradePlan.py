@@ -16,6 +16,7 @@ from django.views.generic.edit import CreateView
 
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
 from tradesys.models import MarketOverView,TradePlanAction
+from tradesys.models import SUB_DIR,OBJ_DIR,TRADEFRAME,TRADETYPE
 
 from tradesys.forms import MarketOverViewForm,PlanResultForm
 from tradesys.forms import FirstSelectFormset,SelectedFormset
@@ -220,8 +221,8 @@ def market_over_view(request,tp_id=None):
 
     if request.method == "POST":
         movd_formset = MovDetailInlineFormset(request.POST,
-                                            request.FILES,
-                                            instance = tp_obj.market_overview)
+                                              request.FILES,
+                                              instance = tp_obj.market_overview)
         mov_form     = MarketOverViewForm(request.POST,instance = tp_obj.market_overview)
         plan_res_form  = PlanResultForm(request.POST,instance = tp_obj)
         if movd_formset.is_valid():
@@ -295,7 +296,6 @@ def market_diff_view(request,tp_id = None):
                                         prefix = 's',
                                         instance = tp_obj.diff_s_overview)
 
-
         if s_diffview.is_valid():
             s_diffview.save()
 
@@ -332,8 +332,19 @@ def first_select_view(request,tp_id = None):
     tp_id = tp_id_proc(request,tp_id)
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
 
+
+    mdi_obj = MarketDetailInfo.objects
+
+    s_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
+                                timeframe = trade_frame_map(tp_obj.tradeframe)[0])
+    mov_s_res  = tp_obj.diff_s_overview.market_result
+    b_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
+                                timeframe = trade_frame_map(tp_obj.tradeframe)[1])
+    mov_b_res  = tp_obj.diff_b_overview.market_result
+    
     mdi_query_set =  MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
                                                      timeframe = tp_obj.tradeframe)
+    
     if request.method == "POST":
         first_select_view = FirstSelectFormset( request.POST,
                                                 queryset = mdi_query_set )
@@ -347,8 +358,17 @@ def first_select_view(request,tp_id = None):
         first_select_view = FirstSelectFormset( queryset = mdi_query_set )
 
     return render_to_response("tradesys/FirstSelectView.html", {
+            "tf" : dict(TRADEFRAME),
+            "tt" : dict(TRADETYPE),
+            "sub_dir" : dict(SUB_DIR),
+            "obj_dir" : dict(OBJ_DIR),
+            "b_diffview_set" : b_queryset,
+            "s_diffview_set" : s_queryset,
+            "mov_b_res" : mov_b_res,
+            "mov_s_res" : mov_s_res,
             "tradetype" :  tp_obj.tradetype,
-            "first_select_view" : first_select_view.as_ul()
+            "first_select_view" : first_select_view.as_ul(),
+            "image_base_url" : settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
 # 可能需要 用 login_required 修饰一下，确保登录使用

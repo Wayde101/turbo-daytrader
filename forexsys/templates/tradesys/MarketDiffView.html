@@ -17,7 +17,7 @@
         <tr><td colspan=7><h2>長期</h2></td></tr>
       <tr>
 	      <th>图表 </th>
-	      {% for form in b_diffview %}
+	      {% for form in b_diffview  %}
           <td class="thumb">
 	          <a href="{{image_base_url}}full/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt="diff_view">
 	              <img src="{{image_base_url}}thumb/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt = "diff_view"/>
