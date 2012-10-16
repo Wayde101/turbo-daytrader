@@ -155,7 +155,9 @@ def tp_id_proc(request,tp_id):
     # 访问的目标.
 
     if tp_id is not None:
+        request.session['TradePlanModel_id'] = tp_id
         return tp_id
+
     if request.session.has_key('TradePlanModel_id'):
         return request.session['TradePlanModel_id']
 
@@ -247,6 +249,7 @@ def market_over_view(request,tp_id=None):
 
         return redirect('tradesys.views.TradePlan.market_diff_view')
     else:
+        
         movd_formset   = MovDetailInlineFormset(instance = tp_obj.market_overview)
         mov_form       = MarketOverViewForm(instance = tp_obj.market_overview)
         plan_res_form  = PlanResultForm(instance = tp_obj)
