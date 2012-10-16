@@ -1,4 +1,13 @@
 /* shared */
+.left {
+   float: left;
+}
+.right {
+   float: right;
+}
+.hidden {
+   display: none;
+}
 
 .clear {
    clear: both;
@@ -47,6 +56,8 @@ div#menu {
 
 /* body */
 
+div#popup { display: none; }
+
 div#content {
    width: 90%;
    margin: .5em auto;
@@ -88,4 +99,57 @@ table.diffview td textarea {
 }
 table.diffview td.thumb img {
    width: 98%;
+}
+
+div.stepview {
+   height: 70%;
+   padding: 7px;
+   border: 1px solid #666;
+   background-color: #999;
+}
+
+div.stepview .selector {
+   width: 100%;
+   background-color: white;
+}
+
+div.stepview .selector h3 {
+   display: inline;
+   float: left;
+   text-align: center;
+   width: 2.5em;
+}
+
+div.stepview img {
+   position: relative;
+   margin: 0 auto;
+   height: 100%;
+}
+
+div.stepview ul li {
+   list-style: none;
+   float: left;
+}
+
+div.stepview .selected {
+   background-color: maroon;
+   color: white;
+   font-weight: bold;
+}
+
+div.stepview a {
+   text-decoration: none;
+   font-size: 16px;
+   border: 1px solid #666;
+   padding: 7px;
+   margin: 3px;
+   display: inline-block;
+}
+
+div.stepview a:link {
+   color: blue;
+}
+div.stepview a:hover {
+   background-color: navy;
+   color: #ccc;
 }
