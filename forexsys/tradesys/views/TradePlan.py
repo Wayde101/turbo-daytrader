@@ -307,8 +307,7 @@ def market_diff_view(request,tp_id = None):
 
         if mov_s_form.is_valid():
             mov_s_form.save()
-
-        return redirect('/tradesys/MyTradePlan/first_select_view')
+        return redirect('tradesys.views.TradePlan.first_select_view')
 
     else:
         b_diffview = MdvDetailFormset(prefix = 'b',queryset = b_queryset)
