@@ -1,4 +1,73 @@
 {% extends "tradesys/base.html" %}
+
+{% block tradesys_head %}
+<script type="text/javascript">
+var step = 1;
+
+function start() {
+    step = 1;
+    next_step();
+}
+
+function next_step() {
+    if (step < 6) {
+	$('#step-' + step).lightbox_me({
+	    centered: true,
+	    onLoad: function() {
+		$('#step-' + (step - 1)).hide();
+		step = step + 1;
+	    }
+	});
+    } else {
+	step = 1;
+	$('.popup').trigger('close');
+    }
+}
+
+function abort_step() {
+    $('.popup').trigger('close');
+}
+
+function next_if_complete(s) {
+    var v1 = $('#id_marketdetailinfo_set-' + s + '-obj_dir').val();
+    var v2 = $('#id_marketdetailinfo_set-' + s + '-sub_dir').val();
+
+    if (v1 != 'N' && v2 != 'N') {
+	next_step();
+    }
+}
+
+$(function() {
+
+    $('.obj-selector li a').click(function(e) {
+	var arg = $(this).attr('id').split('-');
+	$('#id_marketdetailinfo_set-' + (5 - arg[2]) + '-obj_dir').val(arg[3]);
+	$("#obj-selector-" + arg[2] + " li a").removeClass("selected");
+	$(this).addClass('selected');
+	next_if_complete(5 - arg[2]);
+	e.preventDefault();
+    });
+
+    $('.sub-selector li a').click(function(e) {
+	var arg = $(this).attr('id').split('-');
+	$('#id_marketdetailinfo_set-' + (5 - arg[2]) + '-sub_dir').val(arg[3]);
+	$("#sub-selector-" + arg[2] + " li a").removeClass("selected");
+	$(this).addClass('selected');
+	next_if_complete(5 - arg[2]);
+	e.preventDefault();
+    });
+
+
+    $('a.start-at-step').click(function(e) {
+	var arg = $(this).attr('id').split('-');
+	var id = arg[3];
+	step = id;
+	next_step();
+    });
+});
+</script>
+{% endblock %}
+
 {% block menu %}
     <a href="/tradesys/MyTradePlan">我的计划</a> &rarr;
     <b>市场整体分析</b>
@@ -93,59 +162,4 @@
 </td>
 {% endfor %}
 
-<script type="text/javascript">
-var step = 1;
-function start() {
-    step = 1;
-    next_step();
-}
-function next_step() {
-    if (step < 6) {
-	$('.popup').hide();
-
-	$('#step-' + step).lightbox_me({
-	    centered: true,
-	});
-	step = step + 1;
-    } else {
-	step = 0;
-	$('.popup').trigger('close');
-    }
-}
-
-function abort_step() {
-    $('.popup').trigger('close');
-}
-
-function next_if_complete(id) {
-    var v1 = $('#id_marketdetailinfo_set-' + id + '-obj_dir').val();
-    var v2 = $('#id_marketdetailinfo_set-' + id + '-sub_dir').val();
-
-    if (v1 != 'N' && v2 != 'N') next_step();
-}
-
-$('.obj-selector a').click(function(e) {
-    var arg = $(this).attr('id').split('-');
-    $('#id_marketdetailinfo_set-' + (5 - arg[2]) + '-obj_dir').val(arg[3]);
-    $("#obj-selector-" + arg[2] + " a").removeClass("selected");
-    $(this).addClass('selected');
-    next_if_complete(5 - arg[2]);
-});
-
-$('.sub-selector a').click(function(e) {
-    var arg = $(this).attr('id').split('-');
-    $('#id_marketdetailinfo_set-' + (5 - arg[2]) + '-sub_dir').val(arg[3]);
-    $("#sub-selector-" + arg[2] + " a").removeClass("selected");
-    $(this).addClass('selected');
-    next_if_complete(5 - arg[2]);
-});
-
-$('a.start-at-step').click(function(e) {
-    var arg = $(this).attr('id').split('-');
-    var id = arg[3];
-    step = id;
-    next_step();
-});
-
-</script>
 {% endblock %}
