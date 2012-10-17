@@ -1,5 +1,5 @@
 {% extends "tradesys/base.html" %}
-
+{% load tradesys_extras %}
 {% block tradesys_head %}
 <script type="text/javascript">
 var step = Array();
@@ -116,7 +116,7 @@ $(function() {
 	        {% for form in b_diffview  %}
             <td class="thumb">
 	            <a href="#" class="start-at-step" id="start-at-step-b-{{ forloop.counter}}">
-	                <img src="{{image_base_url}}thumb/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt = "diff_view"/>
+	                <img src="{{image_base_url}}thumb/{{form.symbol_name.value}}_{{timeframe_dict|hash:form.timeframe.value}}.gif" alt = "diff_view"/>
                 </a>
 	        </td>
 	        {% endfor %}
@@ -147,7 +147,7 @@ $(function() {
             {% for form in s_diffview %}
             <td class="thumb">
 	            <a href="#" class="start-at-step" id="start-at-step-s-{{ forloop.counter}}">
-                    <img src="{{image_base_url}}thumb/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" alt = "diff_view"/>
+                    <img src="{{image_base_url}}thumb/{{form.symbol_name.value}}_{{timeframe_dict|hash:form.timeframe.value}}.gif" alt = "diff_view"/>
                 </a>
             </td>
             {% endfor %}
@@ -219,7 +219,7 @@ $(function() {
 {% for form in b_diffview  %}
 <div id="step-b-{{ forloop.counter }}" class="stepview popup hidden cls-b">
     <div>
-	    <img src="{{image_base_url}}full/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" />
+	    <img src="{{image_base_url}}full/{{form.symbol_name.value}}_{{timeframe_dict|hash:form.timeframe.value}}.gif" />
     </div>
     <div class="selector">
         <h3>客观</h3>
@@ -248,7 +248,7 @@ $(function() {
 {% for form in s_diffview  %}
 <div id="step-s-{{ forloop.counter }}" class="stepview popup hidden cls-s">
     <div>
-	    <img src="{{image_base_url}}full/{{form.symbol_name.value}}_{{form.timeframe.value}}.gif" / >
+	    <img src="{{image_base_url}}full/{{form.symbol_name.value}}_{{timeframe_dict|hash:form.timeframe.value}}.gif" / >
     </div>
     <div class="selector">
         <h3>客观</h3>
