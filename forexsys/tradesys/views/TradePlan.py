@@ -399,10 +399,10 @@ def analysis_selected_view(request, tp_id = None):
                 Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
                 Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
                 symbol_name__in=selected))
-
+    print dir(selected_view)
     return render_to_response("tradesys/AnalysisSelectedView.html", {
             "tradetype" :  tp_obj.tradetype,
-            "selected_view" : selected_view.as_ul()
+            "selected_view" : selected_view,
             },context_instance=RequestContext(request))
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
