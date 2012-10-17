@@ -17,6 +17,7 @@ from django.views.generic.edit import CreateView
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
 from tradesys.models import MarketOverView,TradePlanAction
 from tradesys.models import SUB_DIR,OBJ_DIR,TRADEFRAME,TRADETYPE,NORMATIVE
+from tradesys.models import TIMEFRAME
 
 from tradesys.forms import MarketOverViewForm,PlanResultForm
 from tradesys.forms import FirstSelectFormset,SelectedFormset
@@ -30,15 +31,15 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 def trade_frame_map(tradeframe):
-    if tradeframe == '5M':
-        return ['5M','15M','1H','4H','1D']
-    if tradeframe == '1H':
-        return ['1H','4H','1D','1W','1Mon']
+    if tradeframe == '5':
+        return ['5','15','60','240','1440']
+    if tradeframe == '60':
+        return ['60','240','1440','10080','40320']
 
 def tradeplan_lag_time(tradeframe):
-    if tradeframe == '1H':
+    if tradeframe == '60':
         return 60 * 60 * 4 * 4
-    if tradeframe == '5M':
+    if tradeframe == '5':
         return 60 * 5  * 3 * 4
 
 def market_overview_init(tradetype,tradeframe):
@@ -190,7 +191,6 @@ class MyTradePlanView(CreateView):
         tf     =  form.cleaned_data['tradeframe']
         user   =  self.request.user
         tp_obj =  self.model.objects
-
         now    = timezone.now()
 
         ltp = tp_obj.filter(tradeframe = tf,
@@ -256,6 +256,9 @@ def market_over_view(request,tp_id=None):
         plan_res_form  = PlanResultForm(instance = tp_obj)
 
     return render_to_response("tradesys/MarketOverView.html", {
+            "tradeframe_dict" : dict(TRADEFRAME),
+            "tradetype_dict" : dict(TRADETYPE),
+            "timeframe_dict" : dict(TIMEFRAME),
             "tradetype" : tp_obj.tradetype,
             "movd_formset" : movd_formset,
             "mov_form" : mov_form,
@@ -317,6 +320,9 @@ def market_diff_view(request,tp_id = None):
 
 
     return render_to_response("tradesys/MarketDiffView.html", {
+            "tradeframe_dict" : dict(TRADEFRAME),
+            "tradetype_dict" : dict(TRADETYPE),
+            "timeframe_dict" : dict(TIMEFRAME),
             "tradetype"  : tp_obj.tradetype,
             "b_diffview" : b_diffview,
             "s_diffview" : s_diffview,
@@ -358,8 +364,9 @@ def first_select_view(request,tp_id = None):
         first_select_view = FirstSelectFormset( queryset = mdi_query_set )
 
     return render_to_response("tradesys/FirstSelectView.html", {
-            "tf" : dict(TRADEFRAME),
-            "tt" : dict(TRADETYPE),
+            "tradeframe_dict" : dict(TRADEFRAME),
+            "tradetype_dict" : dict(TRADETYPE),
+            "timeframe_dict" : dict(TIMEFRAME),
             "sub_dir" : dict(SUB_DIR),
             "obj_dir" : dict(OBJ_DIR),
             "normative" : dict(NORMATIVE),
@@ -398,11 +405,12 @@ def analysis_selected_view(request, tp_id = None):
         selected_view = SelectedFormset(queryset = MarketDetailInfo.objects.filter(
                 Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
                 Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
-                symbol_name__in=selected))
-    print dir(selected_view)
+                symbol_name__in=selected).order_by('symbol_name','timeframe'))
+        
     return render_to_response("tradesys/AnalysisSelectedView.html", {
-            "tradetype" :  tp_obj.tradetype,
-            "selected_view" : selected_view,
+            "tradetype"  :  tp_obj.tradetype,
+            "timeframes" :  trade_frame_map(tp_obj.tradeframe),
+            "selected_view" : selected_view.as_ul(),
             },context_instance=RequestContext(request))
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
