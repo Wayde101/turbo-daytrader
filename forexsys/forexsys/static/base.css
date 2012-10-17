@@ -81,27 +81,29 @@ h1 {
    font-weight: bold;
    padding: .5em 2px;
 }
-table.diffview {
+table.graph {
    border-collapse: collapse;
    width: 100%;
 }
-table.diffview th {
+table.graph th {
    text-align: center;
-   width: 5%;
 }
-table.diffview td {
+table.graph td {
    text-align: center;
-   width: 19%;
 }
-table.diffview td textarea {
+table.graph td textarea {
    width: 98%;
    height: 2.5em;
    padding: .25em .5em;
    margin: .25em;
 }
-table.diffview td.thumb img {
+table.graph td.thumb img {
    width: 98%;
 }
+table.overview th { width: 5% }
+table.overview td { width: 19% }
+table.diffview th { width: 4% }
+table.diffview td { width: 16% }
 
 div.stepview {
    padding: 7px;
