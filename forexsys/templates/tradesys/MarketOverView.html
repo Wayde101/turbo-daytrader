@@ -89,7 +89,7 @@ $(function() {
     {% csrf_token %}
     <h1>{{ tradetype }} &rarr; <a href="javascript:start();" class="next_step">开始</a>
     </h1>
-    <table class="diffview">
+    <table class="graph overview">
         <tr>
 	        <th>图表</th>
 	        {% for form in movd_formset reversed %}
