@@ -59,7 +59,7 @@ div#menu {
 div#popup { display: none; }
 
 div#content {
-   width: 960px;
+   width: 90%;
    margin: .5em auto;
 }
 
@@ -83,13 +83,15 @@ h1 {
 }
 table.diffview {
    border-collapse: collapse;
+   width: 100%;
 }
 table.diffview th {
    text-align: center;
-   width: 2.5em;
+   width: 5%;
 }
 table.diffview td {
    text-align: center;
+   width: 19%;
 }
 table.diffview td textarea {
    width: 98%;
@@ -102,28 +104,31 @@ table.diffview td.thumb img {
 }
 
 div.stepview {
-   height: 70%;
    padding: 7px;
    border: 1px solid #666;
-   background-color: #999;
+   background-color: #333;
+   width: 80%;
 }
 
 div.stepview .selector {
-   width: 100%;
-   background-color: white;
+   background-color: #111;
+   color: #ccc;
+   padding: 0 2px;
+   line-height: 2;
 }
 
 div.stepview .selector h3 {
    display: inline;
    float: left;
    text-align: center;
-   width: 2.5em;
+   margin-left: 1%;
+   margin-right: 1%;
 }
 
 div.stepview img {
    position: relative;
    margin: 0 auto;
-   height: 480px;
+   width: 100%;
 }
 
 div.stepview ul li {
@@ -140,16 +145,20 @@ div.stepview .selected {
 div.stepview a {
    text-decoration: none;
    font-size: 16px;
-   border: 1px solid #666;
-   padding: 7px;
+   border: 1px solid #555;
+   background-color: #333;
+   padding: 7px 13px;
    margin: 3px;
    display: inline-block;
 }
 
 div.stepview a:link {
-   color: blue;
+   color: #ccc;
+}
+div.stepview a:visited {
+   color: #ccc;
 }
 div.stepview a:hover {
-   background-color: navy;
+   background-color: darkblue;
    color: #ccc;
 }
