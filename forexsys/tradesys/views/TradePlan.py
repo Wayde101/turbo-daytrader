@@ -180,7 +180,7 @@ class MyTradePlanView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(MyTradePlanView, self).get_context_data(**kwargs)
         context['tradeinfo'] = TradePlanInitForm().as_ul()
-        context['oldplans'] = self.model.objects.filter(created_by=self.request.user)
+        context['oldplans'] = self.model.objects.filter(created_by=self.request.user).order_by('-begin_time')
         return context
 
     def form_valid(self,form):
@@ -234,7 +234,7 @@ def market_over_view(request,tp_id=None):
             mov_form.save()
         else:
             return redirect('tradesys.views.TradePlan.market_over_view')
-        
+
         if plan_res_form.is_valid() and plan_res_form.cleaned_data['plan_result'] is not None:
             plan_res_form.save()
         else:
@@ -243,14 +243,14 @@ def market_over_view(request,tp_id=None):
         if tp_obj.diff_s_overview is None:
             tp_obj.diff_s_overview = diff_overview_init(tp_obj,'s')
             tp_obj.save()
-            
+
         if tp_obj.diff_b_overview is None:
             tp_obj.diff_b_overview = diff_overview_init(tp_obj,'b')
             tp_obj.save()
 
         return redirect('tradesys.views.TradePlan.market_diff_view')
     else:
-        
+
         movd_formset   = MovDetailInlineFormset(instance = tp_obj.market_overview)
         mov_form       = MarketOverViewForm(instance = tp_obj.market_overview)
         plan_res_form  = PlanResultForm(instance = tp_obj)
@@ -347,10 +347,10 @@ def first_select_view(request,tp_id = None):
     b_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
                                 timeframe = trade_frame_map(tp_obj.tradeframe)[1])
     mov_b_res  = tp_obj.diff_b_overview.market_result
-    
+
     mdi_query_set =  MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
                                                      timeframe = tp_obj.tradeframe)
-    
+
     if request.method == "POST":
         first_select_view = FirstSelectFormset( request.POST,
                                                 queryset = mdi_query_set )
@@ -406,7 +406,7 @@ def analysis_selected_view(request, tp_id = None):
                 Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
                 Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
                 symbol_name__in=selected).order_by('symbol_name','timeframe'))
-        
+
     return render_to_response("tradesys/AnalysisSelectedView.html", {
             "tradetype"  :  tp_obj.tradetype,
             "timeframes" :  trade_frame_map(tp_obj.tradeframe),
