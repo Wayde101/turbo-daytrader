@@ -31,16 +31,20 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 def trade_frame_map(tradeframe):
-    if tradeframe == '5':
-        return ['5','15','60','240','1440']
-    if tradeframe == '60':
-        return ['60','240','1440','10080','40320']
+    if tradeframe == 5:
+        return [ 5, 15, 60, 240, 1440]
+    if tradeframe == 60:
+        return [ 60, 240, 1440, 10080, 40320]
 
 def tradeplan_lag_time(tradeframe):
-    if tradeframe == '60':
+    if tradeframe == 60:
         return 60 * 60 * 4 * 4
-    if tradeframe == '5':
+    if tradeframe == 5:
         return 60 * 5  * 3 * 4
+
+
+def prev_dir(symbol,timeframe):
+    return 0
 
 def market_overview_init(tradetype,tradeframe):
     now    = timezone.now()
@@ -74,7 +78,6 @@ def diff_overview_init(tp_model,diff_flag):
         if diff_flag == 's':
             tfm = tf[0]
             mov_save = mov
-
         mdi = MarketDetailInfo(symbol_name = symbol,
                                timeframe   = tfm ,
                                obj_dir     = 'N' ,
@@ -92,14 +95,12 @@ def selected_overview_init(tp_obj):
         return False
 
     tfm = trade_frame_map(tp_obj.tradeframe)
-
     for mdi in selected:
         for tf in tfm:
             try:
                 mdi_new = MarketDetailInfo.objects.get(symbol_name = mdi.symbol_name,
                                                        market_overview = tp_obj.diff_s_overview,
                                                        timeframe = tf)
-
             except MarketDetailInfo.DoesNotExist:
                 mdi_new=MarketDetailInfo(symbol_name = mdi.symbol_name,
                                          timeframe   = tf,
@@ -342,19 +343,19 @@ def first_select_view(request,tp_id = None):
     mdi_obj = MarketDetailInfo.objects
 
     s_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
-                                timeframe = trade_frame_map(tp_obj.tradeframe)[0])
+                                timeframe = trade_frame_map(tp_obj.tradeframe)[0]).order_by('-symbol_name')
     mov_s_res  = tp_obj.diff_s_overview.market_result
     b_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
-                                timeframe = trade_frame_map(tp_obj.tradeframe)[1])
+                                timeframe = trade_frame_map(tp_obj.tradeframe)[1]).order_by('-symbol_name')
     mov_b_res  = tp_obj.diff_b_overview.market_result
 
     mdi_query_set =  MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
-                                                     timeframe = tp_obj.tradeframe)
-
+                                                     timeframe = tp_obj.tradeframe).order_by('-symbol_name')
     if request.method == "POST":
         first_select_view = FirstSelectFormset( request.POST,
                                                 queryset = mdi_query_set )
         if first_select_view.is_valid():
+            print '#' * 80
             first_select_view.save()
 
         selected_overview_init(tp_obj)
@@ -395,22 +396,29 @@ def analysis_selected_view(request, tp_id = None):
             queryset = MarketDetailInfo.objects.filter(
                 Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
                 Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
-                symbol_name__in=selected))
+                symbol_name__in=selected).order_by('symbol_name','-timeframe'))
         if selected_view.is_valid():
             selected_view.save()
-            tradeplan_action_init(tp_obj)
+
+        tradeplan_action_init(tp_obj)
 
         return redirect('/tradesys/MyTradePlan/tradeplan_action_view')
     else:
         selected_view = SelectedFormset(queryset = MarketDetailInfo.objects.filter(
                 Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
                 Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
-                symbol_name__in=selected).order_by('symbol_name','timeframe'))
+                symbol_name__in=selected).order_by('symbol_name','-timeframe'))
 
     return render_to_response("tradesys/AnalysisSelectedView.html", {
-            "tradetype"  :  tp_obj.tradetype,
-            "timeframes" :  trade_frame_map(tp_obj.tradeframe),
-            "selected_view" : selected_view.as_ul(),
+            "tradeframe_dict" : dict(TRADEFRAME),
+            "tradetype_dict" : dict(TRADETYPE),
+            "timeframe_dict" : dict(TIMEFRAME),
+            "sym_count" :  selected_view.total_form_count()/len(trade_frame_map(tp_obj.tradeframe)),
+            "tf_count"  :  len(trade_frame_map(tp_obj.tradeframe)),
+            "tradetype" :  tp_obj.tradetype,
+            "timeframes":  trade_frame_map(tp_obj.tradeframe),
+            "selected_view" : selected_view,
+            "image_base_url" : settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
