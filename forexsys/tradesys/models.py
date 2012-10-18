@@ -24,18 +24,18 @@ SYMBOL_NAME = (
     )
 
 TIMEFRAME = (
-    (u'5',   u'5M'),
-    (u'15',  u'15M'),
-    (u'60',  u'1H'),
-    (u'240', u'4H'),
-    (u'1440',u'1D'),
-    (u'10080', u'1W'),
-    (u'40320', u'1Mon'),
+    (5,   u'5M'),
+    (15,  u'15M'),
+    (60,  u'1H'),
+    (240, u'4H'),
+    (1440,u'1D'),
+    (10080, u'1W'),
+    (40320, u'1Mon'),
     )
 
 TRADEFRAME = (
-    (u'5', u'超短计划(以5分钟为最小交易级别)'),
-    (u'60', u'日计划(以1小时为最小交易级别)'),
+    (5, u'超短计划(以5分钟为最小交易级别)'),
+    (60, u'日计划(以1小时为最小交易级别)'),
     )
 
 OBJ_DIR = (
@@ -119,7 +119,7 @@ class MarketOverView(models.Model):
 
 class MarketDetailInfo(models.Model):
     symbol_name = models.CharField(max_length = 20,choices = SYMBOL_NAME)
-    timeframe   = models.CharField(max_length = 10,choices = TIMEFRAME)
+    timeframe   = models.IntegerField(choices = TIMEFRAME)
     obj_dir     = models.CharField(max_length =10,choices  = OBJ_DIR)
     sub_dir     = models.CharField(max_length =10,choices  = SUB_DIR)
     strength    = models.FloatField(max_length=5,
@@ -151,8 +151,7 @@ class TradePlanModel(models.Model):
     end_time         = models.DateTimeField(blank=True,null=True)
     completion       = models.IntegerField()
     created_by       = models.ForeignKey(User,blank=True,null=True)
-    tradeframe       = models.CharField(max_length=10,
-                                        choices=TRADEFRAME,
+    tradeframe       = models.IntegerField(choices=TRADEFRAME,
                                         default = TRADEFRAME[1][0])
     tradetype        = models.CharField(max_length=10,
                                         choices=TRADETYPE,

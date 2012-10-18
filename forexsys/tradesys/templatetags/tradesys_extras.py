@@ -8,3 +8,4 @@ def hash(h, key):
         return h[key]
     else:
         return u'NoValue'
+
