@@ -433,6 +433,8 @@ def tradeplan_action_view(request, tp_id = None):
         tradeplan_action_view = TradePlanActionFormset( request.POST,
                                                         queryset = tp_action_query)
         if tradeplan_action_view.is_valid():
+            tp_obj.end_time = timezone.now()
+            tp_obj.save()
             tradeplan_action_view.save()
         return redirect('/tradesys/MyTradePlan/tradeplan_action_view')
     else:
