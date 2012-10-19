@@ -1,0 +1,59 @@
+* taobaoworks roadmap
+
+** DONE huijun  meeting 确定做gemstone 部署的wbs分解
+  CLOCK: [2011-09-21 Wed 12:03]--[2011-09-21 Wed 13:00] =>  0:57
+[2011-09-21 Wed 12:03]
+[[file:~/org/taobaoworks.org::*]]
+
+  1. opsfree / rolesdb
+  2. rt/k2
+  3. broom
+  4. oob
+  5. account
+  6. dns
+  7. yum
+  8. gemstone
+ 
+** SA main road map						       :NOTE:
+   CLOCK: [2011-09-21 Wed 14:26]--[2011-09-21 Wed 14:48] =>  0:22
+[2011-09-21 Wed 14:26]
+
+*** 预期分布
+*** 系统的组成部分.
+**** opsfree 
+**** rt/k2
+**** broom
+**** oob
+**** account
+**** dns
+**** yum
+**** gemstone/cmos
+
+
+
+
+** 离职: zhangchengwei.pt@ 淘宝旅行， java 开发			       :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-09-30 Fri 14:08]--[2011-09-30 Fri 14:15] =>  0:07
+   :END:
+[2011-09-30 Fri 14:08]
+** 离职 yuhao  03643  量子统计					       :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-09-30 Fri 14:20]--[2011-09-30 五 14:39] =>  0:19
+   :END:
+[2011-09-30 Fri 14:20]
+[[file:~/org/refile.org::*][:NOTE:]]
+
+** DONE  postgresql9.1.1 hstore 安装
+  :LOGBOOK:
+  CLOCK: [2011-10-09 Sun 15:01]--[2011-10-09 Sun 15:04] =>  0:03
+  CLOCK: [2011-10-09 Sun 11:41]--[2011-10-09 Sun 12:10] =>  0:29
+  :END:
+
+   1. ssh yuting@shterm.aliyun-inc.com
+   2. postgresql 9.1 开始使用 create extention hstore 来创建 扩展
+
+
+
+
+
