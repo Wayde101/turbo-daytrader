@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#echo $1 $2
+tail ${1}  /etc/service/${2}/log/main/current |tai64nlocal 

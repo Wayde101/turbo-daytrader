@@ -1,0 +1,16 @@
+* opsdocs						      :@office:NOTES:
+** opsfree 
+** rt/k2
+** broom
+** oob
+** account
+   帐号处理文档. 
+*** 流程
+*** 常用的操作方法
+** dns
+*** 流程
+*** 常用的操作方法
+** yum
+*** 流程
+*** 常用的操作方法
+** gemstone/cmos
