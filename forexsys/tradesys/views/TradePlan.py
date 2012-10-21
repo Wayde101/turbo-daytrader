@@ -47,8 +47,10 @@ def tradeplan_lag_time(tradeframe):
         return 60 * 60 * 32          # 32 个小时
     if tradeframe == 60:
         return 60 * 60 * 4 * 4
+    if tradeframe == 15:
+        return 60 * 60 * 3 
     if tradeframe == 5:
-        return 60 * 5  * 3 * 4
+        return 60 * 60  
 
 
 def market_overview_init(request,tradetype,tradeframe):
