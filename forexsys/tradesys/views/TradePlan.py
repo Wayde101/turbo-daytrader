@@ -44,6 +44,7 @@ def tradeplan_lag_time(tradeframe):
 
 
 def prev_dir(symbol,timeframe):
+    
     return 0
 
 def market_overview_init(tradetype,tradeframe):
@@ -169,7 +170,7 @@ def tp_id_proc(request,tp_id):
     if len(ltp) == 0:
         return 'empty TradePlanModel. failed'
     request.session['TradePlanModel_id'] = ltp[0].pk
-    return request.session['TradePlanModel_id']
+    return request.session['TradePlanModel_id'],0
 
 
 class MyTradePlanView(CreateView):
@@ -228,9 +229,7 @@ def market_over_view(request,tp_id=None):
         plan_res_form  = PlanResultForm(request.POST,instance = tp_obj)
         if movd_formset.is_valid():
             movd_formset.save()
-            # MarketOverViewForm 在 rewrite market_result 字段的之后，非空的valid 需要做一下
-            # 提示用户某个字段需要必须填写的.
-            # if mov_form.is_valid(): then xxx
+
         if mov_form.is_valid():
             mov_form.save()
         else:
@@ -248,6 +247,9 @@ def market_over_view(request,tp_id=None):
         if tp_obj.diff_b_overview is None:
             tp_obj.diff_b_overview = diff_overview_init(tp_obj,'b')
             tp_obj.save()
+
+        if plan_res_form.cleaned_data['plan_result'] == 'N':
+            return redirect('tradesys.views.TradePlan.plan_result_view')
 
         return redirect('tradesys.views.TradePlan.market_diff_view')
     else:
@@ -388,8 +390,7 @@ def analysis_selected_view(request, tp_id = None):
     selected = get_selected_symbols(tp_obj.tradeframe,tp_obj.diff_s_overview)
 
     if selected is None:
-        return u'没有选出要交易的货币，之后需要一个逻辑来处理，比如场外等待多久继续做交易计划,因为不交易也是一种交易状态'
-        # return redirect('/tradesys/MyTradePlan/no_selected_symbol')
+        return redirect('tradesys.views.TradePlan.plan_result_view')
 
     if request.method == "POST":
         selected_view = SelectedFormset( request.POST,
@@ -445,6 +446,15 @@ def tradeplan_action_view(request, tp_id = None):
             "tradeplan_action_view" : tradeplan_action_view.as_ul()
             },context_instance=RequestContext(request))
 
+
+def plan_result_view(request, tp_id = None):
+    tp_id = tp_id_proc(request,tp_id)
+    tp_obj  = TradePlanModel.objects.get(pk = tp_id)
+
+    return render_to_response("tradesys/PlanResult.html", {
+            "tradetype" :  tp_obj.tradetype,
+            },context_instance=RequestContext(request))
+    return 
 
 tp_sum_view       = login_required(MyTradePlanView.as_view())
 # market_over_view  = login_required(MarketOview.as_view())
