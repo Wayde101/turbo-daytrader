@@ -37,33 +37,71 @@ def trade_frame_map(tradeframe):
         return [ 60, 240, 1440, 10080, 40320]
 
 def tradeplan_lag_time(tradeframe):
+    if tradeframe == 40320:
+        return 60 * 60 * 24 * 60     # 每60天
+    if tradeframe == 10080:
+        return 60 * 60 * 24 * 20     # 每20天
+    if tradeframe == 1440:
+        return 60 * 60 * 24 * 5      # 每 5 天  
+    if tradeframe == 240:            # 4 小时图
+        return 60 * 60 * 32          # 32 个小时
     if tradeframe == 60:
         return 60 * 60 * 4 * 4
     if tradeframe == 5:
         return 60 * 5  * 3 * 4
 
 
-def prev_dir(symbol,timeframe):
-    
-    return 0
-
-def market_overview_init(tradetype,tradeframe):
+def market_overview_init(request,tradetype,tradeframe):
     now    = timezone.now()
     mov = MarketOverView(market_result = "", pub_date = now)
     mov.save()
 
     for tf in trade_frame_map(tradeframe):
+
         mdi = MarketDetailInfo(symbol_name = tradetype,
                                timeframe   = tf ,
-                               obj_dir     = 'N',
-                               sub_dir     = 'N',
+                               obj_dir     = get_prev_dir(request,tradetype,tf,'obj_dir'),
+                               sub_dir     = get_prev_dir(request,tradetype,tf,'sub_dir'),
                                market_overview = mov)
         mdi.save()
     return mov
 
+def get_prev_dir(request,symbol,timeframe,os_dir):
 
-def diff_overview_init(tp_model,diff_flag):
+    if request.session['TradePlanModel_pre_id'] is None:
+        return 'N'
+
+    prev_tp_id  = request.session['TradePlanModel_pre_id']
+
+    prev_tp_obj = TradePlanModel.objects.get( pk = prev_tp_id )
+
+    if symbol == prev_tp_obj.tradetype:
+        mov_id  = prev_tp_obj.market_overview
+    else:
+        mov_id  = prev_tp_obj.diff_s_overview
+
+
     now    = timezone.now()
+    lag_time = tradeplan_lag_time(timeframe)
+
+        
+    mdi = MarketDetailInfo.objects.get(market_overview = mov_id,
+                                       timeframe = timeframe,
+                                       symbol_name = symbol)
+
+    if (now - mdi.market_overview.pub_date).total_seconds() > lag_time:
+        return 'N'
+
+    if os_dir == 'obj_dir':
+        return mdi.obj_dir
+
+    if os_dir == 'sub_dir':
+        return mdi.sub_dir
+
+    return 'N'
+
+def diff_overview_init(request,tp_model,diff_flag):
+    now = timezone.now()
     mov = MarketOverView(market_result = "", pub_date = now)
     mov.save()
 
@@ -81,13 +119,13 @@ def diff_overview_init(tp_model,diff_flag):
             mov_save = mov
         mdi = MarketDetailInfo(symbol_name = symbol,
                                timeframe   = tfm ,
-                               obj_dir     = 'N' ,
-                               sub_dir     = 'N' ,
+                               obj_dir     = get_prev_dir(request,symbol,tfm,'obj_dir'),
+                               sub_dir     = get_prev_dir(request,symbol,tfm,'sub_dir'),
                                market_overview = mov_save)
         mdi.save()
     return mov
 
-def selected_overview_init(tp_obj):
+def selected_overview_init(request,tp_obj):
     try:
         selected = MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
                                                    timeframe = tp_obj.tradeframe,
@@ -153,24 +191,48 @@ def get_selected_symbols(tradeframe,selected_overview):
     return [ '%s' % x.symbol_name for x in mdi ]
 
 
+def prev_tp_id(request,tp_id):
+
+    if tp_id is None:
+        return None
+
+    try:
+        tp_obj = TradePlanModel.objects.get(pk = tp_id)
+    except TradePlanModel.DoesNotExist:
+        return None
+
+    pre_tp_obj = TradePlanModel.objects.filter(created_by = request.user,
+                                               tradeframe = tp_obj.tradeframe,
+                                               tradetype  = tp_obj.tradetype,
+                                               id__lt = tp_obj.id).order_by('-begin_time')[:1]
+    if len(pre_tp_obj) == 0:
+        return None
+    return pre_tp_obj[0].id
+
+
 def tp_id_proc(request,tp_id):
-    # 如果直接通过GET 方法访问每个tradeplan step, 而且又没有GET 到 tp_id
-    # 参数那么将去 tradeplanmodel 里面去拿最近的一个 tradeplan id 作为
-    # 访问的目标.
 
     if tp_id is not None:
         request.session['TradePlanModel_id'] = tp_id
+        request.session['TradePlanModel_pre_id'] = prev_tp_id(request,tp_id)
         return tp_id
 
     if request.session.has_key('TradePlanModel_id'):
+        request.session['TradePlanModel_pre_id'] = prev_tp_id(request,
+                                                              request.session['TradePlanModel_id'])
         return request.session['TradePlanModel_id']
+
+    # 直接访问单步骤页面的时候没有 session key 也没有 tp_id
 
     tp_obj =  TradePlanModel.objects
     ltp    =  tp_obj.filter(created_by = request.user).order_by('-begin_time')[:1]
     if len(ltp) == 0:
         return 'empty TradePlanModel. failed'
+
     request.session['TradePlanModel_id'] = ltp[0].pk
-    return request.session['TradePlanModel_id'],0
+    request.session['TradePlanModel_pre_id'] = prev_tp_id(request,
+                                                          request.session['TradePlanModel_id'])
+    return request.session['TradePlanModel_id']
 
 
 class MyTradePlanView(CreateView):
@@ -206,17 +268,22 @@ class MyTradePlanView(CreateView):
             self.object.begin_time = now
             self.object.completion = 1
             self.object.created_by = user
-            self.object.market_overview = market_overview_init(tt,tf)
             self.object.save()
+
+            tp_id_proc(self.request,self.object.id)
+            self.object.market_overview = market_overview_init(self.request,tt,tf)
+            self.object.save()
+
         else:
+            tp_id_proc(self.request, ltp[0].id)
             self.object = ltp[0]
 
-        self.request.session['TradePlanModel_id'] = self.object.id
+
         return redirect(self.success_url)
 
 # 可能需要 用 login_required 修饰一下，确保登录使用
 def market_over_view(request,tp_id=None):
-
+    
     tp_id  = tp_id_proc(request,tp_id)
 
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
@@ -241,11 +308,11 @@ def market_over_view(request,tp_id=None):
             return redirect('tradesys.views.TradePlan.market_over_view')
 
         if tp_obj.diff_s_overview is None:
-            tp_obj.diff_s_overview = diff_overview_init(tp_obj,'s')
+            tp_obj.diff_s_overview = diff_overview_init(request,tp_obj,'s')
             tp_obj.save()
 
         if tp_obj.diff_b_overview is None:
-            tp_obj.diff_b_overview = diff_overview_init(tp_obj,'b')
+            tp_obj.diff_b_overview = diff_overview_init(request,tp_obj,'b')
             tp_obj.save()
 
         if plan_res_form.cleaned_data['plan_result'] == 'N':
@@ -360,7 +427,7 @@ def first_select_view(request,tp_id = None):
             print '#' * 80
             first_select_view.save()
 
-        selected_overview_init(tp_obj)
+        selected_overview_init(request,tp_obj)
 
         return redirect('/tradesys/MyTradePlan/analysis_selected_view')
     else:
