@@ -18,7 +18,7 @@ class Configuration:
     rsyncbin       = '/usr/bin/rsync'
     pg_home        = '/home/tops/pgsql-9.1'
     pg_dump        = '%s/bin/pg_dump' % pg_home
-    psql           = '%s/bin/psql' % psql
+    psql           = '%s/bin/psql' % pg_home
     forexsysdb     = 'forexsys'
     forexdb_bak    = '/home/yuting/project/turbo-daytrader/forexsys/tradesys/static/forexsys.pgdump'
     timeframe_map  = {'5':'5M',
