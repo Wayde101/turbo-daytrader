@@ -16,6 +16,7 @@ class Configuration:
     #ticketbase     = '/home/yuting/project/yuting/Alpari.dev/tester/files/shots'
     convertbin     = '/usr/bin/convert'
     rsyncbin       = '/usr/bin/rsync'
+    pg_backup	   = '%s/pgdump' % forexbase
     pg_home        = '/home/tops/pgsql-9.1'
     pg_dump        = '%s/bin/pg_dump' % pg_home
     psql           = '%s/bin/psql' % pg_home
