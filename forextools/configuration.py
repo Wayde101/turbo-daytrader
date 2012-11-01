@@ -20,8 +20,8 @@ class Configuration:
     pg_home        = '/home/tops/pgsql-9.1'
     pg_dump        = '%s/bin/pg_dump' % pg_home
     psql           = '%s/bin/psql' % pg_home
-    forexsysdb     = 'forexsys'
-    forexdb_bak    = '/home/yuting/project/turbo-daytrader/forexsys/tradesys/static/forexsys.pgdump'
+    forexsys_db    = 'forexsys'
+    forexsys_user  = 'forexsys'
     timeframe_map  = {'5':'5M',
                       '15':'15M',
                       '60':'1H',

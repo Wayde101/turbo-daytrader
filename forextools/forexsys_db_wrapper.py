@@ -9,8 +9,10 @@ import time
 
 class ForexsysDb:
     def __init__(self, config = configuration.Configuration()):
-        self.pg_dump  = config.pg_dump
-        self.pg_backup   = config.pg_backup
+        self.pg_dump   = config.pg_dump
+        self.pg_backup = config.pg_backup
+        self.db_user      = config.forexsys_user
+        self.db_pass      = config.forexsys_db
         
         if not os.path.isdir(self.pg_backup):
             os.mkdir(self.pg_backup)
@@ -22,9 +24,11 @@ class ForexsysDb:
                                tm_mon,
                                tm_mday)
 
-        bak_cmd  = '%s -f %s/%s' % (self.pg_dump,
-                                    self.pg_backup,
-                                    bak_file)
+        bak_cmd  = '%s -U %s %s -f %s/%s' % (self.pg_dump,
+                                             self.db_user,
+                                             self.db_pass,
+                                             self.pg_backup,
+                                             bak_file)
 
         p = process.Process(bak_cmd)
         p.runInConsole()
