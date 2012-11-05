@@ -1,0 +1,94 @@
+* NEXT 把 spkg clone 到本机笔记本上
+  :LOGBOOK:
+  CLOCK: [2011-09-29 Thu 13:08]--[2011-09-29 Thu 13:14] =>  0:06
+  :END:
+[2011-09-29 Thu 13:08]
+[[file:~/org/refile.org::*runin%20%E8%84%9A%E6%9C%AC][runin 脚本]]
+* TODO 配置 imapd + ssl
+  :LOGBOOK:
+  CLOCK: [2011-09-29 Thu 18:05]--[2011-09-29 四 18:15] =>  0:10
+  :END:
+[2011-09-29 Thu 18:05]
+[[file:~/org/gemstone.org::*%E9%85%8D%E7%BD%AE%20yasnippet%20&%20flymake][配置 yasnippet & flymake]]
+ 
+* DONE 回购
+  :LOGBOOK:
+  CLOCK: [2011-10-08 Sat 11:30]--[2011-10-08 Sat 11:40] =>  0:10
+  :END:
+[2011-10-08 Sat 11:30]
+[[gnus:Junk#1750506965.23141316708747540.JavaMail.root@UNKNOWN.aliyun.com][Email from SHARES@alibaba-inc.com: 第三方投资人投标要约购买阿里巴]]
+
+https://shares.alibaba.com/shares/user/clientPassWord.action?encryptUserName=D94E37406A9E6B5BCB504D17AB8F7B7BD5E5E3622FD9117550216682B2E83AE4F06271348A0FD4D7
+
+* 如何通过 emacs 编辑系统下root权限的东西 			       :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-10-10 一 07:26]--[2011-10-10 一 07:29] =>  0:03
+   :END:
+[2011-10-10 一 07:26]
+[[id:eb155a82-92b2-4f25-a3c6-0304591af2f9][Organization]]
+   /sudo::/etc/hosts
+* TODO procmail 规则有问题
+  :LOGBOOK:
+  CLOCK: [2011-10-11 Tue 14:26]--[2011-10-11 Tue 14:28] =>  0:02
+  :END:
+[2011-10-11 Tue 14:26]
+[[gnus:Greetings#201101240409.p0O4331R005555@nagios.taobao.ali.com][Email from it@taobao.com: 【006617/不平/陆研】给您送来了]]
+
+	- 当前情况是大部分的邮件都命中了 Junk 的规则. 怀疑是规则信息有问题.
+	- 需要解决的问题. 如何建立一个空的 bincmap.
+
+* TODO 确定pyrange 默认的 altpath
+  :LOGBOOK:
+  CLOCK: [2011-10-12 Wed 14:48]--[2011-10-12 Wed 14:49] =>  0:01
+  :END:
+[2011-10-12 Wed 14:48]
+[[file:~/org/gemstone.org::*%E9%85%8D%E7%BD%AE%20yasnippet%20&%20flymake][配置 yasnippet & flymake]]
+
+	需要把默认的pyrange 的 altpath 设置成 /home/tops/tools/conf
+* DONE 需要确定 rsyncd 的日志存放地点
+  :LOGBOOK:
+  CLOCK: [2011-10-17 Mon 11:54]--[2011-10-17 Mon 11:58] =>  0:04
+  :END:
+[2011-10-17 Mon 11:54]
+[[file:~/org/reading.org::*%E3%80%8A%E6%97%85%E8%A1%8C%E4%BA%BA%E7%94%9F%E6%9C%80%E6%9C%89%E4%BB%B7%E5%80%BC%E7%9A%84%E6%8A%95%E8%B5%84%E3%80%8B%20-%20Jim%20Rogers][《旅行人生最有价值的投资》   - Jim Rogers]]
+
+目前已经写满了一个admin 的机器 v035030.sqa.cm4.
+	- 写到 /dev/null yes
+
+* project for our works 					       :NOTE:
+   :LOGBOOK:
+   :END:
+[2011-10-25 Tue 10:30]
+[[file:~/org/gemstone.org::*@SQA%20%E7%9A%84%E6%9C%BA%E5%99%A8%E9%9C%80%E8%A6%81%E9%83%A8%E5%B1%9E%E4%B8%8A%E6%89%80%E6%9C%89%E7%9A%84gemclient][@SQA 的机器需要部属上所有的gemclient]]
+	http://project.corp.linuxnote.net/index.php?c=access&a=login
+* 运维的关键在 包管理上							       :NOTE:
+   :LOGBOOK:
+   :END:
+[2011-10-26 Wed 10:13]
+[[file:~/org/gemstone.org::*%E9%85%8D%E7%BD%AE%20yasnippet%20&%20flymake][配置 yasnippet & flymake]]
+	关于包管理上如何做? 
+* DNS/YUM/LVS/NTP 服务器运维 					       :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-10-26 Wed 10:18]--[2011-10-27 四 08:01] => 21:43
+   :END:
+[2011-10-26 Wed 10:18]
+[[file:~/org/gemstone.org::*gemserver.rsync][gemserver.rsync]]
+	- YUM 服务器.  (yum 集群的角色)
+	- DNS (包) lvs + dns 包.
+	- CNZ 的帐号问题. 在CNZ的机器上部署gemclient-run .
+	- NTP
+	- SYSLOG-NG
+* TODO 给 cnz 3000台部署 gemstone . [0/0]
+  :LOGBOOK:
+  CLOCK: [2011-10-27 四 08:01]--[2011-10-27 四 08:04] =>  0:03
+  :END:
+[2011-10-27 四 08:01]
+   - 确定  gemserver 并且部署.
+   - 确定 cnz 的服务器的型号和操作系统版本.
+   - 明确 为这些系统做包.
+   - 关于 yum.conf 的配置. 如何同步更新.
+* TODO 使用 task juggle + org-mode 实现基于内容和plaintext的项目管理工具.
+  :LOGBOOK:
+  :END:
+[2011-10-27 四 08:05]
+[[file:~/src/turbo-daytrader/org/gemstone.org::*%E7%A1%AE%E5%AE%9A%E4%BB%A5%E5%8F%8A%E9%83%A8%E7%BD%B2%20gemserver][确定以及部署 gemserver]]
