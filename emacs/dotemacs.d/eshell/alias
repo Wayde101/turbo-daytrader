@@ -1,0 +1,28 @@
+alias .cd_devfs cd /home/yuting/project/yuting/Alpari.dev/tester/files/shots $*
+alias .cd_fs cd /home/yuting/project/yuting/Alpari/experts/files/shots/ $*
+alias .cd_ft cd /home/yuting/project/turbo-daytrader/forextools $*
+alias .cd_gf cd /home/yuting/project/gemstone/conf/installations/LXN $*
+alias .cd_gt cd /home/yuting/project/gemstone/transforms $*
+alias .cd_mqlin cd /home/yuting/project/yuting/turbo-daytrader/mql/in $*
+alias .cd_proj cd /home/yuting/project $*
+alias .cd_raw cd /home/yuting/project/gemstone/raw $*
+alias .cd_skel cd ~/project/gemstone/raw/homeskel $*
+alias .cd_tp cd /home/yuting/project/turbo-daytrader $*
+alias .cd_trt cd /home/yuting/pkg/tops-python27-trt/source/taobao-rt-1.0 $*
+alias .gc cd /usr/local/gemclient $*
+alias .gs cd /home/yuting/project/gemstone $*
+alias .loadrc source ${HOME}/.bashrc $*
+alias .reduce_rotate_bb convert -rotate 90  -density 72 -geometry 50x50%  $*
+alias .sl ls /service $*
+alias .ssh_accountdb2 ssh accountdb2.cm4 $*
+alias .ssh_gaoyang ssh gao-yang.com $*
+alias .ssh_hallway ssh hallway.corp.linuxnote.net $*
+alias .ssh_homehp ssh yuting@192.168.2.5 $*
+alias .ssh_newbie ssh newbie.corp.linuxnote.net $*
+alias .ssh_shterm ssh shterm.aliyun-inc.com -l yuting $*
+alias l. ls -d .* $*
+alias la ls -aF $*
+alias ll ls -l $*
+alias ls ls -F $*
+alias vi find-file $*
+alias which alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde $*

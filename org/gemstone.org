@@ -1,0 +1,221 @@
+* pre gemstone project 
+  :PROPERTIES:
+  :CATEGORY: GEMSTONE
+  :END:   
+** gemclient
+*** amdin 规划
+**** 确定以及部署 gemserver
+
+**** STARTED opsfree 和 gemstone 信息交互。
+     :LOGBOOK:
+     CLOCK: [2011-10-12 Wed 14:49]--[2011-10-13 Thu 09:37] => 18:48
+     CLOCK: [2011-10-12 Wed 14:40]--[2011-10-12 Wed 14:48] =>  0:08
+     CLOCK: [2011-10-12 Wed 10:16]--[2011-10-12 Wed 14:39] =>  4:23
+     CLOCK: [2011-09-29 Thu 14:11]--[2011-09-29 Thu 14:12] =>  0:01
+     CLOCK: [2011-09-20 Tue 09:52]--[2011-09-20 Tue 09:57] =>  0:05
+     :END:
+[2011-09-20 Tue 09:52]
+  1. 通过mako 把opsfree 里面的数据 + HOSTS/nodes.cf GROUPS/nodes.cf
+  2. 人来编辑模板，实现机器和人可以coedit HOSTS/nodes.cf GROUPS/nodes.cf
+
+     是否多个template. (No 不分片)
+     GROUP1
+	INCLUDE opsfree1_nodes_compress('group1_query_string_in_opsfree')
+
+     目前暂时需要
+
+***** STARTED 调研mako .  目的 opsfree + json 接口 + mako 模板生成 nodes.cf [1/3]
+      :LOGBOOK:
+      CLOCK: [2011-10-11 Tue 14:28]--[2011-10-12 三 07:50] => 17:22
+      CLOCK: [2011-10-11 Tue 11:23]--[2011-10-11 Tue 14:26] =>  3:03
+      CLOCK: [2011-09-29 Thu 14:12]--[2011-09-29 Thu 14:15] =>  0:03
+      :END:
+      - [X] 给mako 打包 
+      - [ ] opsfree + json 的库.
+ 	http://tops.corp.taobao.com/2011/07/sitebase-api-%E6%8F%8F%E8%BF%B0/
+      - [ ] mako 库
+      - [ ] 程序命令行界面.
+	cf_out.py --template <template_file> 
+
+*** gemclient 部署
+**** TODO 确定 gemclient 的部署步骤.
+     - 部署步骤 [3/4]
+       - [X] 在目标机器上 yum install -y tops-gemclient-run
+       - [X] 在 gemroot (accountdb2) 的 .gs 下面 hosts.cf groups.cf 中配置该机器
+	 - [X] hosts.cf 确定该机器的 admin
+	 - [X] groups.cf 给该机器打 TAG
+       - [X] bin/make -r 该机器.
+       - [ ] bin/slave -r 该机器.
+**** 确定普通机器上需要安装的 tops 包，来评估系统影响.
+
+*** 确定gemstone管理范围. (仅仅motd)
+*** DONE 收集所有的gemstone 覆盖到的软件包集体升级到 TOPS tag . 顺便做review
+  CLOCK: [2011-09-20 Tue 14:53]--[2011-09-20 Tue 15:25] =>  0:32
+  CLOCK: [2011-09-20 Tue 14:49]--[2011-09-20 Tue 14:50] =>  0:01
+  CLOCK: [2011-09-20 Tue 14:33]--[2011-09-20 Tue 14:45] =>  0:12
+  CLOCK: [2011-09-20 Tue 14:15]--[2011-09-20 Tue 14:21] =>  0:06
+  - 收集软件列表。 （日后评估安装的影响）[16/16]
+    - [X] tops-seco-core install           # tops
+    - [X] tops-seco-gemstone install       # tops
+    - [X] tops-seco-awesomerange install   # tops
+    - [X] tops-python27 install		 # tops 
+    - [X] tops-perl58 install		 # tops
+    - [X] libcrange install		 # tops
+    - [X] librange install		 # tops
+    - [X] daemontools install		 # tops
+    - [X] ucspi-tcp install		 # tops
+    - [X] tops-seco-utils install	 # tops 
+    - [X] supervisersync install	 # tops
+    - [X] sync-gemserver install	 # tops
+    - [X] p4-server install		 # tops
+    - [X] p4-client install 
+    - [X] recompile.			done
+    - [X] re-install tops-gemclient.
+  CLOCK: [2011-09-20 Tue 14:00]--[2011-09-20 Tue 14:02] =>  0:02
+  :PROPERTIES:
+  :ORDERED:  t
+  :END:
+[2011-09-20 Tue 14:00]
+[[file:~/org/todolist.org::*tops-seco-core][tops-seco-core]]
+
+** CMOS
+*** DONE cmos package and installation
+  :LOGBOOK:
+  :END:
+**** DONE checkout cmos 包，并且编译
+      :LOGBOOK:
+      :END:
+      fix: /usr/local/cmos => datapath 
+      
+**** DONE 考虑如何加入 gemclient 相关的工具包到 cmos module下.
+      :LOGBOOK:
+      CLOCK: [2011-09-29 Thu 13:29]--[2011-09-29 Thu 13:57] =>  0:28
+      CLOCK: [2011-09-29 Thu 11:41]--[2011-09-29 Thu 12:23] =>  0:42
+      :END:
+     - gemclient (refresh,stop,start,status)
+
+**** TODO cmos 的插件需求
+     - network [3/3]
+       - [X] mac address
+       - [X] ip address
+       - [X] interface related
+     - system  [0/3]
+       - [ ] cpu
+	# of cores, # of cpus, # of threads
+       - [ ] model
+       - [ ] real freq / capable freq
+     - [ ] mem [0/3]
+       - [ ] size
+       - [ ] in-used slots and avaiable slots
+       - [ ] serial no.
+     - hard disk [0/3]
+       - [ ] raid
+       - [ ] size
+       - [ ] avaiable space and percent
+     - service [0/5]
+       - [ ] ntp
+       - [ ] yum
+       - [ ] sitebase / opsfree
+       - [ ] ddnsupdate
+       - [ ] rsync
+
+*** 系统整体规划.
+
+** DONE @SQA 的机器的KEY 的问题确认
+   和baifei 确认后继续安装 gemstone. rt9003
+   目前有 500多台机器无法登录.
+
+** DONE 去掉 supervisersync.x86_64 这个包，统一使用 supervisersync.noarch
+  :LOGBOOK:
+  CLOCK: [2011-10-17 Mon 11:59]--[2011-10-17 Mon 12:00] =>  0:01
+  :END:
+[2011-10-17 Mon 11:59]
+[[file:~/org/reading.org::*%E3%80%8A%E6%97%85%E8%A1%8C%E4%BA%BA%E7%94%9F%E6%9C%80%E6%9C%89%E4%BB%B7%E5%80%BC%E7%9A%84%E6%8A%95%E8%B5%84%E3%80%8B%20-%20Jim%20Rogers][《旅行人生最有价值的投资》   - Jim Rogers]]
+	统一使用 supervisersync.noarch
+** iptables 相关配置和fanye的讨论结果，参考yst-iptables的实现制作      :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-10-12 Wed 14:39]--[2011-10-12 Wed 14:40] =>  0:01
+   :END:
+[2011-10-12 Wed 14:39]
+[[file:~/org/refile.org::*%E9%85%8D%E7%BD%AE%20imapd%20%2B%20ssl][配置 imapd + ssl]]
+
+严庄 2011-10-12 14:15:27
+ http://pastebin.corp.linuxnote.net/show/46/
+严庄 2011-10-12 14:15:40
+ 这个是以前我们管理iptable 的那个脚本。。
+严庄 2011-10-12 14:16:41
+ 他里面会load 一堆 iptable 相关的规则和 module
+严庄 2011-10-12 14:17:10
+ http://pastebin.corp.linuxnote.net/show/47/
+严庄 2011-10-12 14:17:25
+ 这个是 iptables-modules . 
+严庄 2011-10-12 14:20:23
+ http://pastebin.corp.linuxnote.net/show/48/
+严庄 2011-10-12 14:20:48
+ 这个是 iptables-blessed
+严庄 2011-10-12 14:22:15
+ http://pastebin.corp.linuxnote.net/show/49/
+严庄 2011-10-12 14:22:25
+ 这个是 iptalbes-post-blessed
+严庄 2011-10-12 14:24:00
+ http://pastebin.corp.linuxnote.net/show/50/
+严庄 2011-10-12 14:24:11
+ 这个是 iptables-pre-raw
+严庄 2011-10-12 14:24:26
+ 那个perl 脚本很简单.
+严庄 2011-10-12 14:33:08
+ 这个 iptable load 的脚本里面没有 NAT 相关的连定义。。只有 
+严庄 2011-10-12 14:33:09
+    # link tables to each other
+    run($iptables, '-A', 'pre-blessed', '-j', 'blessed');
+    run($iptables, '-A', 'blessed', '-j', 'post-blessed');
+    #output tables
+    run($iptables, '-A', 'pre-blessed-output', '-j', 'blessed-output');
+    run($iptables, '-A', 'blessed-output', '-j', 'post-blessed-output');
+严庄 2011-10-12 14:33:29
+ ================
+严庄 2011-10-12 14:33:30
+         # link top to input chain
+        run($iptables, '-A', 'INPUT', '-j', 'pre-blessed');
+        run($iptables, '-A', 'OUTPUT', '-j', 'pre-blessed-output');
+严庄 2011-10-12 14:33:35
+ 这两部分的..
+严庄 2011-10-12 14:33:43
+ 关于 NAT的。可以简单仿造加上一个。。
+严庄 2011-10-12 14:33:57
+ 然后加上 NAT的规则链。。
+严庄 2011-10-12 14:33:59
+ 这样就ok了。/
+严庄 2011-10-12 14:35:25
+ 具体实现上，如果web 和 soc 库上都设计差不多了。。
+严庄 2011-10-12 14:35:38
+ 我们可以拉上时迁到时候一起讨论一下。。
+严庄 2011-10-12 14:35:57
+ 应该基本上没有什么太大的问题。。
+严庄 2011-10-12 14:37:39
+ load iptable 的配置和 fetch iptable 的程序我们最好分离。
+严庄 2011-10-12 14:38:14
+ 这样。。未来部署的时候会更灵活，安全。。不会因为一个脚本失败而失败。
+** DONE 给postgresql 打一个 tops 包
+  :LOGBOOK:
+  CLOCK: [2011-10-24 Mon 11:07]--[2011-10-24 Mon 16:51] =>  5:44
+  CLOCK: [2011-10-09 Sun 12:10]--[2011-10-09 Sun 15:01] =>  2:51
+  :END:
+[2011-10-09 Sun 12:10]
+[[file:~/org/refile.org::*%E5%B8%AElidun%20%E6%90%9E%E5%AE%9A%20postgresql%20hstore][帮lidun 搞定 postgresql hstore]]
+  - http://wwwmaster.postgresql.org/download/mirrors-ftp/source/v9.1.1/postgresql-9.1.1.tar.bz2
+    包名: tops-pgsql
+    
+** TODO gemserver.rsync 
+  :LOGBOOK:
+  CLOCK: [2011-10-17 Mon 12:00]--[2011-10-18 Tue 09:27] => 21:27
+  :END:
+[2011-10-17 Mon 12:00]
+[[file:~/org/reading.org::*%E3%80%8A%E6%97%85%E8%A1%8C%E4%BA%BA%E7%94%9F%E6%9C%80%E6%9C%89%E4%BB%B7%E5%80%BC%E7%9A%84%E6%8A%95%E8%B5%84%E3%80%8B%20-%20Jim%20Rogers][《旅行人生最有价值的投资》   - Jim Rogers]]
+
+@400000004e9b9fa02597f084 WARN: verification: setting symlink /home/gemserver -> /home/gemserver.rsync/current
+@400000004e9b9fa025981f64 WARN: verification: could not symlink /home/gemserver -> /home/gemserver.rsync/current
+@400000004e9b9fa02598a04c WARN: verification: director /home/gemserver 0755 root root
+
+gemserver.rsync 是从哪里rsync 的？
+

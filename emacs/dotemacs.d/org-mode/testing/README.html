@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Org-mode Testing</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-08-27 10:56:12 CST"/>
+<meta name="author" content="Ting Yu"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">Org-mode Testing</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 To run the tests interactively </a></li>
+<li><a href="#sec-2">2 To run the tests in batch mode </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> To run the tests interactively </h2>
+<div class="outline-text-2" id="text-1">
+
+<ol>
+<li>
+Install the jump.el testing dependency which is included as a git
+submodule in the org-mode repository.  To do so run the following
+git submodule commands from inside the base of the Org-mode
+directory (or just execute the following code block).
+
+
+
+
+<pre class="example">cd ..
+git submodule init
+git submodule update
+</pre>
+
+
+
+
+</li>
+<li>
+Load the <a href="org-test.el">org-test.el</a> file
+
+
+
+<pre class="example">(load-file "org-test.el")
+</pre>
+
+
+
+
+</li>
+<li>
+The <code>org-test-jump</code> command is now bound to <code>M-C-j</code> in all
+emacs-lisp files.  Call this command from any file in the <code>lisp/</code>
+directory of the org-mode repository to jump to the related test
+file in the <code>testing/</code> directory.  Call this functions with a
+prefix argument, and the corresponding test file will be stubbed
+out if it doesn't already exist.
+
+</li>
+<li>
+Ingest the library-of-babel.org file since some tests require this.
+
+
+
+<pre class="example">(org-babel-lob-ingest "../contrib/babel/library-of-babel.org")
+</pre>
+
+
+
+
+</li>
+<li>
+<i>&lt;info:ert#Top&gt;</i> 
+
+</li>
+<li>
+A number of org-mode-specific functions and macros are provided in
+<code>org-test.el</code> see the <a href="org-test.el">;;; Functions for Writing Tests</a> subsection of
+that file.  Some of these functions make use of example org-mode
+files located in the <a href="examples">examples/</a> directory.
+
+</li>
+<li>
+Functions for loading and running the Org-mode tests are provided
+in the <a href="org-test.el">;;; Load and Run Tests</a> subsection, the most important of
+which are
+<ul>
+<li>
+<code>org-test-load</code> which loads the entire Org-mode test suite
+</li>
+<li>
+<code>org-test-current-defun</code> which runs all tests for the current
+function around point (should be called from inside of an
+Org-mode elisp file)
+</li>
+<li>
+<code>org-test-run-all-tests</code> which runs the entire Org-mode test suite
+</li>
+<li>
+also note that the <code>ert</code> command can also be used to run tests
+
+</li>
+</ul>
+</li>
+<li>
+Load and run all tests
+
+
+
+<pre class="example">(load-file "org-test.el")
+(org-babel-lob-ingest "../contrib/babel/library-of-babel.org")
+(org-test-load)
+(org-test-run-all-tests)
+</pre>
+
+
+
+
+</li>
+</ol>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> To run the tests in batch mode </h2>
+<div class="outline-text-2" id="text-2">
+
+<p>First tangle this file out to your desktop.
+</p>
+
+
+<pre class="example">;; add to the load path
+(add-to-list 'load-path (concat org-dir "/lisp/"))
+(add-to-list 'load-path (concat org-dir "/lisp/testing/"))
+(add-to-list 'load-path (concat org-dir "/lisp/testing/ert/"))
+
+;; load Org-mode
+(require 'org)
+
+;; setup the ID locations used in tests
+(require 'org-id)
+(org-id-update-id-locations
+ (list (concat org-dir "/testing/examples/babel.org")
+       (concat org-dir "/testing/examples/normal.org")
+       (concat org-dir "/testing/examples/ob-awk-test.org")
+       (concat org-dir "/testing/examples/ob-fortran-test.org")
+       (concat org-dir "/testing/examples/link-in-heading.org")
+       (concat org-dir "/testing/examples/links.org")))
+
+;; ensure that the latest Org-mode is loaded
+(org-reload)
+
+;; load the test suite
+(load-file (concat org-dir "/testing/org-test.el"))
+
+;; configure Babel
+(org-babel-lob-ingest (concat org-dir "/contrib/babel/library-of-babel.org"))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (sh . t)))
+(setq org-confirm-babel-evaluate nil)
+
+;; run the test suite
+(org-test-run-all-tests)
+
+;; print the results
+(with-current-buffer "*ert*"
+  (print (buffer-string)))
+</pre>
+
+
+
+
+<p>
+Then run the test suite with the following command which could use any
+version of Emacs.
+</p>
+
+
+<pre class="example">emacs --batch -Q -l ~/Desktop/run-org-tests.el
+</pre>
+
+
+
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Ting Yu
+<a href="mailto:yanzhuang@taobao.com">&lt;yanzhuang@taobao.com&gt;</a>
+</p>
+<p class="date"> Date: 2011-08-27 10:56:12 CST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>
