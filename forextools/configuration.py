@@ -1,9 +1,16 @@
 #!/home/tops/bin/python
 
+import sys
+sys.path.append('/home/yuting/project/turbo-daytrader/forexsys')
+
+from django.core.management import setup_environ
+from forexsys import settings
+setup_environ(settings)
+
 class Configuration:
     mt4shotpath = [
-        '/home/yuting/project/yuting/Alpari/experts/files/shots',
-        '/home/yuting/project/yuting/MTidx/experts/files/shots',
+        '/home/yuting/project/yuting/Alpari/experts/files/shots',   #for trade
+        '/home/yuting/project/yuting/MTidx/experts/files/shots',    #for usdx
         ]
     # for test.
     #mt4shotpath = [
@@ -34,7 +41,12 @@ class Configuration:
     timeframe_col  = ['60','240','1440','10080','43200']
     currency_row   = ['eurusd','gbpusd','usdchf','audusd','usdcad','usdjpy']
     currency_flip  = ['usdcad','usdjpy','usdchf']
+    database = settings.DATABASES
     
     def __init__(self):
         pass
 
+
+if __name__ == '__main__':
+    a = Configuration()
+    print a.database
