@@ -2,7 +2,7 @@ MT4_TOP=D:/MinGW/msys/1.0/home/yuting/Alpari.dev
 
 .PHONY: all install run
 
-all: mon.ex4 snapshot.ex4 mwcc.ex4
+all: mon.ex4 snapshot.ex4 mwcc.ex4 MaCross.ex4
 
 %.ex4: %.mq4
 	$(MT4_TOP)/metalang $<
