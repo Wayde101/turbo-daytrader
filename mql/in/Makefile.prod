@@ -15,7 +15,7 @@ install: all
 	cp *.ex4 $(MT4_TOP)/experts/indicators/
 
 clean:
-	rm -f *.o *.dll *.a *.exe *.ex4 *.log *~
+	rm -f *.o *.dll *.a *.exe *.ex4 *.log *~ ${MT4_TOP}/experts/logs/*.log
 
 run: clean all install 
 	$(MT4_TOP)/terminal.exe
