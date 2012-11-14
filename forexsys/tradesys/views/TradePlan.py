@@ -86,10 +86,12 @@ def get_prev_dir(request,symbol,timeframe,os_dir):
     now    = timezone.now()
     lag_time = tradeplan_lag_time(timeframe)
 
-        
-    mdi = MarketDetailInfo.objects.get(market_overview = mov_id,
-                                       timeframe = timeframe,
-                                       symbol_name = symbol)
+    try:
+        mdi = MarketDetailInfo.objects.get(market_overview = mov_id,
+                                           timeframe = timeframe,
+                                           symbol_name = symbol)
+    except MarketDetailInfo.DoesNotExist:
+        return 'N'
 
     if (now - mdi.market_overview.pub_date).total_seconds() > lag_time:
         return 'N'
@@ -530,3 +532,4 @@ tp_sum_view       = login_required(MyTradePlanView.as_view())
 # market_diff_view  = login_required(MarketDview.as_view())
 # first_select_view = login_required(FirstSelectedView.as_view())
 # select_view       = login_required(SelectedView.as_view())
+# vim: ts=4 sw=4 ai et
