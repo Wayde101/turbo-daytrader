@@ -1,0 +1,6 @@
+#!/bin/bash
+
+/sbin/modprobe vboxdrv
+
+sudo -u yuting sh -c "/usr/bin/VBoxManage startvm winxp --type headless"
+

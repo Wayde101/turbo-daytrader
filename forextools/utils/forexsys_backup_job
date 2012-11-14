@@ -1,0 +1,25 @@
+#!/home/tops/bin/python
+
+import os, sys ,re,string
+import time
+sys.path.append('/home/yuting/project/turbo-daytrader/forextools')
+from forexsys_db_wrapper import ForexsysDb
+from image_maint import ImgMaint
+
+
+if 0 != os.getuid():
+    print >> sys.stderr, 'become root first!!'
+    exit(1)
+
+
+print "Running Database backup"
+forexdb = ForexsysDb()
+forexdb.backup()
+
+print "Running Image Backup"
+forexchart = ImgMaint()
+forexchart.runBakup()
+
+print "Running Image Clean"
+forexchart.runClean()
+
