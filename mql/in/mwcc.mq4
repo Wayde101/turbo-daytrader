@@ -219,7 +219,7 @@ void CC_prop_set() {
   cc_desc = StringConcatenate("CCDIST=",width,";",
 			      "CC0P=",ObjectGetValueByShift("CC",0), ";",
 			      "CC1P=",ObjectGetValueByShift("CC",0) - width * factor, ";" ,
-			      "ZPOINT=",zpoint);
+			      "ZPOINT=",zpoint,";");
   ObjectSetText("CC",cc_desc,10,"Times New Roman",Green);
   return;
 }
