@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from django.conf import settings
 from tradesys.views import TradePlan
 
 
@@ -16,5 +17,6 @@ urlpatterns = patterns('tradesys.views',
                        url(r'^MyTradePlan/tradeplan_action_view/(?P<tp_id>\d+)/$', 'TradePlan.tradeplan_action_view'),
                        url(r'^MyTradePlan/plan_result_view/$', 'TradePlan.plan_result_view'),
                        url(r'^MyTradePlan/plan_result_view/(?P<tp_id>\d+)/$', 'TradePlan.plan_result_view'),
+                       #url(r'^static/(?P<path>.*)$', 'django.views.static.serve',  {'document_root': settings.STATIC_DOC_ROOT}),
                        )
 

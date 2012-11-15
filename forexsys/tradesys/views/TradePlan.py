@@ -285,7 +285,7 @@ class MyTradePlanView(CreateView):
 
         return redirect(self.success_url)
 
-# 可能需要 用 login_required 修饰一下，确保登录使用
+@login_required
 def market_over_view(request,tp_id=None):
     
     tp_id  = tp_id_proc(request,tp_id)
@@ -340,7 +340,7 @@ def market_over_view(request,tp_id=None):
             "image_base_url": settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
-# 可能需要 用 login_required 修饰一下，确保登录使用
+@login_required
 def market_diff_view(request,tp_id = None):
 
     tp_id  = tp_id_proc(request,tp_id)
@@ -406,7 +406,7 @@ def market_diff_view(request,tp_id = None):
             },context_instance=RequestContext(request))
 
 
-# 可能需要 用 login_required 修饰一下，确保登录使用
+@login_required
 def first_select_view(request,tp_id = None):
 
     tp_id = tp_id_proc(request,tp_id)
@@ -453,7 +453,7 @@ def first_select_view(request,tp_id = None):
             "image_base_url" : settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
-# 可能需要 用 login_required 修饰一下，确保登录使用
+@login_required
 def analysis_selected_view(request, tp_id = None):
 
     tp_id = tp_id_proc(request,tp_id)
@@ -493,7 +493,7 @@ def analysis_selected_view(request, tp_id = None):
             "image_base_url" : settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
-# 可能需要 用 login_required 修饰一下，确保登录使用
+@login_required
 def tradeplan_action_view(request, tp_id = None):
 
     tp_id = tp_id_proc(request,tp_id)
