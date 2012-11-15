@@ -36,6 +36,8 @@ class CurrencyChart:
         def splitLine(line):
             if re.search('OBJNAME=CC',line):
                 self.ccstr = line
+                line = line.rstrip(';')
+                self.ccstr = line
             items = map(lambda x: tuple(x.strip().split('=')),
                         line.split(';'))
             return dict(items)
@@ -94,3 +96,4 @@ if __name__ == '__main__':
     # print c.get_latest_gif()
     # print len(c.get_out_of_range_gifs('4days'))
 
+# vim: ts=4 sw=4 ai et
