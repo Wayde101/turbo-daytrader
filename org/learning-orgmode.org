@@ -1,0 +1,80 @@
+* 学习 orgmode
+** TODO org-mode定期的任务场景如何进行org.
+   CLOCK: [2011-09-26 Mon 15:40]--[2011-09-26 Mon 15:41] =>  0:01
+   CLOCK: [2011-09-26 Mon 15:30]--[2011-09-26 Mon 15:40] =>  0:10
+[2011-09-20 Tue 10:12]
+
+*** http://doc.norang.ca/org-mode.html
+*** DONE emacs 'bbdb 'bbdb-com 是否可以作为存储交易计划的emacs数据库来使用？ :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-09-27 Tue 10:53]--[2011-09-27 Tue 10:57] =>  0:04
+   :END:
+  :PROPERTIES:
+  :ORDERED:  t
+  :ID:       12e9161e-299e-45bf-aeea-b96585228e02
+  :END:
+[2011-09-27 Tue 10:53]
+[[file:~/org/docs/orgmode-tut.org::*Handling%20Phone%20Calls][Handling Phone Calls]]
+	The Insidious Big Brother Database (BBDB) is a contact management utility
+	目前来看还不是一个合适的数据库，貌似只能存储联系人信息
+*** TODO 搞清楚 ID 是干啥用的
+  :LOGBOOK:
+  :END:
+	[2011-09-26 Mon 17:36]
+	[[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
+
+*** DONE 翻译 reminders 尝试使用 orgmode 做提醒
+  :LOGBOOK:
+  CLOCK: [2011-09-26 Mon 17:16]--[2011-09-26 Mon 17:27] =>  0:11
+  :END:
+	翻译完毕，但是具体还不知道怎么用
+
+*** TODO schedule todo list to somedays.
+*** bh/clock-in-last-time					       :NOTE:
+   :LOGBOOK:
+   CLOCK: [2011-10-08 Sat 09:56]--[2011-10-08 Sat 09:58] =>  0:02
+   :END:
+	需要 clock-in last time 的意义, 是否是找到最后一个任务并且 clock in?
+** 建立一个定期的任务，每天可以定期执行
+** org-mode 一些常用的快捷键
+   :LOGBOOK:
+   CLOCK: [2011-10-25 Tue 14:23]--[2011-10-25 Tue 14:25] =>  0:02
+   :END:
+   - 给一个任务打 tag .				C-c C-t
+   - 打开一个orgmode 中的文字链 org-open-at-point   C-c C-o
+   - 给某一个任务做 clock-in			C-c C-x <TAB>
+   - 给某一个任务做 clock-out			C-c C-x C-o
+   - 进入到refile 的界面当中			C-M r  cc 退出
+
+** DONE 翻译 time clocking , 学习作者为什么会沉迷于clocking.
+  :LOGBOOK:
+  CLOCK: [2011-10-26 Wed 10:06]--[2011-10-26 Wed 10:11] =>  0:05
+  CLOCK: [2011-09-27 Tue 10:26]--[2011-09-27 Tue 10:53] =>  0:27
+  CLOCK: [2011-09-26 Mon 17:55]--[2011-09-27 Tue 10:16] => 16:21
+  CLOCK: [2011-09-26 Mon 17:39]--[2011-09-26 Mon 17:54] =>  0:15
+  :END:
+[[file:~/org/docs/orgmode-tut.org::*Time%20Clocking][Time Clocking]]
+** 如何展现每天的时间报表					       :NOTE:
+   :LOGBOOK:
+   :END:
+[2011-09-27 Tue 11:51]
+[[file:~/org/docs/orgmode-tut.org::*Drop%20old%20style%20references%20in%20tables][Drop old style references in tables]]
+
+** sblc / slime 
+   \* return the *previous values
+   # what's does # means??
+   *help* in mimibuffer can lisp shortcut for slime
+   
+   translate morse code  to lisp charactor
+
+   - defun a package
+     - c-c c-d c-d  slime-describe-symbol
+     - defpackage  
+     - C-M x  runs the command slime-eval-defun, which is an interactive Lisp
+     - C-x C-e runs the command slime-eval-last-expression, which is an
+     - paredit.el  is usefull parenth editor 
+       - ( can auto complete another )
+       
+     
+     
+     

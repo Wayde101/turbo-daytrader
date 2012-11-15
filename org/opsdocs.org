@@ -1,0 +1,77 @@
+* opsdocs						      :@office:NOTES:
+** opsfree 
+** rt/k2
+** broom
+** oob
+** account
+   帐号处理文档. 
+*** 流程
+*** 常用的操作方法
+** dns
+*** 流程
+*** 常用的操作方法
+** yum
+*** 流程
+**** build
+metapkg-release:
+从每个 release server 做好包之后同步到 metapkg.sqa.cm4 /home/yum 目录下
+**** 生产用的源同步
+  - on build2.ops.cnz.alimama.com tbsa: tjj2tD$ 可以从 adb2 登录.
+  - 从 metapkg.sqa.cm4 同步回来 by supervisesyncmetapkg 
+  - exclude 'lxn-*.rpm' lxn 只是负责 linuxnotes.
+  - save on build2.ops.cnz.alimama.com:/home/yum/ops || createrepo
+**** 办公室源同步
+  - on newbie.corp.linuxnote.net
+  - sync-yumrepo 从 metapkg.sqa.cm4 同步到 newbie.
+**** gao-yang 同步
+  - on gao-yang.com
+  - /etc/service/sync-newbie-yum/run 每5秒钟 同步到 gao-yang /data/yum-repo/
+
+*** 常用的操作方法
+** gemstone/cmos
+*** gemstone 和 云相关的运维工作.
+** 确定联系人.
+  池风 大舞
+
+
+* 2012年11月6日11：00~19：00进行11月份机房容灾演练
+  
+包括非低峰时间的tbsession Tair 、cookie切换，重点是在
+18:00~18:30模拟CM3机房（一期）APP断网30分钟的场景，
+验证在非低峰时间CM3机房断网后CM4机房的工作能力，演练全程
+需要琳娜、加明和所有PE在场。
+
+
+11-6，16:00~17:30 通过GTM将CM3所有与交易相关的应用的全部流量切到CM4；-琳娜
+11-6，18:30~19:00 恢复GTM配置，将所有流量切回至CM3。-琳娜
+
+
+tfs083121.cm4
+@荆磊 autofixing
+aliyun 也有一个 autofixing . 在源里的autofixing 包是已经没人维护的包。
+实际有4快盘怀了. 处理办法重新clone.
+
+
+gemstone 支持 - 号的解决办法.
+
+Utils.pm 里面的 get_hostname 函数.
+
+
+
+
+
+  
+
+
+
+关于 EA 智能交易平台的设计.
+
+
+总的目标是可以通过 tradesys 来控制EA 选择不同的交易策略进行交易.
+
+
+TRADESYS 可以判断整体情况.
+
+EA 可以根据 TRADESYS 来做出交易选择. 交易参数和行为.
+
+
