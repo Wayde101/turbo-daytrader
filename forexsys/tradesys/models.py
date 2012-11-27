@@ -89,7 +89,8 @@ STRENGTHSCORE = (
 PLANRESULT = (
     (u'B', u'做多'),
     (u'S', u'做空'),
-    (u'N', u'不做交易')
+    (u'G', u'多空皆可'),
+    (u'N', u'不做交易'),
     )
 
 
@@ -100,7 +101,9 @@ NORMATIVE = (
     (u'1stClass',  u'一等中继模型'),
     (u'2thClass',  u'二等通道模型'),
     (u'3thClass',  u'三等反弹模型'),
-    (u'MacdClass', u'MACD反弹模型')
+    (u'MacdClass', u'MACD反弹模型'),
+    (u'Double', u'双顶/底'),
+    (u'H&S'   , u'头肩顶/底')
     )
 
 EXREASON = (
