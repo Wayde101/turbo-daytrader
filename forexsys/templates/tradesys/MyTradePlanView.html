@@ -9,6 +9,7 @@
     {% for tp in oldplans %}
     <li>
         <a href="/tradesys/MyTradePlan/market_over_view/{{ tp.id }}/">{{ tp.begin_time }} - {{ tp.tradetype }} - {{ tp.tradeframe }}</a>
+         | <a href="/tradesys/MyTradePlan/report_view/{{ tp.id }}/">Report</a>
     </li>
     {% endfor %}
 </ol>
