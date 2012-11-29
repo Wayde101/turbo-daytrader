@@ -17,7 +17,7 @@ from django.views.generic.edit import CreateView
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
 from tradesys.models import MarketOverView,TradePlanAction
 from tradesys.models import SUB_DIR,OBJ_DIR,TRADEFRAME,TRADETYPE,NORMATIVE
-from tradesys.models import TIMEFRAME
+from tradesys.models import TIMEFRAME,EXREASON
 
 from tradesys.forms import MarketOverViewForm,PlanResultForm
 from tradesys.forms import FirstSelectFormset,SelectedFormset
@@ -453,15 +453,73 @@ def first_select_view(request,tp_id = None):
             "image_base_url" : settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
+
+@login_required
+def report_view(request,tp_id = None):
+    tp_id = tp_id_proc(request,tp_id)
+    tp_obj = TradePlanModel.objects.get(pk = tp_id)
+
+    mdi_obj = MarketDetailInfo.objects
+
+    s_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
+                                timeframe = trade_frame_map(tp_obj.tradeframe)[0]).order_by('-symbol_name')
+    mov_s_res  = tp_obj.diff_s_overview.market_result
+    b_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
+                                timeframe = trade_frame_map(tp_obj.tradeframe)[1]).order_by('-symbol_name')
+    mov_b_res  = tp_obj.diff_b_overview.market_result
+
+    mdi_query_set =  MarketDetailInfo.objects.filter(market_overview = tp_obj.diff_s_overview,
+                                                     timeframe = tp_obj.tradeframe).order_by('-symbol_name')
+
+    movd_formset   = MovDetailInlineFormset(instance = tp_obj.market_overview)
+    mov_form       = MarketOverViewForm(instance = tp_obj.market_overview)
+
+    if request.method == "POST":
+        first_select_view = FirstSelectFormset( request.POST,
+                                                queryset = mdi_query_set )
+        if first_select_view.is_valid():
+            print '#' * 80
+            first_select_view.save()
+
+        selected_overview_init(request,tp_obj)
+
+        return redirect('/tradesys/MyTradePlan/analysis_selected_view')
+    else:
+        first_select_view = FirstSelectFormset( queryset = mdi_query_set )
+
+    return render_to_response("tradesys/ReportView.html", {
+            "tradeframe_dict" : dict(TRADEFRAME),
+            "tradetype_dict"  : dict(TRADETYPE),
+            "timeframe_dict"  : dict(TIMEFRAME),
+            "sub_dir"         : dict(SUB_DIR),
+            "obj_dir"         : dict(OBJ_DIR),
+            "normative"       : dict(NORMATIVE),
+            "exreason"        : dict(EXREASON),
+            "tp_obj"          : tp_obj,
+            "movd_formset"    : movd_formset,
+            "mov_form"        : mov_form,
+            "b_diffview_set"  : b_queryset,
+            "s_diffview_set"  : s_queryset,
+            "mov_b_res"       : mov_b_res,
+            "mov_s_res"       : mov_s_res,
+            "tradetype"       : tp_obj.tradetype,
+            "first_select_view" : first_select_view,
+            "image_base_url" : settings.IMAGE_BASE_URL,
+            },context_instance=RequestContext(request))
+
 @login_required
 def analysis_selected_view(request, tp_id = None):
 
     tp_id = tp_id_proc(request,tp_id)
     tp_obj  = TradePlanModel.objects.get(pk = tp_id)
     selected = get_selected_symbols(tp_obj.tradeframe,tp_obj.diff_s_overview)
+    # 需要写入 不做交易选项. ting
 
     if selected is None:
-        return redirect('tradesys.views.TradePlan.plan_result_view')
+        tp_obj.end_time = timezone.now()
+        tp_obj.plan_result = 'N';
+        tp_obj.save()
+        return redirect('/tradesys/MyTradePlan/report_view/%d/' % tp_obj.id )
 
     if request.method == "POST":
         selected_view = SelectedFormset( request.POST,
