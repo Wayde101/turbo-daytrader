@@ -137,6 +137,7 @@ DEBUG_TOOLBAR_CONFIG = {
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 
 STATIC_DOC_ROOT = '/home/yuting/project/turbo-daytrader/forexsys/tradesys/static'
+IMAGE_ARCHIVE_DIR  = '/home/forexchart/forextools/html/forexsys/images/Archive'
 
 # Forexsys Settings
 
