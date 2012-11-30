@@ -2,6 +2,10 @@
 # -*- mode: python -*-
 # Create your views here.
 # from tradesys.models import Symbol
+
+import re
+import os,shutil,stat
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 from django import forms
 from django.template import RequestContext
@@ -11,24 +15,40 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.utils import timezone
-
 from django.views.generic.edit import CreateView
-
 from tradesys.models import MarketDetailInfo,TradePlanModel,TradePlanAction
 from tradesys.models import MarketOverView,TradePlanAction
 from tradesys.models import SUB_DIR,OBJ_DIR,TRADEFRAME,TRADETYPE,NORMATIVE
 from tradesys.models import TIMEFRAME,EXREASON
-
 from tradesys.forms import MarketOverViewForm,PlanResultForm
 from tradesys.forms import FirstSelectFormset,SelectedFormset
 from tradesys.forms import MovDetailInlineFormset,TradePlanActionFormset
 from tradesys.forms import TradePlanInitForm,MarketOverViewForm
 from tradesys.forms import MdvDetailFormset
-import re
+
 
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
+
+def copy_r_dir(src_dir,dst_dir):
+    if not os.path.exists( dst_dir ):
+        os.makedirs(dst_dir)
+
+    for item in os.listdir(src_dir):
+        subpath = os.path.join(src_dir, item)
+        mode = os.stat(subpath)[stat.ST_MODE]
+        if stat.S_ISDIR(mode):
+            dst_path = "%s/%s" % (dst_dir,item)
+            if not os.path.exists(dst_path):
+                os.mkdir(dst_path)
+            smgr_copy_dir(subpath,"%s/%s" % (dst_dir,item))
+        elif stat.S_ISREG(mode):
+            shutil.copyfile(subpath,"%s/%s" % (dst_dir,item))
+        else:
+            print "unkown file status and ignore it."
+
 
 def trade_frame_map(tradeframe):
     if tradeframe == 5:
@@ -53,6 +73,13 @@ def tradeplan_lag_time(tradeframe):
         return 60 * 60  
 
 
+def sync_tradeplan_images(tp_obj):
+    img_src = "%s/../full" % settings.IMAGE_ARCHIVE_DIR
+    img_dst = "%s/%s" % (settings.IMAGE_ARCHIVE_DIR,tp_obj.id)
+    copy_r_dir(img_src,img_dst)
+    
+    
+
 def market_overview_init(request,tradetype,tradeframe):
     now    = timezone.now()
     mov = MarketOverView(market_result = "", pub_date = now)
@@ -64,7 +91,7 @@ def market_overview_init(request,tradetype,tradeframe):
                                timeframe   = tf ,
                                obj_dir     = get_prev_dir(request,tradetype,tf,'obj_dir'),
                                sub_dir     = get_prev_dir(request,tradetype,tf,'sub_dir'),
-                               market_overview = mov)
+                               market_overview = mov) 
         mdi.save()
     return mov
 
@@ -246,9 +273,21 @@ class MyTradePlanView(CreateView):
     success_url   = "/tradesys/MyTradePlan/market_over_view"
 
     def get_context_data(self, **kwargs):
+        plan_list = self.model.objects.filter(created_by=self.request.user).order_by('-begin_time')
+        paginator = Paginator(plan_list, 10)
+        
+        page = self.request.GET.get('page')
+        try:
+            plans = paginator.page(page)
+        except PageNotAnInteger:
+            plans = paginator.page(1)
+        except EmptyPage:
+            plans = paginator.page(paginator.num_pages)
+
         context = super(MyTradePlanView, self).get_context_data(**kwargs)
         context['tradeinfo'] = TradePlanInitForm().as_ul()
-        context['oldplans'] = self.model.objects.filter(created_by=self.request.user).order_by('-begin_time')
+        # context['oldplans'] = self.model.objects.filter(created_by=self.request.user).order_by('-begin_time')
+        context['oldplans'] = plans
         return context
 
     def form_valid(self,form):
@@ -282,6 +321,7 @@ class MyTradePlanView(CreateView):
             tp_id_proc(self.request, ltp[0].id)
             self.object = ltp[0]
 
+        sync_tradeplan_images(self.object)
 
         return redirect(self.success_url)
 
@@ -320,7 +360,7 @@ def market_over_view(request,tp_id=None):
             tp_obj.save()
 
         if plan_res_form.cleaned_data['plan_result'] == 'N':
-            return redirect('tradesys.views.TradePlan.plan_result_view')
+            return redirect('/tradesys/MyTradePlan/report_view/%d/' % tp_obj.id )
 
         return redirect('tradesys.views.TradePlan.market_diff_view')
     else:
@@ -459,6 +499,7 @@ def report_view(request,tp_id = None):
     tp_id = tp_id_proc(request,tp_id)
     tp_obj = TradePlanModel.objects.get(pk = tp_id)
 
+    selected = get_selected_symbols(tp_obj.tradeframe,tp_obj.diff_s_overview)
     mdi_obj = MarketDetailInfo.objects
 
     s_queryset = mdi_obj.filter(market_overview = tp_obj.diff_s_overview,
@@ -474,18 +515,20 @@ def report_view(request,tp_id = None):
     movd_formset   = MovDetailInlineFormset(instance = tp_obj.market_overview)
     mov_form       = MarketOverViewForm(instance = tp_obj.market_overview)
 
-    if request.method == "POST":
-        first_select_view = FirstSelectFormset( request.POST,
-                                                queryset = mdi_query_set )
-        if first_select_view.is_valid():
-            print '#' * 80
-            first_select_view.save()
 
-        selected_overview_init(request,tp_obj)
-
-        return redirect('/tradesys/MyTradePlan/analysis_selected_view')
+    if selected is not None:
+        selected_view = SelectedFormset(queryset = MarketDetailInfo.objects.filter(
+                Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
+                Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
+                symbol_name__in=selected).order_by('symbol_name','-timeframe'))
+        sym_count = selected_view.total_form_count()/len(trade_frame_map(tp_obj.tradeframe))
+        selected = 1
     else:
-        first_select_view = FirstSelectFormset( queryset = mdi_query_set )
+        selected = 0
+        selected_view = 0
+        sym_count = 0
+
+    first_select_view = FirstSelectFormset( queryset = mdi_query_set )
 
     return render_to_response("tradesys/ReportView.html", {
             "tradeframe_dict" : dict(TRADEFRAME),
@@ -504,6 +547,11 @@ def report_view(request,tp_id = None):
             "mov_s_res"       : mov_s_res,
             "tradetype"       : tp_obj.tradetype,
             "first_select_view" : first_select_view,
+            "selected"        : selected,
+            "timeframes"      : trade_frame_map(tp_obj.tradeframe),
+            "sym_count"       : sym_count,
+            "tf_count"        : len(trade_frame_map(tp_obj.tradeframe)),
+            "selected_view"   : selected_view,
             "image_base_url" : settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
@@ -530,6 +578,9 @@ def analysis_selected_view(request, tp_id = None):
         if selected_view.is_valid():
             selected_view.save()
 
+        if request.POST.has_key('planresult'):
+            return redirect('/tradesys/MyTradePlan/report_view/%d/' % tp_obj.id)
+
         tradeplan_action_init(tp_obj)
 
         return redirect('/tradesys/MyTradePlan/tradeplan_action_view')
@@ -541,14 +592,14 @@ def analysis_selected_view(request, tp_id = None):
 
     return render_to_response("tradesys/AnalysisSelectedView.html", {
             "tradeframe_dict" : dict(TRADEFRAME),
-            "tradetype_dict" : dict(TRADETYPE),
-            "timeframe_dict" : dict(TIMEFRAME),
-            "sym_count" :  selected_view.total_form_count()/len(trade_frame_map(tp_obj.tradeframe)),
-            "tf_count"  :  len(trade_frame_map(tp_obj.tradeframe)),
-            "tradetype" :  tp_obj.tradetype,
-            "timeframes":  trade_frame_map(tp_obj.tradeframe),
-            "selected_view" : selected_view,
-            "image_base_url" : settings.IMAGE_BASE_URL,
+            "tradetype_dict"  : dict(TRADETYPE),
+            "timeframe_dict"  : dict(TIMEFRAME),
+            "sym_count"       : selected_view.total_form_count()/len(trade_frame_map(tp_obj.tradeframe)),
+            "tf_count"        : len(trade_frame_map(tp_obj.tradeframe)),
+            "tradetype"       : tp_obj.tradetype,
+            "timeframes"      : trade_frame_map(tp_obj.tradeframe),
+            "selected_view"   : selected_view,
+            "image_base_url"  : settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
 @login_required
@@ -556,6 +607,7 @@ def tradeplan_action_view(request, tp_id = None):
 
     tp_id = tp_id_proc(request,tp_id)
     tp_obj  = TradePlanModel.objects.get(pk = tp_id)
+    selected = get_selected_symbols(tp_obj.tradeframe,tp_obj.diff_s_overview)
 
     tp_action_query = TradePlanAction.objects.filter(tradeplan = tp_obj)
 
@@ -566,28 +618,30 @@ def tradeplan_action_view(request, tp_id = None):
             tp_obj.end_time = timezone.now()
             tp_obj.save()
             tradeplan_action_view.save()
+
+
         return redirect('/tradesys/MyTradePlan/tradeplan_action_view')
     else:
         tradeplan_action_view = TradePlanActionFormset( queryset = tp_action_query )
+        selected_view = SelectedFormset(queryset = MarketDetailInfo.objects.filter(
+                Q(exclude_reason = 'N'  ,market_overview = tp_obj.diff_s_overview) |
+                Q(exclude_reason__isnull = True,market_overview = tp_obj.diff_s_overview),
+                symbol_name__in=selected).order_by('symbol_name','-timeframe'))
+
 
     return render_to_response("tradesys/TradePlanActionView.html", {
+            "tradeframe_dict" : dict(TRADEFRAME),
+            "tradetype_dict" : dict(TRADETYPE),
+            "timeframe_dict" : dict(TIMEFRAME),
             "tradetype" :  tp_obj.tradetype,
-            "tradeplan_action_view" : tradeplan_action_view.as_ul()
+            "tradeplan_action_view" : tradeplan_action_view.as_ul(),
+            "timeframes":  trade_frame_map(tp_obj.tradeframe),
+            "selected_view" : selected_view,
+            "image_base_url" : settings.IMAGE_BASE_URL,
             },context_instance=RequestContext(request))
 
-
-def plan_result_view(request, tp_id = None):
-    tp_id = tp_id_proc(request,tp_id)
-    tp_obj  = TradePlanModel.objects.get(pk = tp_id)
-
-    return render_to_response("tradesys/PlanResult.html", {
-            "tradetype" :  tp_obj.tradetype,
-            },context_instance=RequestContext(request))
-    return 
 
 tp_sum_view       = login_required(MyTradePlanView.as_view())
-# market_over_view  = login_required(MarketOview.as_view())
-# market_diff_view  = login_required(MarketDview.as_view())
-# first_select_view = login_required(FirstSelectedView.as_view())
-# select_view       = login_required(SelectedView.as_view())
+
+
 # vim: ts=4 sw=4 ai et

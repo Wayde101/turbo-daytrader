@@ -150,4 +150,28 @@
 <tr><th>周内市场分化結論:</th><td colspan=6>{{ mov_b_res }}</td></tr>
 <tr><th>日内市场分化結論:</th><td colspan=6>{{ mov_s_res }}</td></tr>
 </table>
+
+{% if selected == 0 %}
+	<h2>没有入选货币</h2>
+{% endif %}
+
+{% if selected == 1 %}
+<table class="graph diffview">
+  <tr>
+    {% for item in selected_view %}
+    {% if forloop.counter0|divisibleby:5 %}
+    {% if forloop.counter0 != 0 %} <tr> {% endif %}	</tr><tr>
+    {% endif %}
+    {% if forloop.counter0|divisibleby:5 %}<th>{{ item.symbol_name.value }} 图表 </th>{% endif %}
+    <td class="thumb">
+      <a href="{{image_base_url}}Archive/{{tp_obj.id}}/{{item.symbol_name.value}}_{{timeframe_dict|hash:item.timeframe.value}}.gif" alt="diff_view">
+	<img src="{{image_base_url}}Archive/{{tp_obj.id}}/{{item.symbol_name.value}}_{{timeframe_dict|hash:item.timeframe.value}}.gif" alt = "diff_view"/>
+      </a>
+      {{ obj_dir|hash:item.obj_dir.value }}<br>{{ sub_dir|hash:item.sub_dir.value }}
+    </td>
+    {% endfor %}
+  </tr>
+</table>
+{% endif %}
+
 {% endblock %}
