@@ -56,6 +56,10 @@ gemstone 支持 - 号的解决办法.
 
 Utils.pm 里面的 get_hostname 函数.
 
+[root@my031226.sqa.cm4 ~]# cat /etc/motd 
+Check Hardware Notice:[Warning - Virtual Drives:3,Degraded:1,Physical Devices:14,Disks:12; Disks on following slots are Online: 0,1,2,3,5,4,6,7,8,9,10,11. VirtualDrive:1,State:Degraded.], check it in RMS system
+
+
 
 
 
