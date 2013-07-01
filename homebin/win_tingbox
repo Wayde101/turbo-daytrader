@@ -1,3 +1,6 @@
 #!/bin/sh
 
-rdesktop -g 1280x1024 -u yuting -5 -a 16 -P -D -K -xl -z -r disk:D=$HOME/win -r clipboard:PRIMARYCLIPBOARD -r sound:off -T 'tingbox'  192.168.2.8
+
+resol=$(xrandr --screen 0 2>&1 |grep '*' |awk '{print $1}')
+
+rdesktop -g $resol -u yuting -5 -a 16 -P -D -K -xl -z -r disk:D=$HOME/win -r clipboard:PRIMARYCLIPBOARD -r sound:local -T 'tingbox'  192.168.2.8
